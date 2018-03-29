@@ -1,9 +1,0 @@
-J:\academy\OnlineExam\Common\bin\Debug\netcoreapp2.0\Common.deps.json
-J:\academy\OnlineExam\Common\bin\Debug\netcoreapp2.0\Common.dll
-J:\academy\OnlineExam\Common\bin\Debug\netcoreapp2.0\Common.pdb
-J:\academy\OnlineExam\Common\obj\Debug\netcoreapp2.0\Common.csproj.CoreCompileInputs.cache
-J:\academy\OnlineExam\Common\obj\Debug\netcoreapp2.0\Common.AssemblyInfoInputs.cache
-J:\academy\OnlineExam\Common\obj\Debug\netcoreapp2.0\Common.AssemblyInfo.cs
-J:\academy\OnlineExam\Common\obj\Debug\netcoreapp2.0\Common.dll
-J:\academy\OnlineExam\Common\obj\Debug\netcoreapp2.0\Common.pdb
-J:\academy\OnlineExam\Common\obj\Debug\netcoreapp2.0\Common.csprojResolveAssemblyReference.cache
