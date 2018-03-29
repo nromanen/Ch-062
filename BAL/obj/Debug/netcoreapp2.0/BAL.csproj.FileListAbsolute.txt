@@ -1,0 +1,16 @@
+J:\academy\OnlineExam\BAL\bin\Debug\netcoreapp2.0\BAL.deps.json
+J:\academy\OnlineExam\BAL\bin\Debug\netcoreapp2.0\BAL.dll
+J:\academy\OnlineExam\BAL\bin\Debug\netcoreapp2.0\BAL.pdb
+J:\academy\OnlineExam\BAL\bin\Debug\netcoreapp2.0\Common.dll
+J:\academy\OnlineExam\BAL\bin\Debug\netcoreapp2.0\DAL.dll
+J:\academy\OnlineExam\BAL\bin\Debug\netcoreapp2.0\Model.dll
+J:\academy\OnlineExam\BAL\bin\Debug\netcoreapp2.0\Common.pdb
+J:\academy\OnlineExam\BAL\bin\Debug\netcoreapp2.0\DAL.pdb
+J:\academy\OnlineExam\BAL\bin\Debug\netcoreapp2.0\Model.pdb
+J:\academy\OnlineExam\BAL\obj\Debug\netcoreapp2.0\BAL.csprojResolveAssemblyReference.cache
+J:\academy\OnlineExam\BAL\obj\Debug\netcoreapp2.0\BAL.csproj.CoreCompileInputs.cache
+J:\academy\OnlineExam\BAL\obj\Debug\netcoreapp2.0\BAL.AssemblyInfoInputs.cache
+J:\academy\OnlineExam\BAL\obj\Debug\netcoreapp2.0\BAL.AssemblyInfo.cs
+J:\academy\OnlineExam\BAL\obj\Debug\netcoreapp2.0\BAL.csproj.CopyComplete
+J:\academy\OnlineExam\BAL\obj\Debug\netcoreapp2.0\BAL.dll
+J:\academy\OnlineExam\BAL\obj\Debug\netcoreapp2.0\BAL.pdb
