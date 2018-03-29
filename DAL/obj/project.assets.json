@@ -689,11 +689,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "D:\\BKarpovych\\OnlineExam\\DAL\\DAL.csproj",
+      "projectUniqueName": "D:\\BKarpovych\\BK\\DAL\\DAL.csproj",
       "projectName": "DAL",
-      "projectPath": "D:\\BKarpovych\\OnlineExam\\DAL\\DAL.csproj",
+      "projectPath": "D:\\BKarpovych\\BK\\DAL\\DAL.csproj",
       "packagesPath": "C:\\Users\\bkarptc\\.nuget\\packages\\",
-      "outputPath": "D:\\BKarpovych\\OnlineExam\\DAL\\obj\\",
+      "outputPath": "D:\\BKarpovych\\BK\\DAL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -712,8 +712,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "D:\\BKarpovych\\OnlineExam\\Model\\Model.csproj": {
-              "projectPath": "D:\\BKarpovych\\OnlineExam\\Model\\Model.csproj"
+            "D:\\BKarpovych\\BK\\Model\\Model.csproj": {
+              "projectPath": "D:\\BKarpovych\\BK\\Model\\Model.csproj"
             }
           }
         }

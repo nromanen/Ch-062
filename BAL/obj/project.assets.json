@@ -724,11 +724,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "D:\\BKarpovych\\OnlineExam\\BAL\\BAL.csproj",
+      "projectUniqueName": "D:\\BKarpovych\\BK\\BAL\\BAL.csproj",
       "projectName": "BAL",
-      "projectPath": "D:\\BKarpovych\\OnlineExam\\BAL\\BAL.csproj",
+      "projectPath": "D:\\BKarpovych\\BK\\BAL\\BAL.csproj",
       "packagesPath": "C:\\Users\\bkarptc\\.nuget\\packages\\",
-      "outputPath": "D:\\BKarpovych\\OnlineExam\\BAL\\obj\\",
+      "outputPath": "D:\\BKarpovych\\BK\\BAL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -747,14 +747,14 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "D:\\BKarpovych\\OnlineExam\\DAL\\DAL.csproj": {
-              "projectPath": "D:\\BKarpovych\\OnlineExam\\DAL\\DAL.csproj"
+            "D:\\BKarpovych\\BK\\DAL\\DAL.csproj": {
+              "projectPath": "D:\\BKarpovych\\BK\\DAL\\DAL.csproj"
             },
-            "D:\\BKarpovych\\OnlineExam\\Model\\Model.csproj": {
-              "projectPath": "D:\\BKarpovych\\OnlineExam\\Model\\Model.csproj"
+            "D:\\BKarpovych\\BK\\Model\\Model.csproj": {
+              "projectPath": "D:\\BKarpovych\\BK\\Model\\Model.csproj"
             },
-            "D:\\BKarpovych\\OnlineExam\\Common\\Common.csproj": {
-              "projectPath": "D:\\BKarpovych\\OnlineExam\\Common\\Common.csproj"
+            "D:\\BKarpovych\\BK\\Common\\Common.csproj": {
+              "projectPath": "D:\\BKarpovych\\BK\\Common\\Common.csproj"
             }
           }
         }

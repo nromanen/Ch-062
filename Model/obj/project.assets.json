@@ -673,11 +673,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "D:\\BKarpovych\\OnlineExam\\Model\\Model.csproj",
+      "projectUniqueName": "D:\\BKarpovych\\BK\\Model\\Model.csproj",
       "projectName": "Model",
-      "projectPath": "D:\\BKarpovych\\OnlineExam\\Model\\Model.csproj",
+      "projectPath": "D:\\BKarpovych\\BK\\Model\\Model.csproj",
       "packagesPath": "C:\\Users\\bkarptc\\.nuget\\packages\\",
-      "outputPath": "D:\\BKarpovych\\OnlineExam\\Model\\obj\\",
+      "outputPath": "D:\\BKarpovych\\BK\\Model\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

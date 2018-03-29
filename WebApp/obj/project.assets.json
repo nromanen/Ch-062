@@ -12561,11 +12561,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "D:\\BKarpovych\\OnlineExam\\WebApp\\WebApp.csproj",
+      "projectUniqueName": "D:\\BKarpovych\\BK\\WebApp\\WebApp.csproj",
       "projectName": "WebApp",
-      "projectPath": "D:\\BKarpovych\\OnlineExam\\WebApp\\WebApp.csproj",
+      "projectPath": "D:\\BKarpovych\\BK\\WebApp\\WebApp.csproj",
       "packagesPath": "C:\\Users\\bkarptc\\.nuget\\packages\\",
-      "outputPath": "D:\\BKarpovych\\OnlineExam\\WebApp\\obj\\",
+      "outputPath": "D:\\BKarpovych\\BK\\WebApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -12584,8 +12584,8 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "D:\\BKarpovych\\OnlineExam\\Model\\Model.csproj": {
-              "projectPath": "D:\\BKarpovych\\OnlineExam\\Model\\Model.csproj"
+            "D:\\BKarpovych\\BK\\Model\\Model.csproj": {
+              "projectPath": "D:\\BKarpovych\\BK\\Model\\Model.csproj"
             }
           }
         }
