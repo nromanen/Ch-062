@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace DAL.Interface
 {
-    interface IBaseRepository<TEntity> where TEntity : class
+    public interface IBaseRepository<TEntity> where TEntity : class
     {
         IEnumerable<TEntity> GetAll();
         TEntity GetById(int id);

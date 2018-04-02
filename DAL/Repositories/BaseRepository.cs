@@ -1,7 +1,7 @@
 ﻿using DAL.Interface;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -9,8 +9,8 @@ namespace DAL.Repositories
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
-        internal MainDbContext context;
-        internal DbSet<TEntity> dbSet;
+        private MainDbContext context;
+        private DbSet<TEntity> dbSet;
 
         public BaseRepository(MainDbContext mainDbContext)
         {

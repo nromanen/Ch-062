@@ -1,8 +1,10 @@
 ﻿using System;
 using DAL.Repositories;
 using Model.DB;
-using System.Data.Entity.Validation;
 using DAL.Interface;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
@@ -13,9 +15,13 @@ namespace DAL
         private IBaseRepository<Role> roleRepo;
         private IBaseRepository<User> userRepo;
 
-        public UnitOfWork()
+        public UnitOfWork(string connectionString)
         {
-            context = new MainDbContext();
+            var optionsBuilder = new DbContextOptionsBuilder<MainDbContext>();
+            var options = optionsBuilder
+                .UseSqlServer(connectionString)
+                .Options;
+            context = new MainDbContext(options);
             roleRepo = new BaseRepository<Role>(context);
             userRepo = new BaseRepository<User>(context);
         }
@@ -40,20 +46,13 @@ namespace DAL
 
         public int Save()
         {
-            try
-            {
-                return context.SaveChanges();
-            }
-            catch (DbEntityValidationException)
-            {
-                return 0;
-            }
+            return context.SaveChanges();
         }
 
-        public void UpdateContext()
-        {
-            context = new MainDbContext();
-        }
+        //public void UpdateContext()
+        //{
+        //    context = new MainDbContext();
+        //}
 
         private bool disposed = false;
 

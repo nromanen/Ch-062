@@ -2,7 +2,7 @@
 
 namespace DAL.Interface
 {
-    interface IUnitOfWork
+    public interface IUnitOfWork
     {
         IBaseRepository<User> UserRepo { get; }
         IBaseRepository<Role> RoleRepo { get; }
