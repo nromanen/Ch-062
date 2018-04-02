@@ -34,6 +34,29 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
+                <ul class="nav navbar-nav" style="float: right">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            <p>@User.Identity.Name</p>
+                        </li>
+
+                        <li>
+                            <form method="post" asp-controller="Account" asp-action="LogOff">
+                                <input type="submit" value="Выход" />
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a asp-controller="Account" asp-action="Login">Вход</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Account" asp-action="Register">Регистрация</a>
+                        </li>
+                    }
+                </ul>
             </div>
         </div>
     </nav>
