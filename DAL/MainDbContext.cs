@@ -11,7 +11,7 @@ namespace DAL
 
         public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
     }
 }
