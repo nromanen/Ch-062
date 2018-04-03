@@ -2,8 +2,6 @@
 using DAL.Repositories;
 using Model.DB;
 using DAL.Interface;
-using Microsoft.Extensions.Configuration;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL

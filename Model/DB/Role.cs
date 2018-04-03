@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Model.DB
 {
-    public class Role : IdentityRole
+    public class Role
     {
         public string Description { get; set; }
     }

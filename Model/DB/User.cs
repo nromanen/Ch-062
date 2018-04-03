@@ -6,10 +6,8 @@ namespace Model.DB
 {
     public class User : IdentityUser
     {
-        
+        //public virtual IdentityRole Role { get; set; }
 
-        public virtual Role Role { get; set; }
-
-        public int RoleId { get; set; }
+        //public string RoleId { get; set; }
     }
 }
