@@ -13,15 +13,9 @@ namespace DAL
         private IBaseRepository<Role> roleRepo;
         private IBaseRepository<User> userRepo;
 
-        public UnitOfWork(string connectionString)
+        public UnitOfWork(MainDbContext context)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<MainDbContext>();
-            var options = optionsBuilder
-                .UseSqlServer(connectionString)
-                .Options;
-            context = new MainDbContext(options);
-            roleRepo = new BaseRepository<Role>(context);
-            userRepo = new BaseRepository<User>(context);
+            this.context = context;
         }
 
         public IBaseRepository<Role> RoleRepo
