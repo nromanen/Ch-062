@@ -8,6 +8,7 @@ using WebApp.Models;
 using Model.DB;
 using WebApp.ViewModels;
 
+// работа с учетными записями пользователей
 namespace WebApp.Controllers
 {
     public class AccountController : Controller

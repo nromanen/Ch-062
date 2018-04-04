@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Model.DTO
 {
-    class UserDTO
+    public class UserDTO
     {
+
     }
 }
