@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using WebApp.Models;
 using WebApp.ViewModels;
 using Model.DB;
+using Model.DTO;
+using AutoMapper;
 
 namespace WebApp.Controllers
 {
@@ -14,13 +16,19 @@ namespace WebApp.Controllers
     {
         UserManager<User> _userManager;
 
-        public UsersController(UserManager<User> userManager)
+        IMapper _mapper;
+        public UsersController(UserManager<User> userManager, IMapper mapper)
         {
             _userManager = userManager;
+            _mapper = mapper;
         }
 
-        public IActionResult Users() => View("Users",_userManager.Users.ToList());
-
+        //public IActionResult Users() => View("Users", AutoMapper.Mapper.Map<List<Model.DB.User>, List<Model.DTO.UserDTO>>(_userManager.Users.ToList()));
+        public IActionResult Users()
+        {
+            var t = _mapper.Map< List<Model.DTO.UserDTO>>(_userManager.Users.ToList());
+            return View(t);
+        }
         public IActionResult Create() => View();
 
         [HttpPost]
