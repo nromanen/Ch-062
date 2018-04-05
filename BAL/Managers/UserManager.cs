@@ -6,5 +6,6 @@ namespace BAL.Managers
 {
     class UserManager
     {
+
     }
 }
