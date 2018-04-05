@@ -1,10 +1,9 @@
 ﻿using System;
 using DAL;
 using DAL.Interface;
-<<<<<<< HEAD
-=======
+
 using DAL.Repositories;
->>>>>>> 64874d3561c09c85242273ba42e09e3613735741
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;

@@ -12,10 +12,17 @@ namespace DAL
 
         private IBaseRepository<Role> roleRepo;
         private IBaseRepository<User> userRepo;
+        private IBaseRepository<TestTask> taskRepo;
 
-        public UnitOfWork(MainDbContext context)
+        public UnitOfWork(string connectionString)
         {
-            this.context = context;
+            var optionsBuilder = new DbContextOptionsBuilder<MainDbContext>();
+            var options = optionsBuilder
+                .UseSqlServer(connectionString)
+                .Options;
+            context = new MainDbContext(options);
+            roleRepo = new BaseRepository<Role>(context);
+            userRepo = new BaseRepository<User>(context);
         }
 
         public IBaseRepository<Role> RoleRepo
@@ -33,6 +40,15 @@ namespace DAL
             {
                 if (userRepo == null) { userRepo = new BaseRepository<User>(context); }
                 return userRepo;
+            }
+        }
+
+        public IBaseRepository<TestTask> TaskRepo
+        {
+            get
+            {
+                if (taskRepo == null) { taskRepo = new BaseRepository<TestTask>(context); }
+                return taskRepo;
             }
         }
 

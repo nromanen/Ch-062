@@ -6,6 +6,7 @@ namespace DAL.Interface
     {
         IBaseRepository<User> UserRepo { get; }
         IBaseRepository<Role> RoleRepo { get; }
+        IBaseRepository<TestTask> TaskRepo { get; }
         void Dispose();
         int Save();
     }
