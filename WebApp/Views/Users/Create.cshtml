@@ -1,4 +1,4 @@
-﻿@model CustomIdentityApp.ViewModels.CreateUserViewModel
+﻿@model Model.DTO.UserDTO
 @{
     ViewBag.Title = "Добавление пользователя";
 }
@@ -11,10 +11,6 @@
     <div class="form-group">
         <label asp-for="Password" class="control-label">Пароль</label>
         <input type="text" asp-for="Password" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Year" class="control-label">Год рождения</label>
-        <input type="number" asp-for="Year" class="form-control" />
     </div>
     <div class="form-group">
         <input type="submit" value="Добавить" class="btn btn-default" />
