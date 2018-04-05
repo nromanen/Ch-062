@@ -19,8 +19,7 @@ namespace WebApp.Controllers
             _userManager = userManager;
         }
 
-
-        public IActionResult Index() => View(_userManager.Users.ToList());
+        public IActionResult Users() => View("Users",_userManager.Users.ToList());
 
         public IActionResult Create() => View();
 
