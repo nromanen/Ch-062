@@ -1,10 +1,7 @@
 ﻿using System;
 using DAL;
 using DAL.Interface;
-<<<<<<< HEAD
-=======
 using DAL.Repositories;
->>>>>>> 64874d3561c09c85242273ba42e09e3613735741
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -41,7 +38,6 @@ namespace WebApp
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<MainDbContext>();
-            services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
             
             //add dependecy injection for dal repositories
