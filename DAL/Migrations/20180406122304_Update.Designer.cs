@@ -11,7 +11,7 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20180406111333_Update")]
+    [Migration("20180406122304_Update")]
     partial class Update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -134,7 +134,9 @@ namespace DAL.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<short>("AccessCondition");
+                    b.Property<string>("Course");
+
+                    b.Property<string>("TaskName");
 
                     b.Property<string>("TaskString");
 
@@ -142,7 +144,7 @@ namespace DAL.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("tasks");
+                    b.ToTable("TestTasks");
                 });
 
             modelBuilder.Entity("Model.DB.User", b =>
