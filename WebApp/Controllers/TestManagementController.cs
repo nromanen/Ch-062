@@ -24,7 +24,7 @@ namespace WebApp.Controllers
             mMapper = mapper;
         }
 
-       // [Authorize(Roles = "teacher")]
+        [Authorize(Roles = "Teacher")]
         public IActionResult Index()
         {
             var t = mMapper.Map<List<TaskDTO>>(uUnitOfWork.TaskRepo.GetAll());
@@ -40,5 +40,20 @@ namespace WebApp.Controllers
             */
             return View(t);
         }
+
+        
+        public IActionResult TaskView(int id)
+        {
+            TestTask task = uUnitOfWork.TaskRepo.GetById(id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+            GetTaskViewModel model = new GetTaskViewModel { TaskName = task.TaskName, TaskString = task.TaskString };
+            return View(model);
+            
+        }
+
+
     }
 }
