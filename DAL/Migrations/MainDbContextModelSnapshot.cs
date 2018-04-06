@@ -128,6 +128,22 @@ namespace DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Model.DB.TestTask", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<short>("AccessCondition");
+
+                    b.Property<string>("TaskString");
+
+                    b.Property<int>("TeacherID");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("tasks");
+                });
+
             modelBuilder.Entity("Model.DB.User", b =>
                 {
                     b.Property<string>("Id")

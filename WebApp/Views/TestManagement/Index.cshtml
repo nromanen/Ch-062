@@ -1,0 +1,35 @@
+﻿
+@using WebApp.ViewModels
+@using Model.DB;
+@model TaskListShowViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<h1>Список пользователей</h1>
+<table class="table">
+    <tr><th>Имя</th><th>Возраст</th><th>Компания</th></tr>
+    @foreach (TestTask u in Model.testTasks)
+    {
+        <tr><td>@u.ID</td><td>@u.TaskString</td></tr>
+    }
+</table>
+@if (Model.TaskViewModel.HasPreviousPage)
+{
+    <a asp-action="Index"
+       asp-route-page="@(Model.TaskViewModel.PageNumber - 1)"
+       class="btn btn-default btn">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Назад
+    </a>
+}
+@if (Model.TaskViewModel.HasNextPage)
+{
+
+    <a asp-action="Index"
+       asp-route-page="@(Model.TaskViewModel.PageNumber - 1)"
+       class="btn btn-default btn">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Назад
+    </a>
+}
