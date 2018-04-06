@@ -29,7 +29,8 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
-            var t = _mapper.Map<List<Model.DTO.UserDTO>>(_userManager.Users.ToList());
+            var t = _mapper.Map<List<UserDTO>>(_userManager.Users.ToList());
+           // var t = _mapper.Map<List<Model.DTO.UserDTO>>(_userManager.Users.ToList());
             return View(t);
 
         }
@@ -52,7 +53,8 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await _userManager.FindByIdAsync(model.Id);
+            
+               User user = await _userManager.FindByIdAsync(model.Id);
                 if (user != null)
                 {
                     IdentityResult result =
