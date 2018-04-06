@@ -7,7 +7,7 @@ namespace WebApp.IoC
 {
     public class AutoMapperProfileConfiguration : Profile
     {
-      /*  public AutoMapperProfileConfiguration()
+        public AutoMapperProfileConfiguration()
             : this("MyProfile")
         {
             //mapping db into dto
@@ -24,7 +24,7 @@ namespace WebApp.IoC
             : base(profileName)
         {
 
-        }*/
+        }
         //public AutoMapperProfileConfiguration()
         //    : this("MyProfile")
         //{
