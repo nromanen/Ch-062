@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoMapper;
 using DAL;
 using DAL.Interface;
 using DAL.Repositories;
@@ -30,16 +31,18 @@ namespace WebApp
             {
                 cfg.AddProfile(new AutoMapperProfileConfiguration());
             });
+
             var mapper = config.CreateMapper();
+            services.AddMvc();
             services.AddSingleton(mapper);
-            
+
             services.AddMvc();
             services.AddDbContext<MainDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<MainDbContext>();
 
-            
+
             //add dependecy injection for dal repositories
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Model.DB;
+using Model.DTO;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers
@@ -14,15 +16,23 @@ namespace WebApp.Controllers
     {
 
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        // private readonly SignInManager<User> _signInManager;
 
-        public UserController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly IMapper _mapper;
+
+        public UserController(UserManager<User> userManager, IMapper mapper)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
+
+            _mapper = mapper;
         }
 
-        public IActionResult Index() => View(_userManager.Users.ToList());
+        public IActionResult Index()
+        {
+            var t = _mapper.Map<List<Model.DTO.UserDTO>>(_userManager.Users.ToList());
+            return View(t);
+
+        }
 
         [HttpGet]
         public async Task<IActionResult> ChangePassword(string id)

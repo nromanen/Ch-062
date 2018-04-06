@@ -2,15 +2,19 @@
 
 <table class="table">
     <tr><th>Email</th><th>Action</th><th></th></tr>
+
     @foreach (var user in Model)
     {
-        <tr>
-            <td>@user.Email</td>
-            <td>
-                <form method="post">
-                    <a class="btn btn-sm btn-primary" asp-action="ChangePassword" asp-route-id="@user.Id">Change password</a>
-                </form>
-            </td>
-        </tr>
+        if (User.Identity.Name == user.Email)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>
+                    <form method="post">
+                        <a class="btn btn-sm btn-primary" asp-action="ChangePassword" asp-route-id="@user.Id">Change password</a>
+                    </form>
+                </td>
+            </tr>
+        }
     }
 </table>
