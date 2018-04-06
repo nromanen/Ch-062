@@ -15,22 +15,21 @@ namespace WebApp.Controllers
     public class UserController : Controller
     {
 
-        private readonly UserManager<User> _userManager;
-        // private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> userManager;
 
-        private readonly IMapper _mapper;
 
-        public UserController(UserManager<User> userManager, IMapper mapper)
+        private readonly IMapper mapper;
+
+        public UserController(UserManager<User> uManager, IMapper ucMapper)
         {
-            _userManager = userManager;
+            userManager = uManager;
 
-            _mapper = mapper;
+            mapper = ucMapper;
         }
 
         public IActionResult Index()
         {
-            var t = _mapper.Map<List<UserDTO>>(_userManager.Users.ToList());
-           // var t = _mapper.Map<List<Model.DTO.UserDTO>>(_userManager.Users.ToList());
+            var t = mapper.Map<List<UserDTO>>(userManager.Users.ToList());
             return View(t);
 
         }
@@ -38,7 +37,7 @@ namespace WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> ChangePassword(string id)
         {
-            User user = await _userManager.FindByIdAsync(id);
+            User user = await userManager.FindByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -53,12 +52,12 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-            
-               User user = await _userManager.FindByIdAsync(model.Id);
+
+                User user = await userManager.FindByIdAsync(model.Id);
                 if (user != null)
                 {
                     IdentityResult result =
-                        await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+                        await userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Index", "Home");
@@ -73,7 +72,7 @@ namespace WebApp.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Пользователь не найден");
+                    ModelState.AddModelError(string.Empty, "User not found");
                 }
             }
             return View(model);
