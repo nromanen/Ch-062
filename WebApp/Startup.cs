@@ -38,7 +38,6 @@ namespace WebApp
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<MainDbContext>();
-            services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
             
             //add dependecy injection for dal repositories

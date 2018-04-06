@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DAL.Migrations
 {
-    public partial class initial : Migration
+    public partial class Update : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,21 @@ namespace DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tasks",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AccessCondition = table.Column<short>(nullable: false),
+                    TaskString = table.Column<string>(nullable: true),
+                    TeacherID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tasks", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -210,6 +225,9 @@ namespace DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "tasks");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
