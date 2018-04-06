@@ -16,17 +16,16 @@ namespace WebApp.Controllers
     {
         UserManager<User> _userManager;
 
-        IMapper _mapper;
+        private readonly IMapper _mapper;
+
         public UsersController(UserManager<User> userManager, IMapper mapper)
         {
             _userManager = userManager;
             _mapper = mapper;
         }
-
-        //public IActionResult Users() => View("Users", AutoMapper.Mapper.Map<List<Model.DB.User>, List<Model.DTO.UserDTO>>(_userManager.Users.ToList()));
         public IActionResult Users()
         {
-            var t = _mapper.Map< List<Model.DTO.UserDTO>>(_userManager.Users.ToList());
+            var t = _mapper.Map<List<Model.DTO.UserDTO>>(_userManager.Users.ToList());
             return View(t);
         }
         public IActionResult Create() => View();
@@ -40,7 +39,7 @@ namespace WebApp.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -78,7 +77,7 @@ namespace WebApp.Controllers
                     var result = await _userManager.UpdateAsync(user);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {

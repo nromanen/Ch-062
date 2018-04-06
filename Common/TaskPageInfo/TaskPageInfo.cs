@@ -6,10 +6,10 @@ namespace Common.TaskPageInfo
 {
     public class TaskPageInfo
     {
-        public int PageNumber { get; set; } // номер текущей страницы
-        public int PageSize { get; set; } // кол-во объектов на странице
-        public int TotalItems { get; set; } // всего объектов
-        public int TotalPages  // всего страниц
+        public int PageNumber { get; set; } 
+        public int PageSize { get; set; } 
+        public int TotalItems { get; set; } 
+        public int TotalPages  
         {
             get { return (int)Math.Ceiling((decimal)TotalItems / PageSize); }
         }
