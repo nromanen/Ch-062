@@ -6,12 +6,15 @@ namespace Model.DB
 {
     public class TestTask
     {
+        
         public int ID { get; set; }
 
         public int TeacherID { get; set; }
 
+        public string TaskName { get; set; }
+
         public string TaskString { get; set; }
 
-        public short AccessCondition { get; set; }
+        public string Course { get; set; }
     }
 }

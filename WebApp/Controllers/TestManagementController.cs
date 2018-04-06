@@ -7,33 +7,38 @@ using Microsoft.AspNetCore.Identity;
 using WebApp.Models;
 using WebApp.ViewModels;
 using Model.DB;
+using Model.DTO;
 using Microsoft.AspNetCore.Authorization;
 using DAL.Interface;
+using AutoMapper;
 
 namespace WebApp.Controllers
 {
     public class TestManagementController : Controller
     {
-        private IUnitOfWork _unitOfWork;
-        public TestManagementController(IUnitOfWork unitOfWork)
+        private IUnitOfWork uUnitOfWork;
+        private IMapper mMapper;
+        public TestManagementController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _unitOfWork = unitOfWork;
+            uUnitOfWork = unitOfWork;
+            mMapper = mapper;
         }
 
-        [Authorize(Roles = "teacher")]
-        public IActionResult Index(int page = 1)
+       // [Authorize(Roles = "teacher")]
+        public IActionResult Index()
         {
-            int pageSize = 3;   // количество элементов на странице
+            var t = mMapper.Map<List<TaskDTO>>(uUnitOfWork.TaskRepo.GetAll());
+          /*  int pageSize = 3;   
 
-            var tests = _unitOfWork.TaskRepo.GetAll();
+            var tests = uUnitOfWork.TaskRepo.GetAll();
 
             var count = tests.Count();
             var items = tests.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             TaskListViewModel taskViewModel = new TaskListViewModel(count, page, pageSize);
             TaskListShowViewModel viewModel = new TaskListShowViewModel { testTasks = tests, TaskViewModel = taskViewModel };
-
-            return View(viewModel);
+            */
+            return View(t);
         }
     }
 }

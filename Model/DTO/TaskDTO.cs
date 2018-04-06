@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace WebApp.ViewModels
+namespace Model.DTO
 {
-    public class UpdateTaskViewModel
+    public class TaskDTO
     {
         public int ID { get; set; }
+
+        public int TeacherID { get; set; }
 
         public string TaskName { get; set; }
 
         public string TaskString { get; set; }
 
-        public short AccessCondition { get; set; }
+        public string Course { get; set; }
     }
 }
