@@ -4,9 +4,16 @@ using System.Text;
 
 namespace Model.DTO
 {
-    class TaskDTO
+    public class TaskDTO
     {
+        public int ID { get; set; }
 
+        public int TeacherID { get; set; }
 
+        public string TaskName { get; set; }
+
+        public string TaskString { get; set; }
+
+        public string Course { get; set; }
     }
 }

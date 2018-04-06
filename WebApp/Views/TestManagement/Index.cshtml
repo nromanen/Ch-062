@@ -1,35 +1,24 @@
-﻿
-@using WebApp.ViewModels
-@using Model.DB;
-@model TaskListShowViewModel
-
+﻿@model IEnumerable<Model.DTO.TaskDTO>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewBag.Title = "Task List";
 }
-<h1>Список пользователей</h1>
+
+<a asp-action="Create">Add Task</a>
+
 <table class="table">
-    <tr><th>Имя</th><th>Возраст</th><th>Компания</th></tr>
-    @foreach (TestTask u in Model.testTasks)
+    @foreach (var task in Model)
     {
-        <tr><td>@u.ID</td><td>@u.TaskString</td></tr>
+    <tr>
+        <td>@task.Course</td>
+        <td>@task.TaskName</td>
+        <td>
+            <form asp-action="Delete" asp-route-id="@task.ID" method="post">
+                <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@task">Change</a>
+                <button type="submit" class="btn btn-sm btn-danger">
+                    Delete
+                </button>
+            </form>
+        </td>
+    </tr>
     }
 </table>
-@if (Model.TaskViewModel.HasPreviousPage)
-{
-    <a asp-action="Index"
-       asp-route-page="@(Model.TaskViewModel.PageNumber - 1)"
-       class="btn btn-default btn">
-        <i class="glyphicon glyphicon-chevron-left"></i>
-        Назад
-    </a>
-}
-@if (Model.TaskViewModel.HasNextPage)
-{
-
-    <a asp-action="Index"
-       asp-route-page="@(Model.TaskViewModel.PageNumber - 1)"
-       class="btn btn-default btn">
-        <i class="glyphicon glyphicon-chevron-left"></i>
-        Назад
-    </a>
-}

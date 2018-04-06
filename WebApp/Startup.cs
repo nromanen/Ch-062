@@ -32,6 +32,7 @@ namespace WebApp
             });
             var mapper = config.CreateMapper();
             services.AddSingleton(mapper);
+
             
             services.AddMvc();
             services.AddDbContext<MainDbContext>(options =>
