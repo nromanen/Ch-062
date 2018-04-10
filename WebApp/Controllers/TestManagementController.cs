@@ -11,6 +11,7 @@ using Model.DTO;
 using Microsoft.AspNetCore.Authorization;
 using DAL.Interface;
 using AutoMapper;
+using System.Security.Claims;
 
 namespace WebApp.Controllers
 {
@@ -18,6 +19,7 @@ namespace WebApp.Controllers
     {
         private IUnitOfWork uUnitOfWork;
         private IMapper mMapper;
+
         public TestManagementController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             uUnitOfWork = unitOfWork;
@@ -47,10 +49,13 @@ namespace WebApp.Controllers
         [HttpPost]
         public IActionResult Create(CreateTaskViewModel model)
         {
+            var user = uUnitOfWork.UserRepo.GetAll().ToList().Find(c => c.Email == User.Identity.Name);
+            
+                
             //int id=1;
             if (ModelState.IsValid)
             {
-                TestTask task = new TestTask { Course = model.Course, TaskName = model.TaskName, TaskString=model.TaskString};
+                TestTask task = new TestTask { Course = model.Course, TaskName = model.TaskName, TaskString = model.TaskString, TeacherID=user.Id};
 
                 try
                 {

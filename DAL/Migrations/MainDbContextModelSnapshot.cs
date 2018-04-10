@@ -139,7 +139,7 @@ namespace DAL.Migrations
 
                     b.Property<string>("TaskString");
 
-                    b.Property<int>("TeacherID");
+                    b.Property<string>("TeacherID");
 
                     b.HasKey("ID");
 
