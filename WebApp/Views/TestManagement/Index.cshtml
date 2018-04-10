@@ -9,11 +9,12 @@
     @foreach (var task in Model)
     {
     <tr>
+        <td>@task.ID</td>
         <td>@task.Course</td>
-        <td>@task.TaskName</td>
+        <td><a style="color: #0800ff;"  asp-action="TaskView" asp-route-id="@task.ID" >@task.TaskName</a></td>
         <td>
             <form asp-action="Delete" asp-route-id="@task.ID" method="post">
-                <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@task">Change</a>
+                <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@task.ID">Change</a>
                 <button type="submit" class="btn btn-sm btn-danger">
                     Delete
                 </button>

@@ -65,6 +65,7 @@ namespace DAL.Repositories
         public virtual void Update(TEntity entityToUpdate)
         {
             context.Entry(entityToUpdate).State = EntityState.Modified;
+
         }
 
         public virtual void Delete(TEntity entityToDelete)

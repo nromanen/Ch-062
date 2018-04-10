@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace WebApp.ViewModels
 {
-    public class UpdateTaskViewModel
+    public class CreateTaskViewModel
     {
-        public int ID { get; set; }
+       // public int TeacherID { get; set; }
 
         public string TaskName { get; set; }
 
