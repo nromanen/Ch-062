@@ -9,7 +9,7 @@ namespace DAL.Repositories
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
-        private MainDbContext context;
+        private readonly MainDbContext context;
         private DbSet<TEntity> dbSet;
 
         public BaseRepository(MainDbContext mainDbContext)

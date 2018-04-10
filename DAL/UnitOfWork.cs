@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
-        private MainDbContext context;
+        private readonly MainDbContext context;
 
         private IBaseRepository<Role> roleRepo;
         private IBaseRepository<User> userRepo;
@@ -51,28 +51,23 @@ namespace DAL
             return context.SaveChanges();
         }
 
-        //public void UpdateContext()
-        //{
-        //    context = new MainDbContext();
-        //}
+        private bool isDisposed = false;
 
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Grind(bool disposing)
         {
-            if (!this.disposed)
+            if (!isDisposed)
             {
                 if (disposing)
                 {
                     context.Dispose();
                 }
             }
-            this.disposed = true;
+            isDisposed = true;
         }
 
         public void Dispose()
         {
-            Dispose(true);
+            Grind(true);
             GC.SuppressFinalize(this);
         }
     }
