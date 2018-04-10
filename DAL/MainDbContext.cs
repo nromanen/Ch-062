@@ -6,14 +6,11 @@ namespace DAL
 {
     public class MainDbContext : IdentityDbContext<User>
     {
-        //public DbSet<Role> Roles { get; set; }
-        //public DbSet<User> Users { get; set; }
-
         public DbSet<TestTask> TestTasks { get; set; }
+        public DbSet<Course> Courses { get; set; }
 
         public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
         {
-            //Database.EnsureCreated();
         }
     }
 }

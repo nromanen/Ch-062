@@ -2,7 +2,6 @@
 using DAL.Repositories;
 using Model.DB;
 using DAL.Interface;
-using Microsoft.EntityFrameworkCore;
 
 namespace DAL
 {
@@ -13,6 +12,7 @@ namespace DAL
         private IBaseRepository<Role> roleRepo;
         private IBaseRepository<User> userRepo;
         private IBaseRepository<TestTask> taskRepo;
+        private IBaseRepository<Course> courseRepo;
 
         public UnitOfWork(MainDbContext context)
         {
@@ -43,6 +43,15 @@ namespace DAL
             {
                 if (taskRepo == null) { taskRepo = new BaseRepository<TestTask>(context); }
                 return taskRepo;
+            }
+        }
+
+        public IBaseRepository<Course> CourseRepo
+        {
+            get
+            {
+                if (courseRepo == null) { courseRepo = new BaseRepository<Course>(context); }
+                return courseRepo;
             }
         }
 
