@@ -9,7 +9,7 @@ namespace Model.DB
         
         public int ID { get; set; }
 
-        public int TeacherID { get; set; }
+        public string TeacherID { get; set; }
 
         public string TaskName { get; set; }
 
