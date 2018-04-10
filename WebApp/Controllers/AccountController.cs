@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,8 @@ namespace WebApp.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddClaimAsync(user, new Claim("Some Claim", "Claim"));
+                    await _userManager.AddToRoleAsync(user, "student");
                     // установка куки
                     await _signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");
@@ -67,12 +70,19 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                User user = new User { Email = model.Email, UserName = model.Email };
                 var result =
                     await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     {
+                        Claim claim = new Claim("Some Claim", "Claim");
+                        var v = await _userManager.GetUsersForClaimAsync(claim);
+                        if (v.ToList().All(c => c.Email != user.Email))
+                        {
+                            await _userManager.AddClaimAsync(user, claim);
+                        }
                         return Redirect(model.ReturnUrl);
                     }
                     else
