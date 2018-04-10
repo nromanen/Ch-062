@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DAL.Migrations
 {
-    public partial class Update : Migration
+    public partial class newMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -57,7 +57,7 @@ namespace DAL.Migrations
                     Course = table.Column<string>(nullable: true),
                     TaskName = table.Column<string>(nullable: true),
                     TaskString = table.Column<string>(nullable: true),
-                    TeacherID = table.Column<int>(nullable: false)
+                    TeacherID = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

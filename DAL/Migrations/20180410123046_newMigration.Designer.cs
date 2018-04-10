@@ -11,8 +11,8 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20180406122304_Update")]
-    partial class Update
+    [Migration("20180410123046_newMigration")]
+    partial class newMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -140,7 +140,7 @@ namespace DAL.Migrations
 
                     b.Property<string>("TaskString");
 
-                    b.Property<int>("TeacherID");
+                    b.Property<string>("TeacherID");
 
                     b.HasKey("ID");
 
