@@ -1,8 +1,8 @@
 ﻿using System;
-using AutoMapper;
 using DAL;
 using DAL.Interface;
 using DAL.Repositories;
+using DAL.Seed;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -31,17 +31,16 @@ namespace WebApp
             {
                 cfg.AddProfile(new AutoMapperProfileConfiguration());
             });
-
             var mapper = config.CreateMapper();
-            services.AddMvc();
             services.AddSingleton(mapper);
-
+            
             services.AddMvc();
             services.AddDbContext<MainDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<MainDbContext>();
 
+            services.AddScoped<IDbInitializer, DbInitializer>();
 
             //add dependecy injection for dal repositories
             services.AddTransient<IUnitOfWork, UnitOfWork>();
@@ -82,7 +81,7 @@ namespace WebApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IDbInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -97,6 +96,8 @@ namespace WebApp
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            dbInitializer.Initialize();
 
             app.UseMvc(routes =>
             {
