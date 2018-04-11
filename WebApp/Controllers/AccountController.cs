@@ -9,7 +9,6 @@ using WebApp.Models;
 using Model.DB;
 using WebApp.ViewModels;
 
-// работа с учетными записями пользователей
 namespace WebApp.Controllers
 {
     public class AccountController : Controller
@@ -38,13 +37,11 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 User user = new User { Email = model.Email, UserName = model.Email };
-                // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await _userManager.AddClaimAsync(user, new Claim("Some Claim", "Claim"));
                     await _userManager.AddToRoleAsync(user, "student");
-                    // установка куки
                     await _signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");
                 }
@@ -105,10 +102,5 @@ namespace WebApp.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-
-
-
-
-
     }
 }
