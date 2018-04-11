@@ -36,10 +36,10 @@ namespace WebApp
             services.AddSingleton(mapper);
 
             services.AddMvc();
-            services.AddDbContext<DAL.MainDbContext>(options =>
+            services.AddDbContext<MainDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<DAL.MainDbContext>();
+                .AddEntityFrameworkStores<MainDbContext>();
 
             services.AddScoped<IDbInitializer, DbInitializer>();
 
