@@ -6,12 +6,12 @@ using Common.TaskPageInfo;
 
 namespace WebApp.ViewModels
 {
-    public class TaskListViewModel
+    public class ExerciseListViewModel
     {
         public int PageNumber { get; private set; }
         public int TotalPages { get; private set; }
 
-        public TaskListViewModel(int count, int pageNumber, int pageSize)
+        public ExerciseListViewModel(int count, int pageNumber, int pageSize)
         {
             PageNumber = pageNumber;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);

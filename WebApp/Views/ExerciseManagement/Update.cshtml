@@ -1,11 +1,11 @@
-﻿@model Model.DTO.TaskDTO
+﻿@model Model.DTO.ExerciseDTO
 @{
     ViewBag.Title = "Task View";
 }
-<form asp-action="Update" asp-controller="TestManagement">
+<form asp-action="Update" asp-controller="ExerciseManagement">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <input type="hidden" asp-for="ID" />
+        <input type="hidden" asp-for="Id" />
     </div>
     <div class="form-group">
         <label asp-for="Course" class="control-label">Course Name</label>

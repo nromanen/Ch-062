@@ -18,12 +18,12 @@ namespace WebApp.IoC
                    .ForMember(dest => dest.Email, options => options.MapFrom(src => src.Email));
                    cfg.CreateMap<List<User>, List<UserDTO>>();
 
-                   cfg.CreateMap<TestTask, TaskDTO>().ForMember(dest => dest.ID, options => options.MapFrom(src => src.ID))
+                   cfg.CreateMap<Exercise, ExerciseDTO>().ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))
                    .ForMember(dest => dest.TaskName, options => options.MapFrom(src => src.TaskName))
                    .ForMember(dest => dest.TaskString, options => options.MapFrom(src => src.TaskString))
-                   .ForMember(dest => dest.TeacherID, options => options.MapFrom(src => src.TeacherID))
+                   .ForMember(dest => dest.TeacherId, options => options.MapFrom(src => src.TeacherId))
                    .ForMember(dest => dest.Course, options => options.MapFrom(src => src.Course));
-                   cfg.CreateMap<List<TestTask>, List<TaskDTO>>();
+                   cfg.CreateMap<List<Exercise>, List<ExerciseDTO>>();
                });
            }
 
@@ -41,6 +41,6 @@ namespace WebApp.IoC
            //        cfg.CreateMap<User, UserDTO>();
            //        cfg.CreateMap<List<User>, List<UserDTO>>();
            //    });
-           //}
+           //}*/
     }
 }

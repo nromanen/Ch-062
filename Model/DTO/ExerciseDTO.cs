@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model.DB
+namespace Model.DTO
 {
-    public class TestTask
+    public class ExerciseDTO
     {
-        
-        public int ID { get; set; }
+        public int Id { get; set; }
 
-        public string TeacherID { get; set; }
+        public string TeacherId { get; set; }
 
         public string TaskName { get; set; }
 

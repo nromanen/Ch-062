@@ -1,23 +1,21 @@
-﻿@model Model.DTO.TaskDTO
+﻿@model Model.DTO.ExerciseDTO
 @{
-    ViewBag.Title = "Task View";
+    ViewBag.Title = "Add Task";
 }
-<form asp-action="TaskView" asp-controller="TestManagement">
+<form asp-action="Create" asp-controller="ExerciseManagement">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <input type="hidden" asp-for="ID" />
-    </div>
-    <div class="form-group">
+        
         <label asp-for="Course" class="control-label">Course Name</label>
         <input type="text" asp-for="Course" class="form-control" />
         <label asp-for="TaskName" class="control-label">Task Name</label>
         <input type="text" asp-for="TaskName" class="form-control" />
-    </div>
+    </div>    
     <div class="form-group">
         <label asp-for="TaskName" class="control-label">Task:</label>
         <input type="text" asp-for="TaskString" class="form-control" />
     </div>
     <div class="form-group">
-        <input type="submit" value="Ok" class="btn btn-default" />
+        <input type="submit" value="Добавить" class="btn btn-default" />
     </div>
 </form>

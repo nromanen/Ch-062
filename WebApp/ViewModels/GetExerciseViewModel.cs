@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace WebApp.ViewModels
 {
-    public class GetTaskViewModel
+    public class GetExerciseViewModel
     {
-        public int ID { get; set; }
-
-      //  public int TeacherID { get; set; }
+        public int Id { get; set; }
 
         public string Course { get; set; }
 
@@ -17,6 +15,5 @@ namespace WebApp.ViewModels
 
         public string TaskString { get; set; }
 
-      // public short AccessCondition { get; set; }
     }
 }
