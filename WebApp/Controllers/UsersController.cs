@@ -17,18 +17,18 @@ namespace WebApp.Controllers
     {
         UserManager<User> userManager;
         RoleManager<IdentityRole> roleManager;
-        IMapper _mapper;
+        IMapper mapper;
         public UsersController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
-            _mapper = mapper;
+            this.mapper = mapper;
         }
         
 
         public IActionResult Users()
         {
-            var t = _mapper.Map<List<Model.DTO.UserDTO>>(this.userManager.Users.ToList());
+            var t = this.mapper.Map<List<Model.DTO.UserDTO>>(this.userManager.Users.ToList());
             return View(t);
         }
 
@@ -38,7 +38,7 @@ namespace WebApp.Controllers
             User user = await this.userManager.FindByIdAsync(id);
             if (user != null)
             {
-                IdentityResult result = await this.userManager.DeleteAsync(user);
+                await this.userManager.DeleteAsync(user);
             }
             return RedirectToAction("Index");
         }
@@ -99,11 +99,9 @@ namespace WebApp.Controllers
 
         public async Task<IActionResult> EditRole(string userId)
         {
-            // получаем пользователя
             User user = await this.userManager.FindByIdAsync(userId);
             if (user != null)
             {
-                // получем список ролей пользователя
                 var userRoles = await this.userManager.GetRolesAsync(user);
                 var allRoles = this.roleManager.Roles.ToList();
                 ChangeRoleViewModel model = new ChangeRoleViewModel
@@ -121,23 +119,15 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> EditRole(string userId, List<string> roles)
         {
-            // получаем пользователя
             User user = await this.userManager.FindByIdAsync(userId);
             if (user != null)
             {
-                // получем список ролей пользователя
                 var userRoles = await this.userManager.GetRolesAsync(user);
-                // получаем все роли
                 var allRoles = this.roleManager.Roles.ToList();
-                // получаем список ролей, которые были добавлены
                 var addedRoles = roles.Except(userRoles);
-                // получаем роли, которые были удалены
                 var removedRoles = userRoles.Except(roles);
-
                 await this.userManager.AddToRolesAsync(user, addedRoles);
-
                 await this.userManager.RemoveFromRolesAsync(user, removedRoles);
-
                 return RedirectToAction("Users");
             }
 
