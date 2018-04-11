@@ -8,7 +8,7 @@ namespace DAL
     public class MainDbContext : IdentityDbContext<User>
     {
 
-        public DbSet<TestTask> tasks { get; set; }
+        public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Course> Courses { get; set; }
 
         public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
