@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,6 +14,7 @@ namespace Model.DTO
         //public string Password { get; set; }
 
         public string Email { get; set; }
+        
 
         //public string RoleId { get; set; }
         //public string RoleName { get; set; }

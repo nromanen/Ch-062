@@ -3,6 +3,7 @@ using DAL.Repositories;
 using Model.DB;
 using DAL.Interface;
 using Microsoft.EntityFrameworkCore;
+using Model;
 
 namespace DAL
 {

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BAL.Managers
+namespace DAL.Seed
 {
-    public class UserManager
+    public interface IDbInitializer
     {
-
+        void Initialize();
     }
 }

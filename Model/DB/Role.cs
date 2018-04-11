@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
 namespace Model.DB
 {
-    public class Role
+    public class Role: IdentityRole
     {
-        public string Description { get; set; }
+        public Role() : base() { }
+        public Role(string roleName) : base(roleName) { }
     }
 }
