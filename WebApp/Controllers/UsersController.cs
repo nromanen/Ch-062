@@ -9,37 +9,55 @@ using WebApp.ViewModels;
 using Model.DB;
 using Model.DTO;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
     public class UsersController : Controller
     {
-        UserManager<User> _userManager;
-
-        private readonly IMapper _mapper;
-
-        public UsersController(UserManager<User> userManager, IMapper mapper)
+        UserManager<User> userManager;
+        RoleManager<IdentityRole> roleManager;
+        IMapper _mapper;
+        public UsersController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
         {
-            _userManager = userManager;
+            this.userManager = userManager;
+            this.roleManager = roleManager;
             _mapper = mapper;
         }
+        
+
         public IActionResult Users()
         {
-            var t = _mapper.Map<List<Model.DTO.UserDTO>>(_userManager.Users.ToList());
+            var t = _mapper.Map<List<Model.DTO.UserDTO>>(this.userManager.Users.ToList());
             return View(t);
         }
-        public IActionResult Create() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateUserViewModel model)
+        public async Task<ActionResult> Delete(string id)
         {
-            if (ModelState.IsValid)
+            User user = await this.userManager.FindByIdAsync(id);
+            if (user != null)
             {
-                User user = new User { Email = model.Email, UserName = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                IdentityResult result = await this.userManager.DeleteAsync(user);
+            }
+            return RedirectToAction("Index");
+        }
+
+
+        
+       
+        public IActionResult Roles() => View(this.roleManager.Roles.ToList());
+
+        public IActionResult CreateRole() => View();
+        [HttpPost]
+        public async Task<IActionResult> CreateRole(string name)
+        {
+            if (!string.IsNullOrEmpty(name))
+            {
+                IdentityResult result = await this.roleManager.CreateAsync(new IdentityRole(name));
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Roles");
                 }
                 else
                 {
@@ -49,57 +67,82 @@ namespace WebApp.Controllers
                     }
                 }
             }
-            return View(model);
+            return View(name);
         }
-
-        public async Task<IActionResult> Edit(string id)
+        
+        public async Task<IActionResult> DeleteRole(string id)
         {
-            User user = await _userManager.FindByIdAsync(id);
-            if (user == null)
+            IdentityRole role = await this.roleManager.FindByIdAsync(id);
+            if (role != null)
             {
-                return NotFound();
+                IdentityResult result = await this.roleManager.DeleteAsync(role);
             }
-            EditUserViewModel model = new EditUserViewModel { Id = user.Id, Email = user.Email };
-            return View(model);
+            return RedirectToAction("Roles");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Edit(EditUserViewModel model)
+        public async Task<IActionResult> DeleteRoleFromUser(string userId, List<string> roles)
         {
-            if (ModelState.IsValid)
-            {
-                User user = await _userManager.FindByIdAsync(model.Id);
-                if (user != null)
-                {
-                    user.Email = model.Email;
-                    user.UserName = model.Email;
-
-                    var result = await _userManager.UpdateAsync(user);
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        foreach (var error in result.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
-                    }
-                }
-            }
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> Delete(string id)
-        {
-            User user = await _userManager.FindByIdAsync(id);
+            User user = await this.userManager.FindByIdAsync(userId);
             if (user != null)
             {
-                IdentityResult result = await _userManager.DeleteAsync(user);
+                // получем список ролей пользователя
+                var userRoles = await this.userManager.GetRolesAsync(user);
+                // получаем список ролей, которые были выбраны
+                var addedRoles = roles.Except(userRoles);
+
+                await this.userManager.RemoveFromRolesAsync(user, addedRoles);
+
+                return RedirectToAction("EditRole");
             }
-            return RedirectToAction("Index");
+            return NotFound();
         }
+
+        public async Task<IActionResult> EditRole(string userId)
+        {
+            // получаем пользователя
+            User user = await this.userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                // получем список ролей пользователя
+                var userRoles = await this.userManager.GetRolesAsync(user);
+                var allRoles = this.roleManager.Roles.ToList();
+                ChangeRoleViewModel model = new ChangeRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserEmail = user.Email,
+                    UserRoles = userRoles,
+                    AllRoles = allRoles
+                };
+                return View(model);
+            }
+
+            return NotFound();
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditRole(string userId, List<string> roles)
+        {
+            // получаем пользователя
+            User user = await this.userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                // получем список ролей пользователя
+                var userRoles = await this.userManager.GetRolesAsync(user);
+                // получаем все роли
+                var allRoles = this.roleManager.Roles.ToList();
+                // получаем список ролей, которые были добавлены
+                var addedRoles = roles.Except(userRoles);
+                // получаем роли, которые были удалены
+                var removedRoles = userRoles.Except(roles);
+
+                await this.userManager.AddToRolesAsync(user, addedRoles);
+
+                await this.userManager.RemoveFromRolesAsync(user, removedRoles);
+
+                return RedirectToAction("Users");
+            }
+
+            return NotFound();
+        }
+
     }
 }

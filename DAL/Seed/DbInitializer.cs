@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Identity;
+using Model;
 using Model.DB;
 
 namespace DAL.Seed

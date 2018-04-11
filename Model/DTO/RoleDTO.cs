@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Model.DTO
 {
-    class RoleDTO
+    public class RoleDTO
     {
         public string Id { get; set; }
 

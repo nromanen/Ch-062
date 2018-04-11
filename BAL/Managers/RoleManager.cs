@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace BAL.Managers
 {
-    public class UserManager
+    public class RoleManager
     {
-
     }
 }

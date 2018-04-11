@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Model;
 using Model.DB;
 using WebApp.IoC;
 
@@ -33,7 +34,7 @@ namespace WebApp
             });
             var mapper = config.CreateMapper();
             services.AddSingleton(mapper);
-            
+
             services.AddMvc();
             services.AddDbContext<MainDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
