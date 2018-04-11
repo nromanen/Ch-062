@@ -26,7 +26,7 @@ namespace WebApp.Controllers
             mMapper = mapper;
         }
 
-       [Authorize(Roles = "Teacher")]
+      // [Authorize(Roles = "Teacher")]
         public IActionResult Index()
         {
             var t = mMapper.Map<List<ExerciseDTO>>(uUnitOfWork.TaskRepo.GetAll());
@@ -43,10 +43,11 @@ namespace WebApp.Controllers
             return View(t);
         }
 
-
+        [Authorize(Roles = "Teacher")]
         public IActionResult Create() => View();
 
         [HttpPost]
+        [Authorize(Roles = "Teacher")]
         public IActionResult Create(CreateExerciseViewModel model)
         {
             var user = uUnitOfWork.UserRepo.GetAll().ToList().Find(c => c.Email == User.Identity.Name);
@@ -90,7 +91,7 @@ namespace WebApp.Controllers
          return RedirectToAction("Index", "ExerciseManagement");
         }
 
-
+        [Authorize(Roles = "Teacher")]
         public IActionResult Update(int id)
         {
             //  Exercise task =  uUnitOfWork.TaskRepo.GetById(id);
@@ -103,6 +104,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Teacher")]
         public IActionResult Update(UpdateExerciseViewModel model)
         {
             if (ModelState.IsValid)
@@ -131,6 +133,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Teacher")]
         public IActionResult Delete(int id)
         {
             if (ModelState.IsValid)
