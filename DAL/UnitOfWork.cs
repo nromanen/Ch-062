@@ -2,6 +2,7 @@
 using DAL.Repositories;
 using Model.DB;
 using DAL.Interface;
+using Microsoft.AspNetCore.Identity;
 
 namespace DAL
 {
@@ -9,7 +10,7 @@ namespace DAL
     {
         private readonly MainDbContext context;
 
-        private IBaseRepository<Role> roleRepo;
+        private IBaseRepository<IdentityRole> roleRepo;
         private IBaseRepository<User> userRepo;
         private IBaseRepository<TestTask> taskRepo;
         private IBaseRepository<Course> courseRepo;
@@ -19,11 +20,11 @@ namespace DAL
             this.context = context;
         }
 
-        public IBaseRepository<Role> RoleRepo
+        public IBaseRepository<IdentityRole> RoleRepo
         {
             get
             {
-                if (roleRepo == null) { roleRepo = new BaseRepository<Role>(context); }
+                if (roleRepo == null) { roleRepo = new BaseRepository<IdentityRole>(context); }
                 return roleRepo;
             }
         }
