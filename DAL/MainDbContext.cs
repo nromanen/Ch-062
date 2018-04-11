@@ -3,12 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Model.DB;
 using System;
 
-namespace Model
+namespace DAL
 {
     public class MainDbContext : IdentityDbContext<User>
     {
 
         public DbSet<TestTask> tasks { get; set; }
+        public DbSet<Course> Courses { get; set; }
 
         public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
         {
