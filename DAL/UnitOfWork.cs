@@ -2,18 +2,17 @@
 using DAL.Repositories;
 using Model.DB;
 using DAL.Interface;
-using Microsoft.EntityFrameworkCore;
-using Model;
 
 namespace DAL
 {
-    public class UnitOfWork : IUnitOfWork, IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
-        private MainDbContext context;
+        private readonly MainDbContext context;
 
         private IBaseRepository<Role> roleRepo;
         private IBaseRepository<User> userRepo;
         private IBaseRepository<TestTask> taskRepo;
+        private IBaseRepository<Course> courseRepo;
 
         public UnitOfWork(MainDbContext context)
         {
@@ -47,33 +46,37 @@ namespace DAL
             }
         }
 
+        public IBaseRepository<Course> CourseRepo
+        {
+            get
+            {
+                if (courseRepo == null) { courseRepo = new BaseRepository<Course>(context); }
+                return courseRepo;
+            }
+        }
+
         public int Save()
         {
             return context.SaveChanges();
         }
 
-        //public void UpdateContext()
-        //{
-        //    context = new MainDbContext();
-        //}
+        private bool isDisposed = false;
 
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposing)
+        protected virtual void Grind(bool disposing)
         {
-            if (!this.disposed)
+            if (!isDisposed)
             {
                 if (disposing)
                 {
                     context.Dispose();
                 }
             }
-            this.disposed = true;
+            isDisposed = true;
         }
 
         public void Dispose()
         {
-            Dispose(true);
+            Grind(true);
             GC.SuppressFinalize(this);
         }
     }

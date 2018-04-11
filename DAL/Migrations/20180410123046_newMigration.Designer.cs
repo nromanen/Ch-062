@@ -12,8 +12,8 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20180403154329_initial")]
-    partial class initial
+    [Migration("20180410123046_newMigration")]
+    partial class newMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -128,6 +128,24 @@ namespace DAL.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Model.DB.TestTask", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Course");
+
+                    b.Property<string>("TaskName");
+
+                    b.Property<string>("TaskString");
+
+                    b.Property<string>("TeacherID");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("TestTasks");
                 });
 
             modelBuilder.Entity("Model.DB.User", b =>

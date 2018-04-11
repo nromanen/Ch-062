@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model.DB
+namespace Model.DTO
 {
-    public class TestTask
+    public class TaskDTO
     {
-        
         public int ID { get; set; }
 
         public string TeacherID { get; set; }

@@ -1,13 +1,14 @@
 ﻿using Model.DB;
+using System;
 
 namespace DAL.Interface
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
         IBaseRepository<User> UserRepo { get; }
         IBaseRepository<Role> RoleRepo { get; }
         IBaseRepository<TestTask> TaskRepo { get; }
-        void Dispose();
+        IBaseRepository<Course> CourseRepo { get; }
         int Save();
     }
 }

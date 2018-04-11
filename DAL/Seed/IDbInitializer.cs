@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DAL.Seed
+﻿namespace DAL.Seed
 {
     public interface IDbInitializer
     {

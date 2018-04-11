@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Model.DB
+namespace WebApp.ViewModels
 {
-    public class TestTask
+    public class CreateTaskViewModel
     {
-        
-        public int ID { get; set; }
-
-        public string TeacherID { get; set; }
+       // public int TeacherID { get; set; }
 
         public string TaskName { get; set; }
 

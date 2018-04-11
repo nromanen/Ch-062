@@ -10,7 +10,7 @@ namespace DAL.Repositories
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
-        private MainDbContext context;
+        private readonly MainDbContext context;
         private DbSet<TEntity> dbSet;
 
         public BaseRepository(MainDbContext mainDbContext)
@@ -66,6 +66,7 @@ namespace DAL.Repositories
         public virtual void Update(TEntity entityToUpdate)
         {
             context.Entry(entityToUpdate).State = EntityState.Modified;
+
         }
 
         public virtual void Delete(TEntity entityToDelete)
