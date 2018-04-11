@@ -80,6 +80,23 @@ namespace WebApp.Controllers
             return RedirectToAction("Roles");
         }
 
+        public async Task<IActionResult> DeleteRoleFromUser(string userId, List<string> roles)
+        {
+            User user = await this.userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                // получем список ролей пользователя
+                var userRoles = await this.userManager.GetRolesAsync(user);
+                // получаем список ролей, которые были выбраны
+                var addedRoles = roles.Except(userRoles);
+
+                await this.userManager.RemoveFromRolesAsync(user, addedRoles);
+
+                return RedirectToAction("EditRole");
+            }
+            return NotFound();
+        }
+
         public async Task<IActionResult> EditRole(string userId)
         {
             // получаем пользователя
