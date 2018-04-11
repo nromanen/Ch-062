@@ -36,7 +36,7 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     @if (User.IsInRole("Administrator"))
                     {
-                        <li><a asp-area="" asp-controller="Users" asp-action="Users" >Users</a></li>
+                        <li><a asp-area="" asp-controller="AdminPanel" asp-action="Users" >AdminPanel</a></li>
                     }
                     <li><a asp-area="" asp-controller="TestManagement" asp-action="Index">Tasks</a></li>
 
