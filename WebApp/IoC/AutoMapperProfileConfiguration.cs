@@ -24,6 +24,14 @@ namespace WebApp.IoC
                    .ForMember(dest => dest.TeacherID, options => options.MapFrom(src => src.TeacherID))
                    .ForMember(dest => dest.Course, options => options.MapFrom(src => src.Course));
                    cfg.CreateMap<List<TestTask>, List<TaskDTO>>();
+
+                   cfg.CreateMap<Course, CourseDTO>().ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))
+                   .ForMember(dest => dest.Name, options => options.MapFrom(src => src.Name))
+                   .ForMember(dest => dest.Description, options => options.MapFrom(src => src.Description))
+                   .ForMember(dest => dest.IsActive, options => options.MapFrom(src => src.IsActive))
+                   .ForMember(dest => dest.CreationDate, options => options.MapFrom(src => src.CreationDate))
+                   .ForMember(dest => dest.UserId, options => options.MapFrom(src => src.UserId));
+                   cfg.CreateMap<List<Course>, List<CourseDTO>>();
                });
            }
 

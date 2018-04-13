@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Model.DTO.CourseDTO>
+@{
+    ViewBag.Title = "Course List";
+}
+
+<a asp-action="Create">Add course</a>
+
+<table class="table">
+    <tr>
+        <th>Course name</th>
+        <th>Creation date</th>
+    </tr>
+    @foreach (var course in Model)
+    {
+        <tr>
+            <td>@course.Name</td>
+            <td>@course.CreationDate.ToString("dd/MM/yyyy")</td>
+            <td>
+                <form asp-action="Delete" asp-route-id="@course.Id" method="post">
+                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@course.Id">Edit</a>
+                    @if (course.IsActive)
+                    {
+                    <a class="btn btn-sm btn-danger" asp-action="Suspend" asp-route-id="@course.Id">Suspend</a>
+                    }
+                    else
+                    {
+                    <a class="btn btn-sm btn-primary" asp-action="Suspend" asp-route-id="@course.Id">Activate</a>
+                    }
+                </form>
+            </td>
+        </tr>
+    }
+</table>

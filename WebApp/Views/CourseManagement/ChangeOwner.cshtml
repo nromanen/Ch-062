@@ -1,0 +1,14 @@
+﻿@model WebApp.ViewModels.CoursesViewModels.SuspendCourseViewModel
+@{
+    ViewData["Title"] = "ChangeOwner";
+}
+
+<h2>Course @Model.CourseName</h2>
+
+<form asp-action="ChangeOwner" asp-controller="CourseManagement" method="post">
+    <select asp-for="ResultTeacherId"
+            asp-items="@(new SelectList(Model.TeacherList, "Id", "Email"))">
+    </select>
+    <input type="hidden" asp-for="CourseId" value="@Model.CourseId"/>
+    <input type="submit" value="Ok" class="btn btn-default"/>
+</form>

@@ -1,0 +1,24 @@
+﻿@model Model.DTO.CourseDTO
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<form asp-action="Edit" asp-controller="CourseManagement">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <input type="hidden" asp-for="Id" value="@Model.Id"/>
+        <input type="hidden" asp-for="UserId" value="@Model.UserId"/>
+        <input type="hidden" asp-for="IsActive" value="@Model.IsActive"/>
+        <input type="hidden" asp-for="CreationDate" value="@Model.CreationDate" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label">Course Name</label>
+        <input type="text" asp-for="Name" class="form-control" value="@Model.Name"/>
+        <label asp-for="Description" class="control-label">Description</label>
+        <input type="text" asp-for="Description" class="form-control" value ="@Model.Description"/>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Ok" class="btn btn-default" />
+    </div>
+</form>
+

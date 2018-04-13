@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 using Model.DB;
 using WebApp.ViewModels;
+using DAL.Interface;
+
 
 // работа с учетными записями пользователей
 namespace WebApp.Controllers
@@ -16,11 +18,13 @@ namespace WebApp.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IUnitOfWork unitOfWork;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            this.unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
@@ -70,13 +74,13 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.Email };
                 var result =
                     await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     {
+                        var user = unitOfWork.UserRepo.GetAll().First(t => t.Email == model.Email);
                         Claim claim = new Claim("Some Claim", "Claim");
                         var v = await _userManager.GetUsersForClaimAsync(claim);
                         if (v.ToList().All(c => c.Email != user.Email))
