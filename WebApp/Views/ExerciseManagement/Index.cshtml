@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Model.DTO.ExerciseDTO>
+@{
+    ViewBag.Title = "Task List";
+}
+@if (User.IsInRole("Teacher"))
+{
+    <a asp-action="Create">Add Task</a>
+}
+    <table class="table">
+        @foreach (var task in Model)
+        {
+            <tr>
+                <td>@task.Id</td>
+                <td>@task.Course</td>
+                <td><a style="color: #0800ff;" asp-action="TaskView" asp-route-id="@task.Id">@task.TaskName</a></td>
+                <td>
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        <form asp-action="Delete" asp-route-id="@task.Id" method="post">
+                            <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@task.Id">Change</a>
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Delete
+                            </button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </table>

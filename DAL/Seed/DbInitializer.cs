@@ -44,6 +44,15 @@ namespace DAL.Seed
                 var t = userManager.FindByNameAsync(userTeacher);
                 userManager.AddToRoleAsync(t.Result, "Teacher").Wait();
             }
+            if (!context.Roles.Any(r => r.Name == "Student"))
+            {
+                roleManager.CreateAsync(new IdentityRole("Student")).Wait();
+                string userStudent = "student@gmail.com";
+                string passwordStudent = "Student_123";
+                userManager.CreateAsync(new User { UserName = userStudent, Email = userStudent, EmailConfirmed = true }, passwordStudent).Wait();
+                var t = userManager.FindByNameAsync(userStudent);
+                userManager.AddToRoleAsync(t.Result, "Student").Wait();
+            }
         }
     }
 }

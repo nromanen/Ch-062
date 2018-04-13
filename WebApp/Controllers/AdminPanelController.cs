@@ -13,12 +13,13 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
-    public class UsersController : Controller
+    [Authorize(Roles = "Administrator")]
+    public class AdminPanelController : Controller
     {
         UserManager<User> userManager;
         RoleManager<IdentityRole> roleManager;
         IMapper mapper;
-        public UsersController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
+        public AdminPanelController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
