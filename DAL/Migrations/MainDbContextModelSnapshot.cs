@@ -150,9 +150,9 @@ namespace DAL.Migrations
                     b.ToTable("Courses");
                 });
 
-            modelBuilder.Entity("Model.DB.TestTask", b =>
+            modelBuilder.Entity("Model.DB.Exercise", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Course");
@@ -161,11 +161,11 @@ namespace DAL.Migrations
 
                     b.Property<string>("TaskString");
 
-                    b.Property<string>("TeacherID");
+                    b.Property<string>("TeacherId");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
-                    b.ToTable("tasks");
+                    b.ToTable("Exercises");
                 });
 
             modelBuilder.Entity("Model.DB.User", b =>

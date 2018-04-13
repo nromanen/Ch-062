@@ -49,19 +49,19 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tasks",
+                name: "Exercises",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Course = table.Column<string>(nullable: true),
                     TaskName = table.Column<string>(nullable: true),
                     TaskString = table.Column<string>(nullable: true),
-                    TeacherID = table.Column<string>(nullable: true)
+                    TeacherId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tasks", x => x.ID);
+                    table.PrimaryKey("PK_Exercises", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -259,7 +259,7 @@ namespace DAL.Migrations
                 name: "Courses");
 
             migrationBuilder.DropTable(
-                name: "tasks");
+                name: "Exercises");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
