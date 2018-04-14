@@ -2,7 +2,35 @@
     padding-top: 50px;
     padding-bottom: 20px;
 }
+/* styles for validation helpers */
+.field-validation-error {
+    color:red;
+}
 
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    color: red;
+}
+
+
+select.input-validation-error {
+    color: red;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: red;
+}
+
+.validation-summary-valid {
+    display: none;
+}
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {

@@ -2,9 +2,10 @@
 @{
     ViewBag.Title = "Task List";
 }
+
 @if (User.IsInRole("Teacher"))
 {
-    <a asp-action="Create">Add Task</a>
+    <h4 style="margin-top: 15px"><a asp-action="Create">Add Task</a></h4>
 }
     <table class="table">
         @foreach (var task in Model)
