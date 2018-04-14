@@ -11,6 +11,7 @@ namespace WebApp.ViewModels
 
 
         public IEnumerable<Exercise> Exercises { get; set; }
+
         public ExerciseListViewModel ExerciseViewModel { get; set; }
     }
 }

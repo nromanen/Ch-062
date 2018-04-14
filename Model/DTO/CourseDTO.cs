@@ -12,6 +12,6 @@ namespace Model.DTO
         public DateTime CreationDate { get; set; }
 
         public string UserId { get; set; }
-        public virtual User User { get; set; }
+        public virtual User User { get; set; }    
     }
 }
