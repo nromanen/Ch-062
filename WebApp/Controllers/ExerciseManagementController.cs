@@ -51,18 +51,18 @@ namespace WebApp.Controllers
         public IActionResult Create(CreateExerciseViewModel model)
         {
             var user = uUnitOfWork.UserRepo.GetAll().ToList().Find(c => c.Email == User.Identity.Name);
-            
-                
+
+
             //int id=1;
             if (ModelState.IsValid)
             {
-                Exercise task = new Exercise { Course = model.Course, TaskName = model.TaskName, TaskString = model.TaskString, TeacherId=user.Id};
+                Exercise task = new Exercise { Course = model.Course, TaskName = model.TaskName, TaskString = model.TaskString, TeacherId = user.Id };
 
                 try
                 {
                     uUnitOfWork.TaskRepo.Insert(task);
                     uUnitOfWork.Save();
-                   // id = task.Id;
+                    // id = task.Id;
                     // return RedirectToAction("Index", "TestManagement");
                 }
                 catch (Exception ex)
@@ -70,6 +70,8 @@ namespace WebApp.Controllers
                     ModelState.AddModelError(string.Empty, ex.Message);
                 }
             }
+
+            
             // return View(mMapper.Map<ExerciseDTO>(uUnitOfWork.TaskRepo.GetById(id)));
             return RedirectToAction("Index", "ExerciseManagement");
         }
@@ -113,7 +115,7 @@ namespace WebApp.Controllers
                 if (task != null)
                 {
                     task.TaskName = model.TaskName;
-                    task.TaskString = String.Format(model.TaskString);
+                    task.TaskString = model.TaskString;
                     task.Course = model.Course;
                     try
                     {
