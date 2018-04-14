@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Model.DTO.CourseDTO>
+@{
+    ViewBag.Title = "Course List";
+}
+
+@if (User.IsInRole("Teacher"))
+{
+    <a asp-action="Create">Add course</a>
+    <a asp-action="ViewCourses">My courses</a>
+}
+
+<table class="table">
+    <tr>
+        <th>Course name</th>
+        <th>Creation date</th>
+    </tr>
+    @if (User.IsInRole("Teacher") || User.IsInRole("Administrator"))
+    {
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.Name</td>
+                <td>@course.CreationDate.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <form asp-action="Delete" asp-route-id="@course.Id" method="post">
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@course.Id">Edit</a>
+                            <a class="btn btn-sm btn-primary" asp-action="ChangeOwner" asp-route-id="@course.Id">Change course owner</a>
+                            if (course.IsActive)
+                            {
+                                <a class="btn btn-sm btn-danger" asp-action="Suspend" asp-route-id="@course.Id">Suspend</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-sm btn-primary" asp-action="Suspend" asp-route-id="@course.Id">Activate</a>
+                            }
+                        }
+                    </form>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        @foreach (var course in Model)
+        {
+            if (course.IsActive)
+            {
+                <tr>
+                    <td>@course.Name</td>
+                    <td>@course.CreationDate.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <form asp-action="Delete" asp-route-id="@course.Id" method="post"></form>
+                    </td>
+                </tr>
+            }
+        }
+    }
+</table>

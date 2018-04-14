@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DAL.Migrations
 {
-    public partial class newMigration : Migration
+    public partial class upd : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,19 +49,19 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TestTasks",
+                name: "Exercises",
                 columns: table => new
                 {
-                    ID = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Course = table.Column<string>(nullable: true),
                     TaskName = table.Column<string>(nullable: true),
                     TaskString = table.Column<string>(nullable: true),
-                    TeacherID = table.Column<string>(nullable: true)
+                    TeacherId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TestTasks", x => x.ID);
+                    table.PrimaryKey("PK_Exercises", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -170,6 +170,29 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Courses_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -208,6 +231,11 @@ namespace DAL.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_UserId",
+                table: "Courses",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -228,7 +256,10 @@ namespace DAL.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "TestTasks");
+                name: "Courses");
+
+            migrationBuilder.DropTable(
+                name: "Exercises");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
