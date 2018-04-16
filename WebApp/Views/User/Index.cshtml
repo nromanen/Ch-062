@@ -5,16 +5,13 @@
 
     @foreach (var user in Model)
     {
-        if (User.Identity.Name == user.Email)
-        {
-            <tr>
-                <td>@user.Email</td>
-                <td>
-                    <form method="post">
-                        <a class="btn btn-sm btn-primary" asp-action="ChangePassword" asp-route-id="@user.Id">Change password</a>
-                    </form>
-                </td>
-            </tr>
-        }
+        <tr>
+            <td>@user.Email</td>
+            <td>
+                <form method="post">
+                    <a class="btn btn-sm btn-primary" asp-action="ChangePassword" asp-route-id="@user.Id">Change password</a>
+                </form>
+            </td>
+        </tr>
     }
 </table>

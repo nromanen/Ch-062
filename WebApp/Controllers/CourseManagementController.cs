@@ -1,22 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Model.DTO;
 using Model.DB;
 using DAL.Interface;
 using AutoMapper;
+using DAL;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using WebApp.ViewModels;
 using WebApp.ViewModels.CoursesViewModels;
 
 namespace WebApp.Controllers
 {
     public class CourseManagementController : Controller
     {
+
         private readonly IUnitOfWork uUnitOfWork;
         private readonly IMapper mMapper;
         private readonly UserManager<User> userManager;
+
 
         public CourseManagementController(IUnitOfWork unitOfWork, IMapper mapper, UserManager<User> userManager)
         {
@@ -42,18 +49,27 @@ namespace WebApp.Controllers
             model.UserId = user.Id;
             if (ModelState.IsValid)
             {
-                var course = new Course { Name = model.Name, Description = model.Description, IsActive = model.IsActive, CreationDate = model.CreationDate, UserId = model.UserId };
+                var course = new Course
+                {
+                    Name = model.Name,
+                    Description = model.Description,
+                    IsActive = model.IsActive,
+                    CreationDate = model.CreationDate,
+                    UserId = model.UserId
+                };
 
                 uUnitOfWork.CourseRepo.Insert(course);
                 uUnitOfWork.Save();
             }
+
             return RedirectToAction("Index", "CourseManagement");
         }
 
         public IActionResult ViewCourses()
         {
             var currentTeacherId = uUnitOfWork.UserRepo.GetAll().First(x => x.UserName == User.Identity.Name).Id;
-            var coursesList = mMapper.Map<List<CourseDTO>>(uUnitOfWork.CourseRepo.GetAll().Where(x => x.UserId == currentTeacherId));
+            var coursesList =
+                mMapper.Map<List<CourseDTO>>(uUnitOfWork.CourseRepo.GetAll().Where(x => x.UserId == currentTeacherId));
             return View(coursesList);
         }
 
@@ -79,6 +95,7 @@ namespace WebApp.Controllers
                     uUnitOfWork.Save();
                 }
             }
+
             return RedirectToAction("Index", "CourseManagement");
         }
 
@@ -93,10 +110,12 @@ namespace WebApp.Controllers
                 uUnitOfWork.CourseRepo.Update(course);
                 uUnitOfWork.Save();
             }
+
             if (User.IsInRole("Teacher"))
             {
                 return RedirectToAction("ViewCourses", "CourseManagement");
             }
+
             return RedirectToAction("Index", "CourseManagement");
         }
 
@@ -106,7 +125,12 @@ namespace WebApp.Controllers
         {
             var teacherList = mMapper.Map<List<UserDTO>>(userManager.GetUsersInRoleAsync("Teacher").Result);
             var course = mMapper.Map<CourseDTO>(uUnitOfWork.CourseRepo.GetById(id));
-            return View(new SuspendCourseViewModel() { TeacherList = teacherList, CourseId = course.Id, CourseName = course.Name });
+            return View(new SuspendCourseViewModel()
+            {
+                TeacherList = teacherList,
+                CourseId = course.Id,
+                CourseName = course.Name
+            });
         }
 
         [HttpPost]
@@ -118,5 +142,16 @@ namespace WebApp.Controllers
             uUnitOfWork.Save();
             return RedirectToAction("Index", "CourseManagement");
         }
+
+        [HttpGet]
+        public IActionResult ShowExercise(int id)
+        {       
+            var currentCourseId = uUnitOfWork.CourseRepo.GetById(id);
+            var currentCourseName = currentCourseId.Name;
+            var coursesList =
+                mMapper.Map<List<ExerciseDTO>>(uUnitOfWork.TaskRepo.GetAll().Where(x => x.Course == currentCourseName));
+            return View(coursesList);
+        }
+
     }
 }
