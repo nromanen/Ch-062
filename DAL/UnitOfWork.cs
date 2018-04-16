@@ -12,7 +12,7 @@ namespace DAL
 
         private IBaseRepository<IdentityRole> roleRepo;
         private IBaseRepository<User> userRepo;
-        private IBaseRepository<Exercise> taskRepo;
+        private IBaseRepository<Exercise> exerciseRepo;
         private IBaseRepository<Course> courseRepo;
 
         public UnitOfWork(MainDbContext context)
@@ -38,12 +38,12 @@ namespace DAL
             }
         }
 
-        public IBaseRepository<Exercise> TaskRepo
+        public IBaseRepository<Exercise> ExerciseRepo
         {
             get
             {
-                if (taskRepo == null) { taskRepo = new BaseRepository<Exercise>(context); }
-                return taskRepo;
+                if (exerciseRepo == null) { exerciseRepo = new BaseRepository<Exercise>(context); }
+                return exerciseRepo;
             }
         }
 

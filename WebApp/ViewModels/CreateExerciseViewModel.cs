@@ -15,8 +15,9 @@ namespace WebApp.ViewModels
         [Required]
         public string TaskName { get; set; }
 
-
         public string TaskString { get; set; }
-                
+
+        public DateTime CreateDateTime { get; set; }
+
     }
 }

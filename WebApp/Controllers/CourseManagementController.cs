@@ -149,7 +149,7 @@ namespace WebApp.Controllers
             var currentCourseId = uUnitOfWork.CourseRepo.GetById(id);
             var currentCourseName = currentCourseId.Name;
             var coursesList =
-                mMapper.Map<List<ExerciseDTO>>(uUnitOfWork.TaskRepo.GetAll().Where(x => x.Course == currentCourseName));
+                mMapper.Map<List<ExerciseDTO>>(uUnitOfWork.ExerciseRepo.GetAll().Where(x => x.Course == currentCourseName));
             return View(coursesList);
         }
 
