@@ -1,4 +1,7 @@
-﻿
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
 @model Model.DTO.ExerciseDTO
 @{
     ViewBag.Title = "Task View";
@@ -12,10 +15,10 @@
         <input type="text" asp-for="TaskName" class="form-control" readonly />
     </div>
     <div class="form-group">
-        <label asp-for="TaskName" class="control-label">Task:</label>
+        <label asp-for="TaskName" class="control-label">@SharedLocalizer["Task"]:</label>
         <input type="text" asp-for="TaskString" class="form-control" readonly />
     </div>
     <div class="form-group">
-        <input  value="Ok" onClick="history.go(-1)"; class="btn btn-default" />
+        <input value="@SharedLocalizer["Ok"]" onClick="history.go(-1)" ; class="btn btn-default" />
     </div>
 </form>
