@@ -8,7 +8,7 @@ namespace DAL.Interface
     {
         IBaseRepository<User> UserRepo { get; }
         IBaseRepository<IdentityRole> RoleRepo { get; }
-        IBaseRepository<Exercise> TaskRepo { get; }
+        IBaseRepository<Exercise> ExerciseRepo { get; }
         IBaseRepository<Course> CourseRepo { get; }
         int Save();
     }
