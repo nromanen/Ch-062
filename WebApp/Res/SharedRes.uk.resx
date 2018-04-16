@@ -117,26 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add" xml:space="preserve">
-    <value>Додати</value>
-  </data>
-  <data name="AddTask" xml:space="preserve">
-    <value>Додати Завдання</value>
+  <data name="Action" xml:space="preserve">
+    <value>Дія</value>
   </data>
   <data name="AdminPanel" xml:space="preserve">
     <value>Адмін панель</value>
   </data>
-  <data name="Change" xml:space="preserve">
-    <value>Змінити</value>
+  <data name="ChangeFor" xml:space="preserve">
+    <value>Зміна пароля для </value>
   </data>
-  <data name="CourseName" xml:space="preserve">
-    <value>Назва курсу</value>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Змінити пароль</value>
   </data>
-  <data name="CreateDate" xml:space="preserve">
-    <value>Час створення</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Видалити</value>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>Підтвердити новий пароль</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Електронна адресса</value>
@@ -150,8 +144,11 @@
   <data name="MyProfile" xml:space="preserve">
     <value>Мій профіль</value>
   </data>
-  <data name="Ok" xml:space="preserve">
-    <value>Добре</value>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Новий пароль</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Старий пароль</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Пароль</value>
@@ -159,17 +156,11 @@
   <data name="PasswordConfirm" xml:space="preserve">
     <value>Підтвердіть Пароль</value>
   </data>
-  <data name="Recover" xml:space="preserve">
-    <value>Відновити</value>
-  </data>
   <data name="Registration" xml:space="preserve">
     <value>Реєстрація</value>
   </data>
   <data name="RememberMe?" xml:space="preserve">
     <value>Запам`ятати?</value>
-  </data>
-  <data name="Required" xml:space="preserve">
-    <value>Поля з * обов'язкові</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Зберегти</value>
@@ -183,17 +174,8 @@
   <data name="SignUp" xml:space="preserve">
     <value>Реєстрація</value>
   </data>
-  <data name="Task" xml:space="preserve">
-    <value>Завдання</value>
-  </data>
-  <data name="TaskName" xml:space="preserve">
-    <value>Назва Завдання</value>
-  </data>
   <data name="Tasks" xml:space="preserve">
     <value>Завдання</value>
-  </data>
-  <data name="UpdateDate" xml:space="preserve">
-    <value>Час Зміни</value>
   </data>
   <data name="WebApp" xml:space="preserve">
     <value>Додаток</value>
