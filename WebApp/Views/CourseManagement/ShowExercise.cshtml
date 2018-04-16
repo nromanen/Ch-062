@@ -7,7 +7,7 @@
 
     <table class="table">
         <tr>
-            <th> Task Name </th>
+            <th> @SharedLocalizer["TaskName"] </th>
             </tr>
 
             @foreach (var p in Model)
@@ -17,7 +17,7 @@
                        
                        <td>
                            <form method="post">
-                               <a class="btn btn-sm btn-primary" asp-controller="ExerciseManagement" asp-action="TaskView" asp-route-id="@p.Id">View Tasks</a>
+                               <a class="btn btn-sm btn-primary" asp-controller="ExerciseManagement" asp-action="TaskView" asp-route-id="@p.Id">@SharedLocalizer["Tasks"]</a>
                            </form>
                        </td>
                    </tr>

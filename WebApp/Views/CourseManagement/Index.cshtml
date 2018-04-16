@@ -15,8 +15,8 @@
 
 <table class="table">
     <tr>
-        <th>Course name</th>
-        <th>Creation date</th>
+        <th>@SharedLocalizer["CourseName"]</th>
+        <th>@SharedLocalizer["CreateDate"]</th>
     </tr>
     
     @if (User.IsInRole("Teacher") || User.IsInRole("Administrator"))
@@ -30,15 +30,15 @@
                     <form asp-action="Delete" asp-route-id="@course.Id" method="post">
                         @if (User.IsInRole("Administrator"))
                         {
-                            <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@course.Id">@SharedLocalizer["Edit"]</a>
+                            <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@course.Id">@SharedLocalizer["Change"]</a>
                             <a class="btn btn-sm btn-primary" asp-action="ChangeOwner" asp-route-id="@course.Id">@SharedLocalizer["Changecourseowner"]</a>
                             if (course.IsActive)
                             {
-                                <a class="btn btn-sm btn-danger" asp-action="Suspend" asp-route-id="@course.Id">@SharedLocalizer["Suspend"]</a>
+                                <a class="btn btn-sm btn-danger" asp-action="Suspend" asp-route-id="@course.Id">@SharedLocalizer["Delete"]</a>
                             }
                             else
                             {
-                                <a class="btn btn-sm btn-primary" asp-action="Suspend" asp-route-id="@course.Id">@SharedLocalizer["Activate"]</a>
+                                <a class="btn btn-sm btn-primary" asp-action="Suspend" asp-route-id="@course.Id">@SharedLocalizer["Recover"]</a>
                             }
                         }
                     </form>                  
