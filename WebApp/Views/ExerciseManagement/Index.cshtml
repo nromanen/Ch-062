@@ -9,7 +9,7 @@
 
 @if (User.IsInRole("Teacher"))
 {
-    <h4 style="margin-top: 15px"><a asp-action="Create">@SharedLocalizer["AddTask"]</a></h4>
+    <h4 style="margin-top: 15px"><a asp-action="Create" class="btn btn-sm btn-primary">@SharedLocalizer["AddTask"]</a></h4>
 }
 <table class="table">
     <tr>

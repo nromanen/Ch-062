@@ -8,8 +8,8 @@
 
 @if (User.IsInRole("Teacher"))
 {
-    <a asp-action="Create">@SharedLocalizer["Addcourse"]</a>
-    <a asp-action="ViewCourses">@SharedLocalizer["Mycourses"]</a>
+    <a asp-action="Create" class="btn btn-sm btn-primary">@SharedLocalizer["Addcourse"]</a>
+    <a asp-action="ViewCourses" class="btn btn-sm btn-primary">@SharedLocalizer["Mycourses"]</a>
 }
 
 
