@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using DAL;
 using DAL.Interface;
 using DAL.Repositories;
@@ -6,9 +7,11 @@ using DAL.Seed;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Model;
 using Model.DB;
 using WebApp.IoC;
@@ -27,11 +30,32 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //add automapper for db and dto models
-            var config = new AutoMapper.MapperConfiguration(cfg =>
+            services.AddLocalization(options => options.ResourcesPath = "Res");
+            services.AddMvc()
+                .AddDataAnnotationsLocalization(options =>
+                {
+                    options.DataAnnotationLocalizerProvider = (type, factory) =>
+                        factory.Create(typeof(SharedRes));
+                })
+                .AddViewLocalization();
+
+            services.Configure<RequestLocalizationOptions>(options =>
             {
-                cfg.AddProfile(new AutoMapperProfileConfiguration());
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("uk")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture("en");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
             });
+
+            var config = new AutoMapper.MapperConfiguration(cfg =>
+                {
+                    cfg.AddProfile(new AutoMapperProfileConfiguration());
+                });
             var mapper = config.CreateMapper();
             services.AddSingleton(mapper);
 
@@ -84,6 +108,10 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IDbInitializer dbInitializer)
         {
+            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(locOptions.Value);
+
+            app.UseStaticFiles();
             if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
@@ -93,8 +121,7 @@ namespace WebApp
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
-            app.UseStaticFiles();
+            
 
             app.UseAuthentication();
 
