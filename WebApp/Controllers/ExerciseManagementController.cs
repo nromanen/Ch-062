@@ -27,7 +27,7 @@ namespace WebApp.Controllers
             mMapper = mapper;
         }
 
-      // [Authorize(Roles = "Teacher")]
+        ///Index///Index///Index///Index///Index///Index///Index///Index///Index///Index///
         public IActionResult Index()
         {
             List<ExerciseDTO> t = new List<ExerciseDTO>();
@@ -53,17 +53,17 @@ namespace WebApp.Controllers
             return View(t);
         }
 
+        ///Create///Create///Create///Create///Create///Create///Create///Create///Create///Create///
         [Authorize(Roles = "Teacher")]
         public IActionResult Create()
         {
-            var t = uUnitOfWork.CourseRepo.GetAll().ToList().FindAll(x => x.IsActive);
+            var c = uUnitOfWork.CourseRepo.GetAll().ToList().FindAll(x => x.IsActive);
             List<string> CourseList = new List<string>();
             CourseList.Add(null);
-            foreach (var elem in t)
+            foreach (var elem in c)
             {
                 CourseList.Add(elem.Name);
             }
-            // ViewBag.Courses = new SelectList(t, "Name");
             ViewBag.Courses = CourseList;
             return View();
         }
@@ -73,9 +73,6 @@ namespace WebApp.Controllers
         public IActionResult Create(CreateExerciseViewModel model)
         {
             var user = uUnitOfWork.UserRepo.GetAll().ToList().Find(c => c.Email == User.Identity.Name);
-
-
-            //int id=1;
             if (ModelState.IsValid)
             {
                 Exercise task = new Exercise { Course = model.Course, TaskName = model.TaskName, TaskString = model.TaskString, TeacherId = user.Id };
@@ -84,20 +81,16 @@ namespace WebApp.Controllers
                 {
                     uUnitOfWork.TaskRepo.Insert(task);
                     uUnitOfWork.Save();
-                    // id = task.Id;
-                    // return RedirectToAction("Index", "TestManagement");
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError(string.Empty, ex.Message);
                 }
-            }
-
-            
-            // return View(mMapper.Map<ExerciseDTO>(uUnitOfWork.TaskRepo.GetById(id)));
+            }  
             return RedirectToAction("Index", "ExerciseManagement");
         }
-
+        
+        ///TaskView///TaskView///TaskView///TaskView///TaskView///TaskView///TaskView///TaskView///
         public IActionResult TaskView(int id)
         {
             //  Exercise task =  uUnitOfWork.TaskRepo.GetById(id);
@@ -115,10 +108,21 @@ namespace WebApp.Controllers
          return RedirectToAction("Index", "ExerciseManagement");
         }
 
+
+        ///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///
         [Authorize(Roles = "Teacher")]
         public IActionResult Update(int id)
         {
-            //  Exercise task =  uUnitOfWork.TaskRepo.GetById(id);
+            var c = uUnitOfWork.CourseRepo.GetAll().ToList().FindAll(x => x.IsActive);
+            List<string> CourseList = new List<string>();
+            CourseList.Add(null);
+            foreach (var elem in c)
+            {
+                CourseList.Add(elem.Name);
+            }
+            ViewBag.Courses = CourseList;
+
+
             var t = mMapper.Map<ExerciseDTO>(uUnitOfWork.TaskRepo.GetById(id));
             if (t == null)
             {
@@ -156,6 +160,8 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "ExerciseManagement");
         }
 
+
+        ///Delete///Delete///Delete///Delete///Delete///Delete///Delete///Delete///Delete///
         [HttpPost]
         [Authorize(Roles = "Teacher")]
         public IActionResult Delete(int id)
@@ -189,6 +195,7 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "ExerciseManagement");
         }
 
+        ///Recover///Recover///Recover///Recover///Recover///Recover///Recover///Recover///
         [HttpPost]
         [Authorize(Roles = "Teacher")]
         public IActionResult Recover(int id)
