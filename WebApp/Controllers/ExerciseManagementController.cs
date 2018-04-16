@@ -40,16 +40,7 @@ namespace WebApp.Controllers
             {
                 t = mMapper.Map<List<ExerciseDTO>>(uUnitOfWork.ExerciseRepo.GetAll().ToList().FindAll(x => !x.IsDeleted));
             }
-          /*  int pageSize = 3;   
-
-            var tests = uUnitOfWork.ExerciseRepo.GetAll();
-
-            var count = tests.Count();
-            var items = tests.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-
-            TaskListViewModel taskViewModel = new TaskListViewModel(count, page, pageSize);
-            TaskListShowViewModel viewModel = new TaskListShowViewModel { Exercises = tests, ExerciseViewModel = taskViewModel };
-            */
+          
             return View(t);
         }
 
@@ -101,13 +92,6 @@ namespace WebApp.Controllers
             }
             return View(t);
         }
-
-        [HttpPost]
-        public  IActionResult TaskView()
-        {
-         return RedirectToAction("Index", "ExerciseManagement");
-        }
-
 
         ///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///
         [Authorize(Roles = "Teacher")]
