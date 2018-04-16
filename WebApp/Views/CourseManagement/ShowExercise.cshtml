@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Model.DTO.ExerciseDTO>
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
 <form asp-action="ShowExercise" asp-controller="CourseManagement">
     <div asp-validation-summary="All" class="text-danger"></div>
 

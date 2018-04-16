@@ -117,8 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Addcourse" xml:space="preserve">
+    <value>Додати курс</value>
+  </data>
   <data name="AdminPanel" xml:space="preserve">
     <value>Адмін панель</value>
+  </data>
+  <data name="Changecourseowner" xml:space="preserve">
+    <value>Змінити власника курсу</value>
+  </data>
+  <data name="CourseDescription" xml:space="preserve">
+    <value>Опис курсу</value>
+  </data>
+  <data name="Courses" xml:space="preserve">
+    <value>Курси</value>
+  </data>
+  <data name="Editcourse" xml:space="preserve">
+    <value>Редагувати</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Електронна адресса</value>
@@ -128,6 +143,9 @@
   </data>
   <data name="Login" xml:space="preserve">
     <value>Логін</value>
+  </data>
+  <data name="Mycourses" xml:space="preserve">
+    <value>Мої курси</value>
   </data>
   <data name="MyProfile" xml:space="preserve">
     <value>Мій профіль</value>

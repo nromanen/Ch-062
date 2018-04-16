@@ -2,11 +2,14 @@
 @{
     ViewBag.Title = "Course List";
 }
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
 
 @if (User.IsInRole("Teacher"))
 {
-    <a asp-action="Create">Add course</a>
-    <a asp-action="ViewCourses">My courses</a>
+    <a asp-action="Create">@SharedLocalizer["Addcourse"]</a>
+    <a asp-action="ViewCourses">@SharedLocalizer["Mycourses"]</a>
 }
 
 
@@ -27,15 +30,15 @@
                     <form asp-action="Delete" asp-route-id="@course.Id" method="post">
                         @if (User.IsInRole("Administrator"))
                         {
-                            <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@course.Id">Edit</a>
-                            <a class="btn btn-sm btn-primary" asp-action="ChangeOwner" asp-route-id="@course.Id">Change course owner</a>
+                            <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@course.Id">@SharedLocalizer["Edit"]</a>
+                            <a class="btn btn-sm btn-primary" asp-action="ChangeOwner" asp-route-id="@course.Id">@SharedLocalizer["Changecourseowner"]</a>
                             if (course.IsActive)
                             {
-                                <a class="btn btn-sm btn-danger" asp-action="Suspend" asp-route-id="@course.Id">Suspend</a>
+                                <a class="btn btn-sm btn-danger" asp-action="Suspend" asp-route-id="@course.Id">@SharedLocalizer["Suspend"]</a>
                             }
                             else
                             {
-                                <a class="btn btn-sm btn-primary" asp-action="Suspend" asp-route-id="@course.Id">Activate</a>
+                                <a class="btn btn-sm btn-primary" asp-action="Suspend" asp-route-id="@course.Id">@SharedLocalizer["Activate"]</a>
                             }
                         }
                     </form>                  
