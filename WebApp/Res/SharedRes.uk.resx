@@ -117,8 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Action" xml:space="preserve">
+    <value>Дія</value>
+  </data>
   <data name="AdminPanel" xml:space="preserve">
     <value>Адмін панель</value>
+  </data>
+  <data name="ChangeFor" xml:space="preserve">
+    <value>Зміна пароля для </value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Змінити пароль</value>
+  </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>Підтвердити новий пароль</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Електронна адресса</value>
@@ -132,6 +144,12 @@
   <data name="MyProfile" xml:space="preserve">
     <value>Мій профіль</value>
   </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>Новий пароль</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Старий пароль</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Пароль</value>
   </data>
@@ -143,6 +161,9 @@
   </data>
   <data name="RememberMe?" xml:space="preserve">
     <value>Запам`ятати?</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Зберегти</value>
   </data>
   <data name="SignIn" xml:space="preserve">
     <value>Вхід</value>
