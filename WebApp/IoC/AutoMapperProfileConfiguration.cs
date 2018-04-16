@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace WebApp.IoC
 {
     public class AutoMapperProfileConfiguration : Profile
-    {
+   {
          public AutoMapperProfileConfiguration()
                : this("MyProfile")
            {
@@ -37,7 +37,7 @@ namespace WebApp.IoC
                    cfg.CreateMap<List<Course>, List<CourseDTO>>();
                });
            }
-
+           
            protected AutoMapperProfileConfiguration(string profileName)
                : base(profileName)
            {
