@@ -9,12 +9,13 @@ using WebApp.Models;
 using Model.DB;
 using WebApp.ViewModels;
 using DAL.Interface;
-
+ 
 
 namespace WebApp.Controllers
 {
     public class AccountController : Controller
     {
+
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IUnitOfWork unitOfWork;
@@ -93,7 +94,7 @@ namespace WebApp.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
+                    ModelState.AddModelError("", "Incorrect login and (or) password");
                 }
             }
             return View(model);
