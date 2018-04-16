@@ -11,8 +11,8 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20180413145005_upd")]
-    partial class upd
+    [Migration("20180416111115_newMigration")]
+    partial class newMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -158,11 +158,17 @@ namespace DAL.Migrations
 
                     b.Property<string>("Course");
 
+                    b.Property<DateTime>("CreateDateTime");
+
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<string>("TaskName");
 
                     b.Property<string>("TaskString");
 
                     b.Property<string>("TeacherId");
+
+                    b.Property<DateTime>("UpdateDateTime");
 
                     b.HasKey("Id");
 

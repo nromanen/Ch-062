@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
 namespace DAL.Migrations
@@ -155,11 +157,17 @@ namespace DAL.Migrations
 
                     b.Property<string>("Course");
 
+                    b.Property<DateTime>("CreateDateTime");
+
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<string>("TaskName");
 
                     b.Property<string>("TaskString");
 
                     b.Property<string>("TeacherId");
+
+                    b.Property<DateTime>("UpdateDateTime");
 
                     b.HasKey("Id");
 

@@ -75,7 +75,7 @@ namespace WebApp.Controllers
             var user = uUnitOfWork.UserRepo.GetAll().ToList().Find(c => c.Email == User.Identity.Name);
             if (ModelState.IsValid)
             {
-                Exercise task = new Exercise { Course = model.Course, TaskName = model.TaskName, TaskString = model.TaskString, TeacherId = user.Id };
+                Exercise task = new Exercise { Course = model.Course, TaskName = model.TaskName, TaskString = model.TaskString, TeacherId = user.Id, CreateDateTime = DateTime.Now, UpdateDateTime = DateTime.Now };
 
                 try
                 {
@@ -143,6 +143,7 @@ namespace WebApp.Controllers
                     task.TaskName = model.TaskName;
                     task.TaskString = model.TaskString;
                     task.Course = model.Course;
+                    task.UpdateDateTime = DateTime.Now;
                     try
                     {
                         uUnitOfWork.ExerciseRepo.Update(task);
