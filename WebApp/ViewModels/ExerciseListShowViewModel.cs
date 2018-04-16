@@ -8,9 +8,7 @@ namespace WebApp.ViewModels
 {
     public class ExerciseListShowViewModel
     {
-
-
-        public IEnumerable<Exercise> Exercises { get; set; }
-        public ExerciseListViewModel ExerciseViewModel { get; set; }
+        //public IEnumerable<Exercise> Exercises { get; set; }
+        //public ExerciseListViewModel ExerciseViewModel { get; set; }
     }
 }

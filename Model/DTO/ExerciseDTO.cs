@@ -15,5 +15,7 @@ namespace Model.DTO
         public string TaskString { get; set; }
 
         public string Course { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

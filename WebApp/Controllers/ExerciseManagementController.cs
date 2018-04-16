@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using DAL.Interface;
 using AutoMapper;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebApp.Controllers
 {
@@ -29,7 +30,16 @@ namespace WebApp.Controllers
       // [Authorize(Roles = "Teacher")]
         public IActionResult Index()
         {
-            var t = mMapper.Map<List<ExerciseDTO>>(uUnitOfWork.TaskRepo.GetAll());
+            List<ExerciseDTO> t = new List<ExerciseDTO>();
+
+            if (User.IsInRole("Teacher"))
+            {
+                t = mMapper.Map<List<ExerciseDTO>>(uUnitOfWork.TaskRepo.GetAll());
+            }
+            else
+            {
+                t = mMapper.Map<List<ExerciseDTO>>(uUnitOfWork.TaskRepo.GetAll().ToList().FindAll(x => !x.IsDeleted));
+            }
           /*  int pageSize = 3;   
 
             var tests = uUnitOfWork.TaskRepo.GetAll();
@@ -44,7 +54,19 @@ namespace WebApp.Controllers
         }
 
         [Authorize(Roles = "Teacher")]
-        public IActionResult Create() => View();
+        public IActionResult Create()
+        {
+            var t = uUnitOfWork.CourseRepo.GetAll().ToList().FindAll(x => x.IsActive);
+            List<string> CourseList = new List<string>();
+            CourseList.Add(null);
+            foreach (var elem in t)
+            {
+                CourseList.Add(elem.Name);
+            }
+            // ViewBag.Courses = new SelectList(t, "Name");
+            ViewBag.Courses = CourseList;
+            return View();
+        }
 
         [HttpPost]
         [Authorize(Roles = "Teacher")]
@@ -138,23 +160,67 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Teacher")]
         public IActionResult Delete(int id)
         {
-            if (ModelState.IsValid)
+            //var task = uUnitOfWork.TaskRepo.GetById(id);
+            //try
+            //{
+            //    uUnitOfWork.TaskRepo.Delete(task);
+            //    uUnitOfWork.Save();                       
+            //}
+            //catch (Exception ex)
+            //{
+            //    ModelState.AddModelError(string.Empty, ex.Message);
+            //}
+            var task = uUnitOfWork.TaskRepo.GetById(id);
+            if (task != null)
             {
-                var task = uUnitOfWork.TaskRepo.GetById(id);
+                task.IsDeleted  = true;
                 try
                 {
-                    uUnitOfWork.TaskRepo.Delete(task);
-                    uUnitOfWork.Save();                       
+                    uUnitOfWork.TaskRepo.Update(task);
+                    uUnitOfWork.Save();
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError(string.Empty, ex.Message);
                 }
-                
+
             }
-        return RedirectToAction("Index", "ExerciseManagement");
+
+            return RedirectToAction("Index", "ExerciseManagement");
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Teacher")]
+        public IActionResult Recover(int id)
+        {
+            //var task = uUnitOfWork.TaskRepo.GetById(id);
+            //try
+            //{
+            //    uUnitOfWork.TaskRepo.Delete(task);
+            //    uUnitOfWork.Save();                       
+            //}
+            //catch (Exception ex)
+            //{
+            //    ModelState.AddModelError(string.Empty, ex.Message);
+            //}
+            var task = uUnitOfWork.TaskRepo.GetById(id);
+            if (task != null)
+            {
+                task.IsDeleted = false;
+                try
+                {
+                    uUnitOfWork.TaskRepo.Update(task);
+                    uUnitOfWork.Save();
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+
+            }
+
+            return RedirectToAction("Index", "ExerciseManagement");
+        }
 
     }
 }
