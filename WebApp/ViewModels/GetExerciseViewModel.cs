@@ -15,5 +15,7 @@ namespace WebApp.ViewModels
 
         public string TaskString { get; set; }
 
+        public bool IsDeleted { get; set; }
+
     }
 }

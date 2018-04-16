@@ -8,23 +8,49 @@
     <h4 style="margin-top: 15px"><a asp-action="Create">Add Task</a></h4>
 }
     <table class="table">
-        @foreach (var task in Model)
-        {
-            <tr>
-                <td>@task.Id</td>
-                <td>@task.Course</td>
-                <td><a style="color: #0800ff;" asp-action="TaskView" asp-route-id="@task.Id">@task.TaskName</a></td>
-                <td>
-                    @if (User.IsInRole("Teacher"))
-                    {
-                        <form asp-action="Delete" asp-route-id="@task.Id" method="post">
-                            <a class="btn btn-sm btn-primary" asp-action="Update" asp-route-id="@task.Id">Change</a>
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                Delete
-                            </button>
-                        </form>
-                    }
-                </td>
-            </tr>
-        }
+     @foreach (var task in Model)
+      {
+        @if (!task.IsDeleted)
+         {
+        <tr>
+            <td>@task.Id</td>
+            <td>@task.Course</td>
+            @if (User.IsInRole("Teacher"))
+             {
+            <td>@task.CreateDateTime</td>
+            <td>@task.UpdateDateTime</td>
+             }
+            <td style="color: #0800ff;"><a asp-action="TaskView" asp-route-id="@task.Id">@task.TaskName</a></td>
+            <td>
+                @if (User.IsInRole("Teacher"))
+                 {
+            <form asp-route-id="@task.Id" asp-action="Delete" method="post">
+                <a asp-route-id="@task.Id" asp-action="Update" class="btn btn-sm btn-primary">Change</a>
+                <button type="submit" class="btn btn-sm btn-danger">
+                    Delete
+                </button>
+            </form>
+                 }
+            </td>
+        </tr>
+         }
+         else
+         {
+          <tr style="background-color: rgba(126, 126, 126, 0.65)">
+            <td style="color: #586272;">@task.Id</td>
+            <td style="color: #586272;">@task.Course</td>
+            <td style="color: #738db5;"><a asp-action="TaskView" asp-route-id="@task.Id">@task.TaskName</a></td>
+            <td>
+                @if (User.IsInRole("Teacher"))
+                 {
+                    <form asp-route-id="@task.Id" asp-action="Recover" method="post">
+                         <button  type="submit" class="btn btn-sm btn-warning">
+                             Recover
+                         </button>
+                    </form>
+                 }
+            </td>
+          </tr>
+         }
+      }
     </table>

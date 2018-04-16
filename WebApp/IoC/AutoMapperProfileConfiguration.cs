@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace WebApp.IoC
 {
     public class AutoMapperProfileConfiguration : Profile
-    {
+   {
          public AutoMapperProfileConfiguration()
                : this("MyProfile")
            {
@@ -22,7 +22,10 @@ namespace WebApp.IoC
                    .ForMember(dest => dest.TaskName, options => options.MapFrom(src => src.TaskName))
                    .ForMember(dest => dest.TaskString, options => options.MapFrom(src => src.TaskString))
                    .ForMember(dest => dest.TeacherId, options => options.MapFrom(src => src.TeacherId))
-                   .ForMember(dest => dest.Course, options => options.MapFrom(src => src.Course));
+                   .ForMember(dest => dest.Course, options => options.MapFrom(src => src.Course))
+                   .ForMember(dest => dest.IsDeleted, options => options.MapFrom(src => src.IsDeleted))
+                   .ForMember(dest => dest.CreateDateTime, options => options.MapFrom(src => src.CreateDateTime))
+                   .ForMember(dest => dest.UpdateDateTime, options => options.MapFrom(src => src.UpdateDateTime));
                    cfg.CreateMap<List<Exercise>, List<ExerciseDTO>>();
 
                    cfg.CreateMap<Course, CourseDTO>().ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))
@@ -34,7 +37,7 @@ namespace WebApp.IoC
                    cfg.CreateMap<List<Course>, List<CourseDTO>>();
                });
            }
-
+           
            protected AutoMapperProfileConfiguration(string profileName)
                : base(profileName)
            {

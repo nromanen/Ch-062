@@ -17,5 +17,9 @@ namespace WebApp.ViewModels
 
         [Required]
         public string Course { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public DateTime UpdateDateTime { get; set; }
     }
 }

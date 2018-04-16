@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Model.DB;
 
 namespace Model.DTO
@@ -6,6 +7,7 @@ namespace Model.DTO
     public class CourseDTO
     {
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsActive { get; set; }
