@@ -15,19 +15,22 @@
         <tr>
             <td>@task.Id</td>
             <td>@task.Course</td>
+            @if (User.IsInRole("Teacher"))
+             {
             <td>@task.CreateDateTime</td>
             <td>@task.UpdateDateTime</td>
+             }
             <td style="color: #0800ff;"><a asp-action="TaskView" asp-route-id="@task.Id">@task.TaskName</a></td>
             <td>
                 @if (User.IsInRole("Teacher"))
-        {
+                 {
             <form asp-route-id="@task.Id" asp-action="Delete" method="post">
                 <a asp-route-id="@task.Id" asp-action="Update" class="btn btn-sm btn-primary">Change</a>
                 <button type="submit" class="btn btn-sm btn-danger">
                     Delete
                 </button>
             </form>
-}
+                 }
             </td>
         </tr>
          }
