@@ -117,11 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="AddTask" xml:space="preserve">
+    <value>Add Task</value>
+  </data>
   <data name="Addcourse" xml:space="preserve">
     <value>Add course</value>
   </data>
   <data name="AdminPanel" xml:space="preserve">
     <value>AdminPanel</value>
+  </data>
+  <data name="Change" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ChangeFor" xml:space="preserve">
+    <value>Changing password for</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>Confirm New Password</value>
+  </data>
+  <data name="CourseName" xml:space="preserve">
+    <value>Course Name</value>
+  </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value>Create Date</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="Changecourseowner" xml:space="preserve">
     <value>Change course owner</value>
@@ -150,17 +180,35 @@
   <data name="MyProfile" xml:space="preserve">
     <value>My Profile</value>
   </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Old Password</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
   <data name="PasswordConfirm" xml:space="preserve">
     <value>PasswordConfirm</value>
   </data>
+  <data name="Recover" xml:space="preserve">
+    <value>Recover</value>
+  </data>
   <data name="Registration" xml:space="preserve">
     <value>Registration</value>
   </data>
   <data name="RememberMe?" xml:space="preserve">
     <value>Remember me?</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Fields with * are required</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
   </data>
   <data name="SignIn" xml:space="preserve">
     <value>SignIn</value>
@@ -171,8 +219,17 @@
   <data name="SignUp" xml:space="preserve">
     <value>SignUp</value>
   </data>
+  <data name="Task" xml:space="preserve">
+    <value>Task</value>
+  </data>
+  <data name="TaskName" xml:space="preserve">
+    <value>Task Name</value>
+  </data>
   <data name="Tasks" xml:space="preserve">
     <value>Tasks</value>
+  </data>
+  <data name="UpdateDate" xml:space="preserve">
+    <value>Update Date</value>
   </data>
   <data name="WebApp" xml:space="preserve">
     <value>WebApp</value>

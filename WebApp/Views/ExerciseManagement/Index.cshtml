@@ -1,56 +1,66 @@
-﻿@model IEnumerable<Model.DTO.ExerciseDTO>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+@model IEnumerable<Model.DTO.ExerciseDTO>
 @{
     ViewBag.Title = "Task List";
 }
 
 @if (User.IsInRole("Teacher"))
 {
-    <h4 style="margin-top: 15px"><a asp-action="Create">Add Task</a></h4>
+    <h4 style="margin-top: 15px"><a asp-action="Create">@SharedLocalizer["AddTask"]</a></h4>
 }
-    <table class="table">
-     @foreach (var task in Model)
-      {
-        @if (!task.IsDeleted)
-         {
-        <tr>
-            <td>@task.Id</td>
-            <td>@task.Course</td>
-            @if (User.IsInRole("Teacher"))
-             {
-            <td>@task.CreateDateTime</td>
-            <td>@task.UpdateDateTime</td>
-             }
-            <td style="color: #0800ff;"><a asp-action="TaskView" asp-route-id="@task.Id">@task.TaskName</a></td>
-            <td>
+<table class="table">
+    <tr>
+    <td>@SharedLocalizer["CourseName"]</td>
                 @if (User.IsInRole("Teacher"))
-                 {
-            <form asp-route-id="@task.Id" asp-action="Delete" method="post">
-                <a asp-route-id="@task.Id" asp-action="Update" class="btn btn-sm btn-primary">Change</a>
-                <button type="submit" class="btn btn-sm btn-danger">
-                    Delete
-                </button>
-            </form>
-                 }
-            </td>
+                {
+                    <td>@SharedLocalizer["CreateDate"]</td>
+                    <td>@SharedLocalizer["UpdateDate"]</td>
+                }
         </tr>
-         }
-         else
-         {
-          <tr style="background-color: rgba(126, 126, 126, 0.65)">
-            <td style="color: #586272;">@task.Id</td>
-            <td style="color: #586272;">@task.Course</td>
-            <td style="color: #738db5;"><a asp-action="TaskView" asp-route-id="@task.Id">@task.TaskName</a></td>
-            <td>
+    @foreach (var task in Model)
+    {
+        @if (!task.IsDeleted)
+        {
+            <tr>
+                <td>@task.Course</td>
                 @if (User.IsInRole("Teacher"))
-                 {
-                    <form asp-route-id="@task.Id" asp-action="Recover" method="post">
-                         <button  type="submit" class="btn btn-sm btn-warning">
-                             Recover
-                         </button>
-                    </form>
-                 }
-            </td>
-          </tr>
-         }
-      }
-    </table>
+                {
+                    <td>@task.CreateDateTime</td>
+                    <td>@task.UpdateDateTime</td>
+                }
+                <td style="color: #0800ff;"><a asp-action="TaskView" asp-route-id="@task.Id">@task.TaskName</a></td>
+                <td>
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        <form asp-route-id="@task.Id" asp-action="Delete" method="post">
+                            <a asp-route-id="@task.Id" asp-action="Update" class="btn btn-sm btn-primary">@SharedLocalizer["Change"]</a>
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                @SharedLocalizer["Delete"]
+                            </button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr style="background-color: rgba(126, 126, 126, 0.65)">
+                <td style="color: #586272;">@task.Course</td>
+                <td style="color: #738db5;"><a asp-action="TaskView" asp-route-id="@task.Id">@task.TaskName</a></td>
+                <td>
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        <form asp-route-id="@task.Id" asp-action="Recover" method="post">
+                            <button type="submit" class="btn btn-sm btn-warning">
+                                @SharedLocalizer["Recover"] 
+                            </button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    }
+</table>
