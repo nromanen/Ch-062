@@ -231,10 +231,34 @@
   <data name="UpdateDate" xml:space="preserve">
     <value>Дата оновлення</value>
   </data>
-  <data name="WebApp" xml:space="preserve">
-    <value>WebApp</value>
+  <data name="SoftServe" xml:space="preserve">
+    <value>SoftServe</value>
   </data>
   <data name="HomePageContent" xml:space="preserve">
     <value>Тут буде контент головної сторінки</value>
+  </data>
+  <data name="AddChange" xml:space="preserve">
+    <value>Додати / Редагувати</value>
+  </data>
+  <data name="AddNewRole" xml:space="preserve">
+    <value>Додати нову роль в список</value>
+  </data>
+  <data name="ChangeRole" xml:space="preserve">
+    <value>Редагувати роль юзеру</value>
+  </data>
+  <data name="CurRole" xml:space="preserve">
+    <value>Поточна роль</value>
+  </data>
+  <data name="NewRole" xml:space="preserve">
+    <value>Нова роль</value>
+  </data>
+  <data name="Rights" xml:space="preserve">
+    <value>Права доступа</value>
+  </data>
+  <data name="RolesLst" xml:space="preserve">
+    <value>Список ролей</value>
+  </data>
+  <data name="UsersLst" xml:space="preserve">
+    <value>Назад до юзерів</value>
   </data>
 </root>

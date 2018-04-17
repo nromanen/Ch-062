@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<Model.DTO.UserDTO>
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
 @{
     ViewBag.Title = "Список пользователей";
 }
@@ -11,9 +15,9 @@
             <td>@user.Email</td>
             <td>
                 <form asp-action="Delete" asp-route-id="@user.Id" method="post">
-                    <a class="btn btn-sm btn-primary" asp-action="EditRole" asp-route-userid="@user.Id">Права доступа</a>
+                    <a class="btn btn-sm btn-primary" asp-action="EditRole" asp-route-userid="@user.Id">@SharedLocalizer["Rights"]</a>
                     <button type="submit" class="btn btn-sm btn-danger">
-                        Удалить
+                        @SharedLocalizer["Delete"]
                     </button>
                 </form>
             </td>

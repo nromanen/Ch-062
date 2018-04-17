@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
 
-<form>
-    <a class="btn btn-sm btn-primary" asp-action="Users" >Список пользователей</a>
-</form>
+<div style="margin-bottom:20px;"></div>
+<a asp-action="Users">@SharedLocalizer["UsersLst"]</a>
 
-
-<h2>Список ролей</h2>
+<h2>@SharedLocalizer["RolesLst"]</h2>
 <table class="table">
     @foreach (var role in Model)
     {
@@ -14,7 +15,7 @@
             <td>
                 <form asp-action="DeleteRole" asp-route-id="@role.Id" method="post">
                     <button type="submit" class="btn btn-sm btn-danger">
-                        Удалить
+                        @SharedLocalizer["Delete"]
                     </button>
                 </form>
             </td>
@@ -24,5 +25,5 @@
 
 </table>
 <form>
-    <button asp-action="CreateRole" method="post" class="btn btn-primary">Добавить новую роль в список</button>
+    <button asp-action="CreateRole" method="post" class="btn btn-primary">@SharedLocalizer["AddNewRole"]</button>
 </form>

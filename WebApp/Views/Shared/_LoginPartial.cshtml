@@ -3,7 +3,8 @@
 @inject IViewLocalizer Localizer
 
 @inject IHtmlLocalizer<SharedRes> SharedLocalizer
-<<li>
+
+<li>
     @await Html.PartialAsync("_SelectLanguagePartial")
 </li>
 @if (User.Identity.IsAuthenticated)
@@ -11,18 +12,17 @@
     <li>@Html.ActionLink(@User.Identity.Name, "Index", "User")</li>
 
     <li>
-        <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
+        <form style="color:white;"  asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
             <button type="submit" class="btn btn-link navbar-btn navbar-link">@SharedLocalizer["SignOut"]</button>
-
         </form>
     </li>
 }
 else
 {
-    <li><a asp-controller="Account" asp-action="Login">@SharedLocalizer["SignIn"]</a></li>
+    <li><a style="color:white;"  asp-controller="Account" asp-action="Login">@SharedLocalizer["SignIn"]</a></li>
 
     <li>
-        <a asp-controller="Account" asp-action="Register">
+        <a style="color:white;"  asp-controller="Account"  asp-action="Register">
             @SharedLocalizer["SignUp"]
         </a>
     </li>
