@@ -205,7 +205,7 @@
     <value>Запам`ятати?</value>
   </data>
   <data name="Required" xml:space="preserve">
-    <value>Поле з * є обов'язковим</value>
+    <value>Поля з * є обов'язковими</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Зберегти</value>

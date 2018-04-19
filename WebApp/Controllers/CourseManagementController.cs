@@ -101,7 +101,7 @@ namespace WebApp.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Teacher, Administrator")]
-        public IActionResult Suspend(int id)
+        public IActionResult Toggle(int id)
         {
             var course = uUnitOfWork.CourseRepo.GetById(id);
             if (course != null)
@@ -145,15 +145,15 @@ namespace WebApp.Controllers
 
         [HttpGet]
         public IActionResult ShowExercise(int id)
-        {       
+        {
             var currentCourseId = uUnitOfWork.CourseRepo.GetById(id);
             var currentCourseName = currentCourseId.Name;
             var task = uUnitOfWork.ExerciseRepo.GetById(id);
-                         
-                    var coursesList =
-                        mMapper.Map<List<ExerciseDTO>>(uUnitOfWork.ExerciseRepo.GetAll()
-                            .Where(x => x.Course == currentCourseName && !x.IsDeleted));               
-            
+
+            var coursesList =
+                mMapper.Map<List<ExerciseDTO>>(uUnitOfWork.ExerciseRepo.GetAll()
+                    .Where(x => x.Course == currentCourseName && !x.IsDeleted));
+
 
             return View(coursesList);
         }

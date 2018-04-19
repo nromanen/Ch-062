@@ -34,11 +34,11 @@
                             <a class="btn btn-sm btn-primary" asp-action="ChangeOwner" asp-route-id="@course.Id">@SharedLocalizer["Changecourseowner"]</a>
                             if (course.IsActive)
                             {
-                                <a class="btn btn-sm btn-danger" asp-action="Suspend" asp-route-id="@course.Id">@SharedLocalizer["Delete"]</a>
+                                <a class="btn btn-sm btn-danger" asp-action="Toggle" asp-route-id="@course.Id">@SharedLocalizer["Delete"]</a>
                             }
                             else
                             {
-                                <a class="btn btn-sm btn-primary" asp-action="Suspend" asp-route-id="@course.Id">@SharedLocalizer["Recover"]</a>
+                                <a class="btn btn-sm btn-primary" asp-action="Toggle" asp-route-id="@course.Id">@SharedLocalizer["Recover"]</a>
                             }
                         }
                     </form>                  
@@ -55,9 +55,6 @@
                 <tr>
                     <td>@course.Name</td>
                     <td>@course.CreationDate.ToString("dd/MM/yyyy")</td>
-                    <td>
-                        <form asp-action="Delete" asp-route-id="@course.Id" method="post"></form>
-                    </td>
                 </tr>
             }
         }
