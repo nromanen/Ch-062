@@ -20,8 +20,10 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+
 </head>
 <body>
+
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -31,16 +33,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">@SharedLocalizer["WebApp"]</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" style="color:white; font-size:20px;" class="navbar-brand">@SharedLocalizer["SoftServe"]</a>
 
             </div>
             <div class="container-fluid">
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav nav-pills navbar-nav">
                         @if (User.IsInRole("Administrator"))
                         {
                             <li>
-                                <a asp-area="" asp-controller="AdminPanel" asp-action="Users">
+                                <a style="color:white;" asp-controller="AdminPanel" asp-action="Users">
                                     @SharedLocalizer["AdminPanel"]
                                 </a>
                             </li>
@@ -48,16 +50,16 @@
                         @if (User.IsInRole("Teacher"))
                         {
                             <li>
-                                <a asp-area="" asp-controller="ExerciseManagement" asp-action="Index">
+                                <a style="color:white;" asp-controller="ExerciseManagement" asp-action="Index">
                                     @SharedLocalizer["Tasks"]
                                 </a>
                             </li>
                         }
-                        <li><a asp-area="" asp-controller="CourseManagement" asp-action="Index">@SharedLocalizer["Courses"]</a></li>
+                        <li><a style="color:white;" asp-controller="CourseManagement" asp-action="Index">@SharedLocalizer["Courses"]</a></li>
 
 
                     </ul>
-                    <ul class="nav navbar-nav" style="float: right">
+                    <ul class="nav navbar-nav"  style="float: right; color:white;">
                         @Html.Partial("_LoginPartial")
                     </ul>
                 </div>
@@ -69,10 +71,6 @@
     </nav>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - WebApp</p>
-        </footer>
     </div>
 
     <environment include="Development">

@@ -1,10 +1,13 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @model WebApp.ViewModels.ChangeRoleViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
 
 
 
-<h3>сменить роль пользователю @Model.UserEmail</h3>
+<h3>@SharedLocalizer["ChangeRole"] @Model.UserEmail</h3>
 <form asp-action="EditRole" method="post" style="float: left;">
     <input type="hidden" name="userId" value="@Model.UserId" />
     <div class="form-group">
@@ -18,14 +21,14 @@
 
 
     </div>
-    <button type="submit" class="btn btn-primary">Сохранить</button>
-    
+    <button type="submit" class="btn btn-primary">@SharedLocalizer["Save"]</button>
+
 </form>
 <form>
-    <button asp-action="Roles">Добавить\Изменить</button>
+    <a asp-action="Roles">@SharedLocalizer["AddChange"]</a>
 </form>
 <div style="clear:both;"></div>
-<h3>текущая роль </h3>
+<h3>@SharedLocalizer["CurRole"] </h3>
 
 @foreach (var role in Model.UserRoles)
 {

@@ -4,7 +4,11 @@
 @inject IViewLocalizer Localizer
 
 @inject IHtmlLocalizer<SharedRes> SharedLocalizer
-
+<style>
+    li {
+        color: black;
+    }
+</style>
 <h2>
     @SharedLocalizer["Login"]</h2>
 <form method="post" asp-controller="Account" asp-action="Login"
@@ -29,7 +33,7 @@
     <div>
         <label asp-for="RememberMe">
             @SharedLocalizer["RememberMe?"]
-        </label><br />
+        </label>
 
         <input asp-for="RememberMe" />
     </div>

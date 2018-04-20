@@ -2,13 +2,15 @@
 @{
     ViewBag.Title = "Course List";
 }
-
-<a asp-action="Create">Add course</a>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+<a asp-action="Create" class="btn btn-sm btn-primary">@SharedLocalizer["Addcourse"]</a>
 
 <table class="table">
     <tr>
-        <th>Course name</th>
-        <th>Creation date</th>
+        <th>@SharedLocalizer["CourseName"]</th>
+        <th>@SharedLocalizer["CreateDate"]</th>
     </tr>
     @foreach (var course in Model)
     {
@@ -17,14 +19,14 @@
             <td>@course.CreationDate.ToString("dd/MM/yyyy")</td>
             <td>
                 <form asp-action="Delete" asp-route-id="@course.Id" method="post">
-                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@course.Id">Edit</a>
+                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@course.Id">@SharedLocalizer["Change"]</a>
                     @if (course.IsActive)
                     {
-                    <a class="btn btn-sm btn-danger" asp-action="Suspend" asp-route-id="@course.Id">Suspend</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Toggle" asp-route-id="@course.Id">@SharedLocalizer["Delete"]</a>
                     }
                     else
                     {
-                    <a class="btn btn-sm btn-primary" asp-action="Suspend" asp-route-id="@course.Id">Activate</a>
+                    <a class="btn btn-sm btn-primary" asp-action="Toggle" asp-route-id="@course.Id">@SharedLocalizer["Recover"]</a>
                     }
                 </form>
             </td>

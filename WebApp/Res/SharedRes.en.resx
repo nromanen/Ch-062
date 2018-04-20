@@ -124,7 +124,10 @@
     <value>Add</value>
   </data>
   <data name="AddTask" xml:space="preserve">
-    <value>Add Task</value>
+    <value>Add task</value>
+  </data>
+  <data name="Addcourse" xml:space="preserve">
+    <value>Add course</value>
   </data>
   <data name="AdminPanel" xml:space="preserve">
     <value>AdminPanel</value>
@@ -136,19 +139,31 @@
     <value>Changing password for</value>
   </data>
   <data name="ChangePassword" xml:space="preserve">
-    <value>Change Password</value>
+    <value>Change password</value>
   </data>
   <data name="ConfirmNewPassword" xml:space="preserve">
-    <value>Confirm New Password</value>
+    <value>Confirm new password</value>
   </data>
   <data name="CourseName" xml:space="preserve">
-    <value>Course Name</value>
+    <value>Course name</value>
   </data>
   <data name="CreateDate" xml:space="preserve">
-    <value>Create Date</value>
+    <value>Creation date</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="Changecourseowner" xml:space="preserve">
+    <value>Change course owner</value>
+  </data>
+  <data name="CourseDescription" xml:space="preserve">
+    <value>Course description</value>
+  </data>
+  <data name="Courses" xml:space="preserve">
+    <value>Courses</value>
+  </data>
+  <data name="Editcourse" xml:space="preserve">
+    <value>Edit</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
@@ -159,23 +174,26 @@
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="Mycourses" xml:space="preserve">
+    <value>My courses</value>
+  </data>
   <data name="MyProfile" xml:space="preserve">
-    <value>My Profile</value>
+    <value>My profile</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
-    <value>New Password</value>
+    <value>New password</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
   <data name="OldPassword" xml:space="preserve">
-    <value>Old Password</value>
+    <value>Old password</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
   <data name="PasswordConfirm" xml:space="preserve">
-    <value>PasswordConfirm</value>
+    <value>Password confirm</value>
   </data>
   <data name="Recover" xml:space="preserve">
     <value>Recover</value>
@@ -193,27 +211,54 @@
     <value>Save</value>
   </data>
   <data name="SignIn" xml:space="preserve">
-    <value>SignIn</value>
+    <value>Sign In</value>
   </data>
   <data name="SignOut" xml:space="preserve">
-    <value>SignOut</value>
+    <value>Sign Out</value>
   </data>
   <data name="SignUp" xml:space="preserve">
-    <value>SignUp</value>
+    <value>Sign Up</value>
   </data>
   <data name="Task" xml:space="preserve">
     <value>Task</value>
   </data>
   <data name="TaskName" xml:space="preserve">
-    <value>Task Name</value>
+    <value>Task name</value>
   </data>
   <data name="Tasks" xml:space="preserve">
     <value>Tasks</value>
   </data>
   <data name="UpdateDate" xml:space="preserve">
-    <value>Update Date</value>
+    <value>Update date</value>
   </data>
-  <data name="WebApp" xml:space="preserve">
-    <value>WebApp</value>
+  <data name="SoftServe" xml:space="preserve">
+    <value>SoftServe</value>
+  </data>
+  <data name="HomePageContent" xml:space="preserve">
+    <value>Here will be a home page content</value>
+  </data>
+  <data name="AddChange" xml:space="preserve">
+    <value>Add/Change</value>
+  </data>
+  <data name="AddNewRole" xml:space="preserve">
+    <value>Add new role in List</value>
+  </data>
+  <data name="ChangeRole" xml:space="preserve">
+    <value>Change role to user</value>
+  </data>
+  <data name="CurRole" xml:space="preserve">
+    <value>Current Role</value>
+  </data>
+  <data name="NewRole" xml:space="preserve">
+    <value>New Role</value>
+  </data>
+  <data name="Rights" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="RolesLst" xml:space="preserve">
+    <value> Roles List</value>
+  </data>
+  <data name="UsersLst" xml:space="preserve">
+    <value>Back to List of users</value>
   </data>
 </root>
