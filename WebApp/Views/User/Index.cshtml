@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Model.DTO.UserDTO>
+﻿@model Model.DTO.UserDTO
 
 @using Microsoft.AspNetCore.Mvc.Localization
 
@@ -7,16 +7,12 @@
 @inject IHtmlLocalizer<SharedRes> SharedLocalizer
 <table class="table">
     <tr><th>@SharedLocalizer["Email"]</th><th>@SharedLocalizer["Action"]</th><th></th></tr>
-
-    @foreach (var user in Model)
-    {
         <tr>
-            <td>@user.Email</td>
+            <td>@Model.Email </td>
             <td>
                 <form method="post">
-                    <a class="btn btn-sm btn-primary" asp-action="ChangePassword" asp-route-id="@user.Id">@SharedLocalizer["ChangePassword"]</a>
+                    <a class="btn btn-sm btn-primary" asp-action="ChangePassword" asp-route-id="@Model.Id">@SharedLocalizer["ChangePassword"]</a>
                 </form>
             </td>
         </tr>
-    }
 </table>
