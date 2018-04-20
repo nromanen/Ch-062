@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using AutoMapper;
 using DAL.Interface;
@@ -20,20 +21,18 @@ namespace WebApp.Controllers
     {
 
         private readonly UserManager<User> userManager;
-        private readonly IUnitOfWork uUnitOfWork;
 
         private readonly IMapper mapper;
 
-        public UserController(UserManager<User> uManager, IMapper ucMapper, IUnitOfWork unitOfWork)
+        public UserController(UserManager<User> uManager, IMapper ucMapper)
         {
             userManager = uManager;
-            uUnitOfWork = unitOfWork;
             mapper = ucMapper;
         }
 
-        public IActionResult Index()
+        public   IActionResult Index()
         {
-            var getuser = mapper.Map<List<UserDTO>>(uUnitOfWork.UserRepo.Get().Where(x => x.Email == User.Identity.Name));
+              var getuser = mapper.Map<UserDTO>(userManager.GetUserAsync(HttpContext.User).Result);           
             return View(getuser);
 
         }
@@ -57,8 +56,8 @@ namespace WebApp.Controllers
             {
 
                 User user = await userManager.FindByIdAsync(model.Id);
-                if (user != null)
-                {
+               // if (user != null)
+               // {
                     IdentityResult result =
                         await userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
                     if (result.Succeeded)
@@ -73,11 +72,11 @@ namespace WebApp.Controllers
                         }
                     }
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "User not found");
-                }
-            }
+               // else
+               // {
+                 //   ModelState.AddModelError(string.Empty, "User not found");
+               // }
+           // }
             return View(model);
         }
 
