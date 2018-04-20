@@ -61,3 +61,6 @@ input[type="checkbox"].input-validation-error {
         display: none;
     }
 }
+.bluehighl {
+    color: #0800ff;
+}
