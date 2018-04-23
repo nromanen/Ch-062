@@ -14,7 +14,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Model;
 using Model.DB;
-using WebApp.IoC;
+using BAL.IoC;
+using BAL.Interfaces;
+using BAL.Managers;
 
 namespace WebApp
 {
@@ -70,6 +72,9 @@ namespace WebApp
             //add dependecy injection for dal repositories
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+
+            //Adding DI for managers
+            services.AddScoped<ICourseManager, CourseManager>();
 
             services.Configure<IdentityOptions>(options =>
             {

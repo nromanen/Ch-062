@@ -3,7 +3,7 @@ using Model.DB;
 using Model.DTO;
 using System.Collections.Generic;
 
-namespace WebApp.IoC
+namespace BAL.IoC
 {
     public class AutoMapperProfileConfiguration : Profile
    {
@@ -29,6 +29,7 @@ namespace WebApp.IoC
                    .ForMember(dest => dest.UpdateDateTime, options => options.MapFrom(src => src.UpdateDateTime));
                    cfg.CreateMap<List<Exercise>, List<ExerciseDTO>>();
 
+                   //Course => CourseDTO
                    cfg.CreateMap<Course, CourseDTO>().ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))
                    .ForMember(dest => dest.Name, options => options.MapFrom(src => src.Name))
                    .ForMember(dest => dest.Description, options => options.MapFrom(src => src.Description))
@@ -44,15 +45,5 @@ namespace WebApp.IoC
            {
 
            }
-           //public AutoMapperProfileConfiguration()
-           //    : this("MyProfile")
-           //{
-           //    //mapping db into dto
-           //    Mapper.Initialize(cfg =>
-           //    {
-           //        cfg.CreateMap<User, UserDTO>();
-           //        cfg.CreateMap<List<User>, List<UserDTO>>();
-           //    });
-           //}*/
     }
 }

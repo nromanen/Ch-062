@@ -1,55 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Model.DTO;
 using Model.DB;
-using DAL.Interface;
-using AutoMapper;
-using DAL;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using WebApp.ViewModels;
 using WebApp.ViewModels.CoursesViewModels;
+using BAL.Interfaces;
+using AutoMapper;
 
 namespace WebApp.Controllers
 {
     public class CourseManagementController : Controller
     {
-
-        private readonly IUnitOfWork uUnitOfWork;
-        private readonly IMapper mMapper;
+        private readonly ICourseManager courseManager;
         private readonly UserManager<User> userManager;
+        private readonly IMapper mapper;
 
-
-        public CourseManagementController(IUnitOfWork unitOfWork, IMapper mapper, UserManager<User> userManager)
+        public CourseManagementController(ICourseManager courseManager, UserManager<User> userManager, IMapper mapper)
         {
-            uUnitOfWork = unitOfWork;
-            mMapper = mapper;
+            this.courseManager = courseManager;
             this.userManager = userManager;
+            this.mapper = mapper;
         }
 
         public IActionResult Index()
         {
-            var coursesList = mMapper.Map<List<CourseDTO>>(uUnitOfWork.CourseRepo.GetAll());
+            var coursesList = courseManager.GetAll();
             return View(coursesList);
         }
 
+        [Authorize(Roles = "Teacher")]
         public IActionResult Create() => View();
 
         [HttpPost]
+        [Authorize(Roles = "Teacher")]
         public IActionResult Create(CourseDTO model)
         {
-            var user = uUnitOfWork.UserRepo.GetAll().ToList().Find(c => c.Email == User.Identity.Name);
+            //TODO: Ask Roman
+            var user = userManager.GetUserAsync(HttpContext.User);
+
             model.CreationDate = DateTime.Now;
             model.IsActive = true;
-            model.UserId = user.Id;
+            model.UserId = user.Result.Id;
             if (ModelState.IsValid)
             {
-                var course = new Course
+                var course = new CourseDTO
                 {
                     Name = model.Name,
                     Description = model.Description,
@@ -57,28 +54,23 @@ namespace WebApp.Controllers
                     CreationDate = model.CreationDate,
                     UserId = model.UserId
                 };
-
-                uUnitOfWork.CourseRepo.Insert(course);
-                uUnitOfWork.Save();
+                courseManager.Insert(course);
             }
-
             return RedirectToAction("Index", "CourseManagement");
         }
 
         public IActionResult ViewCourses()
         {
-            var currentTeacherId = uUnitOfWork.UserRepo.GetAll().First(x => x.UserName == User.Identity.Name).Id;
-            var coursesList =
-                mMapper.Map<List<CourseDTO>>(uUnitOfWork.CourseRepo.GetAll().Where(x => x.UserId == currentTeacherId));
-            return View(coursesList);
+            var currentTeacher = userManager.GetUserAsync(HttpContext.User);
+            var courseList = courseManager.Get(course => course.UserId == currentTeacher.Result.Id);
+            return View(courseList);
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var editingCourse = uUnitOfWork.CourseRepo.GetById(id);
-            var course = mMapper.Map<CourseDTO>(editingCourse);
-            return View(course);
+            var editingCourse = courseManager.GetById(id);
+            return View(editingCourse);
         }
 
         [HttpPost]
@@ -86,36 +78,31 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var courseEdit = uUnitOfWork.CourseRepo.GetById(course.Id);
+                var courseEdit = courseManager.GetById(course.Id);
                 if (courseEdit != null)
                 {
                     courseEdit.Name = course.Name;
                     courseEdit.Description = course.Description;
-                    uUnitOfWork.CourseRepo.Update(courseEdit);
-                    uUnitOfWork.Save();
+                    courseManager.Update(courseEdit);
                 }
             }
-
             return RedirectToAction("Index", "CourseManagement");
         }
 
         [HttpGet]
         [Authorize(Roles = "Teacher, Administrator")]
-        public IActionResult Suspend(int id)
+        public IActionResult Toggle(int id)
         {
-            var course = uUnitOfWork.CourseRepo.GetById(id);
+            var course = courseManager.GetById(id);
             if (course != null)
             {
                 course.IsActive = !course.IsActive;
-                uUnitOfWork.CourseRepo.Update(course);
-                uUnitOfWork.Save();
+                courseManager.Update(course);
             }
-
             if (User.IsInRole("Teacher"))
             {
                 return RedirectToAction("ViewCourses", "CourseManagement");
             }
-
             return RedirectToAction("Index", "CourseManagement");
         }
 
@@ -123,8 +110,8 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Administrator")]
         public IActionResult ChangeOwner(int id)
         {
-            var teacherList = mMapper.Map<List<UserDTO>>(userManager.GetUsersInRoleAsync("Teacher").Result);
-            var course = mMapper.Map<CourseDTO>(uUnitOfWork.CourseRepo.GetById(id));
+            var teacherList = mapper.Map<List<UserDTO>>(userManager.GetUsersInRoleAsync("Teacher").Result);
+            var course = courseManager.GetById(id);
             return View(new SuspendCourseViewModel()
             {
                 TeacherList = teacherList,
@@ -134,29 +121,31 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public IActionResult ChangeOwner(SuspendCourseViewModel model)
         {
-            var course = uUnitOfWork.CourseRepo.GetById(model.CourseId);
-            course.UserId = model.ResultTeacherId;
-            uUnitOfWork.CourseRepo.Update(course);
-            uUnitOfWork.Save();
+            var course = courseManager.GetById(model.CourseId);
+            if (course != null)
+            {
+                course.UserId = model.ResultTeacherId;
+                courseManager.Update(course);
+            }
             return RedirectToAction("Index", "CourseManagement");
         }
 
-        [HttpGet]
-        public IActionResult ShowExercise(int id)
-        {       
-            var currentCourseId = uUnitOfWork.CourseRepo.GetById(id);
-            var currentCourseName = currentCourseId.Name;
-            var task = uUnitOfWork.ExerciseRepo.GetById(id);
-                         
-                    var coursesList =
-                        mMapper.Map<List<ExerciseDTO>>(uUnitOfWork.ExerciseRepo.GetAll()
-                            .Where(x => x.Course == currentCourseName && !x.IsDeleted));               
-            
+        //[HttpGet]
+        //public IActionResult ShowExercise(int id)
+        //{
+        //    Need Exercisemanager to rewrite code
+        //    var currentCourseId = uUnitOfWork.CourseRepo.GetById(id);
+        //    var currentCourseName = currentCourseId.Name;
+        //    var task = uUnitOfWork.ExerciseRepo.GetById(id);
 
-            return View(coursesList);
-        }
+        //    var coursesList =
+        //        mMapper.Map<List<ExerciseDTO>>(uUnitOfWork.ExerciseRepo.GetAll()
+        //            .Where(x => x.Course == currentCourseName && !x.IsDeleted));
+        //    return View(coursesList);
+        //}
 
     }
 }
