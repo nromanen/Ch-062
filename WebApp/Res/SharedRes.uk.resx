@@ -261,4 +261,10 @@
   <data name="UsersLst" xml:space="preserve">
     <value>Назад до юзерів</value>
   </data>
+  <data name="ChangeUsername" xml:space="preserve">
+    <value>Змінити ім'я користувача</value>
+  </data>
+  <data name="ChangeEmail" xml:space="preserve">
+    <value>Змінити електронну пошту</value>
+  </data>
 </root>

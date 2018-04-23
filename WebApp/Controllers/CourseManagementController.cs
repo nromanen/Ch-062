@@ -139,8 +139,6 @@ namespace WebApp.Controllers
         //    Need Exercisemanager to rewrite code
         //    var currentCourseId = uUnitOfWork.CourseRepo.GetById(id);
         //    var currentCourseName = currentCourseId.Name;
-        //    var task = uUnitOfWork.ExerciseRepo.GetById(id);
-
         //    var coursesList =
         //        mMapper.Map<List<ExerciseDTO>>(uUnitOfWork.ExerciseRepo.GetAll()
         //            .Where(x => x.Course == currentCourseName && !x.IsDeleted));

@@ -261,4 +261,10 @@
   <data name="UsersLst" xml:space="preserve">
     <value>Back to List of users</value>
   </data>
+  <data name="ChangeUsername" xml:space="preserve">
+    <value>Change Username</value>
+  </data>
+  <data name="ChangeEmail" xml:space="preserve">
+    <value>Change Email</value>
+  </data>
 </root>

@@ -18,7 +18,7 @@ namespace BAL.Managers
         {
             return mapper.Map<List<CourseDTO>>(unitOfWork.CourseRepo.GetAll());
         }
-
+       
         public CourseDTO GetById(int id)
         {
             return mapper.Map<CourseDTO>(unitOfWork.CourseRepo.GetById(id));
