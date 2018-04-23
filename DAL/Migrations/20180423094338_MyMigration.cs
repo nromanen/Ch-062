@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DAL.Migrations
 {
-    public partial class newMigration : Migration
+    public partial class MyMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,10 +55,12 @@ namespace DAL.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Course = table.Column<string>(nullable: true),
+                    CourseId = table.Column<int>(nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
+                    TaskBaseCodeField = table.Column<string>(nullable: true),
                     TaskName = table.Column<string>(nullable: true),
-                    TaskString = table.Column<string>(nullable: true),
+                    TaskTextField = table.Column<string>(nullable: true),
                     TeacherId = table.Column<string>(nullable: true),
                     UpdateDateTime = table.Column<DateTime>(nullable: false)
                 },
@@ -182,7 +184,7 @@ namespace DAL.Migrations
                     CreationDate = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

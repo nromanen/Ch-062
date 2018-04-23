@@ -53,6 +53,30 @@ namespace DAL.Seed
                 var t = userManager.FindByNameAsync(userStudent);
                 userManager.AddToRoleAsync(t.Result, "Student").Wait();
             }
+            if (!context.Courses.Any(r => r.Name == ".Net"))
+            {
+                
+            }
+            if (!context.Courses.Any(r => r.Name == "Java"))
+            {
+
+            }
+            if (!context.Courses.Any(r => r.Name == "JavaScript"))
+            {
+
+            }
+            if (!context.Courses.Any(r => r.Name == ".Net Task 1"))
+            {
+
+            }
+            if (!context.Courses.Any(r => r.Name == "Java Task 1"))
+            {
+
+            }
+            if (!context.Courses.Any(r => r.Name == "JavaScript Task 1"))
+            {
+
+            }
         }
     }
 }

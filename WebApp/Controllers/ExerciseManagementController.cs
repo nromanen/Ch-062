@@ -20,6 +20,7 @@ namespace WebApp.Controllers
     {
         private IUnitOfWork uUnitOfWork;
         private IMapper mMapper;
+        private UserManager<User> userManager;
 
         public ExerciseManagementController(IUnitOfWork unitOfWork, IMapper mapper)
         {
@@ -27,7 +28,7 @@ namespace WebApp.Controllers
             mMapper = mapper;
         }
 
-        ///Index///Index///Index///Index///Index///Index///Index///Index///Index///Index///
+        
         public IActionResult Index()
         {
             List<ExerciseDTO> t = new List<ExerciseDTO>();
@@ -44,29 +45,24 @@ namespace WebApp.Controllers
             return View(t);
         }
 
-        ///Create///Create///Create///Create///Create///Create///Create///Create///Create///Create///
+        
         [Authorize(Roles = "Teacher")]
         public IActionResult Create()
         {
-            var c = uUnitOfWork.CourseRepo.GetAll().ToList().FindAll(x => x.IsActive);
-            List<string> CourseList = new List<string>();
-            CourseList.Add(null);
-            foreach (var elem in c)
-            {
-                CourseList.Add(elem.Name);
-            }
-            ViewBag.Courses = CourseList;
-            return View();
+            var t = mMapper.Map<List<CourseDTO>>(uUnitOfWork.CourseRepo.Get(x => x.IsActive).ToList());
+            return View(t);
         }
 
         [HttpPost]
         [Authorize(Roles = "Teacher")]
         public IActionResult Create(CreateExerciseViewModel model)
         {
-            var user = uUnitOfWork.UserRepo.GetAll().ToList().Find(c => c.Email == User.Identity.Name);
+             var user = uUnitOfWork.UserRepo.Get(c => c.Email == User.Identity.Name).First();
+       //     var user = userManager.GetUserId(HttpContext.User);
             if (ModelState.IsValid)
             {
-                Exercise task = new Exercise { Course = model.Course, TaskName = model.TaskName, TaskString = model.TaskString, TeacherId = user.Id, CreateDateTime = DateTime.Now, UpdateDateTime = DateTime.Now };
+                var course  = uUnitOfWork.CourseRepo.GetById(model.CourseId); 
+                Exercise task = new Exercise { CourseId = model.CourseId, Course = course.Name, TaskName = model.TaskName, TaskTextField = model.TaskTextField, TeacherId = user.Id, CreateDateTime = DateTime.Now, UpdateDateTime = DateTime.Now };
 
                 try
                 {
@@ -81,10 +77,9 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "ExerciseManagement");
         }
         
-        ///TaskView///TaskView///TaskView///TaskView///TaskView///TaskView///TaskView///TaskView///
+        
         public IActionResult TaskView(int id)
         {
-            //  Exercise task =  uUnitOfWork.ExerciseRepo.GetById(id);
             var t = mMapper.Map<ExerciseDTO>(uUnitOfWork.ExerciseRepo.GetById(id));
             if (t == null)
             {
@@ -93,26 +88,25 @@ namespace WebApp.Controllers
             return View(t);
         }
 
-        ///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///UPDATE///
+        
         [Authorize(Roles = "Teacher")]
         public IActionResult Update(int id)
         {
-            var c = uUnitOfWork.CourseRepo.GetAll().ToList().FindAll(x => x.IsActive);
-            List<string> CourseList = new List<string>();
-            CourseList.Add(null);
-            foreach (var elem in c)
-            {
-                CourseList.Add(elem.Name);
-            }
-            ViewBag.Courses = CourseList;
 
 
+            var courseList = mMapper.Map<List<CourseDTO>>(uUnitOfWork.CourseRepo.Get(g => g.IsActive).ToList());
             var t = mMapper.Map<ExerciseDTO>(uUnitOfWork.ExerciseRepo.GetById(id));
             if (t == null)
             {
                 return NotFound();
             }
-            return View(t);
+            return View(new UpdateExerciseViewModel()
+            {
+                CourseList = courseList,
+                TaskName = t.TaskName,
+                TaskTextField = t.TaskTextField,
+            });
+  
         }
 
         [HttpPost]
@@ -124,15 +118,17 @@ namespace WebApp.Controllers
                 Exercise task = uUnitOfWork.ExerciseRepo.GetById(model.Id);
                 if (task != null)
                 {
+                    var course = uUnitOfWork.CourseRepo.GetById(model.CourseId);
+
                     task.TaskName = model.TaskName;
-                    task.TaskString = model.TaskString;
-                    task.Course = model.Course;
+                    task.TaskTextField = model.TaskTextField;
+                    task.CourseId = model.CourseId;
+                    task.Course = course.Name;
                     task.UpdateDateTime = DateTime.Now;
                     try
                     {
                         uUnitOfWork.ExerciseRepo.Update(task);
-                        uUnitOfWork.Save();
-                        // return RedirectToAction("Index", "TestManagement");
+                        uUnitOfWork.Save();                        
                     }
                     catch (Exception ex)
                     {
@@ -141,26 +137,16 @@ namespace WebApp.Controllers
 
                 }
             }
-            //return View(mMapper.Map<ExerciseDTO>(uUnitOfWork.ExerciseRepo.GetById(model.Id));
             return RedirectToAction("Index", "ExerciseManagement");
         }
 
 
-        ///Delete///Delete///Delete///Delete///Delete///Delete///Delete///Delete///Delete///
+        
         [HttpPost]
         [Authorize(Roles = "Teacher")]
         public IActionResult Delete(int id)
         {
-            //var task = uUnitOfWork.ExerciseRepo.GetById(id);
-            //try
-            //{
-            //    uUnitOfWork.ExerciseRepo.Delete(task);
-            //    uUnitOfWork.Save();                       
-            //}
-            //catch (Exception ex)
-            //{
-            //    ModelState.AddModelError(string.Empty, ex.Message);
-            //}
+           
             var task = uUnitOfWork.ExerciseRepo.GetById(id);
             if (task != null)
             {
@@ -180,21 +166,12 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "ExerciseManagement");
         }
 
-        ///Recover///Recover///Recover///Recover///Recover///Recover///Recover///Recover///
+        
         [HttpPost]
         [Authorize(Roles = "Teacher")]
         public IActionResult Recover(int id)
         {
-            //var task = uUnitOfWork.ExerciseRepo.GetById(id);
-            //try
-            //{
-            //    uUnitOfWork.ExerciseRepo.Delete(task);
-            //    uUnitOfWork.Save();                       
-            //}
-            //catch (Exception ex)
-            //{
-            //    ModelState.AddModelError(string.Empty, ex.Message);
-            //}
+           
             var task = uUnitOfWork.ExerciseRepo.GetById(id);
             if (task != null)
             {

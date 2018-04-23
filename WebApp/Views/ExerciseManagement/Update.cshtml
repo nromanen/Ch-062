@@ -2,7 +2,7 @@
 @inject IViewLocalizer Localizer
 @inject IHtmlLocalizer<SharedRes> SharedLocalizer
 
-@model Model.DTO.ExerciseDTO
+@model WebApp.ViewModels.UpdateExerciseViewModel;
 @{
     ViewBag.Title = "Task View";
 }
@@ -12,8 +12,8 @@
         <input type="hidden" asp-for="Id" />
     </div>
     <div class="form-group">
-        <label asp-for="Course" class="control-label">@SharedLocalizer["CourseName"] *</label>
-        <select asp-for="Course" asp-items="@(new SelectList(@ViewBag.Courses))" class="form-control" required></select>
+        <label asp-for="CourseId" class="control-label">@SharedLocalizer["CourseName"] *</label>
+        <select asp-for="CourseId" asp-items="@(new SelectList(Model.CourseList, "Id" , "Name"))" class="form-control" required></select>
         <label asp-for="TaskName" class="control-label">@SharedLocalizer["TaskName"] *</label>
         <input type="text" asp-for="TaskName" class="form-control" required />
     </div>

@@ -24,7 +24,7 @@
         foreach (var course in Model)
         {
             <tr>
-                <td> <a style="color: #0800ff;" asp-action="ShowExercise" asp-route-id="@course.Id">@course.Name</a></td>
+                <td> <a class="bluehighl" asp-action="ShowExercise" asp-route-id="@course.Id">@course.Name</a></td>
                 <td>@course.CreationDate.ToString("dd/MM/yyyy")</td>
                 <td>
                     <form asp-action="Delete" asp-route-id="@course.Id" method="post">
