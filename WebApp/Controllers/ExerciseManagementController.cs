@@ -25,7 +25,7 @@ namespace WebApp.Controllers
         private readonly UserManager<User> userManager;
         private readonly IMapper mapper;
 
-        public ExerciseManagementController(IExerciseManager exerciseManager,ICourseManager courseManager,
+        public ExerciseManagementController(IExerciseManager exerciseManager, ICourseManager courseManager,
                                             UserManager<User> userManager, IMapper mapper)
         {
             this.exerciseManager = exerciseManager;
@@ -41,7 +41,7 @@ namespace WebApp.Controllers
             return View(exerciseList);
         }
 
-        
+
         [Authorize(Roles = "Teacher")]
         public IActionResult Create()
         {
@@ -53,20 +53,27 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Teacher")]
         public IActionResult Create(CreateExerciseViewModel model)
         {
-            var currentTeacher = userManager.GetUserAsync(HttpContext.User);
+            var currentTeacher = userManager.GetUserAsync(HttpContext.User).Result.Id;
 
             if (ModelState.IsValid)
             {
-                var course  = courseManager.GetById(model.CourseId); 
-                ExerciseDTO task = new ExerciseDTO { CourseId = model.CourseId, Course = course.Name,
-                                               TaskName = model.TaskName, TaskTextField = model.TaskTextField, 
-                                               TeacherId = currentTeacher.Result.Id, CreateDateTime = DateTime.Now,
-                                               UpdateDateTime = DateTime.Now };
-            }  
+                var course = courseManager.GetById(model.CourseId);
+                ExerciseDTO task = new ExerciseDTO
+                {
+                    CourseId = model.CourseId,
+                    Course = course.Name,
+                    TaskName = model.TaskName,
+                    TaskTextField = model.TaskTextField,
+                    TeacherId = currentTeacher,
+                    CreateDateTime = DateTime.Now,
+                    UpdateDateTime = DateTime.Now
+                };
+                exerciseManager.Insert(task);
+            }
             return RedirectToAction("Index", "ExerciseManagement");
         }
-        
-        
+
+
         public IActionResult TaskView(int id)
         {
             var task = mapper.Map<ExerciseDTO>(exerciseManager.GetById(id));
@@ -77,7 +84,7 @@ namespace WebApp.Controllers
             return View(task);
         }
 
-        
+
         [Authorize(Roles = "Teacher")]
         public IActionResult Update(int id)
         {
@@ -94,7 +101,7 @@ namespace WebApp.Controllers
                 TaskName = task.TaskName,
                 TaskTextField = task.TaskTextField,
             });
-  
+
         }
 
         [HttpPost]
@@ -114,12 +121,12 @@ namespace WebApp.Controllers
                     UpdateDateTime = DateTime.Now
                 };
                 exerciseManager.Update(task);
-            }                            
+            }
             return RedirectToAction("Index", "ExerciseManagement");
         }
 
 
-        
+
         [HttpPost]
         [Authorize(Roles = "Teacher")]
         public IActionResult DeleteOrRecover(int id)
