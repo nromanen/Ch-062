@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace BAL.IoC
 {
     public class AutoMapperProfileConfiguration : Profile
-   {/*
+   {
          public AutoMapperProfileConfiguration()
                : this("MyProfile")
            {
