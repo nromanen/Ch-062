@@ -3,6 +3,7 @@ using DAL.Repositories;
 using Model.DB;
 using DAL.Interface;
 using Microsoft.AspNetCore.Identity;
+using Model.DB.Code;
 
 namespace DAL
 {
@@ -14,6 +15,9 @@ namespace DAL
         private IBaseRepository<User> userRepo;
         private IBaseRepository<Exercise> exerciseRepo;
         private IBaseRepository<Course> courseRepo;
+        private IBaseRepository<UserCode> codeRepo;
+        private IBaseRepository<CodeResult> codeResultsRepo;
+        private IBaseRepository<CodeError> codeErrorsRepo;
 
         public UnitOfWork(MainDbContext context)
         {
@@ -53,6 +57,33 @@ namespace DAL
             {
                 if (courseRepo == null) { courseRepo = new BaseRepository<Course>(context); }
                 return courseRepo;
+            }
+        }
+
+        public IBaseRepository<UserCode> CodeRepo
+        {
+            get
+            {
+                if (codeRepo == null) { codeRepo = new BaseRepository<UserCode>(context); }
+                return codeRepo;
+            }
+        }
+
+        public IBaseRepository<CodeResult> CodeResultsRepo
+        {
+            get
+            {
+                if (codeResultsRepo == null) { codeResultsRepo = new BaseRepository<CodeResult>(context); }
+                return codeResultsRepo;
+            }
+        }
+
+        public IBaseRepository<CodeError> CodeErrorsRepo
+        {
+            get
+            {
+                if (codeErrorsRepo == null) { codeErrorsRepo = new BaseRepository<CodeError>(context); }
+                return codeErrorsRepo;
             }
         }
 
