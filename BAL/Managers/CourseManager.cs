@@ -11,7 +11,7 @@ using AutoMapper;
 namespace BAL.Managers
 {
     public class CourseManager : BaseManager, ICourseManager
-    {
+    {           
         public CourseManager(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper) { }
 
         public IEnumerable<CourseDTO> GetAll()

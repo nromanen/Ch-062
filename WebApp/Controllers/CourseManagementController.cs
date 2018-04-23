@@ -17,12 +17,14 @@ namespace WebApp.Controllers
         private readonly ICourseManager courseManager;
         private readonly UserManager<User> userManager;
         private readonly IMapper mapper;
+        private readonly IExerciseManager exerciseManager;
 
-        public CourseManagementController(ICourseManager courseManager, UserManager<User> userManager, IMapper mapper)
+        public CourseManagementController(ICourseManager courseManager, UserManager<User> userManager, IMapper mapper, IExerciseManager exerciseManager)
         {
             this.courseManager = courseManager;
             this.userManager = userManager;
             this.mapper = mapper;
+            this.exerciseManager = exerciseManager;
         }
 
         public IActionResult Index()
@@ -78,13 +80,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var courseEdit = courseManager.GetById(course.Id);
-                if (courseEdit != null)
-                {
-                    courseEdit.Name = course.Name;
-                    courseEdit.Description = course.Description;
-                    courseManager.Update(courseEdit);
-                }
+                courseManager.Update(course);
             }
             return RedirectToAction("Index", "CourseManagement");
         }
@@ -133,17 +129,11 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "CourseManagement");
         }
 
-        //[HttpGet]
-        //public IActionResult ShowExercise(int id)
-        //{
-        //    Need Exercisemanager to rewrite code
-        //    var currentCourseId = uUnitOfWork.CourseRepo.GetById(id);
-        //    var currentCourseName = currentCourseId.Name;
-        //    var coursesList =
-        //        mMapper.Map<List<ExerciseDTO>>(uUnitOfWork.ExerciseRepo.GetAll()
-        //            .Where(x => x.Course == currentCourseName && !x.IsDeleted));
-        //    return View(coursesList);
-        //}
-
+        [HttpGet]
+        public IActionResult ShowExercise(int id)
+        {
+            var taskList = exerciseManager.Get(x => x.CourseId == id);
+            return View(taskList);
+        }
     }
 }

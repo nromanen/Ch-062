@@ -2,22 +2,22 @@
 @inject IViewLocalizer Localizer
 @inject IHtmlLocalizer<SharedRes> SharedLocalizer
 
-@model Model.DTO.ExerciseDTO
+@model IEnumerable<Model.DTO.CourseDTO>
 @{
     ViewBag.Title = "Add Task";
 }
-<form asp-action="Create" asp-controller="ExerciseManagement">
+<form asp-action="Create" asp-controller="ExerciseManagement" method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
 
-        <label asp-for="Course" class="control-label">@SharedLocalizer["CourseName"] *</label>
-        <select asp-for="Course" asp-items="@(new SelectList(@ViewBag.Courses))" class="form-control" required></select>
-        <label asp-for="TaskName" class="control-label">@SharedLocalizer["TaskName"] *</label>
-        <input type="text" asp-for="TaskName" class="form-control" required />
+        <label name="CourseId" class="control-label">@SharedLocalizer["CourseName"] *</label>
+        <select name="CourseId", asp-items="@(new SelectList(Model,"Id","Name"))" class="form-control" required></select>
+        <label name="TaskName" class="control-label">@SharedLocalizer["TaskName"] *</label>
+        <input type="text" name="TaskName" class="form-control" required />
     </div>
     <div class="form-group">
-        <label asp-for="TaskName" class="control-label">@SharedLocalizer["Task"]:</label>
-        <input type="text" asp-for="TaskString" class="form-control" />
+        <label name="TaskTextField" class="control-label">@SharedLocalizer["Task"]:</label>
+        <input type="text" name="TaskTextField" class="form-control" />
     </div>
     <div class="form-group">
         <input type="submit" value="@SharedLocalizer["Add"]" class="btn btn-default" />

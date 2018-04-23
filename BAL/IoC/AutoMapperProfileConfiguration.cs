@@ -20,8 +20,10 @@ namespace BAL.IoC
 
                    cfg.CreateMap<Exercise, ExerciseDTO>().ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))
                    .ForMember(dest => dest.TaskName, options => options.MapFrom(src => src.TaskName))
-                   .ForMember(dest => dest.TaskString, options => options.MapFrom(src => src.TaskString))
+                   .ForMember(dest => dest.TaskTextField, options => options.MapFrom(src => src.TaskTextField))
+                   .ForMember(dest => dest.TaskBaseCodeField, options => options.MapFrom(src => src.TaskBaseCodeField))
                    .ForMember(dest => dest.TeacherId, options => options.MapFrom(src => src.TeacherId))
+                   .ForMember(dest => dest.CourseId, options => options.MapFrom(src => src.CourseId))
                    .ForMember(dest => dest.Course, options => options.MapFrom(src => src.Course))
                    .ForMember(dest => dest.IsDeleted, options => options.MapFrom(src => src.IsDeleted))
                    .ForMember(dest => dest.CreateDateTime, options => options.MapFrom(src => src.CreateDateTime))
@@ -44,5 +46,6 @@ namespace BAL.IoC
            {
 
            }
+        //*/
     }
 }
