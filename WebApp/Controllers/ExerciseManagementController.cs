@@ -62,14 +62,6 @@ namespace WebApp.Controllers
                                                TaskName = model.TaskName, TaskTextField = model.TaskTextField, 
                                                TeacherId = currentTeacher.Result.Id, CreateDateTime = DateTime.Now,
                                                UpdateDateTime = DateTime.Now };
-                try
-                {
-                    exerciseManager.Insert(task);
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, ex.Message);
-                }
             }  
             return RedirectToAction("Index", "ExerciseManagement");
         }
