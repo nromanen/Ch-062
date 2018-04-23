@@ -16,8 +16,9 @@ namespace WebApp.Controllers
     public class AccountController : Controller
     {
 
-        private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly IUnitOfWork unitOfWork;
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
