@@ -78,13 +78,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var courseEdit = courseManager.GetById(course.Id);
-                if (courseEdit != null)
-                {
-                    courseEdit.Name = course.Name;
-                    courseEdit.Description = course.Description;
-                    courseManager.Update(courseEdit);
-                }
+                courseManager.Update(course);
             }
             return RedirectToAction("Index", "CourseManagement");
         }
@@ -132,20 +126,5 @@ namespace WebApp.Controllers
             }
             return RedirectToAction("Index", "CourseManagement");
         }
-
-        //[HttpGet]
-        //public IActionResult ShowExercise(int id)
-        //{
-        //    Need Exercisemanager to rewrite code
-        //    var currentCourseId = uUnitOfWork.CourseRepo.GetById(id);
-        //    var currentCourseName = currentCourseId.Name;
-        //    var task = uUnitOfWork.ExerciseRepo.GetById(id);
-
-        //    var coursesList =
-        //        mMapper.Map<List<ExerciseDTO>>(uUnitOfWork.ExerciseRepo.GetAll()
-        //            .Where(x => x.Course == currentCourseName && !x.IsDeleted));
-        //    return View(coursesList);
-        //}
-
     }
 }

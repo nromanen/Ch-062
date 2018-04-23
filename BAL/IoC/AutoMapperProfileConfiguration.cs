@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace BAL.IoC
 {
     public class AutoMapperProfileConfiguration : Profile
-   {
+   {/*
          public AutoMapperProfileConfiguration()
                : this("MyProfile")
            {
@@ -21,6 +21,7 @@ namespace BAL.IoC
                    cfg.CreateMap<Exercise, ExerciseDTO>().ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))
                    .ForMember(dest => dest.TaskName, options => options.MapFrom(src => src.TaskName))
                    .ForMember(dest => dest.TaskTextField, options => options.MapFrom(src => src.TaskTextField))
+                   .ForMember(dest => dest.TaskBaseCodeField, options => options.MapFrom(src => src.TaskBaseCodeField))
                    .ForMember(dest => dest.TeacherId, options => options.MapFrom(src => src.TeacherId))
                    .ForMember(dest => dest.CourseId, options => options.MapFrom(src => src.CourseId))
                    .ForMember(dest => dest.Course, options => options.MapFrom(src => src.Course))
@@ -45,5 +46,6 @@ namespace BAL.IoC
            {
 
            }
+        //*/
     }
 }

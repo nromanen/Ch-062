@@ -35,7 +35,7 @@
                 <td>
                     @if (User.IsInRole("Teacher"))
                     {
-                        <form asp-route-id="@task.Id" asp-action="Delete" method="post">
+                        <form asp-route-id="@task.Id" asp-action="DeleteOrRecover" method="post">
                             <a asp-route-id="@task.Id" asp-action="Update" class="btn btn-sm btn-primary">@SharedLocalizer["Change"]</a>
                             <button type="submit" class="btn btn-sm btn-danger">
                                 @SharedLocalizer["Delete"]
@@ -53,7 +53,7 @@
                 <td>
                     @if (User.IsInRole("Teacher"))
                     {
-                        <form asp-route-id="@task.Id" asp-action="Recover" method="post">
+                        <form asp-route-id="@task.Id" asp-action="DeleteOrRecover" method="post">
                             <button type="submit" class="btn btn-sm btn-warning">
                                 @SharedLocalizer["Recover"] 
                             </button>
