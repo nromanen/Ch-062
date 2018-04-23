@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Model.DB;
 using System;
+using Model.DB.Code;
 
 namespace DAL
 {
@@ -10,6 +11,9 @@ namespace DAL
 
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Course> Courses { get; set; }
+        public DbSet<UserCode> UsersCode { get; set; }
+        public DbSet<CodeResult> CodeResults { get; set; }
+        public DbSet<CodeError> CodeErrors { get; set; }
 
         public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
         {

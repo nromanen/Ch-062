@@ -16,15 +16,13 @@ namespace WebApp.Controllers
     public class AccountController : Controller
     {
 
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly IUnitOfWork unitOfWork;
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IUnitOfWork unitOfWork)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            this.unitOfWork = unitOfWork;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
         }
 
         public IActionResult Index()
@@ -42,12 +40,12 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 User user = new User { Email = model.Email, UserName = model.Email };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await _userManager.AddClaimAsync(user, new Claim("Some Claim", "Claim"));
-                    await _userManager.AddToRoleAsync(user, "student");
-                    await _signInManager.SignInAsync(user, false);
+                    await userManager.AddClaimAsync(user, new Claim("Some Claim", "Claim"));
+                    await userManager.AddToRoleAsync(user, "student");
+                    await signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -73,17 +71,17 @@ namespace WebApp.Controllers
             if (ModelState.IsValid)
             {
                 var result =
-                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                    await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
                     if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
                     {
-                        var user = unitOfWork.UserRepo.GetAll().First(t => t.Email == model.Email);
+                        var user = await userManager.FindByEmailAsync(model.Email);
                         Claim claim = new Claim("Some Claim", "Claim");
-                        var v = await _userManager.GetUsersForClaimAsync(claim);
+                        var v = await userManager.GetUsersForClaimAsync(claim);
                         if (v.ToList().All(c => c.Email != user.Email))
                         {
-                            await _userManager.AddClaimAsync(user, claim);
+                            await userManager.AddClaimAsync(user, claim);
                         }
                         return Redirect(model.ReturnUrl);
                     }
@@ -104,7 +102,7 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
         {
-            await _signInManager.SignOutAsync();
+            await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
     }
