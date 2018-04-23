@@ -130,41 +130,13 @@ namespace WebApp.Controllers
         
         [HttpPost]
         [Authorize(Roles = "Teacher")]
-        public IActionResult Delete(int id)
-        {           
+        public IActionResult DeleteOrRecover(int id)
+        {
             var task = exerciseManager.GetById(id);
             if (task != null)
             {
-                task.IsDeleted  = true;
-                try
-                {
-                    exerciseManager.Update(task);
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, ex.Message);
-                }
-            }
-            return RedirectToAction("Index", "ExerciseManagement");
-        }
-
-        
-        [HttpPost]
-        [Authorize(Roles = "Teacher")]
-        public IActionResult Recover(int id)
-        {         
-            var task = exerciseManager.GetById(id);
-            if (task != null)
-            {
-                task.IsDeleted = false;
-                try
-                {
-                    exerciseManager.Update(task);
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, ex.Message);
-                }
+                task.IsDeleted = !task.IsDeleted;
+                exerciseManager.Update(task);
             }
             return RedirectToAction("Index", "ExerciseManagement");
         }

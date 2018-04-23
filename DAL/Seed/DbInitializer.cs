@@ -90,7 +90,7 @@ namespace DAL.Seed
                     UserId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
                 });
             }
-            if (!context.Courses.Any(r => r.Name == ".Net Task 1"))
+            if (!context.Exercises.Any(r => r.TaskName == ".Net Task 1"))
             {
                 unitOfWork.ExerciseRepo.Insert(new Exercise
                 {
@@ -98,13 +98,13 @@ namespace DAL.Seed
                     TaskTextField = "First Task 4 .Net",
                     Course = ".Net",
                     CourseId = unitOfWork.CourseRepo.Get(c => c.Name == ".Net").First().Id,
-                    IsDeleted = true,
+                    IsDeleted = false,
                     CreateDateTime = System.DateTime.Now,
                     UpdateDateTime = System.DateTime.Now,
                     TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
                 });
             }
-            if (!context.Courses.Any(r => r.Name == "Java Task 1"))
+            if (!context.Exercises.Any(r => r.TaskName == "Java Task 1"))
             {
                 unitOfWork.ExerciseRepo.Insert(new Exercise
                 {
@@ -112,13 +112,13 @@ namespace DAL.Seed
                     TaskTextField = "First Task 4 Java",
                     Course = "Java",
                     CourseId = unitOfWork.CourseRepo.Get(c => c.Name == "Java").First().Id,
-                    IsDeleted = true,
+                    IsDeleted = false,
                     CreateDateTime = System.DateTime.Now,
                     UpdateDateTime = System.DateTime.Now,
                     TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
                 });
             }
-            if (!context.Courses.Any(r => r.Name == "JavaScript Task 1"))
+            if (!context.Exercises.Any(r => r.TaskName == "JavaScript Task 1"))
             {
                 unitOfWork.ExerciseRepo.Insert(new Exercise
                 {
@@ -126,7 +126,7 @@ namespace DAL.Seed
                     TaskTextField = "First Task 4 JavaScript",
                     Course = "JavaScript",
                     CourseId = unitOfWork.CourseRepo.Get(c => c.Name == "JavaScript").First().Id,
-                    IsDeleted = true,
+                    IsDeleted = false,
                     CreateDateTime = System.DateTime.Now,
                     UpdateDateTime = System.DateTime.Now,
                     TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id

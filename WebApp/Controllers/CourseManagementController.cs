@@ -132,20 +132,5 @@ namespace WebApp.Controllers
             }
             return RedirectToAction("Index", "CourseManagement");
         }
-
-        //[HttpGet]
-        //public IActionResult ShowExercise(int id)
-        //{
-        //    Need Exercisemanager to rewrite code
-        //    var currentCourseId = uUnitOfWork.CourseRepo.GetById(id);
-        //    var currentCourseName = currentCourseId.Name;
-        //    var task = uUnitOfWork.ExerciseRepo.GetById(id);
-
-        //    var coursesList =
-        //        mapper.Map<List<ExerciseDTO>>(uUnitOfWork.ExerciseRepo.GetAll()
-        //            .Where(x => x.Course == currentCourseName && !x.IsDeleted));
-        //    return View(coursesList);
-        //}
-
     }
 }
