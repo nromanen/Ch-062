@@ -78,13 +78,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var courseEdit = courseManager.GetById(course.Id);
-                if (courseEdit != null)
-                {
-                    courseEdit.Name = course.Name;
-                    courseEdit.Description = course.Description;
-                    courseManager.Update(courseEdit);
-                }
+                courseManager.Update(course);
             }
             return RedirectToAction("Index", "CourseManagement");
         }

@@ -65,15 +65,7 @@ namespace DAL.Repositories
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            try
-            {
-                dbSet.Attach(entityToUpdate);
-            }
-            catch (InvalidOperationException) { }
-            finally
-            {
-                context.Entry(entityToUpdate).State = EntityState.Modified;
-            }
+            context.Entry(entityToUpdate).State = EntityState.Modified;
         }
 
         public virtual void Delete(TEntity entityToDelete)
