@@ -142,7 +142,7 @@ namespace WebApp.Controllers
         //    var task = uUnitOfWork.ExerciseRepo.GetById(id);
 
         //    var coursesList =
-        //        mMapper.Map<List<ExerciseDTO>>(uUnitOfWork.ExerciseRepo.GetAll()
+        //        mapper.Map<List<ExerciseDTO>>(uUnitOfWork.ExerciseRepo.GetAll()
         //            .Where(x => x.Course == currentCourseName && !x.IsDeleted));
         //    return View(coursesList);
         //}
