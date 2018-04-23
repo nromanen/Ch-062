@@ -10,14 +10,14 @@ namespace WebApp.ViewModels
     public class CreateExerciseViewModel
     {
         [Required]
-        public string Course { get; set; }
+        public int CourseId { get; set; }
 
         [Required]
         public string TaskName { get; set; }
 
-        public string TaskString { get; set; }
+        public string TaskTextField { get; set; }
 
-        public DateTime CreateDateTime { get; set; }
+        public string TaskBaseCodeField { get; set; }
 
     }
 }

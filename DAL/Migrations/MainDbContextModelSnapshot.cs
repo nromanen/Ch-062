@@ -158,13 +158,17 @@ namespace DAL.Migrations
 
                     b.Property<string>("Course");
 
+                    b.Property<int>("CourseId");
+
                     b.Property<DateTime>("CreateDateTime");
 
                     b.Property<bool>("IsDeleted");
 
+                    b.Property<string>("TaskBaseCodeField");
+
                     b.Property<string>("TaskName");
 
-                    b.Property<string>("TaskString");
+                    b.Property<string>("TaskTextField");
 
                     b.Property<string>("TeacherId");
 

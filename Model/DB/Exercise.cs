@@ -13,7 +13,11 @@ namespace Model.DB
 
         public string TaskName { get; set; }
 
-        public string TaskString { get; set; }
+        public string TaskTextField { get; set; }
+
+        public string TaskBaseCodeField { get; set; }
+
+        public int CourseId { get; set; }
 
         public string Course { get; set; }
         

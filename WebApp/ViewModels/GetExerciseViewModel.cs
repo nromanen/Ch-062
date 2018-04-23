@@ -13,7 +13,9 @@ namespace WebApp.ViewModels
 
         public string TaskName { get; set; }
 
-        public string TaskString { get; set; }
+        public string TaskTextField { get; set; }
+
+        public string TaskBaseCodeField { get; set; }
 
         public bool IsDeleted { get; set; }
 
