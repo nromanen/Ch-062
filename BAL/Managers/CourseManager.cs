@@ -45,6 +45,22 @@ namespace BAL.Managers
             unitOfWork.Save();
         }
 
+        public void ToggleCourseStatus(int id)
+        {
+            var cource = unitOfWork.CourseRepo.GetById(id);
+            cource.IsActive = !cource.IsActive;
+            unitOfWork.CourseRepo.Update(cource);
+            unitOfWork.Save();
+        }
+
+        public void UpdateCourseOwner(int courseId, string teacherId)
+        {
+            var cource = unitOfWork.CourseRepo.GetById(courseId);
+            cource.UserId = teacherId;
+            unitOfWork.CourseRepo.Update(cource);
+            unitOfWork.Save();
+        }
+
         public void Delete(CourseDTO entityToDelete)
         {
             unitOfWork.CourseRepo.Delete(mapper.Map<Course>(entityToDelete));

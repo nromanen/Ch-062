@@ -13,7 +13,7 @@ namespace Model.DB
         public int ExerciseId { get; set; }
         public string CodeText { get; set; }
 
-        public virtual ICollection<CodeErrorDTO> Errors { get; set; }
+        public virtual ICollection<CodeError> Errors { get; set; }
         public virtual ICollection<CodeResult> Results { get; set; }
 
         public virtual User User { get; set; }
