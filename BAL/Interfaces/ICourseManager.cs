@@ -18,6 +18,8 @@ namespace BAL.Interfaces
             string includeProperties = "");
         void Insert(CourseDTO item);
         void Update(CourseDTO item);
+        void UpdateCourseOwner(int courseId, string teacherId);
+        void ToggleCourseStatus(int id);
         void Delete(CourseDTO item);
     }
 }

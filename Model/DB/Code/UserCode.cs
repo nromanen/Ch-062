@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Model.DB.Code;
+﻿using System.Collections.Generic;
 using Model.DTO.CodeDTO;
 
-namespace Model.DB
+namespace Model.DB.Code
 {
     public class UserCode
     {
@@ -13,7 +10,7 @@ namespace Model.DB
         public int ExerciseId { get; set; }
         public string CodeText { get; set; }
 
-        public virtual ICollection<CodeErrorDTO> Errors { get; set; }
+        public virtual ICollection<CodeError> Errors { get; set; }
         public virtual ICollection<CodeResult> Results { get; set; }
 
         public virtual User User { get; set; }

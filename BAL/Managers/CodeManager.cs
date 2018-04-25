@@ -2,6 +2,7 @@
 using System.Linq;
 using DAL.Interface;
 using Model.DB;
+using Model.DB.Code;
 
 namespace BAL.Managers
 {

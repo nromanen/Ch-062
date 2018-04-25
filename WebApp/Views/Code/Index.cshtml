@@ -1,4 +1,4 @@
-﻿@model Model.DB.UserCode
+﻿@model Model.DTO.CodeDTO.UserCodeDTO
 <style type="text/css">
     .block1 {
         width: 100%;
@@ -21,7 +21,6 @@
 
 <div class="row block1">
 
-</div>
 <div class="row block2">
 
     <div>
@@ -29,15 +28,15 @@
 
         </div>
         <div class="col-md-10" sttyle="background: aqua">
-            <div class="row" style="background: cadetblue; height: 200px;"></div>
+            <div class="row" style="background: cadetblue; height: 200px;">
+                <div>@Model.Exercise.TaskName</div>
+                <div>@Model.Exercise.TaskTextField</div>
+            </div>
             <div>
                 <div class="row" style="background: aquamarine; height: 500px">
                     <div class="col-md-12">
                         <form method="post" id="codeResult" asp-controller="Code" asp-action="GetCode" >
-                            <textarea id="codeText" name="CodeText" class="col-md-12" style="height: 400px; width: 100%; margin: 10px" ></textarea>
-                            
-                            
-
+                            <textarea id="codeText" name="CodeText" class="col-md-12" style="height: 400px; width: 100%; margin: 10px"></textarea>
                             <button type="submit" class="btn btn-default"> Execute </button>
                             <div id="result" style="margin: 10px"></div>
 
@@ -47,6 +46,7 @@
             </div>
             <div class="row" style="background: black; height: 100px; width: 100%">
                 <div class="row" style="background: #cccccc; height: 80px; margin: 10px; width: 900px">
+                    <div id="result" style="margin: 10px"></div>
                 </div>
             </div>
         </div>
@@ -54,11 +54,11 @@
 </div>
 
 @section Scripts {
-    <script type="text/javascript">
-        function determineStorageLocation() {
-            var token = $('input[name="__RequestVerificationToken"]', $('#codeResult')).val();
-            var myData = { CodeText: $('#codeText').val() };
-            var dataWithAntiforgeryToken = $.extend(myData, { '__RequestVerificationToken': token });
+    <script>
+        $('#executeButton').click(
+            function () {
+                var userCode = new Object();
+                userCode.CodeText = $('#codeText').val();
 
             $.ajax({
                 url: "/Code/Index",

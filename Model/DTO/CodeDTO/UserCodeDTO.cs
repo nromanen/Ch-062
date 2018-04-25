@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Model.DB;
+using Model.DB.Code;
 
 namespace Model.DTO.CodeDTO
 {
@@ -11,9 +12,9 @@ namespace Model.DTO.CodeDTO
         public string CodeText { get; set; }
 
         public ICollection<CodeErrorDTO> Errors { get; set; }
-        public ICollection<CodeResult> Results { get; set; }
+        public ICollection<CodeResultDTO> Results { get; set; }
 
-        public User User { get; set; }
-        public Exercise Exercise { get; set; }
+        public UserDTO User { get; set; }
+        public ExerciseDTO Exercise { get; set; }
     }
 }

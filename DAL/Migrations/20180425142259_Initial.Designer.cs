@@ -11,9 +11,10 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180425142259_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,58 +127,6 @@ namespace DAL.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("Model.DB.Code.CodeError", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CodeId");
-
-                    b.Property<string>("Result");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CodeId");
-
-                    b.ToTable("CodeErrors");
-                });
-
-            modelBuilder.Entity("Model.DB.Code.CodeResult", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CodeId");
-
-                    b.Property<string>("Result");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CodeId");
-
-                    b.ToTable("CodeResults");
-                });
-
-            modelBuilder.Entity("Model.DB.Code.UserCode", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CodeText");
-
-                    b.Property<int>("ExerciseId");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExerciseId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UsersCode");
                 });
 
             modelBuilder.Entity("Model.DB.Course", b =>
@@ -325,34 +274,6 @@ namespace DAL.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Model.DB.Code.CodeError", b =>
-                {
-                    b.HasOne("Model.DB.Code.UserCode", "Code")
-                        .WithMany("Errors")
-                        .HasForeignKey("CodeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Model.DB.Code.CodeResult", b =>
-                {
-                    b.HasOne("Model.DB.Code.UserCode", "Code")
-                        .WithMany("Results")
-                        .HasForeignKey("CodeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Model.DB.Code.UserCode", b =>
-                {
-                    b.HasOne("Model.DB.Exercise", "Exercise")
-                        .WithMany()
-                        .HasForeignKey("ExerciseId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Model.DB.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Model.DB.Course", b =>

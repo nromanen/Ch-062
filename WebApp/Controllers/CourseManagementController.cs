@@ -82,6 +82,10 @@ namespace WebApp.Controllers
             {
                 courseManager.Update(course);
             }
+            if (User.IsInRole("Teacher"))
+            {
+                return RedirectToAction("Index", "ViewCourses");
+            }
             return RedirectToAction("Index", "CourseManagement");
         }
 
@@ -89,12 +93,7 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Teacher, Administrator")]
         public IActionResult Toggle(int id)
         {
-            var course = courseManager.GetById(id);
-            if (course != null)
-            {
-                course.IsActive = !course.IsActive;
-                courseManager.Update(course);
-            }
+            courseManager.ToggleCourseStatus(id);
             if (User.IsInRole("Teacher"))
             {
                 return RedirectToAction("ViewCourses", "CourseManagement");
@@ -108,7 +107,7 @@ namespace WebApp.Controllers
         {
             var teacherList = mapper.Map<List<UserDTO>>(userManager.GetUsersInRoleAsync("Teacher").Result);
             var course = courseManager.GetById(id);
-            return View(new SuspendCourseViewModel()
+            return View(new ChangeCourseOwnerViewModel()
             {
                 TeacherList = teacherList,
                 CourseId = course.Id,
@@ -118,14 +117,9 @@ namespace WebApp.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public IActionResult ChangeOwner(SuspendCourseViewModel model)
+        public IActionResult ChangeOwner(ChangeCourseOwnerViewModel model)
         {
-            var course = courseManager.GetById(model.CourseId);
-            if (course != null)
-            {
-                course.UserId = model.ResultTeacherId;
-                courseManager.Update(course);
-            }
+            courseManager.UpdateCourseOwner(model.CourseId, model.ResultTeacherId);
             return RedirectToAction("Index", "CourseManagement");
         }
 

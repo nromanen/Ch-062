@@ -72,7 +72,7 @@ namespace DAL.Repositories
             catch { }
             finally
             {
-                context.Entry(entityToUpdate).State = EntityState.Modified;
+                dbSet.Update(entityToUpdate);
             }
         }
 
