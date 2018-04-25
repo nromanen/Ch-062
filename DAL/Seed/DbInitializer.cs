@@ -57,7 +57,7 @@ namespace DAL.Seed
                 var t = userManager.FindByNameAsync(userStudent);
                 userManager.AddToRoleAsync(t.Result, "Student").Wait();
             }
-            if (!context.Courses.Any(r => r.Name == ".Net"))
+           /* if (!context.Courses.Any(r => r.Name == ".Net"))
             {
                 unitOfWork.CourseRepo.Insert(new Course
                 {
@@ -131,7 +131,7 @@ namespace DAL.Seed
                     UpdateDateTime = System.DateTime.Now,
                     TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
                 });
-            }
+            }*/
             unitOfWork.Save();
         }
     }

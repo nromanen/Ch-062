@@ -46,6 +46,6 @@ namespace BAL.IoC
            {
 
            }
-        //*/
+        /**/
     }
 }
