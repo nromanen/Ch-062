@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.ViewModels.CoursesViewModels
 {
-    public class SuspendCourseViewModel
+    public class ChangeCourseOwnerViewModel
     {
         public IEnumerable<UserDTO> TeacherList { get; set; }
         [Required]
