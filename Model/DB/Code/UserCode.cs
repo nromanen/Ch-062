@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Model.DB.Code;
+﻿using System.Collections.Generic;
 using Model.DTO.CodeDTO;
 
-namespace Model.DB
+namespace Model.DB.Code
 {
     public class UserCode
     {

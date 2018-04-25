@@ -90,48 +90,48 @@ namespace DAL.Seed
                     UserId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
                 });
             }
-            if (!context.Exercises.Any(r => r.TaskName == ".Net Task 1"))
-            {
-                unitOfWork.ExerciseRepo.Insert(new Exercise
-                {
-                    TaskName = ".Net Task 1",
-                    TaskTextField = "First Task 4 .Net",
-                    Course = ".Net",
-                    CourseId = unitOfWork.CourseRepo.Get(c => c.Name == ".Net").First().Id,
-                    IsDeleted = false,
-                    CreateDateTime = System.DateTime.Now,
-                    UpdateDateTime = System.DateTime.Now,
-                    TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
-                });
-            }
-            if (!context.Exercises.Any(r => r.TaskName == "Java Task 1"))
-            {
-                unitOfWork.ExerciseRepo.Insert(new Exercise
-                {
-                    TaskName = "Java Task 1",
-                    TaskTextField = "First Task 4 Java",
-                    Course = "Java",
-                    CourseId = unitOfWork.CourseRepo.Get(c => c.Name == "Java").First().Id,
-                    IsDeleted = false,
-                    CreateDateTime = System.DateTime.Now,
-                    UpdateDateTime = System.DateTime.Now,
-                    TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
-                });
-            }
-            if (!context.Exercises.Any(r => r.TaskName == "JavaScript Task 1"))
-            {
-                unitOfWork.ExerciseRepo.Insert(new Exercise
-                {
-                    TaskName = "JavaScript Task 1",
-                    TaskTextField = "First Task 4 JavaScript",
-                    Course = "JavaScript",
-                    CourseId = unitOfWork.CourseRepo.Get(c => c.Name == "JavaScript").First().Id,
-                    IsDeleted = false,
-                    CreateDateTime = System.DateTime.Now,
-                    UpdateDateTime = System.DateTime.Now,
-                    TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
-                });
-            }
+            //if (!context.Exercises.Any(r => r.TaskName == ".Net Task 1"))
+            //{
+            //    unitOfWork.ExerciseRepo.Insert(new Exercise
+            //    {
+            //        TaskName = ".Net Task 1",
+            //        TaskTextField = "First Task 4 .Net",
+            //        Course = ".Net",
+            //        CourseId = unitOfWork.CourseRepo.Get(c => c.Name == ".Net").First().Id,
+            //        IsDeleted = false,
+            //        CreateDateTime = System.DateTime.Now,
+            //        UpdateDateTime = System.DateTime.Now,
+            //        TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
+            //    });
+            //}
+            //if (!context.Exercises.Any(r => r.TaskName == "Java Task 1"))
+            //{
+            //    unitOfWork.ExerciseRepo.Insert(new Exercise
+            //    {
+            //        TaskName = "Java Task 1",
+            //        TaskTextField = "First Task 4 Java",
+            //        Course = "Java",
+            //        CourseId = unitOfWork.CourseRepo.Get(c => c.Name == "Java").First().Id,
+            //        IsDeleted = false,
+            //        CreateDateTime = System.DateTime.Now,
+            //        UpdateDateTime = System.DateTime.Now,
+            //        TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
+            //    });
+            //}
+            //if (!context.Exercises.Any(r => r.TaskName == "JavaScript Task 1"))
+            //{
+            //    unitOfWork.ExerciseRepo.Insert(new Exercise
+            //    {
+            //        TaskName = "JavaScript Task 1",
+            //        TaskTextField = "First Task 4 JavaScript",
+            //        Course = "JavaScript",
+            //        CourseId = unitOfWork.CourseRepo.Get(c => c.Name == "JavaScript").First().Id,
+            //        IsDeleted = false,
+            //        CreateDateTime = System.DateTime.Now,
+            //        UpdateDateTime = System.DateTime.Now,
+            //        TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
+            //    });
+            //}
             unitOfWork.Save();
         }
     }

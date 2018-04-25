@@ -1,4 +1,5 @@
 ﻿using Model.DB;
+using Model.DB.Code;
 
 namespace Model.DTO.CodeDTO
 {
@@ -8,6 +9,6 @@ namespace Model.DTO.CodeDTO
         public int CodeId { get; set; }
         public string Result { get; set; }
 
-        public UserCode Code { get; set; }
+        public UserCodeDTO Code { get; set; }
     }
 }

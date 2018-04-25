@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Model.DB
+﻿namespace Model.DB.Code
 {
     public class CodeResult
     {
