@@ -31,10 +31,10 @@ namespace WebApp.Controllers
             mapper = ucMapper;
         }
 
-        public   IActionResult Index()
+        public IActionResult Index()
         {
-             var getuser = mapper.Map<UserDTO>(userManager.GetUserAsync(HttpContext.User).Result);           
-           
+            var getuser = mapper.Map<UserDTO>(userManager.GetUserAsync(HttpContext.User).Result);
+
             return View(getuser);
 
         }
@@ -54,31 +54,29 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                return View(model);
+            }
 
-                User user = await userManager.FindByIdAsync(model.Id);
-               // if (user != null)
-               // {
-                    IdentityResult result =
-                        await userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        foreach (var error in result.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
-                    }
-                }
-               // else
-               // {
-                 //   ModelState.AddModelError(string.Empty, "User not found");
-               // }
-           // }
+            User user = await userManager.FindByIdAsync(model.Id);
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "User not found");
+                return View(model);
+            }
+
+            IdentityResult result = await userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
             return View(model);
         }
         [HttpGet]
@@ -97,34 +95,31 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeUserName(ChangeUserNameViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                return View(model);
+            }
 
-                User user = await userManager.FindByIdAsync(model.Id);
-                IdentityResult result =
-                    await userManager.SetUserNameAsync(user,model.NewUserName) ;
-            
-               bool result2 = await userManager.CheckPasswordAsync(user, model.Password);
-                if (result.Succeeded && result2)
-                {                                
-                    await  signInManager.RefreshSignInAsync(user);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
+            User user = await userManager.FindByIdAsync(model.Id);
+            IdentityResult userNameResult = await userManager.SetUserNameAsync(user, model.NewUserName);
+            if (!userNameResult.Succeeded)
+            {
+                foreach (var error in userNameResult.Errors)
                 {
-                    foreach (var error in result.Errors)
-                    {                   
-                        ModelState.AddModelError(string.Empty, error.Description);
-
-                    }
-                    if (!result2)
-                    {
-                        ModelState.AddModelError(string.Empty, "Incorrect password");
-                    }
+                    ModelState.AddModelError(string.Empty, error.Description);
+                    return View(model);
                 }
             }
-            
-            return View(model);
+
+            bool passwordResult = await userManager.CheckPasswordAsync(user, model.Password);
+            if (!passwordResult)
+            {
+                ModelState.AddModelError(string.Empty, "Incorrect password");
+                return View(model);
+            }
+
+            await signInManager.RefreshSignInAsync(user);
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -143,35 +138,31 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeEmail(ChangeEmailViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                User user = await userManager.FindByIdAsync(model.Id);
-                IdentityResult result = await userManager.SetEmailAsync(user, model.NewEmail);
-                //  await  userManager.SetEmailAsync(user, model.NewEmail);
-                //userManager.ChangeEmailAsync(user,model.OldEmail, model.NewEmail);
-
-                bool result2 = await userManager.CheckPasswordAsync(user, model.Password);
-                if (result.Succeeded && result2)
+                return View(model);
+            }
+            User user = await userManager.FindByIdAsync(model.Id);
+            IdentityResult emailResult = await userManager.SetEmailAsync(user, model.NewEmail);
+            if (!emailResult.Succeeded)
+            {
+                foreach (var error in emailResult.Errors)
                 {
-                 //   await signInManager.RefreshSignInAsync(user);
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-
-                    }
-                    if (!result2)
-                    {
-                        ModelState.AddModelError(string.Empty, "Incorrect password");
-                    }
+                    ModelState.AddModelError(string.Empty, error.Description);
+                    return View(model);
                 }
             }
-            return View(model);
+            bool passwordResult = await userManager.CheckPasswordAsync(user, model.Password);
+            if (!passwordResult)
+            {
+                ModelState.AddModelError(string.Empty, "Incorrect password");
+                return View(model);
+            }
+            return RedirectToAction("Index", "Home");
         }
 
 
     }
+
+
 }
