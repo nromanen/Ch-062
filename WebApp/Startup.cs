@@ -76,6 +76,7 @@ namespace WebApp
             //Adding DI for managers
             services.AddScoped<ICourseManager, CourseManager>();
             services.AddScoped<IExerciseManager, ExerciseManager>();
+            services.AddScoped<ISandboxManager, SandboxManager>();
 
             services.Configure<IdentityOptions>(options =>
             {
