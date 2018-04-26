@@ -15,12 +15,11 @@ namespace WebApp.Controllers
 {
     public class CodeController : Controller
     {
-        private IExerciseManager exerciseManager;
-        private IUnitOfWork unitOfWork;
-        public CodeController(IExerciseManager exerciseManager, IUnitOfWork unitOfWork)
+        private CodeManager codeManager;
+        private UserManager<User> userManager;
+        public CodeController(CodeManager codeManager, UserManager<User> userManager)
         {
-            this.unitOfWork = unitOfWork;
-            this.exerciseManager = exerciseManager;
+            this.codeManager = codeManager;
         }
         public IActionResult Index(UserCodeDTO model)
         {
@@ -28,32 +27,13 @@ namespace WebApp.Controllers
             {
                 return Redirect("Home/Index");
             }
-
-            var exercise = exerciseManager.GetById(model.ExerciseId);
-            model.Exercise = exercise;
-            model.CodeText = exercise.TaskBaseCodeField;
-            var user = unitOfWork.UserRepo.Get(c => c.Email == model.UserId).First().Id;
-            model.UserId = user;
-            var findeCode = unitOfWork.CodeRepo.Get(c => c.UserId == user && c.ExerciseId == model.ExerciseId).Last();
-            if (findeCode != null)
-            {
-                model.CodeText = findeCode.CodeText;
-            }
-
-            return View(model);
+            return View(codeManager.BuildCodeModel(model));
         }
 
         [HttpPost]
         public string GetCode(UserCodeDTO model)
         {
-            UserCode code = new UserCode
-            {
-                CodeText = model.CodeText,
-                UserId = model.UserId,
-                ExerciseId = model.ExerciseId
-            };
-            unitOfWork.CodeRepo.Insert(code);
-            unitOfWork.Save();
+            codeManager.AddCode(model);
             return model.CodeText;
         }
     }

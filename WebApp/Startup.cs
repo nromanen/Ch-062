@@ -68,7 +68,7 @@ namespace WebApp
                 .AddEntityFrameworkStores<MainDbContext>();
 
             services.AddScoped<IDbInitializer, DbInitializer>();
-
+            services.AddScoped<CodeManager, CodeManager>();
             //add dependecy injection for dal repositories
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
