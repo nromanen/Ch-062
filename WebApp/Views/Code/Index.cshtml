@@ -8,7 +8,6 @@
 
     .block2 {
         width: 100%;
-        background: #fc0;
         height: 100%;
     }
 </style>
@@ -17,27 +16,24 @@
 <div class="row block2">
 
     <div>
-        <div class="col-md-2" style="background: aliceblue; height: 100%">
-
-        </div>
-        <div class="col-md-10" sttyle="background: aqua">
-            <div class="row" style="background: cadetblue; height: 200px;">
-                <div>@Model.Exercise.TaskName</div>
-                <div>@Model.Exercise.TaskTextField</div>
+        <div class="col-md-12">
+            <div class="row" style="height: 200px; padding: 30px">
+                <div class="col-md-12">
+                    <div class="row" style="padding: 20px">Exercise name: @Model.Exercise.TaskName</div>
+                    <div class="row" style="padding: 20px">Exercise point: @Model.Exercise.TaskTextField</div>
+                </div>
             </div>
             <div>
-                <div class="row" style="background: aquamarine; height: 500px">
+                <div class="row" style=" height: 500px">
                     <div class="col-md-12">
-                        <textarea id="codeText" class="col-md-12" style="height: 400px; width: 100%; margin: 10px">@Model.Exercise.TaskBaseCodeField</textarea>
+                        <textarea id="codeText" class="col-md-12" style="height: 400px; width: 100%; margin: 10px">@Model.CodeText</textarea>
                         <button type="button" id="executeButton" class="btn btn-default"> Execute </button>
-                        
+
                     </div>
                 </div>
             </div>
-            <div class="row" style="background: black; height: 100px; width: 100%">
-                <div class="row" style="background: #cccccc; height: 80px; margin: 10px; width: 900px">
-                    <div id="result" style="margin: 10px"></div>
-                </div>
+            <div class="row" style=" height: 100px; width: 100%">
+                    <div id="result" style="padding: 10px; border-color: black; border: 1px solid; height: 100%"></div>
             </div>
         </div>
     </div>
@@ -47,11 +43,15 @@
     <script>
         $('#executeButton').click(
             function () {
+                console.log("start");
+
                 var userCode = new Object();
                 userCode.CodeText = $('#codeText').val();
+                userCode.ExerciseId = ('@Model.ExerciseId');
+                userCode.UserId = ('@Model.UserId');
 
                 $.ajax({
-                    
+
                     type: "POST",
                     url: "/Code/GetCode",
                     data: userCode,
