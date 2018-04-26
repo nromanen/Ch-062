@@ -1,4 +1,4 @@
-﻿@model Model.DTO.CodeDTO.UserCodeDTO
+﻿
 <style type="text/css">
     .block1 {
         width: 100%;
@@ -19,7 +19,6 @@
 <script src="js/continuecomment.js"></script>
 <script src="js/clike.js"></script>
 
-<div class="row block1">
 
 <div class="row block2">
 
@@ -29,8 +28,8 @@
         </div>
         <div class="col-md-10" sttyle="background: aqua">
             <div class="row" style="background: cadetblue; height: 200px;">
-                <div>@Model.Exercise.TaskName</div>
-                <div>@Model.Exercise.TaskTextField</div>
+                <@*div>@Model.Exercise.TaskName</div>
+                <div>@Model.Exercise.TaskTextField</div>*@
             </div>
             <div>
                 <div class="row" style="background: aquamarine; height: 500px">
@@ -54,24 +53,25 @@
 </div>
 
 @section Scripts {
-    <script>
+    <script >
         $('#executeButton').click(
             function () {
                 var userCode = new Object();
                 userCode.CodeText = $('#codeText').val();
 
-            $.ajax({
-                url: "/Code/Index",
-                type: "POST",
-                data: dataWithAntiforgeryToken,
-                success: function (data) {
-                        $("#results").append(data);
-                },
-                error: function () {
-                    $("#StorageLocations").empty();
-                }
-            });
-        }
+                $.ajax({
+
+                    type: "POST",
+                    url: "/Code/GetCode",
+                    data: userCode,
+                    success: function (data) {
+                        $("#result").html(data);
+                    }
+                });
+
+            }
+        )
+    
         window.onload = function () {
             var editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeText'), {
                 mode: "text/x-csrc",
@@ -80,8 +80,6 @@
             });
 
         };
-
-
 
 
         $("#IsHardcover").on('change', determineStorageLocation);
