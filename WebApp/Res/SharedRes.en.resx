@@ -267,4 +267,16 @@
   <data name="ChangeEmail" xml:space="preserve">
     <value>Change Email</value>
   </data>
+  <data name="NewEmail" xml:space="preserve">
+    <value>New Email</value>
+  </data>
+  <data name="NewUserName" xml:space="preserve">
+    <value>New user name</value>
+  </data>
+  <data name="YourEmail" xml:space="preserve">
+    <value>Your email is :</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>Your name is :</value>
+  </data>
 </root>

@@ -267,4 +267,16 @@
   <data name="ChangeEmail" xml:space="preserve">
     <value>Змінити електронну пошту</value>
   </data>
+  <data name="NewEmail" xml:space="preserve">
+    <value>Нова електронна пошта</value>
+  </data>
+  <data name="NewUserName" xml:space="preserve">
+    <value>Нове ім'я користувача</value>
+  </data>
+  <data name="YourEmail" xml:space="preserve">
+    <value> Ваша електронна пошта :</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>Ваше ім'я :</value>
+  </data>
 </root>
