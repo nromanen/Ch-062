@@ -84,7 +84,7 @@ namespace WebApp.Controllers
             }
             if (User.IsInRole("Teacher"))
             {
-                return RedirectToAction("Index", "ViewCourses");
+                return RedirectToAction("ViewCourses", "CourseManagement");
             }
             return RedirectToAction("Index", "CourseManagement");
         }

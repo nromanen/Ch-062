@@ -1,0 +1,55 @@
+﻿@model WebApp.ViewModels.CodeHistoryViewModel.CodeHistoryViewModel
+
+@{
+    ViewData["Title"] = "History";
+}
+
+<h2>History</h2>
+<style>
+    .titlecode {
+        font-size: 18px;
+        color: #808080;
+    }
+
+    #code-example {
+        border: 1px solid grey;
+        padding: 12px;
+    }
+
+    #date, #collapsecontent {
+        color: #808080;
+        font-size: 12px;
+    }
+</style>
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <span class="titlecode" data-toggle="collapse" data-target="#code-example">Code title</span>
+            <div id="code-example" class="collapse">
+                @Model.ErrorExecutionHistory
+            </div>
+        </div>
+        <span id="date" class=" col-lg-2">@DateTime.Now</span>
+
+        <span class=" col-lg-2 glyphicon glyphicon-heart" data-toggle="collapse" href="#collapsecontent"></span>
+        <div class="collapse" id="collapsecontent">
+            saved to favourites
+        </div>
+    </div>
+</div>
+<hr />
+<script>
+    $(document).ready(function () {
+        $('.divcontainer').click(function () {
+            $(this).find("span:eq(1)")
+                .toggleClass('glyphicon-chevron-down')
+                .toggleClass("glyphicon-chevron-up");
+        });
+    });
+    
+</script>
+<script src="js/codemirror.js"></script>
+<script src="js/matchbrackets.js"></script>
+<script src="js/continuecomment.js"></script>
+<script src="js/clike.js"></script>

@@ -9,6 +9,7 @@ namespace Model.DB.Code
         {
             this.CodeErrors = new HashSet<CodeError>();
             this.CodeResults = new HashSet<CodeResult>();
+            this.CodeHistories = new HashSet<CodeHistory>();
         }
         public int Id { get; set; }
         public string UserId { get; set; }
@@ -17,6 +18,7 @@ namespace Model.DB.Code
 
         public virtual ICollection<CodeError> CodeErrors { get; set; }
         public virtual ICollection<CodeResult> CodeResults { get; set; }
+        public virtual ICollection<CodeHistory> CodeHistories { get; set; }
 
         public virtual User User { get; set; }
         public virtual Exercise Exercise { get; set; }

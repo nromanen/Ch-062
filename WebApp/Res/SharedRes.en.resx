@@ -282,4 +282,7 @@
   <data name="BaseCode" xml:space="preserve">
     <value>BaseCode</value>
   </data>
+  <data name="CodeHistory" xml:space="preserve">
+    <value>Code history</value>
+  </data>
 </root>

@@ -1,9 +1,5 @@
 ﻿@model Model.DTO.CodeDTO.UserCodeDTO
-<link rel="stylesheet" href="css/codemirror.css" />
-<script src="js/codemirror.js"></script>
-<script src="js/matchbrackets.js"></script>
-<script src="js/continuecomment.js"></script>
-<script src="js/clike.js"></script>
+
 <style type="text/css">
     .block1 {
         width: 100%;
@@ -31,7 +27,7 @@
             <div>
                 <div class="row" style=" height: 500px">
                     <div class="col-md-12">
-                        <textarea id="codeText" class="col-md-12" style="height: 400px; width: 100%; margin: 10px">@Model.CodeText</textarea>
+                        <textarea id="codeText" class="col-md-12 textField" style="height: 400px; width: 100%; margin: 10px"></textarea>
                         <button type="button" id="executeButton" class="btn btn-default"> Execute </button>
 
                     </div>
@@ -45,37 +41,47 @@
 </div>
 
 @section Scripts {
+    <link rel="stylesheet" href="css/codemirror.css" />
+    <script src="js/codemirror.js"></script>
+    <script src="js/matchbrackets.js"></script>
+    <script src="js/continuecomment.js"></script>
+    <script src="js/clike.js"></script>
     <script>
+        $(document).ready(function() {
+            $('#codeText').html('@Model.CodeText');
+        });
+        
+        
+        //window.onload = function () {
+        //    var editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeText'), {
+        //        mode: "text/x-csrc",
+        //        theme: "default",
+        //        lineNumbers: true
+        //    });
+
+        //};
+
         $('#executeButton').click(
-            function () {
+            function() {
                 console.log("start");
 
                 var userCode = new Object();
                 userCode.CodeText = $('#codeText').val();
+                console.log(userCode.CodeText);
                 userCode.ExerciseId = ('@Model.ExerciseId');
                 userCode.UserId = ('@Model.UserId');
 
                 $.ajax({
-
                     type: "POST",
                     url: "/Code/GetCode",
                     data: userCode,
-                    success: function (data) {
+                    success: function(data) {
                         $("#result").html(data);
                     }
                 });
 
             }
-        )
-        
-        window.onload = function () {
-            var editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeText'), {
-                mode: "text/x-csrc",
-                theme: "default",
-                lineNumbers: true
-            });
-
-        };
+        );
     </script>
 }
 
