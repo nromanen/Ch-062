@@ -8,8 +8,8 @@ using Model.DTO.CodeDTO;
 namespace BAL.IoC
 {
     public class AutoMapperProfileConfiguration : Profile
-   {
-        public AutoMapperProfileConfiguration()
+    {
+        /*public AutoMapperProfileConfiguration()
               : this("MyProfile")
         {
             Mapper.Initialize(cfg =>
@@ -62,6 +62,13 @@ namespace BAL.IoC
                     .ForMember(dest => dest.CodeId, options => options.MapFrom(src => src.CodeId))
                     .ForMember(dest => dest.Result, options => options.MapFrom(src => src.Result));
                 cfg.CreateMap<List<CodeError>, List<CodeErrorDTO>>();
+
+                cfg.CreateMap<CodeHistory, CodeHistoryDTO>()
+                    .ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))
+                    .ForMember(dest => dest.Code, options => options.MapFrom(src => src.Code))
+                    .ForMember(dest => dest.CodeId, options => options.MapFrom(src => src.CodeId))
+                    .ForMember(dest => dest.CodeText, options => options.MapFrom(src => src.CodeText));
+                cfg.CreateMap<List<CodeHistory>, List<CodeHistoryDTO>>();
             });
         }
 
@@ -69,6 +76,6 @@ namespace BAL.IoC
             : base(profileName)
         {
 
-        }
+        }*/
     }
 }

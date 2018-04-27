@@ -11,9 +11,10 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180427093443_codeHistory")]
+    partial class codeHistory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,30 +248,6 @@ namespace DAL.Migrations
                     b.ToTable("Exercises");
                 });
 
-            modelBuilder.Entity("Model.DB.TestCase", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("ExerciseId");
-
-                    b.Property<string>("InputData");
-
-                    b.Property<string>("OutputData");
-
-                    b.Property<int>("UserId");
-
-                    b.Property<string>("UserId1");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExerciseId");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("TestCases");
-                });
-
             modelBuilder.Entity("Model.DB.User", b =>
                 {
                     b.Property<string>("Id")
@@ -408,18 +385,6 @@ namespace DAL.Migrations
                     b.HasOne("Model.DB.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("Model.DB.TestCase", b =>
-                {
-                    b.HasOne("Model.DB.Exercise", "Exercise")
-                        .WithMany()
-                        .HasForeignKey("ExerciseId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Model.DB.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
                 });
 #pragma warning restore 612, 618
         }

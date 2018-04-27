@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using BAL.Interfaces;
@@ -26,41 +27,67 @@ namespace BAL.Managers
 
         public UserCodeDTO GetUserCodeById(string id)
         {
-            UserCodeDTO code = mapper.Map<UserCodeDTO>(unitOfWork.CodeRepo.GetAll().FirstOrDefault(c => c.UserId == id));
+            UserCodeDTO code = mapper.Map<UserCodeDTO>(unitOfWork.CodeRepo.Get(c => c.UserId == id).FirstOrDefault());
             return code;
         }
 
         public List<CodeResultDTO> GetCodeResults(int codeId)
         {
-            List<CodeResultDTO> results = mapper.Map<List<CodeResultDTO>>(unitOfWork.CodeResultsRepo.GetAll().ToList().Where(c => c.CodeId == codeId).ToList());
+            List<CodeResultDTO> results = mapper.Map<List<CodeResultDTO>>(unitOfWork.CodeResultsRepo.Get(c => c.CodeId == codeId).ToList());
             return results;
         }
         public List<CodeErrorDTO> GetCodeErrors(int codeId)
         {
-            List<CodeErrorDTO> results = mapper.Map<List<CodeErrorDTO>>(unitOfWork.CodeErrorsRepo.GetAll().ToList().Where(c => c.CodeId == codeId).ToList());
+            List<CodeErrorDTO> results = mapper.Map<List<CodeErrorDTO>>(unitOfWork.CodeErrorsRepo.Get(c => c.CodeId == codeId).ToList());
             return results;
         }
 
         public UserCodeDTO UserCodeByExId(string userId, int exerciseId)
         {
-            UserCodeDTO code = mapper.Map<UserCodeDTO>(unitOfWork.CodeRepo.GetAll().ToList().Find(c => c.UserId == userId && c.ExerciseId == exerciseId));
+            UserCodeDTO code = mapper.Map<UserCodeDTO>(unitOfWork.CodeRepo.Get(c => c.UserId == userId && c.ExerciseId == exerciseId).FirstOrDefault());
             return code;
         }
 
         public string IsUserDidExercise(string userId, int exerciseId)
         {
-            return unitOfWork.CodeRepo.Get(c => c.UserId == userId && c.ExerciseId == exerciseId).Last().CodeText;
+            return unitOfWork.CodeRepo.Get(c => c.UserId == userId && c.ExerciseId == exerciseId).LastOrDefault()?.CodeText;
         }
 
+        public bool FindUserCode(string userId, int exerciseId)
+        {
+            return unitOfWork.CodeRepo.Get(c => c.ExerciseId == exerciseId && c.UserId == userId).FirstOrDefault() != null;
+        }
+
+        private void AddHistory(int codeId, string text)
+        {
+            unitOfWork.CodeHistoryRepo.Insert(new CodeHistory
+            {
+                CodeText = text,
+                CodeId = codeId
+            });
+            unitOfWork.Save();
+        }
         public void AddCode(UserCodeDTO model)
         {
-            UserCode code = new UserCode
+            if (FindUserCode(model.UserId, model.ExerciseId))
             {
-                CodeText = model.CodeText,
-                UserId = model.UserId,
-                ExerciseId = model.ExerciseId
-            };
-            unitOfWork.CodeRepo.Insert(code);
+                var code = unitOfWork.CodeRepo.Get(c => c.ExerciseId == model.ExerciseId && c.UserId == model.UserId)
+                    .First();
+                code.CodeText = model.CodeText;
+                unitOfWork.CodeRepo.Update(code);
+                AddHistory(code.Id, model.CodeText);
+            }
+            else
+            {
+                UserCode code = new UserCode
+                {
+                    CodeText = model.CodeText,
+                    UserId = model.UserId,
+                    ExerciseId = model.ExerciseId
+                };
+
+                unitOfWork.CodeRepo.Insert(code);
+            }
             unitOfWork.Save();
         }
 
