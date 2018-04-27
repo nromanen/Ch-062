@@ -279,4 +279,7 @@
   <data name="YourName" xml:space="preserve">
     <value>Your name is :</value>
   </data>
+  <data name="BaseCode" xml:space="preserve">
+    <value>BaseCode</value>
+  </data>
 </root>

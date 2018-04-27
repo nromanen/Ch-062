@@ -6,6 +6,19 @@
 @{
     ViewBag.Title = "Task View";
 }
+
+<script src="~/js/katex.min.js"></script>
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/highlight.min.js"></script>
+<script src="~/js/quill.js"></script>
+
+<link href="~/css/monokai-sublime.min.css" rel="stylesheet" />
+<link href="~/css/katex.min.css" rel="stylesheet" />
+<link href="~/css/quill.bubble.css" rel="stylesheet" />
+<link href="~/css/quill.snow.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/css/site.css" />
+
+
 <form asp-action="TaskView" asp-controller="ExerciseManagement">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
@@ -15,10 +28,16 @@
         <input type="text" asp-for="TaskName" class="form-control" readonly />
     </div>
     <div class="form-group">
-        <label asp-for="TaskTextField" class="control-label">@SharedLocalizer["Task"]:</label>
-        <input type="text" asp-for="TaskTextField" class="form-control" readonly />
+        <label class="control-label">@SharedLocalizer["Task"]:</label>
+        <div id="editor-container" class="form-control"></div>
     </div>
+    <label asp-for="TaskBaseCodeField" class="control-label">@SharedLocalizer["BaseCode"]:</label>
+    <textarea asp-for="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;" readonly></textarea>
     <div class="form-group">
         <input value="@SharedLocalizer["Ok"]" onClick="history.go(-1)" ; class="btn btn-default" />
     </div>
 </form>
+
+<script>
+    var quill = new Quill('#editor-container', { theme: 'snow' });
+</script>
