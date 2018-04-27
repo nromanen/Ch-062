@@ -11,7 +11,9 @@ using Model.DTO.CodeDTO;
 
 namespace BAL.Managers
 {
-    public class CodeManager:ICodeManager
+    
+
+    public class CodeManager : ICodeManager
     {
         private IUnitOfWork unitOfWork;
         private IMapper mapper;
