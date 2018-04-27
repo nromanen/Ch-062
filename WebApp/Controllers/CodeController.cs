@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BAL.Interfaces;
+using BAL.Managers;
+using DAL.Interface;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Model.DB;
 using Model.DB.Code;
@@ -11,16 +15,26 @@ namespace WebApp.Controllers
 {
     public class CodeController : Controller
     {
+        private CodeManager codeManager;
+        private UserManager<User> userManager;
+        public CodeController(CodeManager codeManager, UserManager<User> userManager)
+        {
+            this.codeManager = codeManager;
+        }
         public IActionResult Index(UserCodeDTO model)
         {
-            return View(model);
+            if (!ModelState.IsValid)
+            {
+                return Redirect("Home/Index");
+            }
+            return View(codeManager.BuildCodeModel(model));
         }
 
         [HttpPost]
         public string GetCode(UserCodeDTO model)
         {
-            var text = model.CodeText;
-            return text;
+            codeManager.AddCode(model);
+            return model.CodeText;
         }
     }
 }

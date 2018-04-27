@@ -68,7 +68,7 @@ namespace WebApp
                 .AddEntityFrameworkStores<MainDbContext>();
 
             services.AddScoped<IDbInitializer, DbInitializer>();
-
+            services.AddScoped<CodeManager, CodeManager>();
             //add dependecy injection for dal repositories
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
@@ -76,6 +76,7 @@ namespace WebApp
             //Adding DI for managers
             services.AddScoped<ICourseManager, CourseManager>();
             services.AddScoped<IExerciseManager, ExerciseManager>();
+            services.AddScoped<ISandboxManager, SandboxManager>();
 
             services.Configure<IdentityOptions>(options =>
             {

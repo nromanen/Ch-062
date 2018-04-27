@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="2.7.0" />
   </ItemGroup>
 
   <ItemGroup>
