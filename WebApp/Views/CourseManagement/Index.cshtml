@@ -19,9 +19,9 @@
         <th>@SharedLocalizer["CreateDate"]</th>
     </tr>
     
-    @if (User.IsInRole("Teacher") || User.IsInRole("Administrator"))
-    {
-        foreach (var course in Model)
+    @*@if (User.IsInRole("Teacher") || User.IsInRole("Administrator"))*@
+    @* { *@
+        @foreach (var course in Model)
         {
             <tr>
                 <td> <a class="bluehighl" asp-action="ShowExercise" asp-route-id="@course.Id">@course.Name</a></td>
@@ -45,8 +45,8 @@
                 </td>
             </tr>
         }
-    }
-    else
+    @* } *@
+    @*else
     {
         @foreach (var course in Model)
         {
@@ -58,5 +58,5 @@
                 </tr>
             }
         }
-    }
+    }*@
 </table>
