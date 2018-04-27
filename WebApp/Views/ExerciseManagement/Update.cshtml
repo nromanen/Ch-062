@@ -6,6 +6,29 @@
 @{
     ViewBag.Title = "Task View";
 }
+
+<script src="~/js/katex.min.js"></script>
+<script src="~/js/jquery.min.js"></script>
+<script src="~/js/highlight.min.js"></script>
+<script src="~/js/quill.js"></script>
+
+<link href="~/css/monokai-sublime.min.css" rel="stylesheet" />
+<link href="~/css/katex.min.css" rel="stylesheet" />
+<link href="~/css/quill.bubble.css" rel="stylesheet" />
+<link href="~/css/quill.snow.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/css/site.css" />
+
+<link rel="stylesheet" href="~/css/site.css" />
+
+
+
+<link href="~/css/codemirror.css" rel="stylesheet" />
+<script src="~/js/codemirror.js"></script>
+<script src="~/js/continuecomment.js"></script>
+<script src="~/js/highlight.min.js"></script>
+<script src="~/js/matchbrackets.js"></script>
+
+
 <form asp-action="Update" asp-controller="ExerciseManagement">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
@@ -13,18 +36,65 @@
     </div>
     <div class="form-group">
         <label asp-for="CourseId" class="control-label">@SharedLocalizer["CourseName"] *</label>
-        <select asp-for="CourseId" asp-items="@(new SelectList(Model.CourseList, "Id" , "Name"))" class="form-control" required></select>
+        <select asp-for="CourseId" id="CourseId" asp-items="@(new SelectList(Model.CourseList, "Id" , "Name"))" class="form-control" required></select>
         <label asp-for="TaskName" class="control-label">@SharedLocalizer["TaskName"] *</label>
-        <input type="text" asp-for="TaskName" class="form-control" required />
+        <input type="text" asp-for="TaskName" id="TaskName" class="form-control" required />
     </div>
     <div class="form-group">
-        <label asp-for="TaskTextField" class="control-label">@SharedLocalizer["Task"]:</label>
-        <input type="text" asp-for="TaskTextField" class="form-control" />
+        <label class="control-label">@SharedLocalizer["Task"]:</label>
+        <div id="editor-container" class="form-control"></div>
     </div>
+    <label asp-for="TaskBaseCodeField" class="control-label">@SharedLocalizer["BaseCode"]:</label>
+    <textarea asp-for="TaskBaseCodeField" id="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;"></textarea>
+
     <div class="form-group">
-        <input type="submit" value="@SharedLocalizer["Save"]" class="btn btn-default" />
+        <button id="save" class="btn btn-default">@SharedLocalizer["Add"]</button>
     </div>
 </form>
 
+
 <br />
 <h6>@SharedLocalizer["Required"]</h6>
+
+<script>
+    var quill = new Quill('#editor-container', {
+        modules: {
+            toolbar: [
+                [{ header: [1, 2, false] }],
+                ['bold', 'italic', 'underline'],
+                ['image', 'code-block']
+            ]
+        },
+        placeholder: 'Compose an epic...',
+        theme: 'snow'
+    });
+
+    $('#save').click(function () {
+        var taskContent = new Object();
+        taskContent.TaskTextField = quill.getText();
+        taskContent.CourseId = $('#CourseId').val();
+        taskContent.TaskName = $('#TaskName').val();
+        taskContent.TaskBaseCodeField = $('#TaskBaseCodeField').val();
+
+        $.ajax({
+
+            type: "POST",
+            url: "/ExerciseManagement/Update",
+            data: taskContent
+        });
+
+    });
+
+    window.onload = function () {
+        var editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('TaskBaseCodeField'), {
+            mode: "text/x-csrc",
+            theme: "default",
+            lineNumbers: true
+        });
+
+    };
+
+
+    $("#IsHardcover").on('change', determineStorageLocation);
+</script>
+

@@ -46,7 +46,10 @@ namespace WebApp.Controllers
         public IActionResult Create()
         {
             var courseList = courseManager.Get(x => x.IsActive).ToList();
-            return View(courseList);
+            return View(new CreateExerciseViewModel()
+            {
+                CourseList = courseList
+            });
         }
 
         [HttpPost]
@@ -64,6 +67,7 @@ namespace WebApp.Controllers
                     Course = course.Name,
                     TaskName = model.TaskName,
                     TaskTextField = model.TaskTextField,
+                    TaskBaseCodeField = model.TaskBaseCodeField,
                     TeacherId = currentTeacher,
                     CreateDateTime = DateTime.Now,
                     UpdateDateTime = DateTime.Now
@@ -100,6 +104,7 @@ namespace WebApp.Controllers
                 CourseList = courseList,
                 TaskName = task.TaskName,
                 TaskTextField = task.TaskTextField,
+                TaskBaseCodeField = task.TaskBaseCodeField
             });
 
         }
@@ -116,6 +121,7 @@ namespace WebApp.Controllers
                     Id = model.Id,
                     TaskName = model.TaskName,
                     TaskTextField = model.TaskTextField,
+                    TaskBaseCodeField = model.TaskBaseCodeField,
                     CourseId = model.CourseId,
                     Course = course.Name,
                     UpdateDateTime = DateTime.Now

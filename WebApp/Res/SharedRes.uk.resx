@@ -279,4 +279,10 @@
   <data name="YourName" xml:space="preserve">
     <value>Ваше ім'я :</value>
   </data>
+  <data name="BaseCode" xml:space="preserve">
+    <value>Стартовий код</value>
+  </data>
+  <data name="CodeHistory" xml:space="preserve">
+    <value>Історія виконання коду</value>
+  </data>
 </root>

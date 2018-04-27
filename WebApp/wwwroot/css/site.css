@@ -79,3 +79,7 @@ input[type="checkbox"].input-validation-error {
 .bluehighl {
     color: #0800ff;
 }
+
+#editor-container {
+    height: 375px;
+}
