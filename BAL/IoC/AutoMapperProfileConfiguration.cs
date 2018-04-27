@@ -9,7 +9,7 @@ namespace BAL.IoC
 {
     public class AutoMapperProfileConfiguration : Profile
     {
-        /*public AutoMapperProfileConfiguration()
+        public AutoMapperProfileConfiguration()
               : this("MyProfile")
         {
             Mapper.Initialize(cfg =>
@@ -69,6 +69,16 @@ namespace BAL.IoC
                     .ForMember(dest => dest.CodeId, options => options.MapFrom(src => src.CodeId))
                     .ForMember(dest => dest.CodeText, options => options.MapFrom(src => src.CodeText));
                 cfg.CreateMap<List<CodeHistory>, List<CodeHistoryDTO>>();
+
+                cfg.CreateMap<TestCase, TestCaseDTO>()
+                   .ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))
+                   .ForMember(dest => dest.ExerciseDTOId, options => options.MapFrom(src => src.ExerciseId))
+                   .ForMember(dest => dest.UserDTOId, options => options.MapFrom(src => src.UserId))
+                   .ForMember(dest => dest.InputData, options => options.MapFrom(src => src.InputData))
+                   .ForMember(dest => dest.OutputData, options => options.MapFrom(src => src.OutputData))
+                   .ForMember(dest => dest.Exercise, options => options.MapFrom(src => src.Exercise))
+                   .ForMember(dest => dest.User, options => options.MapFrom(src => src.User));
+                cfg.CreateMap<List<TestCase>, List<TestCaseDTO>>();
             });
         }
 
@@ -76,6 +86,6 @@ namespace BAL.IoC
             : base(profileName)
         {
 
-        }*/
+        }
     }
 }
