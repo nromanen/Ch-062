@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public int ExerciseDTOId { get; set; }
         public int UserDTOId { get; set; }
-        public string InputData { get; set; }
+        public object[] InputData { get; set; }
         public string OutputData { get; set; }
 
         public virtual ExerciseDTO Exercise { get; set; }
