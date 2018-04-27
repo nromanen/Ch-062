@@ -11,7 +11,7 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20180427120140_TestCases")]
+    [Migration("20180427142108_TestCases")]
     partial class TestCases
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -259,15 +259,13 @@ namespace DAL.Migrations
 
                     b.Property<string>("OutputData");
 
-                    b.Property<int>("UserId");
-
-                    b.Property<string>("UserId1");
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ExerciseId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("TestCases");
                 });
@@ -420,7 +418,7 @@ namespace DAL.Migrations
 
                     b.HasOne("Model.DB.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

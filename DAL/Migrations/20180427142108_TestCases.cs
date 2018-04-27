@@ -18,8 +18,7 @@ namespace DAL.Migrations
                     ExerciseId = table.Column<int>(nullable: false),
                     InputData = table.Column<string>(nullable: true),
                     OutputData = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: false),
-                    UserId1 = table.Column<string>(nullable: true)
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,8 +30,8 @@ namespace DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TestCases_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_TestCases_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -44,9 +43,9 @@ namespace DAL.Migrations
                 column: "ExerciseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestCases_UserId1",
+                name: "IX_TestCases_UserId",
                 table: "TestCases",
-                column: "UserId1");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
