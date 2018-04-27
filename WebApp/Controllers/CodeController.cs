@@ -16,8 +16,8 @@ namespace WebApp.Controllers
     public class CodeController : Controller
     {
         private CodeManager codeManager;
-        private UserManager<User> userManager;
-        public CodeController(CodeManager codeManager, UserManager<User> userManager)
+
+        public CodeController(CodeManager codeManager)
         {
             this.codeManager = codeManager;
         }
@@ -33,8 +33,7 @@ namespace WebApp.Controllers
         [HttpPost]
         public string GetCode(UserCodeDTO model)
         {
-            codeManager.AddCode(model);
-            return model.CodeText;
+            return codeManager.ExecuteCode(model); 
         }
     }
 }
