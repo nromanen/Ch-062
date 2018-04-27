@@ -10,7 +10,7 @@ using Model.DTO.CodeDTO;
 
 namespace BAL.Managers
 {
-    public class CodeManager
+    public class CodeManager:ICodeManager
     {
         private IUnitOfWork unitOfWork;
         private IMapper mapper;
