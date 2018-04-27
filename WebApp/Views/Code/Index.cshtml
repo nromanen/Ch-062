@@ -46,7 +46,7 @@
 
 @section Scripts {
     <script>
-        $('#executeButton').click(
+        $('#executeButton').onchange(
             function () {
                 console.log("start");
 
@@ -56,7 +56,6 @@
                 userCode.UserId = ('@Model.UserId');
 
                 $.ajax({
-
                     type: "POST",
                     url: "/Code/GetCode",
                     data: userCode,

@@ -40,23 +40,26 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav nav-pills navbar-nav">
                         @if (User.IsInRole("Administrator"))
-                        {
-                            <li>
-                                <a style="color:white;" asp-controller="AdminPanel" asp-action="Users">
-                                    @SharedLocalizer["AdminPanel"]
-                                </a>
-                            </li>
-                        }
+    {
+                    <li>
+                        <a style="color:white;" asp-controller="AdminPanel" asp-action="Users">
+                            @SharedLocalizer["AdminPanel"]
+                        </a>
+                    </li>
+}
                         @if (User.IsInRole("Teacher"))
-                        {
-                            <li>
-                                <a style="color:white;" asp-controller="ExerciseManagement" asp-action="Index">
-                                    @SharedLocalizer["Tasks"]
-                                </a>
-                            </li>
-                        }
+    {
+                    <li>
+                        <a style="color:white;" asp-controller="ExerciseManagement" asp-action="Index">
+                            @SharedLocalizer["Tasks"]
+                        </a>
+                    </li>
+}
                         <li><a style="color:white;" asp-controller="CourseManagement" asp-action="Index">@SharedLocalizer["Courses"]</a></li>
-
+                        @if (User.Identity.IsAuthenticated)
+    {
+                    <li><a style="color:white;" asp-controller="CodeHistory" asp-action="History">@SharedLocalizer["CodeHistory"]</a></li>
+}
 
                     </ul>
                     <ul class="nav navbar-nav"  style="float: right; color:white;">
