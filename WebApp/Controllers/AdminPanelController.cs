@@ -29,7 +29,7 @@ namespace WebApp.Controllers
 
         public IActionResult Users()
         {
-            var t = this.mapper.Map<List<Model.DTO.UserDTO>>(this.userManager.Users.ToList());
+            var t = this.mapper.Map<List<UserDTO>>(this.userManager.Users.ToList());
             return View(t);
         }
 

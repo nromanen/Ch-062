@@ -12,10 +12,11 @@ namespace BAL.Managers
 {
     public class SandboxManager : ISandboxManager
     {
-        public ExecutionResult Execute(string code, string entryPoint, object[] parameters)
+        public ExecutionResult Execute(string code, string entryPoint = "Test", object[] parameters = null)
         {
             var tree = SyntaxFactory.ParseSyntaxTree(code);
             string fileName = "targetlib.dll";
+            string targetClass = "OnlineExam.Program";
             // Detect the file location for the library that defines the object type
             var systemRefLocation = typeof(object).GetTypeInfo().Assembly.Location;
             // Create a reference to the library
@@ -43,7 +44,7 @@ namespace BAL.Managers
                 {
                     timer.Reset();
                     timer.Start();
-                    object temp = asm.GetType("OnlineExam.Program").GetMethod(entryPoint).Invoke(null, parameters);
+                    object temp = asm.GetType(targetClass).GetMethod(entryPoint).Invoke(null, parameters);
                     timer.Stop();
                     result.Success = true;
                     result.Result = temp.ToString();

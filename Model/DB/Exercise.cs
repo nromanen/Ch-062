@@ -5,8 +5,7 @@ using System.Text;
 namespace Model.DB
 {
     public class Exercise
-    {
-        
+    {  
         public int Id { get; set; }
 
         public string TeacherId { get; set; }

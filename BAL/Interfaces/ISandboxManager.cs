@@ -4,6 +4,6 @@ namespace BAL.Interfaces
 {
     public interface ISandboxManager
     {
-        ExecutionResult Execute(string code, string entryPoint, object[] parameters);
+        ExecutionResult Execute(string code, string entryPoint = "Test", object[] parameters = null);
     }
 }
