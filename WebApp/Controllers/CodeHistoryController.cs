@@ -30,7 +30,7 @@ namespace WebApp.Controllers
             this.courseManager = courseManager;
         }
 
-        public IActionResult History(CodeHistoryViewModel codeHistoryViewModel)
+        public IActionResult History()
         {
             var userName = User.Identity.Name;
             var user = userManager.Users.Where(e => e.UserName == userName).FirstOrDefault();

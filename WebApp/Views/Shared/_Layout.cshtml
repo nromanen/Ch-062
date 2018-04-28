@@ -9,16 +9,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - WebApp</title>
-    
-    
+
+
     <meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
-    <meta name="author" content="Codrops" />  
+    <meta name="author" content="Codrops" />
     <link rel="stylesheet" type="text/css" href="css/normalize.css" />
     <link rel="stylesheet" type="text/css" href="css/demo.css" />
     <link rel="stylesheet" type="text/css" href="css/component.css" />
     <script src="js/modernizr.custom.js"></script>
-    
-    
+
+
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -35,7 +35,7 @@
 
 <body>
     <div class="container">
-        <ul id="gn-menu" class="gn-menu-main" >
+        <ul id="gn-menu" class="gn-menu-main">
             <li class="gn-trigger">
                 <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
                 <nav class="gn-menu-wrapper">
@@ -68,21 +68,20 @@
             </li>
             <li><a class="codrops-icon codrops-icon-drop" href="http://tympanus.net/codrops/?p=16030"><span>Back to the Codrops Article</span></a></li>
         </ul>
-        <header>
-        </header>
+        <header></header>
     </div><!-- /container -->
     <script src="js/classie.js"></script>
     <script src="js/gnmenu.js"></script>
-<script>
-    new gnMenu(document.getElementById('gn-menu'));
-</script>
+    <script>
+        new gnMenu(document.getElementById('gn-menu'));
+    </script>
 
 
 
 
 
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -114,6 +113,12 @@
                             </li>
                         }
                         <li><a style="color: white;" asp-controller="CourseManagement" asp-action="Index">@SharedLocalizer["Courses"]</a></li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+
+                            <li><a style="color: white;" asp-controller="CodeHistory" asp-action="History">@SharedLocalizer["CodeHistory"]</a></li>
+
+                        }
 
 
                     </ul>
