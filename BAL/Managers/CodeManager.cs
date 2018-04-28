@@ -11,7 +11,7 @@ using Model.DTO.CodeDTO;
 
 namespace BAL.Managers
 {
-    
+
 
     public class CodeManager : ICodeManager
     {
@@ -35,16 +35,7 @@ namespace BAL.Managers
             return code;
         }
 
-        public List<CodeResultDTO> GetCodeResults(int codeId)
-        {
-            List<CodeResultDTO> results = mapper.Map<List<CodeResultDTO>>(unitOfWork.CodeResultsRepo.Get(c => c.CodeId == codeId).ToList());
-            return results;
-        }
-        public List<CodeErrorDTO> GetCodeErrors(int codeId)
-        {
-            List<CodeErrorDTO> results = mapper.Map<List<CodeErrorDTO>>(unitOfWork.CodeErrorsRepo.Get(c => c.CodeId == codeId).ToList());
-            return results;
-        }
+
 
         public UserCodeDTO UserCodeByExId(string userId, int exerciseId)
         {
@@ -62,32 +53,15 @@ namespace BAL.Managers
             return unitOfWork.CodeRepo.Get(c => c.ExerciseId == exerciseId && c.UserId == userId).FirstOrDefault() != null;
         }
 
-        private void AddSuccesResult(int codeId, string result)
-        {
-            unitOfWork.CodeResultsRepo.Insert(new CodeResult
-            {
-                CodeId = codeId,
-                Result = result
-            });
-            unitOfWork.Save();
 
-        }
-        private void AddErrors(int codeId, string result)
-        {
-            unitOfWork.CodeErrorsRepo.Insert(new CodeError
-            {
-                CodeId = codeId,
-                Result = result
-            });
-            unitOfWork.Save();
-
-        }
-        private void AddHistory(int codeId, string text)
+        private void AddHistory(int codeId, string text, string error = null, string result = null)
         {
             unitOfWork.CodeHistoryRepo.Insert(new CodeHistory
             {
                 CodeText = text,
-                CodeId = codeId
+                CodeId = codeId,
+                Error = error,
+                Result = result
             });
             unitOfWork.Save();
 
@@ -97,13 +71,11 @@ namespace BAL.Managers
         {
             if (FindUserCode(model.UserId, model.ExerciseId))
             {
-                var code = unitOfWork.CodeRepo.Get(c => c.ExerciseId == model.ExerciseId && c.UserId == model.UserId)
-                    .FirstOrDefault();
+                var code = unitOfWork.CodeRepo.Get(c => c.ExerciseId == model.ExerciseId && c.UserId == model.UserId).FirstOrDefault();
                 if (code != null)
                 {
                     code.CodeText = model.CodeText;
                     unitOfWork.CodeRepo.Update(code);
-                    AddHistory(code.Id, model.CodeText);
                 }
             }
             else
@@ -121,23 +93,27 @@ namespace BAL.Managers
             return ExecutionResult(model.CodeText, model.ExerciseId, model.UserId);
         }
 
-        public string ExecutionResult(string code, int exId, string userId )
+        public string ExecutionResult(string code, int exId, string userId)
         {
-            var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId)
-                .First().Id;
+            var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
+
             var res = sandboxManager.Execute(code);
             if (res.Result != null)
             {
                 string result =
                     $"Result: {res.Result}, Compile time: {res.CompileTime.TotalMilliseconds}, Execution Time: {res.ExecutionTime.TotalMilliseconds}";
-                AddSuccesResult(codeId,result);
+                AddHistory(codeId, code, null, result);
                 return result;
             }
             string errors = res.CompileTimeExceptions.Aggregate("", (current, v) => current + (" " + v));
             errors = res.RunTimeExceptions.Aggregate(errors, (current, v) => current + (" " + v));
-            AddErrors(codeId,errors);
+            AddHistory(codeId, code, errors, null);
             return errors;
         }
+
+
+
+
         public UserCodeDTO BuildCodeModel(UserCodeDTO model)
         {
             var exercise = exerciseManager.GetById(model.ExerciseId);
@@ -151,6 +127,11 @@ namespace BAL.Managers
                 model.CodeText = text;
             }
             return model;
+        }
+        public IEnumerable<CodeHistoryDTO> GetHistoryLst(int codeId)
+        {
+            var codeHistoryDTO = mapper.Map<IEnumerable<CodeHistoryDTO>>(unitOfWork.CodeHistoryRepo.Get().Where(e => e.CodeId == codeId));
+            return codeHistoryDTO;
         }
     }
 }

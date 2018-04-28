@@ -9,9 +9,7 @@ namespace Model.DB.Code
         public string UserId { get; set; }
         public int ExerciseId { get; set; }
         public string CodeText { get; set; }
-
-        public virtual CodeError CodeError { get; set; }
-        public virtual CodeResult CodeResult { get; set; }
+        
         public virtual CodeHistory CodeHistory { get; set; }
 
         public virtual User User { get; set; }

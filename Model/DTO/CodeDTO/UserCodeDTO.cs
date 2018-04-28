@@ -13,9 +13,7 @@ namespace Model.DTO.CodeDTO
         [Required]
         public int ExerciseId { get; set; }
         public string CodeText { get; set; }
-
-        public CodeErrorDTO CodeError { get; set; }
-        public CodeResultDTO CodeResult { get; set; }
+        
         public CodeHistoryDTO CodeHistory { get; set; }
 
 

@@ -1,8 +1,7 @@
-﻿@model Model.DTO.CodeDTO.UserCodeDTO
+﻿@model IEnumerable<Model.DTO.CodeDTO.CodeHistoryDTO>
 
 @{
     ViewData["Title"] = "History";
-
 }
 
 <h2>History</h2>
@@ -26,10 +25,27 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8">
-            <span class="titlecode" data-toggle="collapse" data-target="#code-example"><h2>История кода для @Model.User.UserName</h2></span>
-            <div id="code-example" class="collapse">
-                @Html.DisplayForModel()
-            </div>
+
+
+            @foreach (var code in Model)
+            {
+                <span class="titlecode" data-toggle="collapse" data-target="#code-example"> <h2> История кода для @code.Code.User.UserName</h2> </span>
+                <div id="code-example" class="collapse">
+                    <p>@code.CodeText</p>
+                    @if (code.Result != null)
+                    {
+                        <p>@code.Result</p>
+                    }
+                    else
+                    {
+                        <p>@code.Error</p>
+                    }
+                </div>
+            }
+
+
+
+
         </div>
         <span id="date" class=" col-lg-2">@DateTime.Now</span>
 

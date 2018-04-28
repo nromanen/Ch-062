@@ -16,8 +16,6 @@ namespace DAL
         private IBaseRepository<Exercise> exerciseRepo;
         private IBaseRepository<Course> courseRepo;
         private IBaseRepository<UserCode> codeRepo;
-        private IBaseRepository<CodeResult> codeResultsRepo;
-        private IBaseRepository<CodeError> codeErrorsRepo;
         private IBaseRepository<CodeHistory> codeHistoryRepo;
         private IBaseRepository<TestCase> testCasesRepo;
 
@@ -71,23 +69,7 @@ namespace DAL
             }
         }
 
-        public IBaseRepository<CodeResult> CodeResultsRepo
-        {
-            get
-            {
-                if (codeResultsRepo == null) { codeResultsRepo = new BaseRepository<CodeResult>(context); }
-                return codeResultsRepo;
-            }
-        }
-
-        public IBaseRepository<CodeError> CodeErrorsRepo
-        {
-            get
-            {
-                if (codeErrorsRepo == null) { codeErrorsRepo = new BaseRepository<CodeError>(context); }
-                return codeErrorsRepo;
-            }
-        }
+       
         public IBaseRepository<CodeHistory> CodeHistoryRepo
         {
             get
