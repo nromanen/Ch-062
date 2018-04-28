@@ -1,7 +1,8 @@
-﻿@model WebApp.ViewModels.CodeHistoryViewModel.CodeHistoryViewModel
+﻿@model Model.DTO.CodeDTO.UserCodeDTO
 
 @{
     ViewData["Title"] = "History";
+
 }
 
 <h2>History</h2>
@@ -25,9 +26,9 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8">
-            <span class="titlecode" data-toggle="collapse" data-target="#code-example">Code title</span>
+            <span class="titlecode" data-toggle="collapse" data-target="#code-example"><h2>История кода для @Model.User.UserName</h2></span>
             <div id="code-example" class="collapse">
-                @Model.ErrorExecutionHistory
+                @Html.DisplayForModel()
             </div>
         </div>
         <span id="date" class=" col-lg-2">@DateTime.Now</span>
@@ -47,7 +48,7 @@
                 .toggleClass("glyphicon-chevron-up");
         });
     });
-    
+
 </script>
 <script src="js/codemirror.js"></script>
 <script src="js/matchbrackets.js"></script>

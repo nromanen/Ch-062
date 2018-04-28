@@ -16,8 +16,10 @@ namespace Model.DTO.CodeDTO
 
         public ICollection<CodeErrorDTO> CodeErrors { get; set; }
         public ICollection<CodeResultDTO> CodeResults { get; set; }
+        public ICollection<CodeHistoryDTO> CodeHistories { get; set; }
 
-        public virtual UserDTO User { get; set; }
-        public virtual ExerciseDTO Exercise { get; set; }
+
+        public UserDTO User { get; set; }
+        public ExerciseDTO Exercise { get; set; }
     }
 }

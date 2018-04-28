@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model.DB.Code;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,6 +11,6 @@ namespace Model.DTO.CodeDTO
         public int CodeId { get; set; }
         public string CodeText { get; set; }
 
-        public virtual UserCodeDTO Code { get; set; }
+        public UserCodeDTO Code { get; set; }
     }
 }

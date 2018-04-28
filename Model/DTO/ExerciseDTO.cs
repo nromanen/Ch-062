@@ -18,7 +18,7 @@ namespace Model.DTO
         public string TaskBaseCodeField { get; set; }
 
         public int CourseId { get; set; }
-
+        
         public string Course { get; set; }
 
         public bool IsDeleted { get; set; }

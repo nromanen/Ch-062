@@ -11,9 +11,10 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180427152051_myInit")]
+    partial class myInit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -236,8 +237,6 @@ namespace DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Course");
-
                     b.Property<int>("CourseId");
 
                     b.Property<DateTime>("CreateDateTime");
@@ -255,6 +254,8 @@ namespace DAL.Migrations
                     b.Property<DateTime>("UpdateDateTime");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
 
                     b.ToTable("Exercises");
                 });
@@ -428,6 +429,14 @@ namespace DAL.Migrations
                     b.HasOne("Model.DB.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Model.DB.Exercise", b =>
+                {
+                    b.HasOne("Model.DB.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Model.DB.TestCase", b =>

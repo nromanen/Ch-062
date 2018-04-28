@@ -11,7 +11,7 @@ using Model.DTO.CodeDTO;
 
 namespace BAL.Managers
 {
-    public class CodeManager:ICodeManager
+    public class CodeManager : ICodeManager
     {
         private IUnitOfWork unitOfWork;
         private IMapper mapper;
@@ -24,6 +24,7 @@ namespace BAL.Managers
             this.mapper = mapper;
             this.unitOfWork = unitOfWork;
         }
+        
 
         public UserCodeDTO GetUserCodeById(string id)
         {
@@ -57,7 +58,7 @@ namespace BAL.Managers
         {
             return unitOfWork.CodeRepo.Get(c => c.ExerciseId == exerciseId && c.UserId == userId).FirstOrDefault() != null;
         }
-
+        
         private void AddHistory(int codeId, string text)
         {
             unitOfWork.CodeHistoryRepo.Insert(new CodeHistory

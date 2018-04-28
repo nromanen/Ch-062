@@ -18,20 +18,25 @@ namespace WebApp.Controllers
         private readonly ICodeManager codeManager;
         private readonly IMapper mapper;
         private readonly UserManager<User> userManager;
+        private readonly IExerciseManager exerciseManager;
+        private readonly ICourseManager courseManager;
 
-        public CodeHistoryController(ICodeManager codeManager, IMapper mapper, UserManager<User> userManager)
+        public CodeHistoryController(ICodeManager codeManager, IMapper mapper, UserManager<User> userManager, IExerciseManager exerciseManager, ICourseManager courseManager)
         {
             this.userManager = userManager;
             this.codeManager = codeManager;
             this.mapper = mapper;
+            this.exerciseManager = exerciseManager;
+            this.courseManager = courseManager;
         }
 
         public IActionResult History(CodeHistoryViewModel codeHistoryViewModel)
         {
-            var userCode = codeManager.GetUserCodeById(userManager.Users.Where(e => e.UserName == User.Identity.Name).First().Id);
+            var userName = User.Identity.Name;
+            var user = userManager.Users.Where(e => e.UserName == userName).FirstOrDefault();
+            var code = codeManager.GetUserCodeById(user.Id);
             
-            codeHistoryViewModel.ErrorExecutionHistory = codeManager.GetCodeErrors(userCode.Id);
-            return View();
+            return View(code);
         }
     }
 }
