@@ -35,8 +35,6 @@ namespace BAL.Managers
             return code;
         }
 
-
-
         public UserCodeDTO UserCodeByExId(string userId, int exerciseId)
         {
             UserCodeDTO code = mapper.Map<UserCodeDTO>(unitOfWork.CodeRepo.Get(c => c.UserId == userId && c.ExerciseId == exerciseId).FirstOrDefault());
@@ -54,7 +52,7 @@ namespace BAL.Managers
         }
 
 
-        private void AddHistory(int codeId, string text, string error = null, string result = null)
+        public void AddHistory(int codeId, string text, string error = null, string result = null)
         {
             unitOfWork.CodeHistoryRepo.Insert(new CodeHistory
             {
@@ -111,9 +109,6 @@ namespace BAL.Managers
             return errors;
         }
 
-
-
-
         public UserCodeDTO BuildCodeModel(UserCodeDTO model)
         {
             var exercise = exerciseManager.GetById(model.ExerciseId);
@@ -128,10 +123,19 @@ namespace BAL.Managers
             }
             return model;
         }
-        public IEnumerable<CodeHistoryDTO> GetHistoryLst(int codeId)
+
+        public CodeHistoryDTO GetHistoryLst(int codeId)
         {
-            var codeHistoryDTO = mapper.Map<IEnumerable<CodeHistoryDTO>>(unitOfWork.CodeHistoryRepo.Get().Where(e => e.CodeId == codeId));
-            return codeHistoryDTO;
+            var t = unitOfWork.CodeHistoryRepo.Get(e => e.CodeId == codeId).FirstOrDefault();
+            return mapper.Map<CodeHistoryDTO>(t);
         }
+
+        public void SetFavouriteCode(int codeId, bool setToFavourite)
+        {
+            var codeHistoryEntity = unitOfWork.CodeHistoryRepo.Get().Where(e=>e.CodeId==codeId).FirstOrDefault();
+            codeHistoryEntity.IsFavouriteCode = setToFavourite;
+            unitOfWork.Save();
+        }
+
     }
 }

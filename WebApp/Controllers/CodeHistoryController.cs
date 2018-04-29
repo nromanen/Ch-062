@@ -34,9 +34,16 @@ namespace WebApp.Controllers
             var userName = User.Identity.Name;
             var user = userManager.Users.Where(e => e.UserName == userName).FirstOrDefault();
             var code = codeManager.GetUserCodeById(user.Id);
-            IEnumerable<CodeHistoryDTO> history = codeManager.GetHistoryLst(code.Id);
+            CodeHistoryDTO history = codeManager.GetHistoryLst(code.Id);
             
             return View(history);
+        }
+
+        [HttpPost]
+        public ActionResult AddToFavourites(int codeTextId, bool setToFavourite)
+        {
+            codeManager.SetFavouriteCode(codeTextId, setToFavourite);
+            return View();
         }
     }
 }
