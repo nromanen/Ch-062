@@ -134,22 +134,22 @@ namespace DAL.Seed
             //        TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
             //    });
             //}
-            if (!context.UsersCode.Any())
-            {
-                unitOfWork.CodeHistoryRepo.Insert(new CodeHistory
-                {
-                    CodeId = 3,
-                    Code = new UserCode
-                    {
-                        UserId = unitOfWork.UserRepo.Get(u => u.UserName == "student@gmail.com").First().Id,
-                        ExerciseId = unitOfWork.ExerciseRepo.Get(r => r.TaskName == "JavaScript Task 1").FirstOrDefault().Id
-                   },
-                    CodeText = "document.getElementById('demo').innerHTML = 'Hello Dolly.';",
-                    Error = @"Severity	Code	Description	Project	File	Line	Suppression State
-                    Error   CS0029  Cannot implicitly convert type 'System.Collections.Generic.HashSet<Model.DB.Code.CodeHistory>' to 'Model.DB.Code.CodeHistory'   DAL C:\Users\Filip\source\repos\Ch - 062\DAL\Seed\DbInitializer.cs    153 Active
-                    "
-                });
-            }
+            //if (!context.UsersCode.Any())
+            //{
+            //    unitOfWork.CodeHistoryRepo.Insert(new CodeHistory
+            //    {
+            //        CodeId = 3,
+            //        Code = new UserCode
+            //        {
+            //            UserId = unitOfWork.UserRepo.Get(u => u.UserName == "student@gmail.com").First().Id,
+            //            ExerciseId = unitOfWork.ExerciseRepo.Get(r => r.TaskName == "JavaScript Task 1").FirstOrDefault().Id
+            //       },
+            //        CodeText = "document.getElementById('demo').innerHTML = 'Hello Dolly.';",
+            //        Error = @"Severity	Code	Description	Project	File	Line	Suppression State
+            //        Error   CS0029  Cannot implicitly convert type 'System.Collections.Generic.HashSet<Model.DB.Code.CodeHistory>' to 'Model.DB.Code.CodeHistory'   DAL C:\Users\Filip\source\repos\Ch - 062\DAL\Seed\DbInitializer.cs    153 Active
+            //        "
+            //    });
+            //}
             unitOfWork.Save();
         }
     }
