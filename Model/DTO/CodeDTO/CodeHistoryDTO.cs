@@ -8,11 +8,14 @@ namespace Model.DTO.CodeDTO
     public class CodeHistoryDTO
     {
         public int Id { get; set; }
-        public int CodeId { get; set; }
-        public string CodeText { get; set; }
-        public string Result { get; set; }
-        public string Error { get; set; }
 
+        public string CodeText { get; set; }
+        public string Error { get; set; }
+        public string Result { get; set; }
+        public bool IsFavouriteCode { get; set; }
+
+        public int CodeId { get; set; }
         public UserCodeDTO Code { get; set; }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Model.DTO.CodeDTO.CodeHistoryDTO>
+﻿@model Model.DTO.CodeDTO.CodeHistoryDTO
 
 @{
     ViewData["Title"] = "History";
@@ -27,7 +27,7 @@
         <div class="col-lg-8">
 
 
-            @foreach (var code in Model)
+            @*@foreach (var code in Model)
             {
                 <span class="titlecode" data-toggle="collapse" data-target="#code-example"> <h2> История кода для @code.Code.User.UserName</h2> </span>
                 <div id="code-example" class="collapse">
@@ -41,7 +41,7 @@
                         <p>@code.Error</p>
                     }
                 </div>
-            }
+            }*@
 
 
 
@@ -49,20 +49,28 @@
         </div>
         <span id="date" class=" col-lg-2">@DateTime.Now</span>
 
-        <span class=" col-lg-2 glyphicon glyphicon-heart" data-toggle="collapse" href="#collapsecontent"></span>
+        <span id="toggle-span" class=" col-lg-2 glyphicon glyphicon-heart" data-toggle="collapse" href="#collapsecontent"></span>
         <div class="collapse" id="collapsecontent">
             saved to favourites
+            <span id="qwerty"></span>
         </div>
     </div>
 </div>
 <hr />
 <script>
+    var isFavourite = false;
     $(document).ready(function () {
         $('.divcontainer').click(function () {
             $(this).find("span:eq(1)")
                 .toggleClass('glyphicon-chevron-down')
                 .toggleClass("glyphicon-chevron-up");
+            isFavourite = !isFavourite;
+            console.log(isFavourite);
+            $('qwerty').val().innerHtml = isFavourite;
         });
+
+        
+
     });
 
 </script>

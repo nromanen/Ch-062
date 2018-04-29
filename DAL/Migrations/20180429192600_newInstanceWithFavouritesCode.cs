@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DAL.Migrations
 {
-    public partial class newUpd : Migration
+    public partial class newInstanceWithFavouritesCode : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
