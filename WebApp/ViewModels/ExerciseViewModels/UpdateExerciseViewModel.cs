@@ -26,5 +26,6 @@ namespace WebApp.ViewModels
         public DateTime UpdateDateTime { get; set; }
 
         public IEnumerable<CourseDTO> CourseList { get; set; }
+
     }
 }

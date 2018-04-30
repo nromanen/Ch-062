@@ -23,14 +23,16 @@ namespace WebApp.Controllers
         private readonly IExerciseManager exerciseManager;
         private readonly ICourseManager courseManager;
         private readonly UserManager<User> userManager;
+        private readonly ICommentManager commentManager;
         private readonly IMapper mapper;
 
         public ExerciseManagementController(IExerciseManager exerciseManager, ICourseManager courseManager,
-                                            UserManager<User> userManager, IMapper mapper)
+                                            UserManager<User> userManager, ICommentManager commentManager, IMapper mapper)
         {
             this.exerciseManager = exerciseManager;
             this.courseManager = courseManager;
             this.userManager = userManager;
+            this.commentManager = commentManager;
             this.mapper = mapper;
         }
 
@@ -56,7 +58,7 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Teacher")]
         public IActionResult Create(CreateExerciseViewModel model)
         {
-            var currentTeacher = userManager.GetUserAsync(HttpContext.User).Result.Id;
+            var user = userManager.GetUserAsync(HttpContext.User).Result;
 
             if (ModelState.IsValid)
             {
@@ -68,7 +70,7 @@ namespace WebApp.Controllers
                     TaskName = model.TaskName,
                     TaskTextField = model.TaskTextField,
                     TaskBaseCodeField = model.TaskBaseCodeField,
-                    TeacherId = currentTeacher,
+                    TeacherId = user.Id,
                     CreateDateTime = DateTime.Now,
                     UpdateDateTime = DateTime.Now
                 };
@@ -80,12 +82,19 @@ namespace WebApp.Controllers
 
         public IActionResult TaskView(int id)
         {
-            var task = mapper.Map<ExerciseDTO>(exerciseManager.GetById(id));
-            if (task == null)
+            var task = exerciseManager.GetById(id);
+            var commentList = commentManager.Get(g => g.ExerciseId == id).ToList();
+
+            return View(new GetExerciseViewModel()
             {
-                return NotFound();
-            }
-            return View(task);
+                Id = id,
+                Course = task.Course,
+                IsDeleted = task.IsDeleted,
+                CommentList = commentList,
+                TaskName = task.TaskName,
+                TaskTextField = task.TaskTextField,
+                TaskBaseCodeField = task.TaskBaseCodeField
+            });
         }
 
 
@@ -113,20 +122,13 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Teacher")]
         public IActionResult Update(UpdateExerciseViewModel model)
         {
+            var course = courseManager.GetById(model.CourseId);
             if (ModelState.IsValid)
             {
-                var course = courseManager.GetById(model.CourseId);
-                var task = new ExerciseDTO()
-                {
-                    Id = model.Id,
-                    TaskName = model.TaskName,
-                    TaskTextField = model.TaskTextField,
-                    TaskBaseCodeField = model.TaskBaseCodeField,
-                    CourseId = model.CourseId,
-                    Course = course.Name,
-                    UpdateDateTime = DateTime.Now
-                };
-                exerciseManager.Update(task);
+
+                    exerciseManager.Update(model.Id, model.TaskName, model.TaskTextField,
+                                       model.TaskBaseCodeField, model.CourseId,
+                                       course.Name, DateTime.Now);
             }
             return RedirectToAction("Index", "ExerciseManagement");
         }
@@ -137,12 +139,7 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Teacher")]
         public IActionResult DeleteOrRecover(int id)
         {
-            var task = exerciseManager.GetById(id);
-            if (task != null)
-            {
-                task.IsDeleted = !task.IsDeleted;
-                exerciseManager.Update(task);
-            }
+            exerciseManager.DeleteOrRecover(id);
             return RedirectToAction("Index", "ExerciseManagement");
         }
     }

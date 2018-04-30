@@ -31,6 +31,14 @@ namespace BAL.IoC
                 .ForMember(dest => dest.UpdateDateTime, options => options.MapFrom(src => src.UpdateDateTime));
                 cfg.CreateMap<List<Exercise>, List<ExerciseDTO>>();
 
+                cfg.CreateMap<Comment, CommentDTO>().ForMember(dest => dest.Id, option => option.MapFrom(src => src.Id))
+                .ForMember(dest => dest.ExerciseId, options => options.MapFrom(src => src.ExerciseId))
+                .ForMember(dest => dest.CommentText, options => options.MapFrom(src => src.CommentText))
+                .ForMember(dest => dest.CreationDateTime, options => options.MapFrom(src => src.CreationDateTime))
+                .ForMember(dest => dest.Rating, options => options.MapFrom(src => src.Rating));
+                cfg.CreateMap<List<Comment>, List<CommentDTO>>();
+
+
                 cfg.CreateMap<Course, CourseDTO>().ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, options => options.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Description, options => options.MapFrom(src => src.Description))
