@@ -285,4 +285,13 @@
   <data name="CodeHistory" xml:space="preserve">
     <value>Code history</value>
   </data>
+  <data name="Exercisetitle" xml:space="preserve">
+    <value>Exercise Title</value>
+  </data>
+  <data name="Execute" xml:space="preserve">
+    <value>Execute</value>
+  </data>
+  <data name="Try" xml:space="preserve">
+    <value>Try</value>
+  </data>
 </root>

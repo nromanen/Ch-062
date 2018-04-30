@@ -7,13 +7,15 @@ namespace Model.DB.Code
     {
         public int Id { get; set; }
         public string CodeText { get; set; }
-        
-        public virtual ICollection<CodeHistory> CodeHistory { get; set; }
+
+        public virtual ICollection<CodeHistory> CodeHistories { get; set; }
 
         public string UserId { get; set; }
         public virtual User User { get; set; }
 
         public int ExerciseId { get; set; }
         public virtual Exercise Exercise { get; set; }
+
     }
+
 }

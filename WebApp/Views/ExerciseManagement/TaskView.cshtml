@@ -33,18 +33,21 @@
     </div>
     <label asp-for="TaskBaseCodeField" class="control-label">@SharedLocalizer["BaseCode"]:</label>
     <textarea asp-for="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;" readonly></textarea>
-    <div class="form-group">
-        <input value="@SharedLocalizer["Ok"]" onClick="history.go(-1)" ; class="btn btn-default" />
-    </div>
+    <br />
+        <div class="col-md-2" >
+            <input value="@SharedLocalizer["Ok"]" onClick="history.go(-1)" ; class="btn btn-default" />
+        </div>
+
 </form>
-<div class="col-md-2">
+<div class="col-md-2" style="margin-left: 10px ">
     <form asp-controller="Code" asp-action="Index">
         <input type="hidden" name="UserId" value="@User.Identity.Name" />
         <input type="hidden" name="ExerciseId" value="@Model.Id" />
         <input type="hidden" name="CodeText" value="@Model.TaskBaseCodeField" />
-        <button type="submit" class="btn btn-default">Start</button>
+        <button type="submit" class="btn btn-default">@SharedLocalizer["Try"]</button>
     </form>
 </div>
+
 
 <script>
     var quill = new Quill('#editor-container', { theme: 'snow' });

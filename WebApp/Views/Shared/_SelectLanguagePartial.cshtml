@@ -20,13 +20,37 @@
     select {
         background-color:aliceblue;
     }
+    .deff {
+        font-size: 13px;
+        font-family: 'Lato', Arial, sans-serif;
+        line-height: 30px;
+        color: black;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: bold;
+        display: block;
+        height: 100%;
+        color: #5f6f81;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .deff-language {
+        padding-top: 15px;
+        margin-left: 15px;
+        border-right: 1px solid #c6d0da
+    }
+    .dropdown-lang {
+        font-size: 15px;
+        color: black;
+        margin-right: 15px
+    }
     
 </style>
 
-<form asp-controller="Home" asp-action="SetLanguage" style=" padding: 0px 10px 0px 10px; color: black; font-size: 20px " asp-route-returnUrl="@Context.Request.Path"
-      method="post" class="form-horizontal">
+<form  asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path"
+      method="post" class="form-horizontal deff deff-language">
     @Localizer["Language:"]
-    <select style="font-size: 15px; color:black;" name="culture" onchange="this.form.submit();"
+    <select class="dropdown-lang" name="culture" onchange="this.form.submit();"
             asp-for="@requestCulture.RequestCulture.UICulture.Name"
             asp-items="cultureItems">
         

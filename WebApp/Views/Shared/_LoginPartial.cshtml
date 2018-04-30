@@ -10,9 +10,10 @@
 {
     <li style="float: right">@Html.ActionLink(@User.Identity.Name, "Index", "User")</li>
 
-    <li style="float: right">
+    <li style="float: right" >
         <form  asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm">
-            <button type="submit" style="font-size: 18px; color: black"  class="btn btn-link navbar-btn navbar-link">@SharedLocalizer["SignOut"]</button>
+            <button type="submit" style="" class="btn btn-link navbar-btn navbar-link deff "
+                    >@SharedLocalizer["SignOut"]</button>
         </form>
     </li>
 }

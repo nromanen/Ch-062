@@ -14,17 +14,16 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <title>@ViewData["Title"] - WebApp</title>
 
-
+    <style>
+        a:hover {
+            text-decoration: none;
+        }
+    </style>
 </head>
 
-<style>
-    a:hover{
-        text-decoration:none;
-    }
-</style>
 <body>
-    <div>
-        <ul id="gn-menu" class="gn-menu-main">
+    <div >
+        <ul id="gn-menu" class="gn-menu-main navbar-fixed-top" >
             <li class="gn-trigger">
                 <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
                 <nav class="gn-menu-wrapper">
@@ -58,12 +57,14 @@
                 </nav>
             </li>
             <li>
-                <a asp-area="" asp-controller="Home" asp-action="Index" style="font-size: 20px">@SharedLocalizer["SoftServe"]</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" style="font-size: 20px" >@SharedLocalizer["SoftServe"]</a>
 
             </li>
             @await Html.PartialAsync("_LoginPartial")
         </ul>
-        <header></header>
+        <header>
+
+        </header>
 
         <div class="container body-content" style="margin-top: 30px">
             @RenderBody()
@@ -80,10 +81,7 @@
     <script>
         new gnMenu(document.getElementById('gn-menu'));
     </script>
-    <script src="~/js/codemirror.js"></script>
-    <script src="~/js/matchbrackets.js"></script>
-    <script src="~/js/continuecomment.js"></script>
-    <script src="~/js/clike.js"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

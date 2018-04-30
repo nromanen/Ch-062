@@ -104,7 +104,8 @@ namespace DAL.Seed
                     IsDeleted = false,
                     CreateDateTime = System.DateTime.Now,
                     UpdateDateTime = System.DateTime.Now,
-                    TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
+                    TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id,
+                    TaskBaseCodeField = "namespace OnlineExam\n{\n\tpublic class Program\n    \t{\n    \t\tpublic static int Test()\n    \t\t\t{\n    \t\t\t\treturn 123;\n                }\n        }\n}"
                 });
             }
             if (!context.Exercises.Any(r => r.TaskName == "Java Task 1"))
@@ -144,7 +145,6 @@ namespace DAL.Seed
             //        Exercise = unitOfWork.ExerciseRepo.Get().Where(e => e.Id == 1).FirstOrDefault(),
             //        ExerciseId = 1,
             //        CodeText = "document.getElementById('demo').innerHTML = 'Hello Dolly.';",
-            //        CodeHistory = null
             //    });
             //}
             //if (!context.CodeHistories.Any())
