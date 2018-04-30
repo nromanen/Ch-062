@@ -18,7 +18,10 @@ namespace BAL.Interfaces
                                      IOrderedQueryable<Exercise>> orderBy = null,
                                      string includeProperties = "");
         void Insert(ExerciseDTO item);
-        void Update(ExerciseDTO item);
+        void Update(int id, string taskName, string taskTextField,
+                           string taskBaseCodeField, int courseId, string course,
+                           DateTime updateDateTime);
+        void DeleteOrRecover(int id);
         void Delete(ExerciseDTO item);
     }
 }

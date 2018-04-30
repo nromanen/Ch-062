@@ -11,8 +11,13 @@
         color: #808080;
     }
 
+        .titlecode:hover {
+            cursor: pointer;
+            color: #ffd800;
+        }
+
     #code-example {
-        border: 1px solid grey;
+        border: 1px solid #cacaca;
         padding: 12px;
     }
 
@@ -22,59 +27,72 @@
     }
 </style>
 <hr />
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8">
+@foreach (var code in Model)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
 
-
-            @foreach (var code in Model)
-            {
-                <span class="titlecode" data-toggle="collapse" data-target="#code-example"> <h2> История кода для @code.Code.User.UserName</h2> </span>
+                <span class="titlecode" data-toggle="collapse" data-target="#code-example"> <h2>@*@code.Code.Exercise.TaskName*@</h2> </span>
                 <div id="code-example" class="collapse">
                     <p>@code.CodeText</p>
                     @if (code.Result != null)
                     {
+                        <h3>Result</h3>
+
                         <p>@code.Result</p>
                     }
                     else
                     {
+                        <h3>Errors</h3>
                         <p>@code.Error</p>
                     }
                 </div>
-            }
+            </div>
 
+            <span id="date" class=" col-lg-2">@DateTime.Now</span>
 
+            <span id="toggle-span" class=" col-lg-2 glyphicon glyphicon-heart" data-toggle="collapse" href="#collapsecontent"></span>
+            <div class="collapse" id="collapsecontent">
+                <p>saved to favourites</p>
 
-
-        </div>
-        <span id="date" class=" col-lg-2">@DateTime.Now</span>
-
-        <span id="toggle-span" class=" col-lg-2 glyphicon glyphicon-heart" data-toggle="collapse" href="#collapsecontent"></span>
-        <div class="collapse" id="collapsecontent">
-            saved to favourites
-            <span id="qwerty"></span>
+            </div>
         </div>
     </div>
-</div>
+}
 <hr />
-<script>
-    var isFavourite = false;
+@section Scripts{
+    <script>
     $(document).ready(function () {
         $('.divcontainer').click(function () {
             $(this).find("span:eq(1)")
                 .toggleClass('glyphicon-chevron-down')
                 .toggleClass("glyphicon-chevron-up");
-            isFavourite = !isFavourite;
-            console.log(isFavourite);
-            $('qwerty').val().innerHtml = isFavourite;
         });
 
-        
+        });
 
-    });
+        @*$('#toggle-span').click(
+            function () {
 
-</script>
-<script src="js/codemirror.js"></script>
-<script src="js/matchbrackets.js"></script>
-<script src="js/continuecomment.js"></script>
-<script src="js/clike.js"></script>
+                var userCode;
+                code.CodeId = @Model.Where(e=>e.CodeId).;
+                console.log(userCode.CodeText);
+                userCode.ExerciseId = ('@Model.');
+                userCode.UserId = ('@Model.UserId');
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Code/GetCode",
+                    data: userCode,
+                    success: function(data) {
+                        $("#result").html(data);
+                    }
+                });
+
+            }
+        );*@
+
+    </script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+}

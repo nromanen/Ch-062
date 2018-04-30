@@ -189,6 +189,28 @@ namespace DAL.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("Model.DB.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CommentText");
+
+                    b.Property<DateTime>("CreationDateTime");
+
+                    b.Property<int>("ExerciseId");
+
+                    b.Property<int>("Rating");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("UserName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("Model.DB.Course", b =>
                 {
                     b.Property<int>("Id")

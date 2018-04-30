@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Model.DTO;
 
 namespace WebApp.ViewModels
 {
@@ -18,6 +19,8 @@ namespace WebApp.ViewModels
         public string TaskBaseCodeField { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public IEnumerable<CommentDTO> CommentList { get; set; }
 
     }
 }
