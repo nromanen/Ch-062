@@ -28,8 +28,7 @@ namespace WebApp.Controllers
         private readonly ITestCaseManager testCaseManager;
 
         public ExerciseManagementController(IExerciseManager exerciseManager, ICourseManager courseManager,
-                                            UserManager<User> userManager, IMapper mapper, ITestCaseManager testCaseManager)
-                                            UserManager<User> userManager, ICommentManager commentManager, IMapper mapper)
+                                            UserManager<User> userManager, IMapper mapper, ITestCaseManager testCaseManager, ICommentManager commentManager)
         {
             this.exerciseManager = exerciseManager;
             this.courseManager = courseManager;
