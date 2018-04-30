@@ -96,7 +96,7 @@ namespace BAL.Managers
             var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
 
             var res = sandboxManager.Execute(code);
-            if (res.Result != null)
+            if (res.Success)
             {
                 string result =
                     $"Result: {res.Result}, Compile time: {res.CompileTime.TotalMilliseconds}, Execution Time: {res.ExecutionTime.TotalMilliseconds}";

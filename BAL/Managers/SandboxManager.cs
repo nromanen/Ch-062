@@ -44,7 +44,7 @@ namespace BAL.Managers
                 {
                     timer.Reset();
                     timer.Start();
-                    object temp = asm.GetType(targetClass).GetMethod(entryPoint).Invoke(null, parameters);
+                    object temp = asm.GetType(targetClass).GetMethod(entryPoint).Invoke(null, null);
                     timer.Stop();
                     result.Success = true;
                     result.Result = temp.ToString();
