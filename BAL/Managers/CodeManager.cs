@@ -124,10 +124,10 @@ namespace BAL.Managers
             return model;
         }
 
-        public CodeHistoryDTO GetHistoryLst(int codeId)
+        public IEnumerable<CodeHistoryDTO> GetHistoryLst(int codeId)
         {
-            var t = unitOfWork.CodeHistoryRepo.Get(e => e.CodeId == codeId).FirstOrDefault();
-            return mapper.Map<CodeHistoryDTO>(t);
+            var t = unitOfWork.CodeHistoryRepo.Get(e => e.CodeId == codeId);
+            return mapper.Map<IEnumerable<CodeHistoryDTO>>(t);
         }
 
         public void SetFavouriteCode(int codeId, bool setToFavourite)
