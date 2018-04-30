@@ -11,9 +11,10 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180429192600_newInstanceWithFavouritesCode")]
+    partial class newInstanceWithFavouritesCode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -183,28 +184,6 @@ namespace DAL.Migrations
                     b.Property<int>("ExerciseId");
 
                     b.Property<int>("Rating");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("Model.DB.Comment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CommentText");
-
-                    b.Property<DateTime>("CreationDateTime");
-
-                    b.Property<int>("ExerciseId");
-
-                    b.Property<int>("Rating");
-
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 

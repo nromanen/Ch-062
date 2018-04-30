@@ -18,7 +18,7 @@ namespace Model.DB
 
         public int CourseId { get; set; }
 
-        public string Course { get; set; }
+        public virtual string Course{ get; set; }
         
         public bool IsDeleted { get; set; }
 

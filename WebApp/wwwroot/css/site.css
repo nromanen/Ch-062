@@ -5,6 +5,19 @@
     
 }
 
+.deff {
+    font-size: 13px; font-family: 'Lato', Arial, sans-serif;
+    line-height: 30px; color: black;text-transform: uppercase; letter-spacing: 1px;
+    font-weight: bold;display: block;
+    height: 100%;
+    color: #5f6f81;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: none;
+}
 .navbar{
     background-color:#004577;
 }

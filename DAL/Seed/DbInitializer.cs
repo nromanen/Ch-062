@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Model;
 using DAL.Interface;
 using Model.DB;
+using Model.DB.Code;
+using System.Collections.Generic;
 
 namespace DAL.Seed
 {
@@ -17,7 +19,7 @@ namespace DAL.Seed
             MainDbContext context,
             UserManager<User> userManager,
             RoleManager<IdentityRole> roleManager,
-            IUnitOfWork unitOfWork )
+            IUnitOfWork unitOfWork)
         {
             this.context = context;
             this.userManager = userManager;
@@ -65,7 +67,7 @@ namespace DAL.Seed
                     Description = "Courses for .Net group",
                     IsActive = true,
                     CreationDate = System.DateTime.Now,
-                     UserId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
+                    UserId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
                 });
             }
             if (!context.Courses.Any(r => r.Name == "Java"))
@@ -89,47 +91,74 @@ namespace DAL.Seed
                     CreationDate = System.DateTime.Now,
                     UserId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
                 });
+                unitOfWork.Save();
             }
-            //if (!context.Exercises.Any(r => r.TaskName == ".Net Task 1"))
+            if (!context.Exercises.Any(r => r.TaskName == ".Net Task 1"))
+            {
+                unitOfWork.ExerciseRepo.Insert(new Exercise
+                {
+                    TaskName = ".Net Task 1",
+                    TaskTextField = "First Task 4 .Net",
+                    Course = ".Net",
+                    CourseId = unitOfWork.CourseRepo.Get(c => c.Name == ".Net").First().Id,
+                    IsDeleted = false,
+                    CreateDateTime = System.DateTime.Now,
+                    UpdateDateTime = System.DateTime.Now,
+                    TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id,
+                    TaskBaseCodeField = "namespace OnlineExam\n{\n\tpublic class Program\n    \t{\n    \t\tpublic static int Test()\n    \t\t\t{\n    \t\t\t\treturn 123;\n                }\n        }\n}"
+                });
+            }
+            if (!context.Exercises.Any(r => r.TaskName == "Java Task 1"))
+            {
+                unitOfWork.ExerciseRepo.Insert(new Exercise
+                {
+                    TaskName = "Java Task 1",
+                    TaskTextField = "First Task 4 Java",
+                    Course = "Java",
+                    CourseId = unitOfWork.CourseRepo.Get(c => c.Name == "Java").First().Id,
+                    IsDeleted = false,
+                    CreateDateTime = System.DateTime.Now,
+                    UpdateDateTime = System.DateTime.Now,
+                    TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
+                });
+            }
+            if (!context.Exercises.Any(r => r.TaskName == "JavaScript Task 1"))
+            {
+                unitOfWork.ExerciseRepo.Insert(new Exercise
+                {
+                    TaskName = "JavaScript Task 1",
+                    TaskTextField = "First Task 4 JavaScript",
+                    Course = "JavaScript",
+                    CourseId = unitOfWork.CourseRepo.Get(c => c.Name == "JavaScript").First().Id,
+                    IsDeleted = false,
+                    CreateDateTime = System.DateTime.Now,
+                    UpdateDateTime = System.DateTime.Now,
+                    TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
+                });
+            }
+            //if (!context.UsersCode.Any())
             //{
-            //    unitOfWork.ExerciseRepo.Insert(new Exercise
+            //    unitOfWork.CodeRepo.Insert(new UserCode()
             //    {
-            //        TaskName = ".Net Task 1",
-            //        TaskTextField = "First Task 4 .Net",
-            //        Course = ".Net",
-            //        CourseId = unitOfWork.CourseRepo.Get(c => c.Name == ".Net").First().Id,
-            //        IsDeleted = false,
-            //        CreateDateTime = System.DateTime.Now,
-            //        UpdateDateTime = System.DateTime.Now,
-            //        TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
+            //        UserId = unitOfWork.UserRepo.Get(u => u.UserName == "student@gmail.com").FirstOrDefault().Id,
+            //        User = unitOfWork.UserRepo.Get(u => u.UserName == "student@gmail.com").FirstOrDefault(),
+            //        Exercise = unitOfWork.ExerciseRepo.Get().Where(e => e.Id == 1).FirstOrDefault(),
+            //        ExerciseId = 1,
+            //        CodeText = "document.getElementById('demo').innerHTML = 'Hello Dolly.';",
             //    });
             //}
-            //if (!context.Exercises.Any(r => r.TaskName == "Java Task 1"))
+            //if (!context.CodeHistories.Any())
             //{
-            //    unitOfWork.ExerciseRepo.Insert(new Exercise
+
+            //    unitOfWork.CodeHistoryRepo.Insert(new CodeHistory
             //    {
-            //        TaskName = "Java Task 1",
-            //        TaskTextField = "First Task 4 Java",
-            //        Course = "Java",
-            //        CourseId = unitOfWork.CourseRepo.Get(c => c.Name == "Java").First().Id,
-            //        IsDeleted = false,
-            //        CreateDateTime = System.DateTime.Now,
-            //        UpdateDateTime = System.DateTime.Now,
-            //        TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
-            //    });
-            //}
-            //if (!context.Exercises.Any(r => r.TaskName == "JavaScript Task 1"))
-            //{
-            //    unitOfWork.ExerciseRepo.Insert(new Exercise
-            //    {
-            //        TaskName = "JavaScript Task 1",
-            //        TaskTextField = "First Task 4 JavaScript",
-            //        Course = "JavaScript",
-            //        CourseId = unitOfWork.CourseRepo.Get(c => c.Name == "JavaScript").First().Id,
-            //        IsDeleted = false,
-            //        CreateDateTime = System.DateTime.Now,
-            //        UpdateDateTime = System.DateTime.Now,
-            //        TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
+            //        CodeId = unitOfWork.CodeRepo.Get().Where(e => e.CodeText == "document.getElementById('demo').innerHTML = 'Hello Dolly.';").FirstOrDefault().Id,
+            //        CodeText = "document.getElementById('demo').innerHTML = 'Hello Dolly.';",
+            //        Error = @"Severity	Code	Description	Project	File	Line	Suppression State
+            //        Error   CS0029  Cannot implicitly convert type 'System.Collections.Generic.HashSet<Model.DB.Code.CodeHistory>' to 'Model.DB.Code.CodeHistory'   DAL C:\Users\Filip\source\repos\Ch - 062\DAL\Seed\DbInitializer.cs    153 Active
+            //        ",
+            //        IsFavouriteCode = false,
+            //        Result = null
             //    });
             //}
             unitOfWork.Save();

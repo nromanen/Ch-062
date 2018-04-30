@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Model.DB;
 using Model.DTO.CodeDTO;
-using WebApp.ViewModels.CodeHistoryViewModel;
 
 namespace WebApp.Controllers
 {
@@ -18,19 +17,32 @@ namespace WebApp.Controllers
         private readonly ICodeManager codeManager;
         private readonly IMapper mapper;
         private readonly UserManager<User> userManager;
+        private readonly IExerciseManager exerciseManager;
+        private readonly ICourseManager courseManager;
 
-        public CodeHistoryController(ICodeManager codeManager, IMapper mapper, UserManager<User> userManager)
+        public CodeHistoryController(ICodeManager codeManager, IMapper mapper, UserManager<User> userManager, IExerciseManager exerciseManager, ICourseManager courseManager)
         {
             this.userManager = userManager;
             this.codeManager = codeManager;
             this.mapper = mapper;
+            this.exerciseManager = exerciseManager;
+            this.courseManager = courseManager;
         }
 
-        public IActionResult History(CodeHistoryViewModel codeHistoryViewModel)
+        public IActionResult History()
         {
-            var userCode = codeManager.GetUserCodeById(userManager.Users.Where(e => e.UserName == User.Identity.Name).First().Id);
+            var userName = User.Identity.Name;
+            var user = userManager.Users.Where(e => e.UserName == userName).FirstOrDefault();
+            var code = codeManager.GetUserCodeById(user.Id);
+            IEnumerable<CodeHistoryDTO> history = codeManager.GetHistoryLst(code.Id);
             
-            codeHistoryViewModel.ErrorExecutionHistory = codeManager.GetCodeErrors(userCode.Id);
+            return View(history);
+        }
+
+        [HttpPost]
+        public ActionResult AddToFavourites(int codeTextId, bool setToFavourite)
+        {
+            codeManager.SetFavouriteCode(codeTextId, setToFavourite);
             return View();
         }
     }
