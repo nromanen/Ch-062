@@ -104,7 +104,8 @@ namespace DAL.Seed
                     IsDeleted = false,
                     CreateDateTime = System.DateTime.Now,
                     UpdateDateTime = System.DateTime.Now,
-                    TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
+                    TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id,
+                    TaskBaseCodeField = "namespace OnlineExam\n{\n\tpublic class Program\n    \t{\n    \t\tpublic static int Test()\n    \t\t\t{\n    \t\t\t\treturn 123;\n                }\n        }\n}"
                 });
             }
             if (!context.Exercises.Any(r => r.TaskName == "Java Task 1"))
@@ -135,32 +136,31 @@ namespace DAL.Seed
                     TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
                 });
             }
-            if (!context.UsersCode.Any())
-            {
-                unitOfWork.CodeRepo.Insert(new UserCode()
-                {
-                    UserId = unitOfWork.UserRepo.Get(u => u.UserName == "student@gmail.com").FirstOrDefault().Id,
-                    User = unitOfWork.UserRepo.Get(u => u.UserName == "student@gmail.com").FirstOrDefault(),
-                    Exercise = unitOfWork.ExerciseRepo.Get().Where(e => e.Id == 1).FirstOrDefault(),
-                    ExerciseId = 1,
-                    CodeText = "document.getElementById('demo').innerHTML = 'Hello Dolly.';",
-                    CodeHistory = null
-                });
-            }
-            if (!context.CodeHistories.Any())
-            {
+            //if (!context.UsersCode.Any())
+            //{
+            //    unitOfWork.CodeRepo.Insert(new UserCode()
+            //    {
+            //        UserId = unitOfWork.UserRepo.Get(u => u.UserName == "student@gmail.com").FirstOrDefault().Id,
+            //        User = unitOfWork.UserRepo.Get(u => u.UserName == "student@gmail.com").FirstOrDefault(),
+            //        Exercise = unitOfWork.ExerciseRepo.Get().Where(e => e.Id == 1).FirstOrDefault(),
+            //        ExerciseId = 1,
+            //        CodeText = "document.getElementById('demo').innerHTML = 'Hello Dolly.';",
+            //    });
+            //}
+            //if (!context.CodeHistories.Any())
+            //{
 
-                unitOfWork.CodeHistoryRepo.Insert(new CodeHistory
-                {
-                    CodeId = unitOfWork.CodeRepo.Get().Where(e => e.CodeText == "document.getElementById('demo').innerHTML = 'Hello Dolly.';").FirstOrDefault().Id,
-                    CodeText = "document.getElementById('demo').innerHTML = 'Hello Dolly.';",
-                    Error = @"Severity	Code	Description	Project	File	Line	Suppression State
-                    Error   CS0029  Cannot implicitly convert type 'System.Collections.Generic.HashSet<Model.DB.Code.CodeHistory>' to 'Model.DB.Code.CodeHistory'   DAL C:\Users\Filip\source\repos\Ch - 062\DAL\Seed\DbInitializer.cs    153 Active
-                    ",
-                    IsFavouriteCode = false,
-                    Result = null
-                });
-            }
+            //    unitOfWork.CodeHistoryRepo.Insert(new CodeHistory
+            //    {
+            //        CodeId = unitOfWork.CodeRepo.Get().Where(e => e.CodeText == "document.getElementById('demo').innerHTML = 'Hello Dolly.';").FirstOrDefault().Id,
+            //        CodeText = "document.getElementById('demo').innerHTML = 'Hello Dolly.';",
+            //        Error = @"Severity	Code	Description	Project	File	Line	Suppression State
+            //        Error   CS0029  Cannot implicitly convert type 'System.Collections.Generic.HashSet<Model.DB.Code.CodeHistory>' to 'Model.DB.Code.CodeHistory'   DAL C:\Users\Filip\source\repos\Ch - 062\DAL\Seed\DbInitializer.cs    153 Active
+            //        ",
+            //        IsFavouriteCode = false,
+            //        Result = null
+            //    });
+            //}
             unitOfWork.Save();
         }
     }

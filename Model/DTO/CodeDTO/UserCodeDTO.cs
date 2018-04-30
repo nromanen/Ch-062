@@ -14,7 +14,7 @@ namespace Model.DTO.CodeDTO
         public int ExerciseId { get; set; }
         public string CodeText { get; set; }
         
-        public CodeHistoryDTO CodeHistory { get; set; }
+        public ICollection<CodeHistoryDTO> CodeHistories { get; set; }
 
 
         public UserDTO User { get; set; }

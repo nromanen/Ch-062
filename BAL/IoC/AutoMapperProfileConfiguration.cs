@@ -44,7 +44,7 @@ namespace BAL.IoC
                     .ForMember(dest => dest.ExerciseId, options => options.MapFrom(src => src.ExerciseId))
                     .ForMember(dest => dest.UserId, options => options.MapFrom(src => src.UserId))
                     .ForMember(dest => dest.Exercise, options => options.MapFrom(src => src.Exercise))
-                    .ForMember(dest => dest.CodeHistory, options => options.MapFrom(src => src.CodeHistory))
+                    .ForMember(dest => dest.CodeHistories, options => options.MapFrom(src => src.CodeHistories))
                     .ForMember(dest => dest.User, options => options.MapFrom(src => src.User));
                 cfg.CreateMap<List<UserCode>, List<UserCodeDTO>>();
 
@@ -58,7 +58,7 @@ namespace BAL.IoC
                     .ForMember(dest => dest.CodeId, options => options.MapFrom(src => src.CodeId))
                     .ForMember(dest => dest.Code, options => options.MapFrom(src => src.Code));
                 cfg.CreateMap<IEnumerable<CodeHistory>, IEnumerable<CodeHistoryDTO>>();
-                
+
 
 
                 cfg.CreateMap<TestCase, TestCaseDTO>()

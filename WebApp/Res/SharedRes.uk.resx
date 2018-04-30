@@ -285,4 +285,13 @@
   <data name="CodeHistory" xml:space="preserve">
     <value>Історія виконання коду</value>
   </data>
+  <data name="Exercisetitle" xml:space="preserve">
+    <value>Назва завдання</value>
+  </data>
+  <data name="Execute" xml:space="preserve">
+    <value>Виконати</value>
+  </data>
+  <data name="Try" xml:space="preserve">
+    <value>Спробувати</value>
+  </data>
 </root>

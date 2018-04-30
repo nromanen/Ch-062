@@ -8,21 +8,26 @@
     <table class="table">
         <tr>
             <th> @SharedLocalizer["TaskName"] </th>
-            </tr>
+        </tr>
 
-            @foreach (var p in Model)
-            {
-                   <tr>
-                       <td>@p.TaskName</td>
-                       
-                       <td>
-                           <form method="post">
-                               <a class="btn btn-sm btn-primary" asp-controller="ExerciseManagement" asp-action="TaskView" asp-route-id="@p.Id">@SharedLocalizer["Tasks"]</a>
-                           </form>
-                       </td>
-                   </tr>
-            }
-                                     
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.TaskName</td>
+
+                <td>
+                    @{
+                        if (User.Identity.IsAuthenticated)
+                        {
+                            <form method="post">
+                                <a class="btn btn-sm btn-primary" asp-controller="ExerciseManagement" asp-action="TaskView" asp-route-id="@p.Id">@SharedLocalizer["Tasks"]</a>
+                            </form>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+
     </table>
 
 
