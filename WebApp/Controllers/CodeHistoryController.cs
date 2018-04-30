@@ -34,7 +34,7 @@ namespace WebApp.Controllers
             var userName = User.Identity.Name;
             var user = userManager.Users.Where(e => e.UserName == userName).FirstOrDefault();
             var code = codeManager.GetUserCodeById(user.Id);
-            CodeHistoryDTO history = codeManager.GetHistoryLst(code.Id);
+            IEnumerable<CodeHistoryDTO> history = codeManager.GetHistoryLst(code.Id);
             
             return View(history);
         }

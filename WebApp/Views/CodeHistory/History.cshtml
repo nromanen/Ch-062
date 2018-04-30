@@ -1,4 +1,4 @@
-﻿@model Model.DTO.CodeDTO.CodeHistoryDTO
+﻿@model IEnumerable<Model.DTO.CodeDTO.CodeHistoryDTO>
 
 @{
     ViewData["Title"] = "History";
@@ -27,7 +27,7 @@
         <div class="col-lg-8">
 
 
-            @*@foreach (var code in Model)
+            @foreach (var code in Model)
             {
                 <span class="titlecode" data-toggle="collapse" data-target="#code-example"> <h2> История кода для @code.Code.User.UserName</h2> </span>
                 <div id="code-example" class="collapse">
@@ -41,7 +41,7 @@
                         <p>@code.Error</p>
                     }
                 </div>
-            }*@
+            }
 
 
 
