@@ -79,6 +79,7 @@ namespace WebApp
             services.AddScoped<ISandboxManager, SandboxManager>();
             services.AddScoped<ITestCaseManager, TestCaseManager>();
             services.AddScoped<ICommentManager, CommentManager>();
+            services.AddScoped<ICodeManager, CodeManager>();
 
             services.Configure<IdentityOptions>(options =>
             {
