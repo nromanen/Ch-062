@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+@model IEnumerable<Model.DTO.TestCaseDTO>
+<a asp-action="CreateTestCase" class="btn btn-sm btn-primary">@SharedLocalizer["AddTestCase"]</a>
+<table class="table">
+    <tr>
+        <th>@SharedLocalizer["Exercisetitle"]</th>
+        <th>@SharedLocalizer["InputData"]</th>
+        <th>@SharedLocalizer["OutputData"]</th>
+    </tr>
+    @foreach (var testcase in Model)
+    {
+        <tr>
+            <td>@testcase.Exercise.TaskName</td>
+            <td>@testcase.InputData</td>
+            <td>@testcase.OutputData</td>
+            <td>
+                <a class="btn btn-sm btn-primary" asp-action="EditTestCase" asp-route-id="@testcase.Id">@SharedLocalizer["Change"]</a>
+            </td>
+        </tr>
+    }
+</table>

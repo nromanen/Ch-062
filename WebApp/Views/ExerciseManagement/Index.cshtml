@@ -40,6 +40,7 @@
                             <button type="submit" class="btn btn-sm btn-danger">
                                 @SharedLocalizer["Delete"]
                             </button>
+                            <a asp-route-id="@task.Id" asp-action="Testcases" class="btn btn-sm btn-primary">@SharedLocalizer["Testcases"]</a>
                         </form>
                     }
                 </td>
