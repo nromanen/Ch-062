@@ -24,6 +24,8 @@
                         <textarea id="codeText" class="col-md-12 textField" style="height: 100%; width: 100%; "></textarea>
                         <br />
                         <button type="button" id="executeButton" class="btn btn-default"> @SharedLocalizer["Execute"] </button>
+                        @*<button type="button" id="reloadButton" class="btn btn-default"> @SharedLocalizer["Reload"] </button>*@
+                        <button type="button" id="exit" class="btn btn-default" onclick='location.href = "@Url.Action("Index","Home")"'> @SharedLocalizer["Exit"] </button>
 
 
                     </div>
@@ -51,20 +53,25 @@
         var editableCodeMirror = null;
         window.onload = function () {
             editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeText'), {
-                mode: "text/x-csrc",
+                mode: "htmlmixed",
                 theme: "default",
                 lineNumbers: true
             });
+            editableCodeMirror.setOption("mode", "text/x-csrc");
 
         };
+        $('#reloadButton').click(function () {
 
+            editableCodeMirror.setValue('@Model.CodeText');
+        });
+        
         $('#executeButton').click(
-            function() {
+            function () {
+                $('#result').html('');
                 console.log("start");
 
                 var userCode = new Object();
                 userCode.CodeText = editableCodeMirror.getValue();
-                console.log(userCode.CodeText);
                 userCode.ExerciseId = ('@Model.ExerciseId');
                 userCode.UserId = ('@Model.UserId');
 
