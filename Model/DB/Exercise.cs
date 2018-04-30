@@ -5,8 +5,7 @@ using System.Text;
 namespace Model.DB
 {
     public class Exercise
-    {
-        
+    {  
         public int Id { get; set; }
 
         public string TeacherId { get; set; }
@@ -19,7 +18,7 @@ namespace Model.DB
 
         public int CourseId { get; set; }
 
-        public string Course { get; set; }
+        public virtual string Course{ get; set; }
         
         public bool IsDeleted { get; set; }
 

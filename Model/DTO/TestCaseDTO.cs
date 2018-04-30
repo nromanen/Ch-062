@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public int ExerciseDTOId { get; set; }
-        public int UserDTOId { get; set; }
+        public string UserDTOId { get; set; }
         public object[] InputData { get; set; }
         public string OutputData { get; set; }
 

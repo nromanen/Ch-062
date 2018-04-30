@@ -12,8 +12,6 @@ namespace DAL.Interface
         IBaseRepository<Exercise> ExerciseRepo { get; }
         IBaseRepository<Course> CourseRepo { get; }
         IBaseRepository<UserCode> CodeRepo { get; }
-        IBaseRepository<CodeResult> CodeResultsRepo { get; }
-        IBaseRepository<CodeError> CodeErrorsRepo { get; }
         IBaseRepository<CodeHistory> CodeHistoryRepo { get; }
         IBaseRepository<TestCase> TestCasesRepo { get; }
         int Save();

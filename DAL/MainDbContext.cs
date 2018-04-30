@@ -10,10 +10,9 @@ namespace DAL
     {
 
         public DbSet<Exercise> Exercises { get; set; }
+        public DbSet<Comments> Comments { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<UserCode> UsersCode { get; set; }
-        public DbSet<CodeResult> CodeResults { get; set; }
-        public DbSet<CodeError> CodeErrors { get; set; }
         public DbSet<CodeHistory> CodeHistories { get; set; }
         public DbSet<TestCase> TestCases { get; set; }
 

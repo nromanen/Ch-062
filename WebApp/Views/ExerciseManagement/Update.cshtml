@@ -22,11 +22,6 @@
 
 
 
-<link href="~/css/codemirror.css" rel="stylesheet" />
-<script src="~/js/codemirror.js"></script>
-<script src="~/js/continuecomment.js"></script>
-<script src="~/js/highlight.min.js"></script>
-<script src="~/js/matchbrackets.js"></script>
 
 
 <form asp-action="Update" asp-controller="ExerciseManagement">
@@ -45,7 +40,7 @@
         <div id="editor-container" class="form-control"></div>
     </div>
     <label asp-for="TaskBaseCodeField" class="control-label">@SharedLocalizer["BaseCode"]:</label>
-    <textarea asp-for="TaskBaseCodeField" id="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;"></textarea>
+    <textarea asp-for="TaskBaseCodeField" id="taskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;"></textarea>
 
     <div class="form-group">
         <button id="save" class="btn btn-default">@SharedLocalizer["Add"]</button>
@@ -55,8 +50,15 @@
 
 <br />
 <h6>@SharedLocalizer["Required"]</h6>
+@section Scripts {
+    <link rel="stylesheet" href="~/css/codemirror.css" />
+    <script src="~/js/codemirror.js"></script>
+    <script src="~/js/matchbrackets.js"></script>
+    <script src="~/js/continuecomment.js"></script>
+    <script src="~/js/clike.js"></script>
 
-<script>
+
+    <script>
     var quill = new Quill('#editor-container', {
         modules: {
             toolbar: [
@@ -74,7 +76,7 @@
         taskContent.TaskTextField = quill.getText();
         taskContent.CourseId = $('#CourseId').val();
         taskContent.TaskName = $('#TaskName').val();
-        taskContent.TaskBaseCodeField = $('#TaskBaseCodeField').val();
+        taskContent.TaskBaseCodeField = $('#taskBaseCodeField').val();
 
         $.ajax({
 
@@ -85,16 +87,19 @@
 
     });
 
-    window.onload = function () {
-        var editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('TaskBaseCodeField'), {
-            mode: "text/x-csrc",
-            theme: "default",
-            lineNumbers: true
-        });
-
-    };
+       window.onload = function () {
+           var editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('taskBaseCodeField'), {
+                mode: "text/x-csrc",
+                theme: "default",
+               lineNumbers: true         
+            });
 
 
-    $("#IsHardcover").on('change', determineStorageLocation);
-</script>
 
+        quill.setText('@Model.TaskTextField');
+       };
+   
+
+    </script>
+
+}

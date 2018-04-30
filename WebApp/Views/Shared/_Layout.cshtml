@@ -8,149 +8,76 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/normalize.css" rel="stylesheet" />
+    <link href="~/css/component.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <title>@ViewData["Title"] - WebApp</title>
-    
-    
-    <meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
-    <meta name="author" content="Codrops" />  
-    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="css/demo.css" />
-    <link rel="stylesheet" type="text/css" href="css/component.css" />
-    <script src="js/modernizr.custom.js"></script>
-    
-    
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
+
 
 </head>
 
 
 <body>
-    <div class="container">
-        <ul id="gn-menu" class="gn-menu-main" >
+    <div >
+        <ul id="gn-menu" class="gn-menu-main">
             <li class="gn-trigger">
                 <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
                 <nav class="gn-menu-wrapper">
                     <div class="gn-scroller">
                         <ul class="gn-menu">
-                            <li class="gn-search-item">
-                                <input placeholder="Search" type="search" class="gn-search">
-                                <a class="gn-icon gn-icon-search"><span>Search</span></a>
-                            </li>
-                            <li>
-                                <a class="gn-icon gn-icon-download">Downloads</a>
-                                <ul class="gn-submenu">
-                                    <li><a class="gn-icon gn-icon-illustrator">Vector Illustrations</a></li>
-                                    <li><a class="gn-icon gn-icon-photoshop">Photoshop files</a></li>
-                                </ul>
-                            </li>
-                            <li><a class="gn-icon gn-icon-cog">Settings</a></li>
-                            <li><a class="gn-icon gn-icon-help">Help</a></li>
-                            <li>
-                                <a class="gn-icon gn-icon-archive">Archives</a>
-                                <ul class="gn-submenu">
-                                    <li><a class="gn-icon gn-icon-article">Articles</a></li>
-                                    <li><a class="gn-icon gn-icon-pictures">Images</a></li>
-                                    <li><a class="gn-icon gn-icon-videos">Videos</a></li>
-                                </ul>
-                            </li>
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                <li>
+                                    <a class="gn-icon gn-icon-cog" asp-controller="AdminPanel" asp-action="Users">
+                                        @SharedLocalizer["AdminPanel"]
+                                    </a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Teacher"))
+                            {
+                                <li>
+                                    <a class="gn-icon gn-icon-cog" asp-controller="ExerciseManagement" asp-action="Index">
+                                        @SharedLocalizer["Tasks"]
+                                    </a>
+                                </li>
+                            }
+                            <li><a class="gn-icon gn-icon-cog" asp-controller="CourseManagement" asp-action="Index">@SharedLocalizer["Courses"]</a></li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+
+                                <li><a class="gn-icon gn-icon-cog" asp-controller="CodeHistory" asp-action="History">@SharedLocalizer["CodeHistory"]</a></li>
+
+                            }
                         </ul>
-                    </div><!-- /gn-scroller -->
+                    </div>
                 </nav>
             </li>
-            <li><a class="codrops-icon codrops-icon-drop" href="http://tympanus.net/codrops/?p=16030"><span>Back to the Codrops Article</span></a></li>
+            <li>
+                <a asp-area="" asp-controller="Home" asp-action="Index" style="font-size: 20px" >@SharedLocalizer["SoftServe"]</a>
+
+            </li>
+            @await Html.PartialAsync("_LoginPartial")
         </ul>
         <header>
+
         </header>
-    </div><!-- /container -->
-    <script src="js/classie.js"></script>
-    <script src="js/gnmenu.js"></script>
-<script>
-    new gnMenu(document.getElementById('gn-menu'));
-</script>
 
+        <div class="container body-content" style="margin-top: 30px">
+            @RenderBody()
 
-
-
-
-
-<nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" style="color: white; font-size: 20px;" class="navbar-brand">@SharedLocalizer["SoftServe"]</a>
-
-            </div>
-            <div class="container-fluid">
-                <div class="navbar-collapse collapse">
-                    <ul class="nav nav-pills navbar-nav">
-                        @if (User.IsInRole("Administrator"))
-                        {
-                            <li>
-                                <a style="color: white;" asp-controller="AdminPanel" asp-action="Users">
-                                    @SharedLocalizer["AdminPanel"]
-                                </a>
-                            </li>
-                        }
-                        @if (User.IsInRole("Teacher"))
-                        {
-                            <li>
-                                <a style="color: white;" asp-controller="ExerciseManagement" asp-action="Index">
-                                    @SharedLocalizer["Tasks"]
-                                </a>
-                            </li>
-                        }
-                        <li><a style="color: white;" asp-controller="CourseManagement" asp-action="Index">@SharedLocalizer["Courses"]</a></li>
-
-
-                    </ul>
-                    <ul class="nav navbar-nav" style="float: right; color: white;">
-                        @Html.Partial("_LoginPartial")
-                    </ul>
-                </div>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav"></ul>
-            </div>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
     </div>
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
+    <script src="~/js/modernizr.custom.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/classie.js"></script>
+    <script src="~/js/gnmenu.js"></script>
+    <script src="~/js/site.js"></script>
+    <script>
+        new gnMenu(document.getElementById('gn-menu'));
+    </script>
 
     @RenderSection("Scripts", required: false)
 </body>

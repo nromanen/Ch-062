@@ -11,8 +11,8 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20180427093443_codeHistory")]
-    partial class codeHistory
+    [Migration("20180429212040_fixProblems")]
+    partial class fixProblems
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -129,22 +129,6 @@ namespace DAL.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Model.DB.Code.CodeError", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CodeId");
-
-                    b.Property<string>("Result");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CodeId");
-
-                    b.ToTable("CodeErrors");
-                });
-
             modelBuilder.Entity("Model.DB.Code.CodeHistory", b =>
                 {
                     b.Property<int>("Id")
@@ -154,27 +138,18 @@ namespace DAL.Migrations
 
                     b.Property<string>("CodeText");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Error");
 
-                    b.HasIndex("CodeId");
-
-                    b.ToTable("CodeHistories");
-                });
-
-            modelBuilder.Entity("Model.DB.Code.CodeResult", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CodeId");
+                    b.Property<bool>("IsFavouriteCode");
 
                     b.Property<string>("Result");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CodeId");
+                    b.HasIndex("CodeId")
+                        .IsUnique();
 
-                    b.ToTable("CodeResults");
+                    b.ToTable("CodeHistories");
                 });
 
             modelBuilder.Entity("Model.DB.Code.UserCode", b =>
@@ -195,6 +170,24 @@ namespace DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UsersCode");
+                });
+
+            modelBuilder.Entity("Model.DB.Comments", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CommentText");
+
+                    b.Property<DateTime>("CreationDateTime");
+
+                    b.Property<int>("ExerciseId");
+
+                    b.Property<int>("Rating");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Model.DB.Course", b =>
@@ -246,6 +239,28 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Exercises");
+                });
+
+            modelBuilder.Entity("Model.DB.TestCase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ExerciseId");
+
+                    b.Property<string>("InputData");
+
+                    b.Property<string>("OutputData");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExerciseId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TestCases");
                 });
 
             modelBuilder.Entity("Model.DB.User", b =>
@@ -344,27 +359,11 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Model.DB.Code.CodeError", b =>
-                {
-                    b.HasOne("Model.DB.Code.UserCode", "Code")
-                        .WithMany("CodeErrors")
-                        .HasForeignKey("CodeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("Model.DB.Code.CodeHistory", b =>
                 {
                     b.HasOne("Model.DB.Code.UserCode", "Code")
-                        .WithMany("CodeHistories")
-                        .HasForeignKey("CodeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Model.DB.Code.CodeResult", b =>
-                {
-                    b.HasOne("Model.DB.Code.UserCode", "Code")
-                        .WithMany("CodeResults")
-                        .HasForeignKey("CodeId")
+                        .WithOne("CodeHistory")
+                        .HasForeignKey("Model.DB.Code.CodeHistory", "CodeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -382,6 +381,18 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Model.DB.Course", b =>
                 {
+                    b.HasOne("Model.DB.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Model.DB.TestCase", b =>
+                {
+                    b.HasOne("Model.DB.Exercise", "Exercise")
+                        .WithMany()
+                        .HasForeignKey("ExerciseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Model.DB.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");

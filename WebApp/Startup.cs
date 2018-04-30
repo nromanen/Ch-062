@@ -77,6 +77,8 @@ namespace WebApp
             services.AddScoped<ICourseManager, CourseManager>();
             services.AddScoped<IExerciseManager, ExerciseManager>();
             services.AddScoped<ISandboxManager, SandboxManager>();
+            services.AddScoped<ITestCaseManager, TestCaseManager>();
+            services.AddScoped<ICodeManager, CodeManager>();
 
             services.Configure<IdentityOptions>(options =>
             {
