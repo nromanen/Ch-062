@@ -8,7 +8,7 @@
 }
 
 <link rel="stylesheet" href="~/css/codemirror.css" />
-
+<link rel="stylesheet" href="~/css/SimpleStarRating.css">
 
 
 <form asp-action="TaskView" asp-controller="ExerciseManagement">
@@ -44,7 +44,7 @@
                 <tr>
                     <td>@comment.UserName</td>
                     <td>@comment.CommentText</td>
-                    <td>@comment.Rating</td>
+                    <td><span class="rating" data-default-rating=@comment.Rating disabled></span></td>
                     <td>@comment.CreationDateTime</td>
                 </tr>
             }
@@ -54,8 +54,11 @@
     <div>
         <label class="control-label">Comment text:</label>
         <input type="text" id="textField" class="form-control" />
+
         <label class="control-label">Rate Field:</label>
-        <input type="text" id="rateField" class="form-control" />
+
+        <input id="rateField" /><span class="rating" data-default-rating="0"></span>
+
         <button id="buttn" class="btn btn-default">Comment it !</button>
     </div>
 </form>
@@ -76,6 +79,7 @@
     <script src="~/js/matchbrackets.js"></script>
     <script src="~/js/continuecomment.js"></script>
     <script src="~/js/clike.js"></script>
+    <script src="SimpleStarRating.js"></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script>
 
@@ -84,13 +88,13 @@
                 console.log("start");
                 var comment = new Object();
                 comment.ExerciseId = $('#TaskId').val();
-                comment.Rating = $('#rateField').val();
+                comment.Rating = e.detail;
                 comment.CommentText = $('#textField').val();
 
                 $.ajax({
                     type: "POST",
                     url: "/Comment/Create",
-                    data: comment                 
+                    data: comment
                 });
                 consol.log("done...");
             });
@@ -106,5 +110,19 @@
 
         };
 
+        var ratings = document.getElementsByClassName('rating');
+
+        for (var i = 0; i < ratings.length; i++) {
+            var r = new SimpleStarRating(ratings[i]);
+
+            ratings[i].addEventListener('rate', function (e) {
+                console.log("start " + e.detail);
+                console.log('Rating: ' + e.detail);
+
+            });
+        }
+
+
     </script>
+
 }

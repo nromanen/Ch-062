@@ -89,7 +89,6 @@ namespace WebApp.Controllers
             {
                 Id = id,
                 Course = task.Course,
-                IsDeleted = task.IsDeleted,
                 CommentList = commentList,
                 TaskName = task.TaskName,
                 TaskTextField = task.TaskTextField,
