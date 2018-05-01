@@ -55,6 +55,18 @@ namespace WebApp.Controllers
                 CreationDateTime = DateTime.Now
                 };
                 commentManager.Insert(comment);
+                if (model.Rating != null)
+                {
+                    var commentlist = commentManager.Get(g => g.ExerciseId == model.ExerciseId).ToList();
+                    int average = 0;
+                    foreach (var elem in commentlist)
+                    {
+                        average += elem.Rating;
+                    }
+
+                    average = average / commentlist.Count;
+                    
+                }
             }
             return RedirectToAction("TaskView ", "ExerciseManagement", model.ExerciseId);
         }

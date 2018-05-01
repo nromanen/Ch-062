@@ -9,7 +9,7 @@ namespace BAL.IoC
 {
     public class AutoMapperProfileConfiguration : Profile
     {
-        public AutoMapperProfileConfiguration()
+        /*public AutoMapperProfileConfiguration()
               : this("MyProfile")
         {
             Mapper.Initialize(cfg =>
@@ -85,6 +85,6 @@ namespace BAL.IoC
             : base(profileName)
         {
 
-        }
+        }*/
     }
 }
