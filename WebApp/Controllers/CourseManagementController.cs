@@ -48,15 +48,7 @@ namespace WebApp.Controllers
             model.UserId = user.Result.Id;
             if (ModelState.IsValid)
             {
-                var course = new CourseDTO
-                {
-                    Name = model.Name,
-                    Description = model.Description,
-                    IsActive = model.IsActive,
-                    CreationDate = model.CreationDate,
-                    UserId = model.UserId
-                };
-                courseManager.Insert(course);
+                courseManager.Insert(model);
             }
             return RedirectToAction("Index", "CourseManagement");
         }

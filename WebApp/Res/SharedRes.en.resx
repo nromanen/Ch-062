@@ -294,4 +294,16 @@
   <data name="Try" xml:space="preserve">
     <value>Try</value>
   </data>
+  <data name="AddTestCase" xml:space="preserve">
+    <value>Add test case</value>
+  </data>
+  <data name="InputData" xml:space="preserve">
+    <value>Input data</value>
+  </data>
+  <data name="OutputData" xml:space="preserve">
+    <value>Output data</value>
+  </data>
+  <data name="Testcases" xml:space="preserve">
+    <value>Test cases</value>
+  </data>
 </root>

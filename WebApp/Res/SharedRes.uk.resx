@@ -294,4 +294,16 @@
   <data name="Try" xml:space="preserve">
     <value>Спробувати</value>
   </data>
+  <data name="AddTestCase" xml:space="preserve">
+    <value>Додати тест</value>
+  </data>
+  <data name="InputData" xml:space="preserve">
+    <value>Вхідні дані</value>
+  </data>
+  <data name="OutputData" xml:space="preserve">
+    <value>Вихідні дані</value>
+  </data>
+  <data name="Testcases" xml:space="preserve">
+    <value>Тести</value>
+  </data>
 </root>

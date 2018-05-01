@@ -133,6 +133,8 @@ namespace DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("CodeId");
+
                     b.Property<string>("CodeText");
 
                     b.Property<string>("Error");
@@ -141,11 +143,9 @@ namespace DAL.Migrations
 
                     b.Property<string>("Result");
 
-                    b.Property<int>("UserCodeId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserCodeId");
+                    b.HasIndex("CodeId");
 
                     b.ToTable("CodeHistories");
                 });
@@ -170,7 +170,7 @@ namespace DAL.Migrations
                     b.ToTable("UsersCode");
                 });
 
-            modelBuilder.Entity("Model.DB.Comments", b =>
+            modelBuilder.Entity("Model.DB.Comment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -182,6 +182,10 @@ namespace DAL.Migrations
                     b.Property<int>("ExerciseId");
 
                     b.Property<int>("Rating");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("UserName");
 
                     b.HasKey("Id");
 
@@ -359,9 +363,9 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Model.DB.Code.CodeHistory", b =>
                 {
-                    b.HasOne("Model.DB.Code.UserCode", "UserCode")
+                    b.HasOne("Model.DB.Code.UserCode", "Code")
                         .WithMany("CodeHistories")
-                        .HasForeignKey("UserCodeId")
+                        .HasForeignKey("CodeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

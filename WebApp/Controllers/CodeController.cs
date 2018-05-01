@@ -25,7 +25,7 @@ namespace WebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Redirect("Home/Index");
+                return View("../Home/Index");
             }
             return View(codeManager.BuildCodeModel(model));
         }
@@ -33,7 +33,7 @@ namespace WebApp.Controllers
         [HttpPost]
         public string GetCode(UserCodeDTO model)
         {
-            return codeManager.ExecuteCode(model); 
+            return model.CodeText == null ? "Write some code" : codeManager.ExecuteCode(model);
         }
     }
 }

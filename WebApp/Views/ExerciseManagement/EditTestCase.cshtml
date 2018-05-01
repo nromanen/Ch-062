@@ -1,0 +1,27 @@
+﻿@model Model.DTO.TestCaseDTO
+@{
+    ViewData["Title"] = "Edit";
+}
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+<form asp-action="EditTestCase" asp-controller="ExerciseManagement">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <input type="hidden" asp-for="UserId" value="@Model.UserId" />
+        <input type="hidden" asp-for="ExerciseId" value="@Model.ExerciseId" />
+    </div>
+    <div class="form-group">
+        <label asp-for="InputData" class="control-label">@SharedLocalizer["InputData"]*</label>
+        <input type="text" asp-for="InputData" class="form-control" value="@Model.InputData" required />
+        <label asp-for="OutputData" class="control-label">@SharedLocalizer["OutputData"]</label>
+        <textarea asp-for="OutputData" class="form-control courses_description">@Model.OutputData</textarea>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Ok" class="btn btn-default" />
+    </div>
+</form>
+<h6>@SharedLocalizer["Required"]</h6>
+

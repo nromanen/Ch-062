@@ -39,9 +39,26 @@ namespace BAL.Managers
             unitOfWork.Save();
         }
 
-        public void Update(ExerciseDTO entityToUpdate)
+        public void Update(int id, string taskName, string taskTextField,
+                           string taskBaseCodeField, int courseId, string course,
+                           DateTime updateDateTime)
         {
-            unitOfWork.ExerciseRepo.Update(mapper.Map<Exercise>(entityToUpdate));
+            var task = unitOfWork.ExerciseRepo.GetById(id);
+            task.Course = course;
+            task.CourseId = courseId;
+            task.TaskName = taskName;
+            task.TaskTextField = taskTextField;
+            task.TaskBaseCodeField = taskBaseCodeField;
+            task.UpdateDateTime = updateDateTime;
+            unitOfWork.ExerciseRepo.Update(task);
+            unitOfWork.Save();
+        }
+
+        public void DeleteOrRecover(int id)
+        {
+            var task = unitOfWork.ExerciseRepo.GetById(id);
+            task.IsDeleted = !task.IsDeleted;
+            unitOfWork.ExerciseRepo.Update(task);
             unitOfWork.Save();
         }
 

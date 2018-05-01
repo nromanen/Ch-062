@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DAL.Migrations
 {
-    public partial class myMigration : Migration
+    public partial class newMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,24 @@ namespace DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CommentText = table.Column<string>(nullable: true),
+                    CreationDateTime = table.Column<DateTime>(nullable: false),
+                    ExerciseId = table.Column<int>(nullable: false),
+                    Rating = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -199,6 +217,34 @@ namespace DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TestCases",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ExerciseId = table.Column<int>(nullable: false),
+                    InputData = table.Column<string>(nullable: true),
+                    OutputData = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TestCases", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TestCases_Exercises_ExerciseId",
+                        column: x => x.ExerciseId,
+                        principalTable: "Exercises",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TestCases_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UsersCode",
                 columns: table => new
                 {
@@ -239,6 +285,26 @@ namespace DAL.Migrations
                     table.PrimaryKey("PK_CodeErrors", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CodeErrors_UsersCode_CodeId",
+                        column: x => x.CodeId,
+                        principalTable: "UsersCode",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CodeHistories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CodeId = table.Column<int>(nullable: false),
+                    CodeText = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CodeHistories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CodeHistories_UsersCode_CodeId",
                         column: x => x.CodeId,
                         principalTable: "UsersCode",
                         principalColumn: "Id",
@@ -310,6 +376,11 @@ namespace DAL.Migrations
                 column: "CodeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CodeHistories_CodeId",
+                table: "CodeHistories",
+                column: "CodeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CodeResults_CodeId",
                 table: "CodeResults",
                 column: "CodeId");
@@ -317,6 +388,16 @@ namespace DAL.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Courses_UserId",
                 table: "Courses",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TestCases_ExerciseId",
+                table: "TestCases",
+                column: "ExerciseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TestCases_UserId",
+                table: "TestCases",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -351,10 +432,19 @@ namespace DAL.Migrations
                 name: "CodeErrors");
 
             migrationBuilder.DropTable(
+                name: "CodeHistories");
+
+            migrationBuilder.DropTable(
                 name: "CodeResults");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
                 name: "Courses");
+
+            migrationBuilder.DropTable(
+                name: "TestCases");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

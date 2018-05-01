@@ -10,11 +10,11 @@ namespace DAL
     {
 
         public DbSet<Exercise> Exercises { get; set; }
-        public DbSet<Comments> Comments { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<UserCode> UsersCode { get; set; }
         public DbSet<CodeHistory> CodeHistories { get; set; }
         public DbSet<TestCase> TestCases { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
         {

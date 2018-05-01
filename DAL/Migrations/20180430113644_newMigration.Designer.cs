@@ -11,8 +11,8 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20180427142108_TestCases")]
-    partial class TestCases
+    [Migration("20180430113644_newMigration")]
+    partial class newMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -195,6 +195,28 @@ namespace DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UsersCode");
+                });
+
+            modelBuilder.Entity("Model.DB.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CommentText");
+
+                    b.Property<DateTime>("CreationDateTime");
+
+                    b.Property<int>("ExerciseId");
+
+                    b.Property<int>("Rating");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("UserName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Model.DB.Course", b =>
