@@ -8,7 +8,7 @@
 }
 
 <link rel="stylesheet" href="~/css/codemirror.css" />
-
+<link rel="stylesheet" href="~/css/StarRating.css"/>
 
 
 <form asp-action="TaskView" asp-controller="ExerciseManagement">
@@ -24,7 +24,7 @@
         <textarea asp-for="TaskTextField" id="MCE"></textarea>
     </div>
     <label asp-for="TaskBaseCodeField" class="control-label">@SharedLocalizer["BaseCode"]:</label>
-    <textarea asp-for="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;" readonly></textarea>
+    <textarea asp-for="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;" > aa</textarea>
     <div class="form-group">
         <input value="@SharedLocalizer["Ok"]" onClick="history.go(-1)" ; class="btn btn-default" />
     </div>
@@ -55,7 +55,10 @@
         <label class="control-label">Comment text:</label>
         <input type="text" id="textField" class="form-control" />
         <label class="control-label">Rate Field:</label>
-        <input type="text" id="rateField" class="form-control" />
+
+        @*<input type="text" id="rateField" class="form-control" />*@
+         <span class="rating" id="rateField" data-default-rating="-1"></span> 
+
         <button id="buttn" class="btn btn-default">Comment it !</button>
     </div>
 </form>
@@ -77,33 +80,51 @@
     <script src="~/js/continuecomment.js"></script>
     <script src="~/js/clike.js"></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script src="~/js/StarRating.js"></script>
+   
+        
+
     <script>
 
         $('#buttn').click(
             function () {
-                console.log("start");
+               
                 var comment = new Object();
                 comment.ExerciseId = $('#TaskId').val();
-                comment.Rating = $('#rateField').val();
+                comment.Rating = qq;  
                 comment.CommentText = $('#textField').val();
 
                 $.ajax({
+                    
                     type: "POST",
                     url: "/Comment/Create",
                     data: comment                 
                 });
-                consol.log("done...");
             });
 
         tinymce.init({ selector: '#MCE' });
 
+        var qq = 0;
+        var ratings = document.getElementsByClassName('rating');
+
+        for (var i = 0; i < ratings.length; i++) {
+            var r = new SimpleStarRating(ratings[i]);
+
+            ratings[i].addEventListener('rate', function (e) {
+                console.log('Rating: ' + e.detail);
+                qq = e.detail;
+            });
+        }
+       
+
+        var editableCodeMirror = null;
         window.onload = function () {
-            var editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('taskBaseCodeField'), {
+            editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('taskBaseCodeField'), {
                 mode: "text/x-csrc",
                 theme: "default",
                 lineNumbers: true
             });
-
+           
         };
 
     </script>
