@@ -71,8 +71,8 @@ namespace BAL.IoC
 
                 cfg.CreateMap<TestCase, TestCaseDTO>()
                    .ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))
-                   .ForMember(dest => dest.ExerciseDTOId, options => options.MapFrom(src => src.ExerciseId))
-                   .ForMember(dest => dest.UserDTOId, options => options.MapFrom(src => src.UserId))
+                   .ForMember(dest => dest.ExerciseId, options => options.MapFrom(src => src.ExerciseId))
+                   .ForMember(dest => dest.UserId, options => options.MapFrom(src => src.UserId))
                    .ForMember(dest => dest.InputData, options => options.MapFrom(src => src.InputData))
                    .ForMember(dest => dest.OutputData, options => options.MapFrom(src => src.OutputData))
                    .ForMember(dest => dest.Exercise, options => options.MapFrom(src => src.Exercise))
