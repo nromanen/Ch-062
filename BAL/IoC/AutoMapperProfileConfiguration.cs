@@ -39,13 +39,13 @@ namespace BAL.IoC
                 .ForMember(dest => dest.UserId, options => options.MapFrom(src => src.UserId));
                 cfg.CreateMap<List<Course>, List<CourseDTO>>();
 
-                cfg.CreateMap<UserCode, UserCodeDTO>().ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))
+                cfg.CreateMap<UserCode, UserCodeDTO>()
+                .ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))
                     .ForMember(dest => dest.CodeText, options => options.MapFrom(src => src.CodeText))
                     .ForMember(dest => dest.ExerciseId, options => options.MapFrom(src => src.ExerciseId))
-                    .ForMember(dest => dest.UserId, options => options.MapFrom(src => src.UserId))
-                    .ForMember(dest => dest.Exercise, options => options.MapFrom(src => src.Exercise))
-                    .ForMember(dest => dest.CodeHistories, options => options.MapFrom(src => src.CodeHistories))
-                    .ForMember(dest => dest.User, options => options.MapFrom(src => src.User));
+                    .ForMember(dest => dest.UserId, options => options.MapFrom(src => src.UserId));
+                    //.ForMember(dest => dest.Exercise, options => options.MapFrom(src => src.Exercise))
+                    //.ForMember(dest => dest.User, options => options.MapFrom(src => src.User));
                 cfg.CreateMap<List<UserCode>, List<UserCodeDTO>>();
 
 
@@ -55,11 +55,9 @@ namespace BAL.IoC
                     .ForMember(dest => dest.Error, options => options.MapFrom(src => src.Error))
                     .ForMember(dest => dest.Result, options => options.MapFrom(src => src.Result))
                     .ForMember(dest => dest.IsFavouriteCode, options => options.MapFrom(src => src.IsFavouriteCode))
-                    .ForMember(dest => dest.CodeId, options => options.MapFrom(src => src.CodeId))
-                    .ForMember(dest => dest.Code, options => options.MapFrom(src => src.Code));
-                cfg.CreateMap<IEnumerable<CodeHistory>, IEnumerable<CodeHistoryDTO>>();
-
-
+                    .ForMember(dest => dest.UserCodeId, options => options.MapFrom(src => src.UserCodeId));
+                cfg.CreateMap<List<CodeHistory>, List<CodeHistoryDTO>>();
+                
 
                 cfg.CreateMap<TestCase, TestCaseDTO>()
                    .ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))

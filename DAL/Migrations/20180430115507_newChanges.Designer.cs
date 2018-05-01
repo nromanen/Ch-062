@@ -11,9 +11,10 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180430115507_newChanges")]
+    partial class newChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,6 +134,8 @@ namespace DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("CodeId");
+
                     b.Property<string>("CodeText");
 
                     b.Property<string>("Error");
@@ -141,11 +144,9 @@ namespace DAL.Migrations
 
                     b.Property<string>("Result");
 
-                    b.Property<int>("UserCodeId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserCodeId");
+                    b.HasIndex("CodeId");
 
                     b.ToTable("CodeHistories");
                 });
@@ -359,9 +360,9 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Model.DB.Code.CodeHistory", b =>
                 {
-                    b.HasOne("Model.DB.Code.UserCode", "UserCode")
+                    b.HasOne("Model.DB.Code.UserCode", "Code")
                         .WithMany("CodeHistories")
-                        .HasForeignKey("UserCodeId")
+                        .HasForeignKey("CodeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

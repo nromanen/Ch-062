@@ -57,7 +57,7 @@ namespace BAL.Managers
             unitOfWork.CodeHistoryRepo.Insert(new CodeHistory
             {
                 CodeText = text,
-                CodeId = codeId,
+                UserCodeId = codeId,
                 Error = error,
                 Result = result
             });
@@ -94,7 +94,7 @@ namespace BAL.Managers
         public string ExecutionResult(string code, int exId, string userId)
         {
             var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
-
+            var userCode = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First();
             var res = sandboxManager.Execute(code);
             if (res.Success)
             {
@@ -105,7 +105,7 @@ namespace BAL.Managers
             }
             string errors = res.CompileTimeExceptions.Aggregate("", (current, v) => current + (" " + v));
             errors = res.RunTimeExceptions.Aggregate(errors, (current, v) => current + (" " + v));
-            AddHistory(codeId, code, errors, null);
+            AddHistory(codeId, code, errors, null );
             return errors;
         }
 
@@ -124,15 +124,17 @@ namespace BAL.Managers
             return model;
         }
 
-        public IEnumerable<CodeHistoryDTO> GetHistoryLst(int codeId)
+        public List<CodeHistory> GetHistoryLst(int codeId)
         {
-            var t = unitOfWork.CodeHistoryRepo.Get(e => e.CodeId == codeId);
-            return mapper.Map<IEnumerable<CodeHistoryDTO>>(t);
+            var codeHistories = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).ToList();
+            return codeHistories;
         }
+        
+
 
         public void SetFavouriteCode(int codeId, bool setToFavourite)
         {
-            var codeHistoryEntity = unitOfWork.CodeHistoryRepo.Get().Where(e=>e.CodeId==codeId).FirstOrDefault();
+            var codeHistoryEntity = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).FirstOrDefault();
             codeHistoryEntity.IsFavouriteCode = setToFavourite;
             unitOfWork.Save();
         }

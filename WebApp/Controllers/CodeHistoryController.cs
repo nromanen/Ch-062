@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Model.DB;
 using Model.DTO.CodeDTO;
+using WebApp.ViewModels;
 
 namespace WebApp.Controllers
 {
@@ -34,16 +35,25 @@ namespace WebApp.Controllers
             var userName = User.Identity.Name;
             var user = userManager.Users.Where(e => e.UserName == userName).FirstOrDefault();
             var code = codeManager.GetUserCodeById(user.Id);
-            IEnumerable<CodeHistoryDTO> history = codeManager.GetHistoryLst(code.Id);
-            
-            return View(history);
+            var history = codeManager.GetHistoryLst(code.Id);
+            var exercise = exerciseManager.Get().Where(e => e.Id == code.ExerciseId).FirstOrDefault();
+
+            return View(new CodeHistoryViewModels {
+                CodeHistory = history,
+                ExerciseName = exercise.TaskName
+            });
         }
 
         [HttpPost]
-        public ActionResult AddToFavourites(int codeTextId, bool setToFavourite)
+        public void AddToFavourites(int codeTextId, bool setToFavourite)
         {
             codeManager.SetFavouriteCode(codeTextId, setToFavourite);
-            return View();
+        }
+        [HttpGet]
+        public string GetTaskName(int exerciseId)
+        {
+            var taskName = exerciseManager.Get().Where(e => e.Id == exerciseId).FirstOrDefault().TaskName;
+            return taskName;
         }
     }
 }
