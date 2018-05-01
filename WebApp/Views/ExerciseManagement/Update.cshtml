@@ -2,57 +2,131 @@
 @inject IViewLocalizer Localizer
 @inject IHtmlLocalizer<SharedRes> SharedLocalizer
 
-@model WebApp.ViewModels.UpdateExerciseViewModel;
+@model WebApp.ViewModels.GetExerciseViewModel;
 @{
     ViewBag.Title = "Task View";
 }
+
 <link rel="stylesheet" href="~/css/codemirror.css" />
-<script src="~/js/codemirror.js"></script>
-<script src="~/js/matchbrackets.js"></script>
-<script src="~/js/continuecomment.js"></script>
-<script src="~/js/clike.js"></script>
-<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<link rel="stylesheet" href="~/css/StarRating.css" />
 
 
-<form asp-action="Update" asp-controller="ExerciseManagement">
+<form asp-action="TaskView" asp-controller="ExerciseManagement">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <input id="TaskId" type="hidden" asp-for="Id" value="@Model.Id" />
+        <input type="hidden" asp-for="Id" id="TaskId" value="@Model.Id" />
     </div>
     <div class="form-group">
-        <label asp-for="CourseId" class="control-label">@SharedLocalizer["CourseName"] *</label>
-        <select asp-for="CourseId" id="CourseId" asp-items="@(new SelectList(Model.CourseList, "Id" , "Name"))" class="form-control" required></select>
-        <label asp-for="TaskName" class="control-label">@SharedLocalizer["TaskName"] *</label>
-        <input type="text" asp-for="TaskName" id="TaskName" class="form-control" required />
+        <input type="text" asp-for="TaskName" class="form-control" readonly />
     </div>
     <div class="form-group">
         <label class="control-label">@SharedLocalizer["Task"]:</label>
         <textarea asp-for="TaskTextField" id="MCE"></textarea>
     </div>
     <label asp-for="TaskBaseCodeField" class="control-label">@SharedLocalizer["BaseCode"]:</label>
-    <textarea asp-for="TaskBaseCodeField" id="taskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;"></textarea>
-
+    <textarea asp-for="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;"> aa</textarea>
     <div class="form-group">
-        <button id="save" class="btn btn-default">@SharedLocalizer["Save"]</button>
+        <input value="@SharedLocalizer["Ok"]" onClick="history.go(-1)" ; class="btn btn-default" />
+    </div>
+    <br />
+
+    <div>
+        <table class="table">
+            <tr>
+                <td>User</td>
+                <td>Comment</td>
+                <td>Rate</td>
+                <td>Written</td>
+            </tr>
+            @foreach (var comment in Model.CommentList)
+            {
+
+                <tr>
+                    <td>@comment.UserName</td>
+                    <td>@comment.CommentText</td>
+                    <td>@comment.Rating</td>
+                    <td>@comment.CreationDateTime</td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    <div>
+        <label class="control-label">Comment text:</label>
+        <input type="text" id="textField" class="form-control" />
+        <label class="control-label">Rate Field:</label>
+
+        @*<input type="text" id="rateField" class="form-control" />*@
+        <span class="rating" id="rateField" data-default-rating="-1"></span>
+
+        <button id="buttn" class="btn btn-default">Comment it !</button>
     </div>
 </form>
-
-
 <br />
-<h6>@SharedLocalizer["Required"]</h6>
+<div class="col-md-2">
+    <form asp-controller="Code" asp-action="Index">
+        <input type="hidden" name="UserId" value="@User.Identity.Name" />
+        <input type="hidden" name="ExerciseId" value="@Model.Id" />
+        <input type="hidden" name="CodeText" value="@Model.TaskBaseCodeField" />
+        <button type="submit" class="btn btn-default">Start</button>
+    </form>
+
+</div>
+
+
+@section Scripts {
+    <script src="~/js/codemirror.js"></script>
+    <script src="~/js/matchbrackets.js"></script>
+    <script src="~/js/continuecomment.js"></script>
+    <script src="~/js/clike.js"></script>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script src="~/js/StarRating.js"></script>
+
+
 
     <script>
+
+        $('#buttn').click(
+            function () {
+                console.log($('#rateField').val());
+                var comment = new Object();
+                comment.ExerciseId = $('#TaskId').val();
+                comment.Rating = qq;  // $('#rateField').val();
+                comment.CommentText = $('#textField').val();
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "/Comment/Create",
+                    data: comment
+                });
+            });
+
         tinymce.init({ selector: '#MCE' });
 
+        var qq = 0;
+        var ratings = document.getElementsByClassName('rating');
 
+        for (var i = 0; i < ratings.length; i++) {
+            var r = new SimpleStarRating(ratings[i]);
+
+            ratings[i].addEventListener('rate', function (e) {
+                console.log('Rating: ' + e.detail);
+                qq = e.detail;
+            });
+        }
+
+
+        var editableCodeMirror = null;
         window.onload = function () {
-            var editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('taskBaseCodeField'), {
+            editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('taskBaseCodeField'), {
                 mode: "text/x-csrc",
                 theme: "default",
                 lineNumbers: true
             });
+
         };
 
-
     </script>
+}
 
