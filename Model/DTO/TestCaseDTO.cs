@@ -3,8 +3,8 @@
     public class TestCaseDTO
     {
         public int Id { get; set; }
-        public int ExerciseDTOId { get; set; }
-        public string UserDTOId { get; set; }
+        public int ExerciseId { get; set; }
+        public string UserId { get; set; }
         public string InputData { get; set; }
         public string OutputData { get; set; }
 

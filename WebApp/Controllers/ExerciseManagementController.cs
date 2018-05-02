@@ -181,13 +181,13 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Teacher")]
         public IActionResult CreateTestCase(CreateTestCase model)
         {
-            model.TestCaseDTO.UserDTOId = userManager.GetUserId(HttpContext.User);
+            model.TestCaseDTO.UserId = userManager.GetUserId(HttpContext.User);
             if (ModelState.IsValid)
             {
                 var test = new TestCaseDTO()
                 {
-                    ExerciseDTOId = model.TestCaseDTO.ExerciseDTOId,
-                    UserDTOId = model.TestCaseDTO.UserDTOId,
+                    ExerciseId = model.TestCaseDTO.ExerciseId,
+                    UserId = model.TestCaseDTO.UserId,
                     InputData = model.TestCaseDTO.InputData,
                     OutputData = model.TestCaseDTO.OutputData
                 };

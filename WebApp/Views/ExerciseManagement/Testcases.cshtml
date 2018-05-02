@@ -6,14 +6,12 @@
 <a asp-action="CreateTestCase" class="btn btn-sm btn-primary">@SharedLocalizer["AddTestCase"]</a>
 <table class="table">
     <tr>
-        <th>@SharedLocalizer["Exercisetitle"]</th>
         <th>@SharedLocalizer["InputData"]</th>
         <th>@SharedLocalizer["OutputData"]</th>
     </tr>
     @foreach (var testcase in Model)
     {
         <tr>
-            <td>@testcase.Exercise.TaskName</td>
             <td>@testcase.InputData</td>
             <td>@testcase.OutputData</td>
             <td>

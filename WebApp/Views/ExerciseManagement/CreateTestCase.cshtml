@@ -14,7 +14,7 @@
 <form asp-action="CreateTestCase" asp-controller="ExerciseManagement">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
-        <select asp-for="TestCaseDTO.ExerciseDTOId"
+        <select asp-for="TestCaseDTO.ExerciseId"
                 asp-items="@(new SelectList(Model.ExerciseList, "Id", "TaskName"))"></select>
         <br/>
         <label asp-for="TestCaseDTO.InputData" class="control-label">@SharedLocalizer["InputData"]*</label>
