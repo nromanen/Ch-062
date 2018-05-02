@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Model.DB;
 using Model.DB.Code;
 using Model.DTO.CodeDTO;
+using Model.Entity;
 
 namespace BAL.Managers
 {
@@ -52,14 +53,15 @@ namespace BAL.Managers
         }
 
 
-        public void AddHistory(int codeId, string text, string error = null, string result = null)
+        public void AddHistory(int codeId, string text,DateTime date,  string error = null, string result = null)
         {
             unitOfWork.CodeHistoryRepo.Insert(new CodeHistory
             {
                 CodeText = text,
                 UserCodeId = codeId,
                 Error = error,
-                Result = result
+                Result = result,
+                time = date
             });
             unitOfWork.Save();
 
@@ -99,13 +101,13 @@ namespace BAL.Managers
             {
                 string result =
                     $"Result: {res.Result};\r\nCompile time: {res.CompileTime.TotalMilliseconds};\r\nExecution Time: {res.ExecutionTime.TotalMilliseconds};";
-                AddHistory(codeId, code, null, result);
+                AddHistory(codeId, code, DateTime.Now, null, result);
                 return result;
             }
             
             string errors = res.CompileTimeExceptions.Aggregate("", (current, v) => current + (v + ";\r\n"));
             errors = res.RunTimeExceptions.Aggregate(errors, (current, v) => current + (v + ";\r\n"));
-            AddHistory(codeId, code, errors, null );
+            AddHistory(codeId, code, DateTime.Now,  errors, null );
             return errors;
         }
 
@@ -124,23 +126,26 @@ namespace BAL.Managers
             return model;
         }
         
-        public List<CodeHistoryDTO> GetHistoryLst(int codeId)
+        public List<CodeHistory> GetHistoryLst(int codeId)
         {
-            var codeHistories = mapper.Map<List<CodeHistoryDTO>>(unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).ToList());
+            var codeHistories = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).ToList();
             return codeHistories;
         }
         
 
 
-        public void SetFavouriteCode(int codeId)
+        public SetFav SetFavouriteCode(SetFav model)
         {
-            bool setToFavourite = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).FirstOrDefault().IsFavouriteCode;
-            if (setToFavourite==true)
-            
-            //var codeHistoryEntity = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).FirstOrDefault();
-            //codeHistoryEntity.IsFavouriteCode = setToFavourite;
+                var codeHistoryEntity = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == model.codeId).FirstOrDefault();
+            codeHistoryEntity.IsFavouriteCode = model.flag;
             unitOfWork.Save();
+            return model;
         }
+        public void EditCode(int codeTextId)
+        {
+
+        }
+
 
     }
 }
