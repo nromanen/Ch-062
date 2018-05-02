@@ -306,4 +306,25 @@
   <data name="Testcases" xml:space="preserve">
     <value>Test cases</value>
   </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="ComText" xml:space="preserve">
+    <value>Comment text</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>Rate</value>
+  </data>
+  <data name="RateField" xml:space="preserve">
+    <value>Rate Field</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="Written" xml:space="preserve">
+    <value>Published</value>
+  </data>
 </root>

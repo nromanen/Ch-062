@@ -24,10 +24,11 @@
                             <a class="btn btn-sm btn-primary" asp-controller="ExerciseManagement" asp-action="TaskView" asp-route-id="@p.Id">@SharedLocalizer["Tasks"]</a>                               
                         }
                     }
+
                 </td>
-                <td>
-                    <td><span class="rating" data-default-rating="3.25" disabled></span></td>
-                </td>
+                
+                <td><span class="rating" data-default-rating="@p.Rating" disabled></span></td>
+                
             </tr>
         }
 

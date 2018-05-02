@@ -57,11 +57,11 @@ namespace WebApp.Controllers
                 commentManager.Insert(comment);
                 if (model.Rating != null)
                 {
-                    var commentlist = commentManager.Get(g => g.ExerciseId == model.ExerciseId && g.Rating!=0 && g.Rating!=null).ToList();
+                    var commentlist = commentManager.Get(g => g.ExerciseId == model.ExerciseId && g.Rating!=0).ToList();
                     double average = 0;
                     foreach (var elem in commentlist)
                     {
-                        if(elem.Rating != null)
+                        if(elem.Rating != 0)
                         average += Convert.ToDouble(elem.Rating);
                     }
 
