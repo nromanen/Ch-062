@@ -2,7 +2,7 @@
 @inject IViewLocalizer Localizer
 @inject IHtmlLocalizer<SharedRes> SharedLocalizer
 
-@model WebApp.ViewModels.GetExerciseViewModel;
+@model WebApp.ViewModels.GetExerciseViewModel
 @{
     ViewBag.Title = "Task View";
 }
@@ -24,41 +24,51 @@
         <textarea asp-for="TaskTextField" id="MCE"></textarea>
     </div>
     <label asp-for="TaskBaseCodeField" class="control-label">@SharedLocalizer["BaseCode"]:</label>
-    <textarea asp-for="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;" > aa</textarea>
+    <textarea asp-for="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;" readonly></textarea>
     <div class="form-group">
         <input value="@SharedLocalizer["Ok"]" onClick="history.go(-1)" ; class="btn btn-default" />
     </div>
-    <br />
 
-    <div>
-        <table class="table">
+    
+</form>
+<div class="col-md-2" style="margin-left: 10px">
+    <form asp-controller="Code" asp-action="Index">
+        <input type="hidden" name="UserId" value="@User.Identity.Name" />
+        <input type="hidden" name="ExerciseId" value="@Model.Id" />
+        <input type="hidden" name="CodeText" value="@Model.TaskBaseCodeField" />
+        <button type="submit" class="btn btn-default">Start</button>
+    </form>
+
+</div>
+<br />
+<br />
+
+<div>
+    <table class="table">
+        <tr>
+            <td>User</td>
+            <td>Comment</td>
+            <td>Rate</td>
+            <td>Written</td>
+        </tr>
+        @foreach (var comment in Model.CommentList)
+        {
+
             <tr>
-                <td>User</td>
-                <td>Comment</td>
-                <td>Rate</td>
-                <td>Written</td>
+                <td>@comment.UserName</td>
+                <td>@comment.CommentText</td>
+                <td>@comment.Rating</td>
+                <td>@comment.CreationDateTime</td>
             </tr>
-            @foreach (var comment in Model.CommentList)
-            {
-
-                <tr>
-                    <td>@comment.UserName</td>
-                    <td>@comment.CommentText</td>
-                    <td>@comment.Rating</td>
-                    <td>@comment.CreationDateTime</td>
-                </tr>
-            }
-        </table>
-    </div>
+        }
+    </table>
+</div>
 
     <div>
         <label class="control-label">Comment text:</label>
         <input type="text" id="textField" class="form-control" />
         <label class="control-label">Rate Field:</label>
-
-        @*<input type="text" id="rateField" class="form-control" />*@
-         <span class="rating" id="rateField" data-default-rating="-1"></span> 
-
+        <input type="text" id="rateField" class="form-control" />
         <button id="buttn" class="btn btn-default">Comment it !</button>
     </div>
 </form>
@@ -71,7 +81,6 @@
         <button type="submit" class="btn btn-default">Start</button>
     </form>
 
-</div>
 
 
 @section Scripts {
@@ -98,7 +107,7 @@
                     
                     type: "POST",
                     url: "/Comment/Create",
-                    data: comment                 
+                    data: comment
                 });
             });
 
