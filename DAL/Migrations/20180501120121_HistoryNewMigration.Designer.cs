@@ -11,9 +11,10 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180501120121_HistoryNewMigration")]
+    partial class HistoryNewMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,8 +134,6 @@ namespace DAL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CodeId");
-
                     b.Property<string>("CodeText");
 
                     b.Property<string>("Error");
@@ -143,9 +142,11 @@ namespace DAL.Migrations
 
                     b.Property<string>("Result");
 
+                    b.Property<int>("UserCodeId");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CodeId");
+                    b.HasIndex("UserCodeId");
 
                     b.ToTable("CodeHistories");
                 });
@@ -170,7 +171,7 @@ namespace DAL.Migrations
                     b.ToTable("UsersCode");
                 });
 
-            modelBuilder.Entity("Model.DB.Comment", b =>
+            modelBuilder.Entity("Model.DB.Comments", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -181,11 +182,7 @@ namespace DAL.Migrations
 
                     b.Property<int>("ExerciseId");
 
-                    b.Property<int?>("Rating");
-
-                    b.Property<string>("UserId");
-
-                    b.Property<string>("UserName");
+                    b.Property<int>("Rating");
 
                     b.HasKey("Id");
 
@@ -227,8 +224,6 @@ namespace DAL.Migrations
                     b.Property<DateTime>("CreateDateTime");
 
                     b.Property<bool>("IsDeleted");
-
-                    b.Property<double>("Rating");
 
                     b.Property<string>("TaskBaseCodeField");
 
@@ -365,9 +360,9 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Model.DB.Code.CodeHistory", b =>
                 {
-                    b.HasOne("Model.DB.Code.UserCode", "Code")
+                    b.HasOne("Model.DB.Code.UserCode", "UserCode")
                         .WithMany("CodeHistories")
-                        .HasForeignKey("CodeId")
+                        .HasForeignKey("UserCodeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

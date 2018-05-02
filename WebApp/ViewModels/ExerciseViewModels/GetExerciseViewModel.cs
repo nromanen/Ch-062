@@ -18,9 +18,9 @@ namespace WebApp.ViewModels
 
         public string TaskBaseCodeField { get; set; }
 
-        public bool IsDeleted { get; set; }
-
         public IEnumerable<CommentDTO> CommentList { get; set; }
+
+        public double Rating { get; set; }
 
     }
 }

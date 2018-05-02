@@ -57,15 +57,17 @@ namespace WebApp.Controllers
                 commentManager.Insert(comment);
                 if (model.Rating != null)
                 {
-                    var commentlist = commentManager.Get(g => g.ExerciseId == model.ExerciseId).ToList();
-                    int average = 0;
+                    var commentlist = commentManager.Get(g => g.ExerciseId == model.ExerciseId && g.Rating!=0 && g.Rating!=null).ToList();
+                    double average = 0;
                     foreach (var elem in commentlist)
                     {
-                        average += elem.Rating;
+                        if(elem.Rating != null)
+                        average += Convert.ToDouble(elem.Rating);
                     }
 
                     average = average / commentlist.Count;
-                    
+                    exerciseManager.UpdateRating(model.ExerciseId, average);
+
                 }
             }
             return RedirectToAction("TaskView ", "ExerciseManagement", model.ExerciseId);

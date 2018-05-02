@@ -2,7 +2,7 @@
 @inject IViewLocalizer Localizer
 @inject IHtmlLocalizer<SharedRes> SharedLocalizer
 
-@model WebApp.ViewModels.GetExerciseViewModel
+@model WebApp.ViewModels.GetExerciseViewModel;
 @{
     ViewBag.Title = "Task View";
 }
@@ -24,51 +24,41 @@
         <textarea asp-for="TaskTextField" id="MCE"></textarea>
     </div>
     <label asp-for="TaskBaseCodeField" class="control-label">@SharedLocalizer["BaseCode"]:</label>
-    <textarea asp-for="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;" readonly></textarea>
+    <textarea asp-for="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;"> aa</textarea>
     <div class="form-group">
         <input value="@SharedLocalizer["Ok"]" onClick="history.go(-1)" ; class="btn btn-default" />
     </div>
+    <br />
 
-
-</form>
-<div class="col-md-2" style="margin-left: 10px">
-    <form asp-controller="Code" asp-action="Index">
-        <input type="hidden" name="UserId" value="@User.Identity.Name" />
-        <input type="hidden" name="ExerciseId" value="@Model.Id" />
-        <input type="hidden" name="CodeText" value="@Model.TaskBaseCodeField" />
-        <button type="submit" class="btn btn-default">Start</button>
-    </form>
-
-</div>
-<br />
-<br />
-
-<div>
-    <table class="table">
-        <tr>
-            <td>User</td>
-            <td>Comment</td>
-            <td>Rate</td>
-            <td>Written</td>
-        </tr>
-        @foreach (var comment in Model.CommentList)
-        {
-
+    <div>
+        <table class="table">
             <tr>
-                <td>@comment.UserName</td>
-                <td>@comment.CommentText</td>
-                <td>@comment.Rating</td>
-                <td>@comment.CreationDateTime</td>
+                <td>User</td>
+                <td>Comment</td>
+                <td>Rate</td>
+                <td>Written</td>
             </tr>
-        }
-    </table>
-</div>
-<form>
+            @foreach (var comment in Model.CommentList)
+            {
+
+                <tr>
+                    <td>@comment.UserName</td>
+                    <td>@comment.CommentText</td>
+                    <td><span class="rating" data-default-rating=@comment.Rating disabled></span></td>
+                    <td>@comment.CreationDateTime</td>
+                </tr>
+            }
+        </table>
+    </div>
+
     <div>
         <label class="control-label">Comment text:</label>
         <input type="text" id="textField" class="form-control" />
         <label class="control-label">Rate Field:</label>
-        <span class="rating" id="rateField"></span>
+
+        @*<input type="text" id="rateField" class="form-control" />*@
+        <span class="rating" id="rateField" data-default-rating="-1"></span>
+
         <button id="buttn" class="btn btn-default">Comment it !</button>
     </div>
 </form>
@@ -79,10 +69,9 @@
         <input type="hidden" name="ExerciseId" value="@Model.Id" />
         <input type="hidden" name="CodeText" value="@Model.TaskBaseCodeField" />
         <button type="submit" class="btn btn-default">Start</button>
-
     </form>
-</div>
 
+</div>
 
 
 @section Scripts {
@@ -93,6 +82,7 @@
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script src="~/js/StarRating.js"></script>
 
+    <script src="~/js/tinymce.min.js"></script>
 
 
     <script>
@@ -113,7 +103,7 @@
                 });
             });
 
-        tinymce.init({ selector: '#MCE' });
+        tinymce.init({ selector: '#MCE', readonly: 1, menubar: false, toolbar: false });
 
         var qq = 0;
         var ratings = document.getElementsByClassName('rating');
@@ -122,6 +112,7 @@
             var r = new SimpleStarRating(ratings[i]);
 
             ratings[i].addEventListener('rate', function (e) {
+                console.log('Rating: ' + e.detail);
                 qq = e.detail;
             });
         }

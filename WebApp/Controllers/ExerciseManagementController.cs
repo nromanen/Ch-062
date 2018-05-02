@@ -73,6 +73,7 @@ namespace WebApp.Controllers
                     TaskTextField = model.TaskTextField,
                     TaskBaseCodeField = model.TaskBaseCodeField,
                     TeacherId = user.Id,
+                    Rating = 0,
                     CreateDateTime = DateTime.Now,
                     UpdateDateTime = DateTime.Now
                 };
@@ -91,7 +92,6 @@ namespace WebApp.Controllers
             {
                 Id = id,
                 Course = task.Course,
-                IsDeleted = task.IsDeleted,
                 CommentList = commentList,
                 TaskName = task.TaskName,
                 TaskTextField = task.TaskTextField,

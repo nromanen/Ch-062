@@ -11,7 +11,7 @@ namespace WebApp.ViewModels.CommentViewModel
 
         public string UserName { get; set; }
 
-        public int Rating { get; set; }
+        public int? Rating { get; set; }
 
         public string CommentText { get; set; }
     }

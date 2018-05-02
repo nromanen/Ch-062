@@ -14,7 +14,7 @@ namespace Model.DB.Code
         public string Result { get; set; }
         public bool IsFavouriteCode { get; set; }
 
-        public int CodeId { get; set; }
-        public virtual UserCode Code { get; set; }
+        public int UserCodeId { get; set; }
+        public virtual UserCode UserCode { get; set; }
     }
 }

@@ -11,9 +11,10 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180502075323_rateMigration")]
+    partial class rateMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,7 +182,7 @@ namespace DAL.Migrations
 
                     b.Property<int>("ExerciseId");
 
-                    b.Property<int?>("Rating");
+                    b.Property<int>("Rating");
 
                     b.Property<string>("UserId");
 

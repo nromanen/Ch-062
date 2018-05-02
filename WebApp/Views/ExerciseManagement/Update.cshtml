@@ -41,18 +41,17 @@
 <br />
 <h6>@SharedLocalizer["Required"]</h6>
 
-    <script>
-        tinymce.init({ selector: '#MCE' });
+<script>
+    tinymce.init({ selector: '#MCE' });
 
 
-        window.onload = function () {
-            var editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('taskBaseCodeField'), {
-                mode: "text/x-csrc",
-                theme: "default",
-                lineNumbers: true
-            });
-        };
+    window.onload = function () {
+        var editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('taskBaseCodeField'), {
+            mode: "text/x-csrc",
+            theme: "default",
+            lineNumbers: true
+        });
+    };
 
 
-    </script>
-
+</script>
