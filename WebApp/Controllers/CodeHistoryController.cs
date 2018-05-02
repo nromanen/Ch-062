@@ -43,17 +43,18 @@ namespace WebApp.Controllers
                 ExerciseName = exercise.TaskName
             });
         }
+        [HttpPost]
+        public void EditCode(int codeTextId)
+        {
+            codeManager.SetFavouriteCode(codeTextId);
+        }
 
         [HttpPost]
-        public void AddToFavourites(int codeTextId, bool setToFavourite)
+        public void setFav(int codeTextId, bool setToFavourite)
         {
-            codeManager.SetFavouriteCode(codeTextId, setToFavourite);
+            
+            //codeManager.SetFavouriteCode(codeTextId, setToFavourite);
         }
-        [HttpGet]
-        public string GetTaskName(int exerciseId)
-        {
-            var taskName = exerciseManager.Get().Where(e => e.Id == exerciseId).FirstOrDefault().TaskName;
-            return taskName;
-        }
+        
     }
 }

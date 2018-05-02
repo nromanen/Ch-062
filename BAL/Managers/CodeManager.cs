@@ -132,10 +132,13 @@ namespace BAL.Managers
         
 
 
-        public void SetFavouriteCode(int codeId, bool setToFavourite)
+        public void SetFavouriteCode(int codeId)
         {
-            var codeHistoryEntity = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).FirstOrDefault();
-            codeHistoryEntity.IsFavouriteCode = setToFavourite;
+            bool setToFavourite = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).FirstOrDefault().IsFavouriteCode;
+            if (setToFavourite==true)
+            
+            //var codeHistoryEntity = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).FirstOrDefault();
+            //codeHistoryEntity.IsFavouriteCode = setToFavourite;
             unitOfWork.Save();
         }
 

@@ -2,9 +2,10 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 @inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+<link rel="stylesheet" href="~/css/StarRating.css" />
 <form asp-action="ShowExercise" asp-controller="CourseManagement">
     <div asp-validation-summary="All" class="text-danger"></div>
-
     <table class="table">
         <tr>
             <th> @SharedLocalizer["TaskName"] </th>
@@ -19,17 +20,33 @@
                     @{
                         if (User.Identity.IsAuthenticated)
                         {
-                            <form method="post">
-                                <a class="btn btn-sm btn-primary" asp-controller="ExerciseManagement" asp-action="TaskView" asp-route-id="@p.Id">@SharedLocalizer["Tasks"]</a>
-                            </form>
+                           
+                            <a class="btn btn-sm btn-primary" asp-controller="ExerciseManagement" asp-action="TaskView" asp-route-id="@p.Id">@SharedLocalizer["Tasks"]</a>                               
                         }
                     }
+
                 </td>
+                
+                <td><span class="rating" data-default-rating="@p.Rating" disabled></span></td>
+                
             </tr>
         }
 
     </table>
 
-
 </form>
+@section Scripts{ 
+    <script src="~/js/StarRating.js"></script>
+
+    <script>
+        var ratings = document.getElementsByClassName('rating');
+
+        for (var i = 0; i < ratings.length; i++) {
+            var r = new SimpleStarRating(ratings[i]);
+
+            ratings[i].addEventListener('rate', function (e) {            
+            });
+        }
+    </script>
+}
 

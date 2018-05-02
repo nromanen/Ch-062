@@ -55,7 +55,7 @@ namespace BAL.Managers
                 catch (Exception ex)
                 {
                     timer.Stop();
-                    result.RunTimeExceptions.Add(ex.InnerException.Message);
+                    result.RunTimeExceptions.Add($"{ex.InnerException.Message}, Location: {ex.InnerException.StackTrace}");
                 }
                 result.ExecutionTime = timer.Elapsed;
             }
@@ -63,7 +63,7 @@ namespace BAL.Managers
             {
                 foreach (Diagnostic codeIssue in compilationResult.Diagnostics)
                 {
-                    string issue = codeIssue.GetMessage();
+                    string issue = $"{codeIssue.GetMessage()}, Location {codeIssue.Location.GetLineSpan().StartLinePosition}";
                     result.CompileTimeExceptions.Add(issue);
                 }
             }

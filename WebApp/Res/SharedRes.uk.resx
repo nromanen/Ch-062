@@ -306,4 +306,25 @@
   <data name="Testcases" xml:space="preserve">
     <value>Тести</value>
   </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Коментар</value>
+  </data>
+  <data name="ComText" xml:space="preserve">
+    <value>Текст коментаря</value>
+  </data>
+  <data name="Rate" xml:space="preserve">
+    <value>Рейтинг</value>
+  </data>
+  <data name="RateField" xml:space="preserve">
+    <value>Поле рейтингу</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Старт</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>Користувач</value>
+  </data>
+  <data name="Written" xml:space="preserve">
+    <value>Опубліковано</value>
+  </data>
 </root>
