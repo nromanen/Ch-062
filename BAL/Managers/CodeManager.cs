@@ -94,17 +94,17 @@ namespace BAL.Managers
         public string ExecutionResult(string code, int exId, string userId)
         {
             var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
-            var userCode = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First();
             var res = sandboxManager.Execute(code);
             if (res.Success)
             {
                 string result =
-                    $"Result: {res.Result}, Compile time: {res.CompileTime.TotalMilliseconds}, Execution Time: {res.ExecutionTime.TotalMilliseconds}";
+                    $"Result: {res.Result};\r\nCompile time: {res.CompileTime.TotalMilliseconds};\r\nExecution Time: {res.ExecutionTime.TotalMilliseconds};";
                 AddHistory(codeId, code, null, result);
                 return result;
             }
-            string errors = res.CompileTimeExceptions.Aggregate("", (current, v) => current + (" " + v));
-            errors = res.RunTimeExceptions.Aggregate(errors, (current, v) => current + (" " + v));
+            
+            string errors = res.CompileTimeExceptions.Aggregate("", (current, v) => current + (v + ";\r\n"));
+            errors = res.RunTimeExceptions.Aggregate(errors, (current, v) => current + (v + ";\r\n"));
             AddHistory(codeId, code, errors, null );
             return errors;
         }

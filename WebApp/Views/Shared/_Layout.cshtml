@@ -22,8 +22,8 @@
 </head>
 
 <body>
-    <div >
-        <ul id="gn-menu" class="gn-menu-main navbar-fixed-top" >
+    <div>
+        <ul id="gn-menu" class="gn-menu-main navbar-fixed-top">
             <li class="gn-trigger">
                 <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
                 <nav class="gn-menu-wrapper">
@@ -57,14 +57,12 @@
                 </nav>
             </li>
             <li>
-                <a asp-area="" asp-controller="Home" asp-action="Index" style="font-size: 20px" >@SharedLocalizer["SoftServe"]</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" style="font-size: 20px">@SharedLocalizer["SoftServe"]</a>
 
             </li>
             @await Html.PartialAsync("_LoginPartial")
         </ul>
-        <header>
-
-        </header>
+        <header></header>
 
         <div class="container body-content" style="margin-top: 30px">
             @RenderBody()
@@ -80,6 +78,13 @@
     <script src="~/js/site.js"></script>
     <script>
         new gnMenu(document.getElementById('gn-menu'));
+    </script>
+    <script>
+        $(document).on('click',
+            ".deff",
+            function () {
+                $('.container').html('zdarova. kak dela?');
+            });
     </script>
 
     @RenderSection("Scripts", required: false)

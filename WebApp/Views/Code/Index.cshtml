@@ -14,27 +14,28 @@
             <div class="row" style="height: 100%; padding: 20px; border-color: black; border: 1px solid; background-color: white">
                 <div class="col-md-12">
                     <div class="row" style="padding: 10px">@SharedLocalizer["Exercisetitle"]: @Model.Exercise.TaskName</div>
-                    <div class="row" style="padding: 10px">@SharedLocalizer["Task"]: <textarea  id="MCE">@Model.Exercise.TaskTextField</textarea></div>
+                    <div class="row" style="padding: 10px">@SharedLocalizer["Task"]: @Model.Exercise.TaskTextField</div>
                 </div>
             </div>
             <br />
-            <div>
-                <div class="row" style=" height: 100%">
-                    <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-9">
                         <textarea id="codeText" class="col-md-12 textField" style="height: 100%; width: 100%; "></textarea>
-                        <br />
-                        <button type="button" id="executeButton" class="btn btn-default"> @SharedLocalizer["Execute"] </button>
-                        @*<button type="button" id="reloadButton" class="btn btn-default"> @SharedLocalizer["Reload"] </button>*@
-                        <button type="button" id="exit" class="btn btn-default" onclick='location.href = "@Url.Action("Index","Home")"'> @SharedLocalizer["Exit"] </button>
+                        
 
+                </div>
+                <div class="col-md-3"style="height: 650px" >
+                    <textarea id="result" style="padding: 10px; border-color: black; border: 1px solid; height: 100%; width: 100%; background-color: white" readonly="readonly"></textarea>
+                    <br />
+                    <br />
+                    <button type="button" id="executeButton" class="btn btn-default"> @SharedLocalizer["Execute"] </button>
+                    @*<button type="button" id="reloadButton" class="btn btn-default"> @SharedLocalizer["Reload"] </button>*@
+                    <button type="button" id="exit" class="btn btn-default" onclick='location.href = "@Url.Action("Index","Home")"'> @SharedLocalizer["Exit"] </button>
 
-                    </div>
                 </div>
             </div>
             <br />
-            <div class="row" style=" height: 150px; ">
-                <div id="result" style="padding: 10px; border-color: black; border: 1px solid; height: 100%; background-color: white"></div>
-            </div>
+            
         </div>
     </div>
 </div>
@@ -45,13 +46,11 @@
     <script src="~/js/matchbrackets.js"></script>
     <script src="~/js/continuecomment.js"></script>
     <script src="~/js/clike.js"></script>
-    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#codeText').html('@Model.CodeText');
         });
 
-        tinymce.init({ selector: '#MCE', readonly: 1, menubar: false, toolbar: false });
 
         var editableCodeMirror = null;
         window.onload = function () {
