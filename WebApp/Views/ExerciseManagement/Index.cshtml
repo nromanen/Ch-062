@@ -10,6 +10,7 @@
 @if (User.IsInRole("Teacher"))
 {
     <h4 style="margin-top: 15px"><a asp-action="Create" class="btn btn-sm btn-primary">@SharedLocalizer["AddTask"]</a></h4>
+    <a asp-action="CreateTestCase" class="btn btn-sm btn-primary">@SharedLocalizer["AddTestCase"]</a>
 }
 <table class="table">
     <tr>
