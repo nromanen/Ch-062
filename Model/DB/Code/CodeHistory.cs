@@ -13,6 +13,7 @@ namespace Model.DB.Code
         public string Error { get; set; }
         public string Result { get; set; }
         public bool IsFavouriteCode { get; set; }
+        public DateTime time { get; set; }
 
         public int UserCodeId { get; set; }
         public virtual UserCode UserCode { get; set; }

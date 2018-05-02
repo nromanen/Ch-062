@@ -11,9 +11,10 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180502122358_fixes")]
+    partial class fixes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -142,8 +143,6 @@ namespace DAL.Migrations
                     b.Property<string>("Result");
 
                     b.Property<int>("UserCodeId");
-
-                    b.Property<DateTime>("time");
 
                     b.HasKey("Id");
 

@@ -63,8 +63,8 @@ namespace BAL.IoC
                     .ForMember(dest => dest.CodeText, options => options.MapFrom(src => src.CodeText))
                     .ForMember(dest => dest.Error, options => options.MapFrom(src => src.Error))
                     .ForMember(dest => dest.Result, options => options.MapFrom(src => src.Result))
-                    .ForMember(dest => dest.IsFavouriteCode, options => options.MapFrom(src => src.IsFavouriteCode));
-                    //.ForMember(dest => dest.UserCodeId, options => options.MapFrom(src => src.UserCodeId));
+                    .ForMember(dest => dest.IsFavouriteCode, options => options.MapFrom(src => src.IsFavouriteCode))
+                    .ForMember(dest => dest.UserCodeId, options => options.MapFrom(src => src.UserCodeId));
                 cfg.CreateMap<List<CodeHistory>, List<CodeHistoryDTO>>();
                 
 

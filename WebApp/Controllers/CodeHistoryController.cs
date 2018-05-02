@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Model.DB;
 using Model.DTO.CodeDTO;
+using Model.Entity;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers
@@ -46,14 +47,14 @@ namespace WebApp.Controllers
         [HttpPost]
         public void EditCode(int codeTextId)
         {
-            codeManager.SetFavouriteCode(codeTextId);
+            codeManager.EditCode(codeTextId);
         }
 
         [HttpPost]
-        public void setFav(int codeTextId, bool setToFavourite)
+        public SetFav setFav(SetFav model)
         {
-            
-            //codeManager.SetFavouriteCode(codeTextId, setToFavourite);
+            codeManager.SetFavouriteCode(model);
+            return model;
         }
         
     }
