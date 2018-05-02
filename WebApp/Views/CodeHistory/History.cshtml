@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Model.DTO.CodeDTO.CodeHistoryDTO>
+﻿@model WebApp.ViewModels.CodeHistoryViewModels
 
 @{
     ViewData["Title"] = "History";
@@ -27,38 +27,42 @@
     }
 </style>
 <hr />
-@foreach (var code in Model)
+@foreach (var code in Model.CodeHistory)
 {
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
+    <form>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
 
-                <span class="titlecode" data-toggle="collapse" data-target="#code-example"> <h2>@*@code.Code.Exercise.TaskName*@</h2> </span>
-                <div id="code-example" class="collapse">
-                    <p>@code.CodeText</p>
-                    @if (code.Result != null)
-                    {
-                        <h3>Result</h3>
+                    <div class="titlecode" data-toggle="collapse" data-target="#code-example"> 
+                        <h2 id="task-name"></h2>@Model.ExerciseName</div>
+                    <div id="code-example" class="collapse">
+                        <p>@code.CodeText</p>
+                        @if (code.Result != null)
+                        {
+                            <h3>Result</h3>
 
-                        <p>@code.Result</p>
-                    }
-                    else
-                    {
-                        <h3>Errors</h3>
-                        <p>@code.Error</p>
-                    }
+                            <p>@code.Result</p>
+                        }
+                        else
+                        {
+                            <h3>Errors</h3>
+                            <p>@code.Error</p>
+                        }
+                        
+                    </div>
+                </div>
+
+                <span id="date" class=" col-lg-2">@DateTime.Now</span>
+
+                <span id="toggle-span" class=" col-lg-2 glyphicon glyphicon-heart" data-toggle="collapse" href="#collapsecontent"></span>
+                <div class="collapse" id="collapsecontent">
+                    <p>saved to favourites</p>
+
                 </div>
             </div>
-
-            <span id="date" class=" col-lg-2">@DateTime.Now</span>
-
-            <span id="toggle-span" class=" col-lg-2 glyphicon glyphicon-heart" data-toggle="collapse" href="#collapsecontent"></span>
-            <div class="collapse" id="collapsecontent">
-                <p>saved to favourites</p>
-
-            </div>
         </div>
-    </div>
+    </form>
 }
 <hr />
 @section Scripts{
@@ -69,29 +73,35 @@
                 .toggleClass('glyphicon-chevron-down')
                 .toggleClass("glyphicon-chevron-up");
         });
-
         });
 
-        @*$('#toggle-span').click(
-            function () {
+        function setTaskNameToHeader(userCodeId) {
+            console.log(userCodeId);
 
-                var userCode;
-                code.CodeId = @Model.Where(e=>e.CodeId).;
-                console.log(userCode.CodeText);
-                userCode.ExerciseId = ('@Model.');
-                userCode.UserId = ('@Model.UserId');
+            $.ajax({
+                type: "GET",
+                url: "/CodeHistory/GetTaskName",
+                data: userCodeId,
+                success: function (data) {
+                    $("#task-name").html(data);
+                }
+            });
+        }
+        function setFav(code) {
+            console.log(code);
+            @*userCode.ExerciseId = ('@Model.');
+            userCode.UserId = ('@Model.UserId');
 
-                $.ajax({
-                    type: "POST",
-                    url: "/Code/GetCode",
-                    data: userCode,
-                    success: function(data) {
-                        $("#result").html(data);
-                    }
-                });
+            $.ajax({
+                type: "POST",
+                url: "/Code/GetCode",
+                data: userCode,
+                success: function (data) {
+                    $("#result").html(data);
+                }
+            });*@
 
-            }
-        );*@
+        }
 
     </script>
     <script src="~/lib/jquery/dist/jquery.js"></script>

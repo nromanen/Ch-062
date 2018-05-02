@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Model.DB.Code;
 using Model.DTO.CodeDTO;
 
 namespace BAL.Interfaces
@@ -15,7 +16,7 @@ namespace BAL.Interfaces
         string ExecuteCode(UserCodeDTO model);
         string ExecutionResult(string code, int exId, string userId);
         UserCodeDTO BuildCodeModel(UserCodeDTO model);
-        IEnumerable<CodeHistoryDTO> GetHistoryLst(int codeId);
+        List<CodeHistory> GetHistoryLst(int codeId);
         void SetFavouriteCode(int codeId, bool setToFavourite);
     }
 }
