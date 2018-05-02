@@ -26,29 +26,27 @@
     <label asp-for="TaskBaseCodeField" class="control-label">@SharedLocalizer["BaseCode"]:</label>
     <textarea asp-for="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;"> aa</textarea>
     <div class="form-group">
-        <input value="@SharedLocalizer["Ok"]" onClick="history.go(-1)" ; class="btn btn-default" />
+        
+        <input value="@SharedLocalizer["Ok"]" onClick="window.history.back()" ; class="btn btn-default" />
     </div>
     <br />
 
     <div>
-        <table class="table">
-            <tr>
-                <td>User</td>
-                <td>Comment</td>
-                <td>Rate</td>
-                <td>Written</td>
-            </tr>
-            @foreach (var comment in Model.CommentList)
-            {
 
-                <tr>
-                    <td>@comment.UserName</td>
-                    <td>@comment.CommentText</td>
-                    <td><span class="rating" data-default-rating=@comment.Rating disabled></span></td>
-                    <td>@comment.CreationDateTime</td>
-                </tr>
-            }
-        </table>
+        @foreach (var comment in Model.CommentList)
+    {
+        <div class="panel panel-info" style="width: 400px;">
+            <div class="panel-heading">
+                @comment.UserName   <span style="float: right;" class="rating" data-default-rating=@comment.Rating disabled></span>
+            </div>
+            <div class="panel-body">
+                @comment.CommentText
+            </div>
+            <div class="panel-footer">
+                @comment.CreationDateTime
+            </div>
+        </div>
+}
     </div>
 
     <div>
