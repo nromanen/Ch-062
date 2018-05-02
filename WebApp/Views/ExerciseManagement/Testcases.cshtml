@@ -3,7 +3,6 @@
 @inject IHtmlLocalizer<SharedRes> SharedLocalizer
 
 @model IEnumerable<Model.DTO.TestCaseDTO>
-<a asp-action="CreateTestCase" class="btn btn-sm btn-primary">@SharedLocalizer["AddTestCase"]</a>
 <table class="table">
     <tr>
         <th>@SharedLocalizer["InputData"]</th>

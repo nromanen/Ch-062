@@ -172,6 +172,7 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "ExerciseManagement");
         }
 
+        [HttpGet]
         [Authorize(Roles = "Teacher")]
         public IActionResult CreateTestCase()
         {

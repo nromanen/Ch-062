@@ -14,8 +14,8 @@ namespace Model.DTO.CodeDTO
         public string Result { get; set; }
         public bool IsFavouriteCode { get; set; }
 
-        public int UserCodeId { get; set; }
-        public UserCodeDTO UserCode { get; set; }
+        //public int UserCodeId { get; set; }
+        //public UserCodeDTO UserCode { get; set; }
 
     }
 }

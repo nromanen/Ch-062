@@ -13,7 +13,7 @@
 
 <form asp-action="TaskView" asp-controller="ExerciseManagement">
     <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
+    <div class="form-group" >
         <input type="hidden" asp-for="Id" id="TaskId" value="@Model.Id" />
     </div>
     <div class="form-group">
@@ -25,55 +25,59 @@
     </div>
     <label asp-for="TaskBaseCodeField" class="control-label">@SharedLocalizer["BaseCode"]:</label>
     <textarea asp-for="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;" readonly> </textarea>
-    <div class="col-md-2">
+    <div class="col-md-2" >
         <input value="@SharedLocalizer["Ok"]" onClick="history.go(-1)" ; class="btn btn-default" />
      
     </div>
     
 </form>
 <br />
-<div class="col-md-2" style="margin-left: 10px">
+<div class="col-md-2" style="margin-left: 10px;">
     <form asp-controller="Code" asp-action="Index">
         <input type="hidden" name="UserId" value="@User.Identity.Name" />
         <input type="hidden" name="ExerciseId" value="@Model.Id" />
         <input type="hidden" name="CodeText" value="@Model.TaskBaseCodeField" />
         <button type="submit" class="btn btn-default">@SharedLocalizer["Start"]</button>
-
     </form>
 
 </div>
-<br />
+<div style="clear: both;">
+    <br/>
+ </div>
 
 <div>
-    <table class="table">
-        <tr>
-            <td>@SharedLocalizer["User"]</td>
-            <td>@SharedLocalizer["Comment"]</td>
-            <td>@SharedLocalizer["Rate"]</td>
-            <td>@SharedLocalizer["Written"]</td>
+    @foreach (var comment in Model.CommentList)
+    {
+        <div class="panel panel-info" style="width: 500px; position: unset;">
 
-        </tr>
-        @foreach (var comment in Model.CommentList)
-        {
-
-            <tr>
-                <td>@comment.UserName</td>
-                <td>@comment.CommentText</td>
-                <td><span class="rating" data-default-rating=@comment.Rating disabled></span></td>
-                <td>@comment.CreationDateTime</td>
-            </tr>
-        }
-    </table>
+            <div class="panel-heading">
+                @comment.UserName <span style="float: right;" class="rating" data-default-rating=@comment.Rating disabled></span>
+            </div>
+            <div class="panel-body">
+                @comment.CommentText
+            </div>
+            <div class="panel-footer">
+                @comment.CreationDateTime
+            </div>
+        </div>
+    }
 </div>
 
 <div>
-    <label class="control-label">@SharedLocalizer["ComText"]</label>
-    <input type="text" id="textField" class="form-control" />
-    <label class="control-label">@SharedLocalizer["RateField"]</label>
-    <span class="rating" id="rateField" data-default-rating="-1"></span>
-    <button id="buttn" class="btn btn-default">@SharedLocalizer["Comment"]</button>
+    <div class="panel panel-warning" style="width: 80wh; position: unset;">
+        <div class="panel-heading">
+            <label class="control-label">@SharedLocalizer["RateField"]</label>
+            <span class="rating" id="rateField" data-default-rating="-1"></span>
+        </div>
+        <div class="panel-body">
+            <label class="control-label">@SharedLocalizer["ComText"]</label>
+            <textarea style="width: 95%; margin-left: 20px;" id="textField" class="form-control"></textarea>
+        </div>
+        <div class="panel-footer">
+            <button id="buttn" class="btn btn-default">@SharedLocalizer["Comment"]</button>
+        </div>
+    </div>
 </div>
-
 
 @section Scripts {
     <script src="~/js/codemirror.js"></script>
