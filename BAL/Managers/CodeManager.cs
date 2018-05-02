@@ -123,10 +123,10 @@ namespace BAL.Managers
             }
             return model;
         }
-
-        public List<CodeHistory> GetHistoryLst(int codeId)
+        
+        public List<CodeHistoryDTO> GetHistoryLst(int codeId)
         {
-            var codeHistories = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).ToList();
+            var codeHistories = mapper.Map<List<CodeHistoryDTO>>(unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).ToList());
             return codeHistories;
         }
         

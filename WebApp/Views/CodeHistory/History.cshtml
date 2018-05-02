@@ -48,7 +48,7 @@
     <tr style="width:100%" class="col-12">
         @Html.HiddenFor(x => Model.CodeHistory[i].Id)
         <td>
-            <p data-id="@Model.CodeHistory[i].Id" id="@Model.CodeHistory[i].Id" class="form-control titlecode" readonly>@Model.CodeHistory[i].UserCode.User.UserName</p>
+            <p data-id="@Model.CodeHistory[i].Id" id="@Model.CodeHistory[i].Id" class="form-control titlecode" readonly>@*@Model.CodeHistory[i].UserCode.User.UserName*@</p>
         </td>
         <td>
             <p><textarea data-id="@Model.CodeHistory[i].Id" id="@Model.CodeHistory[i].Id" class="form-control code-example" rows="15">@Model.CodeHistory[i].CodeText</textarea></p>
