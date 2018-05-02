@@ -23,7 +23,7 @@
 		this.el = el;
 		this._init();
 	}
-
+    
 	gnMenu.prototype = {
 		_init : function() {
 			this.trigger = this.el.querySelector( 'a.gn-icon-menu' );

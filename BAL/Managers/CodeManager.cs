@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Model.DB;
 using Model.DB.Code;
 using Model.DTO.CodeDTO;
-using Model.Entity;
 
 namespace BAL.Managers
 {
@@ -53,15 +52,14 @@ namespace BAL.Managers
         }
 
 
-        public void AddHistory(int codeId, string text, DateTime date, string error = null, string result = null)
+        public void AddHistory(int codeId, string text, string error = null, string result = null)
         {
             unitOfWork.CodeHistoryRepo.Insert(new CodeHistory
             {
                 CodeText = text,
                 UserCodeId = codeId,
                 Error = error,
-                Result = result,
-                time = date
+                Result = result
             });
             unitOfWork.Save();
 
@@ -96,18 +94,18 @@ namespace BAL.Managers
         public string ExecutionResult(string code, int exId, string userId)
         {
             var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
-            var userCode = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First();
             var res = sandboxManager.Execute(code);
             if (res.Success)
             {
                 string result =
-                    $"Result: {res.Result}, Compile time: {res.CompileTime.TotalMilliseconds}, Execution Time: {res.ExecutionTime.TotalMilliseconds}";
-                AddHistory(codeId, code, DateTime.Now, null, result);
+                    $"Result: {res.Result};\r\nCompile time: {res.CompileTime.TotalMilliseconds};\r\nExecution Time: {res.ExecutionTime.TotalMilliseconds};";
+                AddHistory(codeId, code, null, result);
                 return result;
             }
-            string errors = res.CompileTimeExceptions.Aggregate("", (current, v) => current + (" " + v));
-            errors = res.RunTimeExceptions.Aggregate(errors, (current, v) => current + (" " + v));
-            AddHistory(codeId, code, DateTime.Now, errors, null);
+            
+            string errors = res.CompileTimeExceptions.Aggregate("", (current, v) => current + (v + ";\r\n"));
+            errors = res.RunTimeExceptions.Aggregate(errors, (current, v) => current + (v + ";\r\n"));
+            AddHistory(codeId, code, errors, null );
             return errors;
         }
 
@@ -125,27 +123,24 @@ namespace BAL.Managers
             }
             return model;
         }
-
-        public List<CodeHistory> GetHistoryLst(int codeId)
+        
+        public List<CodeHistoryDTO> GetHistoryLst(int codeId)
         {
-            var codeHistories = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).ToList();
+            var codeHistories = mapper.Map<List<CodeHistoryDTO>>(unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).ToList());
             return codeHistories;
         }
-
         
-        public SetFav SetFavouriteCode(SetFav model)
+
+
+        public void SetFavouriteCode(int codeId)
         {
-            var codeHistoryEntity = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == model.codeId).FirstOrDefault();
-            codeHistoryEntity.IsFavouriteCode = model.flag;
+            bool setToFavourite = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).FirstOrDefault().IsFavouriteCode;
+            if (setToFavourite==true)
+            
+            //var codeHistoryEntity = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).FirstOrDefault();
+            //codeHistoryEntity.IsFavouriteCode = setToFavourite;
             unitOfWork.Save();
-            return model;
         }
-
-        public void EditCode(int codeTextId)
-        {
-
-        }
-
 
     }
 }

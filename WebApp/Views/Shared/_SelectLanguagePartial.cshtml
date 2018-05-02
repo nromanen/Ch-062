@@ -32,7 +32,6 @@
         height: 100%;
         color: #5f6f81;
         text-decoration: none;
-        cursor: pointer;
     }
     .deff-language {
         padding-top: 15px;
@@ -48,7 +47,7 @@
 </style>
 
 <form  asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@Context.Request.Path"
-      method="post" class="form-horizontal deff deff-language">
+       method="post" class="form-horizontal deff deff-language">
     @Localizer["Language:"]
     <select class="dropdown-lang" name="culture" onchange="this.form.submit();"
             asp-for="@requestCulture.RequestCulture.UICulture.Name"
