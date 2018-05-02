@@ -8,7 +8,7 @@
 }
 
 <link rel="stylesheet" href="~/css/codemirror.css" />
-<link rel="stylesheet" href="~/css/StarRating.css"/>
+<link rel="stylesheet" href="~/css/StarRating.css" />
 
 
 <form asp-action="TaskView" asp-controller="ExerciseManagement">
@@ -29,7 +29,7 @@
         <input value="@SharedLocalizer["Ok"]" onClick="history.go(-1)" ; class="btn btn-default" />
     </div>
 
-    
+
 </form>
 <div class="col-md-2" style="margin-left: 10px">
     <form asp-controller="Code" asp-action="Index">
@@ -63,12 +63,12 @@
         }
     </table>
 </div>
-
+<form>
     <div>
         <label class="control-label">Comment text:</label>
         <input type="text" id="textField" class="form-control" />
         <label class="control-label">Rate Field:</label>
-        <input type="text" id="rateField" class="form-control" />
+        <span class="rating" id="rateField"></span>
         <button id="buttn" class="btn btn-default">Comment it !</button>
     </div>
 </form>
@@ -79,7 +79,9 @@
         <input type="hidden" name="ExerciseId" value="@Model.Id" />
         <input type="hidden" name="CodeText" value="@Model.TaskBaseCodeField" />
         <button type="submit" class="btn btn-default">Start</button>
+
     </form>
+</div>
 
 
 
@@ -90,21 +92,21 @@
     <script src="~/js/clike.js"></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script src="~/js/StarRating.js"></script>
-   
-        
+
+
 
     <script>
 
         $('#buttn').click(
             function () {
-               
+
                 var comment = new Object();
                 comment.ExerciseId = $('#TaskId').val();
-                comment.Rating = qq;  
+                comment.Rating = qq;
                 comment.CommentText = $('#textField').val();
 
                 $.ajax({
-                    
+
                     type: "POST",
                     url: "/Comment/Create",
                     data: comment
@@ -120,11 +122,10 @@
             var r = new SimpleStarRating(ratings[i]);
 
             ratings[i].addEventListener('rate', function (e) {
-                console.log('Rating: ' + e.detail);
                 qq = e.detail;
             });
         }
-       
+
 
         var editableCodeMirror = null;
         window.onload = function () {
@@ -133,7 +134,7 @@
                 theme: "default",
                 lineNumbers: true
             });
-           
+
         };
 
     </script>
