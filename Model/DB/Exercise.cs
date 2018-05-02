@@ -25,5 +25,7 @@ namespace Model.DB
         public DateTime CreateDateTime { get; set; }
 
         public DateTime UpdateDateTime { get; set; }
+
+        public double Rating { get; set; }
     }
 }

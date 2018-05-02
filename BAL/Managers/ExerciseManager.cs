@@ -62,6 +62,14 @@ namespace BAL.Managers
             unitOfWork.Save();
         }
 
+        public void UpdateRating(int id, double rating)
+        {
+            var task = unitOfWork.ExerciseRepo.GetById(id);
+            task.Rating = rating;
+            unitOfWork.ExerciseRepo.Update(task);
+            unitOfWork.Save();
+        }
+
         public void Delete(ExerciseDTO entityToDelete)
         {
             unitOfWork.ExerciseRepo.Delete(mapper.Map<Exercise>(entityToDelete));

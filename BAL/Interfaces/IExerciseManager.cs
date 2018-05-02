@@ -22,6 +22,7 @@ namespace BAL.Interfaces
                            string taskBaseCodeField, int courseId, string course,
                            DateTime updateDateTime);
         void DeleteOrRecover(int id);
+        void UpdateRating(int id, double rating);
         void Delete(ExerciseDTO item);
     }
 }

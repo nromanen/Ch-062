@@ -18,6 +18,6 @@ namespace Model.DB
 
         public int ExerciseId { get; set; }
 
-        public int Rating { get; set; } 
+        public int? Rating { get; set; } 
     }
 }

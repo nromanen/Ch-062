@@ -8,7 +8,7 @@
 }
 
 <link rel="stylesheet" href="~/css/codemirror.css" />
-<link rel="stylesheet" href="~/css/StarRating.css"/>
+<link rel="stylesheet" href="~/css/StarRating.css" />
 
 
 <form asp-action="TaskView" asp-controller="ExerciseManagement">
@@ -24,7 +24,7 @@
         <textarea asp-for="TaskTextField" id="MCE"></textarea>
     </div>
     <label asp-for="TaskBaseCodeField" class="control-label">@SharedLocalizer["BaseCode"]:</label>
-    <textarea asp-for="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;" > aa</textarea>
+    <textarea asp-for="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;"> aa</textarea>
     <div class="form-group">
         <input value="@SharedLocalizer["Ok"]" onClick="history.go(-1)" ; class="btn btn-default" />
     </div>
@@ -44,7 +44,7 @@
                 <tr>
                     <td>@comment.UserName</td>
                     <td>@comment.CommentText</td>
-                    <td>@comment.Rating</td>
+                    <td><span class="rating" data-default-rating=@comment.Rating disabled></span></td>
                     <td>@comment.CreationDateTime</td>
                 </tr>
             }
@@ -57,7 +57,7 @@
         <label class="control-label">Rate Field:</label>
 
         @*<input type="text" id="rateField" class="form-control" />*@
-         <span class="rating" id="rateField" data-default-rating="-1"></span> 
+        <span class="rating" id="rateField" data-default-rating="-1"></span>
 
         <button id="buttn" class="btn btn-default">Comment it !</button>
     </div>
@@ -81,28 +81,29 @@
     <script src="~/js/clike.js"></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script src="~/js/StarRating.js"></script>
-   
-        
+
+    <script src="~/js/tinymce.min.js"></script>
+
 
     <script>
 
         $('#buttn').click(
             function () {
-               
+
                 var comment = new Object();
                 comment.ExerciseId = $('#TaskId').val();
-                comment.Rating = qq;  
+                comment.Rating = qq;
                 comment.CommentText = $('#textField').val();
 
                 $.ajax({
-                    
+
                     type: "POST",
                     url: "/Comment/Create",
-                    data: comment                 
+                    data: comment
                 });
             });
 
-        tinymce.init({ selector: '#MCE' });
+        tinymce.init({ selector: '#MCE', readonly: 1, menubar: false, toolbar: false });
 
         var qq = 0;
         var ratings = document.getElementsByClassName('rating');
@@ -115,7 +116,7 @@
                 qq = e.detail;
             });
         }
-       
+
 
         var editableCodeMirror = null;
         window.onload = function () {
@@ -124,7 +125,7 @@
                 theme: "default",
                 lineNumbers: true
             });
-           
+
         };
 
     </script>

@@ -20,5 +20,7 @@ namespace WebApp.ViewModels
 
         public IEnumerable<CommentDTO> CommentList { get; set; }
 
+        public double Rating { get; set; }
+
     }
 }
