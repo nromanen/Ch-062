@@ -35,5 +35,12 @@ namespace WebApp.Controllers
         {
             return model.CodeText == null ? "Write some code" : codeManager.ExecuteCode(model);
         }
+
+
+        [HttpPost]
+        public string ExecuteCode(UserCodeDTO model)
+        {
+            return model.CodeText == null ? "Write some codeeeee" : codeManager.GetCode(model);
+        }
     }
 }

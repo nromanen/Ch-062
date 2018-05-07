@@ -59,9 +59,35 @@
                 theme: "default",
                 lineNumbers: true
             });
+
+            editableCodeMirror.on('change', function () {  //(cMirror)
+                $('#result').html('');
+                // get value right from instance
+                //console.log(cMirror.getValue());
+                console.log("Starteeed")
+
+                var userCode = new Object();
+                userCode.CodeText = editableCodeMirror.getValue();
+                userCode.ExerciseId = ('@Model.ExerciseId');
+                userCode.UserId = ('@Model.UserId');
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Code/GetCode",
+                    data: userCode,
+                    success: function (data) {
+                        $("#result").html(data);
+                    }
+                });
+            });
+
+
             editableCodeMirror.setOption("mode", "text/x-csrc");
+            console.log("Test2");
 
         };
+
+
         $('#reloadButton').click(function () {
 
             editableCodeMirror.setValue('@Model.CodeText');
@@ -88,6 +114,9 @@
 
             }
         );
+
+
+
     </script>
 }
 
