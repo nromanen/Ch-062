@@ -17,7 +17,6 @@ namespace DAL
         private IBaseRepository<Course> courseRepo;
         private IBaseRepository<UserCode> codeRepo;
         private IBaseRepository<CodeHistory> codeHistoryRepo;
-        private IBaseRepository<TestCase> testCasesRepo;
         private IBaseRepository<Comment> commentRepo;
 
         public UnitOfWork(MainDbContext context)
@@ -89,15 +88,6 @@ namespace DAL
             }
         }
         
-        public IBaseRepository<TestCase> TestCasesRepo
-        {
-            get
-            {
-                if (testCasesRepo == null) { testCasesRepo = new BaseRepository<TestCase>(context); }
-                return testCasesRepo;
-            }
-        }
-
         public int Save()
         {
             return context.SaveChanges();
