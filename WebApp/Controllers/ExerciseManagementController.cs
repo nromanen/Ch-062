@@ -25,17 +25,15 @@ namespace WebApp.Controllers
         private readonly UserManager<User> userManager;
         private readonly ICommentManager commentManager;
         private readonly IMapper mapper;
-        private readonly ITestCaseManager testCaseManager;
 
         public ExerciseManagementController(IExerciseManager exerciseManager, ICourseManager courseManager,
-                                            UserManager<User> userManager, IMapper mapper, ITestCaseManager testCaseManager, ICommentManager commentManager)
+                                            UserManager<User> userManager, IMapper mapper, ICommentManager commentManager)
         {
             this.exerciseManager = exerciseManager;
             this.courseManager = courseManager;
             this.userManager = userManager;
             this.commentManager = commentManager;
             this.mapper = mapper;
-            this.testCaseManager = testCaseManager;
         }
 
         [Authorize(Roles = "Teacher")]
@@ -136,65 +134,11 @@ namespace WebApp.Controllers
         }
 
 
-
         [HttpPost]
         [Authorize(Roles = "Teacher")]
         public IActionResult DeleteOrRecover(int id)
         {
             exerciseManager.DeleteOrRecover(id);
-            return RedirectToAction("Index", "ExerciseManagement");
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "Teacher")]
-        public IActionResult Testcases(int id)
-        {
-            var testcases = testCaseManager.GetByExerciseId(id);
-            return View(testcases);
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "Teacher")]
-        public IActionResult EditTestCase(int id)
-        {
-            var testcase = testCaseManager.GetById(id);
-            return View(testcase);
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "Teacher")]
-        public IActionResult EditTestCase(TestCaseDTO testCaseDTO)
-        {
-            if (ModelState.IsValid)
-            {
-                testCaseManager.Update(testCaseDTO);
-            }
-            return RedirectToAction("Index", "ExerciseManagement");
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "Teacher")]
-        public IActionResult CreateTestCase()
-        {
-            return View(new CreateTestCase() { ExerciseList = exerciseManager.GetAll() });
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "Teacher")]
-        public IActionResult CreateTestCase(CreateTestCase model)
-        {
-            model.TestCaseDTO.UserId = userManager.GetUserId(HttpContext.User);
-            if (ModelState.IsValid)
-            {
-                var test = new TestCaseDTO()
-                {
-                    ExerciseId = model.TestCaseDTO.ExerciseId,
-                    UserId = model.TestCaseDTO.UserId,
-                    InputData = model.TestCaseDTO.InputData,
-                    OutputData = model.TestCaseDTO.OutputData
-                };
-                testCaseManager.Insert(test);
-            }
             return RedirectToAction("Index", "ExerciseManagement");
         }
     }

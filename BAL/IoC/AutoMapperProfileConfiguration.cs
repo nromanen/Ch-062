@@ -29,7 +29,8 @@ namespace BAL.IoC
                 .ForMember(dest => dest.IsDeleted, options => options.MapFrom(src => src.IsDeleted))
                 .ForMember(dest => dest.Rating, options => options.MapFrom(src => src.Rating))
                 .ForMember(dest => dest.CreateDateTime, options => options.MapFrom(src => src.CreateDateTime))
-                .ForMember(dest => dest.UpdateDateTime, options => options.MapFrom(src => src.UpdateDateTime));
+                .ForMember(dest => dest.UpdateDateTime, options => options.MapFrom(src => src.UpdateDateTime))
+                .ForMember(dest => dest.TestCasesCode, options => options.MapFrom(src => src.TestCasesCode));
                 cfg.CreateMap<List<Exercise>, List<ExerciseDTO>>();
 
                 cfg.CreateMap<Comment, CommentDTO>().ForMember(dest => dest.Id, option => option.MapFrom(src => src.Id))
@@ -53,8 +54,8 @@ namespace BAL.IoC
                     .ForMember(dest => dest.CodeText, options => options.MapFrom(src => src.CodeText))
                     .ForMember(dest => dest.ExerciseId, options => options.MapFrom(src => src.ExerciseId))
                     .ForMember(dest => dest.UserId, options => options.MapFrom(src => src.UserId));
-                    //.ForMember(dest => dest.Exercise, options => options.MapFrom(src => src.Exercise))
-                    //.ForMember(dest => dest.User, options => options.MapFrom(src => src.User));
+                //.ForMember(dest => dest.Exercise, options => options.MapFrom(src => src.Exercise))
+                //.ForMember(dest => dest.User, options => options.MapFrom(src => src.User));
                 cfg.CreateMap<List<UserCode>, List<UserCodeDTO>>();
 
 
@@ -66,17 +67,6 @@ namespace BAL.IoC
                     .ForMember(dest => dest.IsFavouriteCode, options => options.MapFrom(src => src.IsFavouriteCode))
                     .ForMember(dest => dest.UserCodeId, options => options.MapFrom(src => src.UserCodeId));
                 cfg.CreateMap<List<CodeHistory>, List<CodeHistoryDTO>>();
-                
-
-                cfg.CreateMap<TestCase, TestCaseDTO>()
-                   .ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))
-                   .ForMember(dest => dest.ExerciseId, options => options.MapFrom(src => src.ExerciseId))
-                   .ForMember(dest => dest.UserId, options => options.MapFrom(src => src.UserId))
-                   .ForMember(dest => dest.InputData, options => options.MapFrom(src => src.InputData))
-                   .ForMember(dest => dest.OutputData, options => options.MapFrom(src => src.OutputData))
-                   .ForMember(dest => dest.Exercise, options => options.MapFrom(src => src.Exercise))
-                   .ForMember(dest => dest.User, options => options.MapFrom(src => src.User));
-                cfg.CreateMap<List<TestCase>, List<TestCaseDTO>>();
             });
         }
 

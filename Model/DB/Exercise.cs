@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Model.DB
 {
@@ -15,6 +13,8 @@ namespace Model.DB
         public string TaskTextField { get; set; }
 
         public string TaskBaseCodeField { get; set; }
+
+        public string TestCasesCode { get; set; }
 
         public int CourseId { get; set; }
 

@@ -10,7 +10,6 @@
 @if (User.IsInRole("Teacher"))
 {
     <h4 style="margin-top: 15px"><a asp-action="Create" class="btn btn-sm btn-primary">@SharedLocalizer["AddTask"]</a></h4>
-    <a asp-action="CreateTestCase" class="btn btn-sm btn-primary">@SharedLocalizer["AddTestCase"]</a>
 }
 <table class="table">
     <tr>
@@ -41,7 +40,6 @@
                             <button type="submit" class="btn btn-sm btn-danger">
                                 @SharedLocalizer["Delete"]
                             </button>
-                            <a asp-route-id="@task.Id" asp-action="Testcases" class="btn btn-sm btn-primary">@SharedLocalizer["Testcases"]</a>
                         </form>
                     }
                 </td>
