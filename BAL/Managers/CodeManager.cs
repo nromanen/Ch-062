@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using AutoMapper;
 using BAL.Interfaces;
 using DAL.Interface;
@@ -30,6 +31,14 @@ namespace BAL.Managers
             this.unitOfWork = unitOfWork;
         }
 
+        public virtual IEnumerable<UserCodeDTO> Get(Expression<Func<UserCode, bool>> filter = null,
+                             Func<IQueryable<UserCode>,
+                             IOrderedQueryable<UserCode>> orderBy = null,
+                             string includeProperties = "")
+        {
+            return mapper.Map<List<UserCodeDTO>>(unitOfWork.CodeRepo.Get(filter, orderBy, includeProperties));
+        }
+
         public UserCodeDTO GetUserCodeById(string id)
         {
             UserCodeDTO code = mapper.Map<UserCodeDTO>(unitOfWork.CodeRepo.Get(c => c.UserId == id).FirstOrDefault());
@@ -39,6 +48,12 @@ namespace BAL.Managers
         public UserCodeDTO UserCodeByExId(string userId, int exerciseId)
         {
             UserCodeDTO code = mapper.Map<UserCodeDTO>(unitOfWork.CodeRepo.Get(c => c.UserId == userId && c.ExerciseId == exerciseId).FirstOrDefault());
+            return code;
+        }
+
+        public List<UserCodeDTO> UserCodeListByExId(int exerciseId)
+        {
+            var code = mapper.Map<List<UserCodeDTO>>(unitOfWork.CodeRepo.Get(c => c.ExerciseId == exerciseId));
             return code;
         }
 

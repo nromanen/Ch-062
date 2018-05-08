@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using Model.DB.Code;
 using Model.DTO.CodeDTO;
@@ -9,6 +11,10 @@ namespace BAL.Interfaces
 {
     public interface ICodeManager
     {
+        IEnumerable<UserCodeDTO> Get(Expression<Func<UserCode, bool>> filter = null,
+                             Func<IQueryable<UserCode>,
+                             IOrderedQueryable<UserCode>> orderBy = null,
+                             string includeProperties = "");
         UserCodeDTO GetUserCodeById(string id);
         UserCodeDTO UserCodeByExId(string userId, int exerciseId);
         string IsUserDidExercise(string userId, int exerciseId);
@@ -18,6 +24,7 @@ namespace BAL.Interfaces
         string ExecutionResult(string code, int exId, string userId, CodeStatus codeStatus);
         UserCodeDTO BuildCodeModel(UserCodeDTO model);
         List<CodeHistory> GetHistoryLst(int codeId);
+        List<UserCodeDTO> UserCodeListByExId(int exerciseId);
         void SetCodeStatus(int id);
         SetFav SetFavouriteCode(SetFav model);
         void EditCode(int codeTextId);

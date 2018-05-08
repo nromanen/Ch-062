@@ -52,5 +52,12 @@ namespace WebApp.Controllers
             codeManager.SetCodeStatus(code.Id);
             return RedirectToAction("TaskView ", "ExerciseManagement", model.ExerciseId);
         }
+
+
+
+        //public ActionResult CodeReview(int )
+        //{
+
+        //}
     }
 }

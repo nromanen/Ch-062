@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
+@model WebApp.ViewModels.UserCodeList.UserCodeListViewModel;
+@{
+    ViewBag.Title = "Task List";
+}
+
+@if (Model == null)
+{
+   <h4>There areno solutions yet </h4>
+}
+else
+{
+<table class="table">
+    <tr>
+            <td>User</td>
+            <td>Solution</td>
+    </tr>
+    @foreach (var code in Model.userCodeList)
+    {
+       
+            <tr>
+                    <td>@code.UserName</td>
+                    <td>time</td>
+                    
+                <td>
+                    @if (User.IsInRole("Teacher"))
+                    {
+                    <form asp-route-id="@code.codeUnit.Id" asp-controller="Code" asp-action="" method="post">
+                        <button type="submit" class="btn btn-sm btn-success"> Review </button>
+                    </form>
+                    }
+                </td>
+            </tr>
+       
+    }
+</table>
+}

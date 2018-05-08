@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using WebApp.Models;
 using WebApp.ViewModels;
+using WebApp.ViewModels.UserCodeList;
 using Model.DB;
 using Model.DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -24,21 +25,24 @@ namespace WebApp.Controllers
         private readonly ICourseManager courseManager;
         private readonly UserManager<User> userManager;
         private readonly ICommentManager commentManager;
+        private readonly ICodeManager codeManager;
         private readonly IMapper mapper;
 
         public ExerciseManagementController(IExerciseManager exerciseManager, ICourseManager courseManager,
-                                            UserManager<User> userManager, IMapper mapper, ICommentManager commentManager)
+                                            UserManager<User> userManager, ICodeManager codeManager , IMapper mapper, ICommentManager commentManager)
         {
             this.exerciseManager = exerciseManager;
             this.courseManager = courseManager;
             this.userManager = userManager;
             this.commentManager = commentManager;
             this.mapper = mapper;
+            this.codeManager = codeManager;
         }
 
         [Authorize(Roles = "Teacher")]
         public IActionResult Index()
         {
+
             var exerciseList = exerciseManager.GetAll();
             return View(exerciseList);
         }
@@ -140,6 +144,28 @@ namespace WebApp.Controllers
         {
             exerciseManager.DeleteOrRecover(id);
             return RedirectToAction("Index", "ExerciseManagement");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Teacher")]
+        public IActionResult ExerciseSolutionsIndex(int id)
+        {
+            List<UserCodeListUnitViewModel> codesList = new List<UserCodeListUnitViewModel>();
+            var solutionsList = codeManager.Get(c => c.ExerciseId == id && c.CodeStatus == Model.Entity.CodeStatus.Done);
+            if (solutionsList != null)
+            {
+                
+                foreach (var elem in solutionsList)
+                {
+                    codesList.Add(new UserCodeListUnitViewModel
+                    {
+                        codeUnit = elem,
+                        UserName = userManager.FindByIdAsync(elem.UserId).Result.UserName
+                    });
+                }
+
+            }
+            return View(new UserCodeListViewModel() { userCodeList = codesList});
         }
     }
 }
