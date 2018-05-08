@@ -19,6 +19,7 @@ namespace DAL
         private IBaseRepository<CodeHistory> codeHistoryRepo;
         private IBaseRepository<TestCase> testCasesRepo;
         private IBaseRepository<Comment> commentRepo;
+        private IBaseRepository<News> newsRepo;
 
         public UnitOfWork(MainDbContext context)
         {
@@ -95,6 +96,15 @@ namespace DAL
             {
                 if (testCasesRepo == null) { testCasesRepo = new BaseRepository<TestCase>(context); }
                 return testCasesRepo;
+            }
+        }
+
+        public IBaseRepository<News> NewsRepo
+        {
+            get
+            {
+                if (newsRepo == null) { newsRepo = new BaseRepository<News>(context); }
+                return newsRepo;
             }
         }
 

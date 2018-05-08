@@ -83,14 +83,14 @@ namespace BAL.Managers
                 UserCode code = new UserCode
                 {
                     CodeText = model.CodeText,
-                    UserId = model.UserId,
-                    ExerciseId = model.ExerciseId
+                    ExerciseId = model.ExerciseId,
+                    UserId = unitOfWork.UserRepo.Get().Where(e=>e.UserName== model.UserId).FirstOrDefault().Id
                 };
 
                 unitOfWork.CodeRepo.Insert(code);
             }
             unitOfWork.Save();
-            return ExecutionResult(model.CodeText, model.ExerciseId, model.UserId);
+            return ExecutionResult(model.CodeText, model.ExerciseId, unitOfWork.UserRepo.Get().Where(e => e.UserName == model.UserId).FirstOrDefault().Id);
         }
 
         public string ExecutionResult(string code, int exId, string userId)
@@ -110,21 +110,7 @@ namespace BAL.Managers
             AddHistory(codeId, code, DateTime.Now,  errors, null );
             return errors;
         }
-
-        public UserCodeDTO BuildCodeModel(UserCodeDTO model)
-        {
-            var exercise = exerciseManager.GetById(model.ExerciseId);
-            model.Exercise = exercise;
-            model.CodeText = exercise.TaskBaseCodeField;
-            var user = userManager.FindByNameAsync(model.UserId).Result;
-            model.UserId = user.Id;
-            string text = IsUserDidExercise(user.Id, exercise.Id);
-            if (text != null)
-            {
-                model.CodeText = text;
-            }
-            return model;
-        }
+        
         
         public List<CodeHistory> GetHistoryLst(int codeId)
         {
@@ -136,14 +122,18 @@ namespace BAL.Managers
 
         public SetFav SetFavouriteCode(SetFav model)
         {
-                var codeHistoryEntity = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == model.codeId).FirstOrDefault();
-            codeHistoryEntity.IsFavouriteCode = model.flag;
+            var codeHistoryEntity = unitOfWork.CodeHistoryRepo.Get().Where(e => e.Id==model.codeId).FirstOrDefault();
+            codeHistoryEntity.IsFavouriteCode = !model.flag;
+            model.flag = !model.flag;
             unitOfWork.Save();
             return model;
         }
-        public void EditCode(int codeTextId)
+        public CodeModel EditCode(CodeModel codeModel)
         {
-
+            var code = unitOfWork.CodeHistoryRepo.Get().Where(e => e.Id == codeModel.codeTextId).FirstOrDefault();
+            code.CodeText = codeModel.codeText;
+            unitOfWork.Save();
+            return codeModel;
         }
 
 

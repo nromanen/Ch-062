@@ -1,0 +1,87 @@
+﻿@model WebApp.ViewModels.NewsViewModel
+
+@{
+    ViewData["Title"] = "News";
+}
+
+<h2>News</h2>
+<style>
+    .eo-date .eo-date__day {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .eo-date .eo-date__month {
+        font-size: 11px;
+        text-transform: uppercase;
+    }
+
+    .eo-date {
+        display: -webkit-box;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        background: #eee;
+        text-align: center;
+        width: 50px;
+        height: 50px;
+        color: #888;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-align-content: center;
+        -ms-flex-line-pack: center;
+        align-content: center;
+        -ms-grid-column-align: center;
+        justify-items: center;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+</style>
+<p>
+    <a asp-action="Create">Create New</a>
+    @*сделать модальное окно*@
+</p>
+
+@try
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h3>News</h3>
+                @foreach (var i in Model.NewsDTO)
+                {
+                    <div class="row">
+                        <div class="col-lg-2 eo-date">
+                            <span class="eo-date__day">@i.Date.Day</span>
+                            <span class="eo-date__month">@i.Date.Month</span>
+                        </div>
+                        <div class="col-lg-10">
+                            <a><span>@i.Title</span></a>
+                            <a><span>@i.Text</span></a>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-lg-4">
+                <h3>Sort by sections</h3>
+                @foreach (var i in Model.CoursesDTO)
+                {
+                    <a href="#">@i.Name</a>
+                }
+            </div>
+        </div>
+    </div>
+}
+catch(Exception ex)
+{
+    <p>Still no news</p>
+}
+
+

@@ -80,6 +80,7 @@ namespace WebApp
             services.AddScoped<ITestCaseManager, TestCaseManager>();
             services.AddScoped<ICommentManager, CommentManager>();
             services.AddScoped<ICodeManager, CodeManager>();
+            services.AddScoped<INewsManager, NewsManager>();
 
             services.Configure<IdentityOptions>(options =>
             {

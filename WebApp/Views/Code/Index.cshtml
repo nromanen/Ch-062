@@ -11,12 +11,12 @@
 
     <div>
         <div class="col-md-12">
-            <div class="row" style="height: 100%; padding: 20px; border-color: black; border: 1px solid; background-color: white">
+            @*<div class="row" style="height: 100%; padding: 20px; border-color: black; border: 1px solid; background-color: white">
                 <div class="col-md-12">
-                    <div class="row" style="padding: 10px">@SharedLocalizer["Exercisetitle"]: @Model.Exercise.TaskName</div>
-                    <div class="row" style="padding: 10px">@SharedLocalizer["Task"]: @Model.Exercise.TaskTextField</div>
+                    <div class="row" style="padding: 10px">@SharedLocalizer["Exercisetitle"]: @Model.ExerciseId</div>
+                    <div class="row" style="padding: 10px">@SharedLocalizer["Task"]: @Model.</div>
                 </div>
-            </div>
+            </div>*@
             <br />
             <div class="row">
                 <div class="col-md-9">
@@ -49,11 +49,13 @@
     <script>
         $(document).ready(function() {
             $('#codeText').html('@Model.CodeText');
+            console.log('@Model.CodeText');
         });
 
 
         var editableCodeMirror = null;
         window.onload = function () {
+            console.log(document.getElementById('codeText'));
             editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeText'), {
                 mode: "htmlmixed",
                 theme: "default",

@@ -8,7 +8,6 @@ using System.Linq;
 using Model.DB;
 using AutoMapper;
 
-
 namespace BAL.Managers
 {
     public class ExerciseManager : BaseManager, IExerciseManager 

@@ -13,5 +13,7 @@ namespace WebApp.ViewModels
     {
         public List<CodeHistory> CodeHistory;
         public string ExerciseName;
+        public int ExerciseId;
+        public string UserId;
     }
 }

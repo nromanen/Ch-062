@@ -66,7 +66,9 @@ namespace BAL.IoC
                     .ForMember(dest => dest.IsFavouriteCode, options => options.MapFrom(src => src.IsFavouriteCode))
                     .ForMember(dest => dest.UserCodeId, options => options.MapFrom(src => src.UserCodeId));
                 cfg.CreateMap<List<CodeHistory>, List<CodeHistoryDTO>>();
-                
+
+                cfg.CreateMap<News, NewsDTO>();
+                cfg.CreateMap<List<News>, List<NewsDTO>>();
 
                 cfg.CreateMap<TestCase, TestCaseDTO>()
                    .ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))
