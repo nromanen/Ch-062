@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Model.DB;
 using Model.DB.Code;
+using Model.Entity;
 
 namespace Model.DTO.CodeDTO
 {
@@ -20,5 +21,8 @@ namespace Model.DTO.CodeDTO
         [Required]
         public int ExerciseId { get; set; }
         public ExerciseDTO Exercise { get; set; }
+
+        public CodeStatus CodeStatus { get; set; }
+        public int Mark { get; set; }
     }
 }
