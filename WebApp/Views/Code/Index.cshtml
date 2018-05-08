@@ -20,11 +20,11 @@
             <br />
             <div class="row">
                 <div class="col-md-9">
-                        <textarea id="codeText" class="col-md-12 textField" style="height: 100%; width: 100%; "></textarea>
-                        
+                    <textarea id="codeText" class="col-md-12 textField" style="height: 100%; width: 100%; "></textarea>
+
 
                 </div>
-                <div class="col-md-3"style="height: 650px" >
+                <div class="col-md-3" style="height: 650px">
                     <textarea id="result" style="padding: 10px; border-color: black; border: 1px solid; height: 100%; width: 100%; background-color: white" readonly="readonly"></textarea>
                     <br />
                     <br />
@@ -33,9 +33,10 @@
                     <button type="button" id="exit" class="btn btn-default" onclick='location.href = "@Url.Action("Index","Home")"'> @SharedLocalizer["Exit"] </button>
 
                 </div>
+
             </div>
             <br />
-            
+            <button type="button" id="done" class="btn btn-default"> Done </button>
         </div>
     </div>
 </div>
@@ -86,6 +87,21 @@
             console.log("Test2");
 
         };
+        $('#done').click(
+            function () {
+
+                var model = new Object();
+                model.CodeText = editableCodeMirror.getValue();
+                model.UserId =('@Model.UserId');
+                model.ExerciseId = ('@Model.ExerciseId');
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "/Code/SetCodeStatus",
+                    data: model
+                });
+            });
 
 
         $('#reloadButton').click(function () {

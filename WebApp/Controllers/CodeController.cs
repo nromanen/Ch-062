@@ -8,6 +8,7 @@ using DAL.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Model.DB;
+using WebApp.ViewModels;
 using Model.DB.Code;
 using Model.DTO.CodeDTO;
 
@@ -41,6 +42,15 @@ namespace WebApp.Controllers
         public string ExecuteCode(UserCodeDTO model)
         {
             return model.CodeText == null ? "Write some codeeeee" : codeManager.GetCode(model);
+        }
+
+
+        [HttpPost]
+        public ActionResult SetCodeStatus(UserCodeViewModel model)
+        {
+            var code = codeManager.UserCodeByExId(model.UserId, model.ExerciseId);
+            codeManager.SetCodeStatus(code.Id);
+            return RedirectToAction("TaskView ", "ExerciseManagement", model.ExerciseId);
         }
     }
 }

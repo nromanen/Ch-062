@@ -90,10 +90,10 @@ namespace BAL.Managers
                 unitOfWork.CodeRepo.Insert(code);
             }
             unitOfWork.Save();
-            return ExecutionResult(model.CodeText, model.ExerciseId, model.UserId);
+            return ExecutionResult(model.CodeText, model.ExerciseId, model.UserId, model.CodeStatus);
         }
 
-        public string ExecutionResult(string code, int exId, string userId)
+        public string ExecutionResult(string code, int exId, string userId, CodeStatus codeStatus)
         {
             var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
             var res = sandboxManager.Execute(code);
@@ -101,13 +101,15 @@ namespace BAL.Managers
             {
                 string result =
                     $"Result: {res.Result};\r\nCompile time: {res.CompileTime.TotalMilliseconds};\r\nExecution Time: {res.ExecutionTime.TotalMilliseconds};";
-                AddHistory(codeId, code, DateTime.Now, null, result);
+                if (codeStatus != CodeStatus.Done)
+                    AddHistory(codeId, code, DateTime.Now, null, result);
                 return result;
             }
             
             string errors = res.CompileTimeExceptions.Aggregate("", (current, v) => current + (v + ";\r\n"));
             errors = res.RunTimeExceptions.Aggregate(errors, (current, v) => current + (v + ";\r\n"));
-            AddHistory(codeId, code, DateTime.Now,  errors, null );
+            if (codeStatus != CodeStatus.Done)
+                AddHistory(codeId, code, DateTime.Now,  errors, null );
             return errors;
         }
 
@@ -158,10 +160,13 @@ namespace BAL.Managers
         }
 
 
-
-
-
-
+        public void SetCodeStatus(int id)
+        {
+            var code = unitOfWork.CodeRepo.GetById(id);
+            code.CodeStatus = CodeStatus.Done;
+            unitOfWork.CodeRepo.Update(code);
+            unitOfWork.Save();
+        }
 
         public UserCodeDTO BuildCodeModel(UserCodeDTO model)
         {
