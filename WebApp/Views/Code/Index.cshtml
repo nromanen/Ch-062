@@ -30,7 +30,7 @@
                     <br />
                     <button type="button" id="executeButton" class="btn btn-default"> @SharedLocalizer["Execute"] </button>
                     @*<button type="button" id="reloadButton" class="btn btn-default"> @SharedLocalizer["Reload"] </button>*@
-                    <button type="button" id="exit" class="btn btn-default" onclick='location.href = "@Url.Action("Index","Home")"'> @SharedLocalizer["Exit"] </button>
+                    <button type="button" id="exit" class="btn btn-default" onclick='location.href = "@Url.Action("Index", "Home")"'> @SharedLocalizer["Exit"] </button>
 
                 </div>
             </div>
@@ -60,30 +60,37 @@
                 lineNumbers: true
             });
 
-            editableCodeMirror.on('change', function () {  //(cMirror)
+            editableCodeMirror.on('change', function (cMirror) {  //(cMirror)
                 $('#result').html('');
-                // get value right from instance
+
                 //console.log(cMirror.getValue());
-                console.log("Starteeed")
 
                 var userCode = new Object();
                 userCode.CodeText = editableCodeMirror.getValue();
                 userCode.ExerciseId = ('@Model.ExerciseId');
                 userCode.UserId = ('@Model.UserId');
 
+                var checkasync = false;
+
+              
                 $.ajax({
                     type: "POST",
-                    url: "/Code/GetCode",
+                    url: "/Code/ExecuteCode",
                     data: userCode,
-                    success: function (data) {
+                    success: function(data) {
+                        
                         $("#result").html(data);
-                    }
-                });
-            });
+                        checkasync = true;
 
+                    }
+
+                });
+                     
+
+                 });
+        
 
             editableCodeMirror.setOption("mode", "text/x-csrc");
-            console.log("Test2");
 
         };
 
