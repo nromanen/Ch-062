@@ -20,22 +20,23 @@
             <br />
             <div class="row">
                 <div class="col-md-9">
-                        <textarea id="codeText" class="col-md-12 textField" style="height: 100%; width: 100%; "></textarea>
-                        
+                    <textarea id="codeText" class="col-md-12 textField" style="height: 100%; width: 100%; "></textarea>
+
 
                 </div>
-                <div class="col-md-3"style="height: 650px" >
+                <div class="col-md-3" style="height: 650px">
                     <textarea id="result" style="padding: 10px; border-color: black; border: 1px solid; height: 100%; width: 100%; background-color: white" readonly="readonly"></textarea>
                     <br />
                     <br />
                     <button type="button" id="executeButton" class="btn btn-default"> @SharedLocalizer["Execute"] </button>
                     @*<button type="button" id="reloadButton" class="btn btn-default"> @SharedLocalizer["Reload"] </button>*@
-                    <button type="button" id="exit" class="btn btn-default" onclick='location.href = "@Url.Action("Index","Home")"'> @SharedLocalizer["Exit"] </button>
+                    <button type="button" id="exit" class="btn btn-default" onclick='location.href = "@Url.Action("Index", "Home")"'> @SharedLocalizer["Exit"] </button>
 
                 </div>
+
             </div>
             <br />
-            
+            <button type="button" id="done" class="btn btn-default"> Done </button>
         </div>
     </div>
 </div>
@@ -61,9 +62,57 @@
                 theme: "default",
                 lineNumbers: true
             });
+
+            editableCodeMirror.on('change', function (cMirror) {  //(cMirror)
+                $('#result').html('');
+
+                //console.log(cMirror.getValue());
+
+                var userCode = new Object();
+                userCode.CodeText = editableCodeMirror.getValue();
+                userCode.ExerciseId = ('@Model.ExerciseId');
+                userCode.UserId = ('@Model.UserId');
+
+                var checkasync = false;
+
+              
+                $.ajax({
+                    type: "POST",
+                    url: "/Code/ExecuteCode",
+                    data: userCode,
+                    success: function(data) {
+                        
+                        $("#result").html(data);
+                        checkasync = true;
+
+                    }
+
+                });
+                     
+
+                 });
+        
+
             editableCodeMirror.setOption("mode", "text/x-csrc");
 
         };
+        $('#done').click(
+            function () {
+
+                var model = new Object();
+                model.CodeText = editableCodeMirror.getValue();
+                model.UserId =('@Model.UserId');
+                model.ExerciseId = ('@Model.ExerciseId');
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "/Code/SetCodeStatus",
+                    data: model
+                });
+            });
+
+
         $('#reloadButton').click(function () {
 
             editableCodeMirror.setValue('@Model.CodeText');
@@ -90,6 +139,9 @@
 
             }
         );
+
+
+
     </script>
 }
 

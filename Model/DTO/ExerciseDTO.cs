@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Model.DB;
 
 namespace Model.DTO
 {
@@ -16,6 +13,8 @@ namespace Model.DTO
         public string TaskTextField { get; set; }
 
         public string TaskBaseCodeField { get; set; }
+
+        public string TestCasesCode { get; set; }
 
         public int CourseId { get; set; }
         

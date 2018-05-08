@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using WebApp.Models;
 using WebApp.ViewModels;
+using WebApp.ViewModels.UserCodeList;
 using Model.DB;
 using Model.DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -24,23 +25,24 @@ namespace WebApp.Controllers
         private readonly ICourseManager courseManager;
         private readonly UserManager<User> userManager;
         private readonly ICommentManager commentManager;
+        private readonly ICodeManager codeManager;
         private readonly IMapper mapper;
-        private readonly ITestCaseManager testCaseManager;
 
         public ExerciseManagementController(IExerciseManager exerciseManager, ICourseManager courseManager,
-                                            UserManager<User> userManager, IMapper mapper, ITestCaseManager testCaseManager, ICommentManager commentManager)
+                                            UserManager<User> userManager, ICodeManager codeManager , IMapper mapper, ICommentManager commentManager)
         {
             this.exerciseManager = exerciseManager;
             this.courseManager = courseManager;
             this.userManager = userManager;
             this.commentManager = commentManager;
             this.mapper = mapper;
-            this.testCaseManager = testCaseManager;
+            this.codeManager = codeManager;
         }
 
         [Authorize(Roles = "Teacher")]
         public IActionResult Index()
         {
+
             var exerciseList = exerciseManager.GetAll();
             return View(exerciseList);
         }
@@ -136,7 +138,6 @@ namespace WebApp.Controllers
         }
 
 
-
         [HttpPost]
         [Authorize(Roles = "Teacher")]
         public IActionResult DeleteOrRecover(int id)
@@ -145,57 +146,26 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "ExerciseManagement");
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Teacher")]
-        public IActionResult Testcases(int id)
-        {
-            var testcases = testCaseManager.GetByExerciseId(id);
-            return View(testcases);
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "Teacher")]
-        public IActionResult EditTestCase(int id)
-        {
-            var testcase = testCaseManager.GetById(id);
-            return View(testcase);
-        }
-
         [HttpPost]
         [Authorize(Roles = "Teacher")]
-        public IActionResult EditTestCase(TestCaseDTO testCaseDTO)
+        public IActionResult ExerciseSolutionsIndex(int id)
         {
-            if (ModelState.IsValid)
+            List<UserCodeListUnitViewModel> codesList = new List<UserCodeListUnitViewModel>();
+            var solutionsList = codeManager.Get(c => c.ExerciseId == id && c.CodeStatus == Model.Entity.CodeStatus.Done);
+            if (solutionsList != null)
             {
-                testCaseManager.Update(testCaseDTO);
-            }
-            return RedirectToAction("Index", "ExerciseManagement");
-        }
-
-        [HttpGet]
-        [Authorize(Roles = "Teacher")]
-        public IActionResult CreateTestCase()
-        {
-            return View(new CreateTestCase() { ExerciseList = exerciseManager.GetAll() });
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "Teacher")]
-        public IActionResult CreateTestCase(CreateTestCase model)
-        {
-            model.TestCaseDTO.UserId = userManager.GetUserId(HttpContext.User);
-            if (ModelState.IsValid)
-            {
-                var test = new TestCaseDTO()
+                
+                foreach (var elem in solutionsList)
                 {
-                    ExerciseId = model.TestCaseDTO.ExerciseId,
-                    UserId = model.TestCaseDTO.UserId,
-                    InputData = model.TestCaseDTO.InputData,
-                    OutputData = model.TestCaseDTO.OutputData
-                };
-                testCaseManager.Insert(test);
+                    codesList.Add(new UserCodeListUnitViewModel
+                    {
+                        codeUnit = elem,
+                        UserName = userManager.FindByIdAsync(elem.UserId).Result.UserName
+                    });
+                }
+
             }
-            return RedirectToAction("Index", "ExerciseManagement");
+            return View(new UserCodeListViewModel() { userCodeList = codesList});
         }
     }
 }
