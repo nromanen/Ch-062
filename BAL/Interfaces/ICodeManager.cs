@@ -26,6 +26,7 @@ namespace BAL.Interfaces
         List<CodeHistory> GetHistoryLst(int codeId);
         List<UserCodeDTO> UserCodeListByExId(int exerciseId);
         void SetCodeStatus(int id);
+        void SetMark(int id, int mark, string comment);
         SetFav SetFavouriteCode(SetFav model);
         void EditCode(int codeTextId);
     }

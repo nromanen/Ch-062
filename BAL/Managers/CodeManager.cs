@@ -185,6 +185,16 @@ namespace BAL.Managers
         {
             var code = unitOfWork.CodeRepo.GetById(id);
             code.CodeStatus = CodeStatus.Done;
+            code.EndTime = DateTime.Now;
+            unitOfWork.CodeRepo.Update(code);
+            unitOfWork.Save();
+        }
+
+        public void SetMark(int id, int mark, string comment)
+        {
+            var code = unitOfWork.CodeRepo.GetById(id);
+            code.Mark = mark;
+            code.TeachersComment = comment;
             unitOfWork.CodeRepo.Update(code);
             unitOfWork.Save();
         }

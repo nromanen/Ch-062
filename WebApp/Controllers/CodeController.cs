@@ -9,18 +9,22 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Model.DB;
 using WebApp.ViewModels;
+using WebApp.ViewModels.UserCodeReview;
 using Model.DB.Code;
 using Model.DTO.CodeDTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
     public class CodeController : Controller
     {
         private CodeManager codeManager;
+        private IExerciseManager exerciseManager;
 
-        public CodeController(CodeManager codeManager)
+        public CodeController(CodeManager codeManager, IExerciseManager exerciseManager)
         {
             this.codeManager = codeManager;
+            this.exerciseManager = exerciseManager;
         }
         public IActionResult Index(UserCodeDTO model)
         {
@@ -46,18 +50,33 @@ namespace WebApp.Controllers
 
 
         [HttpPost]
-        public ActionResult SetCodeStatus(UserCodeViewModel model)
+        public IActionResult SetCodeStatus(UserCodeViewModel model)
         {
             var code = codeManager.UserCodeByExId(model.UserId, model.ExerciseId);
             codeManager.SetCodeStatus(code.Id);
-            return RedirectToAction("TaskView ", "ExerciseManagement", model.ExerciseId);
+            return RedirectToAction("TaskView", "ExerciseManagement", model.ExerciseId);
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Teacher")]
+        public IActionResult CodeReview(int id)
+        {
+            var userCode = codeManager.Get(c => c.Id == id).First();
+            var exercise = exerciseManager.GetById(userCode.ExerciseId);
+            return View(new UserCodeReviewViewModel() {
+                UserCodeDTO = userCode,
+                ExerciseName = exercise.TaskName,
+                ExerciseTask = exercise.TaskTextField
+            });
+        }
 
+        [HttpPost]
+        [Authorize(Roles = "Teacher")]
+        public IActionResult CodeMarking(UserCodeReviewViewModel model)
+        {
+            codeManager.SetMark(model.UserCodeDTO.Id, model.UserCodeDTO.Mark, model.UserCodeDTO.TeachersComment);
+            return RedirectToAction("ExerciseSolutionsIndex","ExerciseManagment", model.UserCodeDTO.ExerciseId);
+        }
 
-        //public ActionResult CodeReview(int )
-        //{
-
-        //}
     }
 }

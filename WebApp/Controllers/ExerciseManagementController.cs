@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using WebApp.Models;
 using WebApp.ViewModels;
-using WebApp.ViewModels.UserCodeList;
+using WebApp.ViewModels.UserCodeReview;
 using Model.DB;
 using Model.DTO;
 using Microsoft.AspNetCore.Authorization;
