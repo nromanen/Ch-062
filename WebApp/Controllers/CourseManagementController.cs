@@ -40,7 +40,6 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Teacher")]
         public IActionResult Create(CourseDTO model)
         {
-            //TODO: Ask Roman
             var user = userManager.GetUserAsync(HttpContext.User);
 
             model.CreationDate = DateTime.Now;

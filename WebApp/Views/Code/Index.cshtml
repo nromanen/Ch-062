@@ -12,30 +12,31 @@
     <div>
         <div class="col-md-12">
             @*<div class="row" style="height: 100%; padding: 20px; border-color: black; border: 1px solid; background-color: white">
-                <div class="col-md-12">
-                    <div class="row" style="padding: 10px">@SharedLocalizer["Exercisetitle"]: @Model.ExerciseId</div>
-                    <div class="row" style="padding: 10px">@SharedLocalizer["Task"]: @Model.</div>
-                </div>
-            </div>*@
+                    <div class="col-md-12">
+                        <div class="row" style="padding: 10px">@SharedLocalizer["Exercisetitle"]: @Model.ExerciseId</div>
+                        <div class="row" style="padding: 10px">@SharedLocalizer["Task"]: @Model.</div>
+                    </div>
+                </div>*@
             <br />
             <div class="row">
                 <div class="col-md-9">
-                        <textarea id="codeText" class="col-md-12 textField" style="height: 100%; width: 100%; "></textarea>
-                        
+                    <textarea id="codeText" class="col-md-12 textField" style="height: 100%; width: 100%; "></textarea>
+
 
                 </div>
-                <div class="col-md-3"style="height: 650px" >
+                <div class="col-md-3" style="height: 650px">
                     <textarea id="result" style="padding: 10px; border-color: black; border: 1px solid; height: 100%; width: 100%; background-color: white" readonly="readonly"></textarea>
                     <br />
                     <br />
                     <button type="button" id="executeButton" class="btn btn-default"> @SharedLocalizer["Execute"] </button>
                     @*<button type="button" id="reloadButton" class="btn btn-default"> @SharedLocalizer["Reload"] </button>*@
-                    <button type="button" id="exit" class="btn btn-default" onclick='location.href = "@Url.Action("Index","Home")"'> @SharedLocalizer["Exit"] </button>
+                    <button type="button" id="exit" class="btn btn-default" onclick='location.href = "@Url.Action("Index", "Home")"'> @SharedLocalizer["Exit"] </button>
 
                 </div>
+
             </div>
             <br />
-            
+            <button type="button" id="done" class="btn btn-default"> Done </button>
         </div>
     </div>
 </div>
@@ -54,23 +55,70 @@
 
 
         var editableCodeMirror = null;
-        window.onload = function () {
+        window.onload = function() {
             console.log(document.getElementById('codeText'));
-            editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeText'), {
-                mode: "htmlmixed",
-                theme: "default",
-                lineNumbers: true
-            });
+            editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeText'),
+                {
+                    mode: "htmlmixed",
+                    theme: "default",
+                    lineNumbers: true
+                });
+       
+            editableCodeMirror.on('change', function() {
+
+  
+                            $('#result').html('');
+
+                            var userCode = new Object();
+                            userCode.CodeText = editableCodeMirror.getValue();
+                           // userCode.ExerciseId = ('@Model.ExerciseId');
+                            //userCode.UserId = ('@Model.UserId');
+
+
+                            $.ajax({
+                                type: "POST",
+                                url: "/Code/ExecuteCode",
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader("XSRF-TOKEN",
+                                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                                },
+                                data: userCode,                          
+                                cache: false,
+                                success: function(data) {
+
+                                    $("#result").html(data);
+                                }
+                                     });
+
+              });
+        };
+
             editableCodeMirror.setOption("mode", "text/x-csrc");
 
-        };
-        $('#reloadButton').click(function () {
+        
+        $('#done').click(
+            function() {
+
+                var model = new Object();
+                model.CodeText = editableCodeMirror.getValue();
+                model.UserId = ('@Model.UserId');
+                model.ExerciseId = ('@Model.ExerciseId');
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Code/SetCodeStatus",
+                    data: model
+                });
+            });
+
+
+        $('#reloadButton').click(function() {
 
             editableCodeMirror.setValue('@Model.CodeText');
         });
 
         $('#executeButton').click(
-            function () {
+            function() {
                 $('#result').html('');
                 console.log("start");
 
@@ -90,6 +138,8 @@
 
             }
         );
+
+
     </script>
 }
 

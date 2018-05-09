@@ -2,6 +2,7 @@
 using DAL.Repositories;
 using Model.DB;
 using DAL.Interface;
+using DAL.Migrations;
 using Microsoft.AspNetCore.Identity;
 using Model.DB.Code;
 

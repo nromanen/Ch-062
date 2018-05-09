@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Model.DTO.CodeDTO;
+using Model.Entity;
 
 namespace Model.DB.Code
 {
@@ -15,6 +16,9 @@ namespace Model.DB.Code
 
         public int ExerciseId { get; set; }
         public virtual Exercise Exercise { get; set; }
+
+        public CodeStatus CodeStatus { get; set; }
+        public int Mark { get; set; }
 
     }
 
