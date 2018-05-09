@@ -146,7 +146,7 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "ExerciseManagement");
         }
 
-        [HttpPost]
+       /* [HttpPost]
         [Authorize(Roles = "Teacher")]
         public IActionResult ExerciseSolutionsIndex(int id)
         {
@@ -166,6 +166,6 @@ namespace WebApp.Controllers
 
             }
             return View(new UserCodeListViewModel() { userCodeList = codesList});
-        }
+        }*/
     }
 }
