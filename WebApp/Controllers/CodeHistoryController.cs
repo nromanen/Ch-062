@@ -33,25 +33,42 @@ namespace WebApp.Controllers
 
         public IActionResult History()
         {
-            var userName = User.Identity.Name;
-            var user = userManager.Users.Where(e => e.UserName == userName).FirstOrDefault();
-            var code = codeManager.GetUserCodeById(user.Id);
-            var history = codeManager.GetHistoryLst(code.Id);
-            var exercise = exerciseManager.Get().Where(e => e.Id == code.ExerciseId).FirstOrDefault();
+            try
+            {
+                var userName = User.Identity.Name;
+                var user = userManager.Users.Where(e => e.UserName == userName).FirstOrDefault();
+                var code = codeManager.GetUserCodeById(user.Id);
+                var history = codeManager.GetHistoryLst(code.Id);
+                var exercise = exerciseManager.Get().Where(e => e.Id == code.ExerciseId).FirstOrDefault();
+                return View(new CodeHistoryViewModels
+                {
+                    CodeHistory = history,
+                    ExerciseName = exercise.TaskName,
+                    ExerciseId = exercise.Id,
+                    UserId = user.UserName
+                });
+            }
+            catch(Exception ex)
+            {
 
-            return View(new CodeHistoryViewModels {
-                CodeHistory = history,
-                ExerciseName = exercise.TaskName
-            });
+            }
+            return View();
+
+            
         }
         [HttpPost]
-        public void EditCode(int codeTextId)
+        public CodeModel EditCode(CodeModel codeModel)
         {
-            codeManager.EditCode(codeTextId);
+            codeManager.EditCode(codeModel);
+            return codeModel;
         }
-
         [HttpPost]
-        public SetFav setFav(SetFav model)
+        public IActionResult SendCodeToExecute(UserCodeDTO codeModel)
+        {
+            return RedirectToAction("Index", "Code", codeModel);
+        }
+        [HttpPost]
+        public SetFav SetFav(SetFav model)
         {
             codeManager.SetFavouriteCode(model);
             return model;

@@ -16,9 +16,8 @@ namespace BAL.Interfaces
         void AddHistory(int codeId, string text, DateTime date, string error = null, string result = null);
         string ExecuteCode(UserCodeDTO model);
         string ExecutionResult(string code, int exId, string userId);
-        UserCodeDTO BuildCodeModel(UserCodeDTO model);
         List<CodeHistory> GetHistoryLst(int codeId);
         SetFav SetFavouriteCode(SetFav model);
-        void EditCode(int codeTextId);
+        CodeModel EditCode(CodeModel codeModel);
     }
 }

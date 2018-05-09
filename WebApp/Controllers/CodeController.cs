@@ -27,7 +27,7 @@ namespace WebApp.Controllers
             {
                 return View("../Home/Index");
             }
-            return View(codeManager.BuildCodeModel(model));
+            return View(model);
         }
 
         [HttpPost]
