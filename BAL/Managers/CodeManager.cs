@@ -110,7 +110,53 @@ namespace BAL.Managers
             AddHistory(codeId, code, DateTime.Now,  errors, null );
             return errors;
         }
-        
+
+
+
+        public string GetCode(UserCodeDTO model)
+       {
+   
+                UserCode code = new UserCode
+                {
+             CodeText = model.CodeText,
+                };
+
+
+                  return ExecuteCode(model.CodeText);
+        }
+
+       public string ExecuteCode(string code)
+        {
+            
+         //   var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
+            var res = sandboxManager.Execute(code);
+            if (res.Success)
+            {
+                string result =
+$"Result: {res.Result};\r\nCompile time: {res.CompileTime.TotalMilliseconds};\r\nExecution Time: {res.ExecutionTime.TotalMilliseconds};";
+                return result;
+           }
+
+            string errors = res.CompileTimeExceptions.Aggregate("", (current, v) => current + (v + ";\r\n"));
+            errors = res.RunTimeExceptions.Aggregate(errors, (current, v) => current + (v + ";\r\n"));
+            return errors;
+       }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
         public List<CodeHistory> GetHistoryLst(int codeId)
         {

@@ -50,52 +50,50 @@
     <script>
         $(document).ready(function() {
             $('#codeText').html('@Model.CodeText');
-            console.log('@Model.CodeText');
+           // console.log('@Model.CodeText');
         });
-
 
         var editableCodeMirror = null;
         window.onload = function() {
-            console.log(document.getElementById('codeText'));
+          //  console.log(document.getElementById('codeText'));
             editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeText'),
                 {
                     mode: "htmlmixed",
                     theme: "default",
                     lineNumbers: true
                 });
-       
-            editableCodeMirror.on('change', function() {
 
-  
-                            $('#result').html('');
+            
+          
+            editableCodeMirror.on('change', function () {             
+                editableCodeMirror.userCodeWasChanged = true;
+            });
 
-                            var userCode = new Object();
-                            userCode.CodeText = editableCodeMirror.getValue();
-                           // userCode.ExerciseId = ('@Model.ExerciseId');
-                            //userCode.UserId = ('@Model.UserId');
+            setInterval(function () { 
+                if (editableCodeMirror.userCodeWasChanged) {
+                    editableCodeMirror.userCodeWasChanged = false;
+                    $('#result').html('');
+                    var userCode = new Object();
+                    userCode.CodeText = editableCodeMirror.getValue();
 
-
-                            $.ajax({
-                                type: "POST",
-                                url: "/Code/ExecuteCode",
-                                beforeSend: function (xhr) {
-                                    xhr.setRequestHeader("XSRF-TOKEN",
-                                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                                },
-                                data: userCode,                          
-                                cache: false,
-                                success: function(data) {
-
-                                    $("#result").html(data);
-                                }
-                                     });
-
-              });
+                    $.ajax({
+                        type: "POST",
+                        url: "/Code/ExecuteCode",
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                        data: userCode,
+                        cache: false,
+                        success: function (data) {
+                            $("#result").html(data);
+                        }
+                    });
+                }
+            },3000);
+      
+            editableCodeMirror.setOption("mode", "text/x-csrc");      
         };
 
-            editableCodeMirror.setOption("mode", "text/x-csrc");
-
-        
         $('#done').click(
             function() {
 
