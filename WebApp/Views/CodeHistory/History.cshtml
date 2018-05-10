@@ -1,10 +1,13 @@
 ﻿@model WebApp.ViewModels.CodeHistoryViewModels
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
 @{
     ViewData["Title"] = "History";
 }
 
-<h2>History</h2>
+<h2>@SharedLocalizer["History"]</h2>
 <style>
     input[type=radio],
     input[type=checkbox] {
@@ -12,8 +15,6 @@
         visibility: hidden;
         position: absolute;
     }
-
-
 
     .titlecode {
         font-size: 18px;
@@ -41,37 +42,60 @@
 </style>
 <hr />
 
-@for (var i = 0; i < Model.CodeHistory.Count(); i++)
+@try
 {
+    @for (var i = 0; i < Model.CodeHistory.Count(); i++)
+    {
+        <div class="row">
 
-    <div class="row">
+            <form>
+                <div class="col-lg-10">
+                    <p data-id="@Model.CodeHistory[i].Id" id="@Model.CodeHistory[i].Id" class="form-control titlecode" readonly>@Model.ExerciseName</p>
 
-        <form>
-            <div class="col-lg-10">
-                <p data-id="@Model.CodeHistory[i].Id" id="@Model.CodeHistory[i].Id" class="form-control titlecode" readonly>@Model.ExerciseName</p>
-
-                <p><textarea data-id="@Model.CodeHistory[i].Id" id="@Model.CodeHistory[i].Id" class="form-control code-example col" rows="15">@Model.CodeHistory[i].CodeText</textarea></p>
-                <p>
-                    <textarea data-id="@Model.CodeHistory[i].Id" id="@Model.CodeHistory[i].Id" class="form-control code-example col" rows="5" readonly>@if (@Model.CodeHistory[i].Result!=null) {@Model.CodeHistory[i].Result}
+                    <textarea id="code-example" data-id="@Model.CodeHistory[i].Id" class="form-control col" rows="15" style="height: 100%; width: 100%; display:none;">@Model.CodeHistory[i].CodeText</textarea>
+                    
+                        <textarea class="form-control col" rows="5" style="height: 100%; width: 100%; " readonly>
+                @if (@Model.CodeHistory[i].Result!=null) {@Model.CodeHistory[i].Result}
                 else {
                     @Model.CodeHistory[i].Error
                 }</textarea>
-                </p>
-            </div>
-            <div class="col-lg-1 date">
-                <div class="row">
-                    <p class="col-lg-12">@Model.CodeHistory[i].time</p>
-                    <input type="button" class="btn btn-default btn-md col-lg-12" value="save changes" />
-                    <input type="button" class="btn btn-default btn-md col-lg-12" value="try to execute" />
+                    
                 </div>
+                <div class="col-lg-1 date">
+                    <div class="row form-group">
+                        <p class="col-lg-12">@Model.CodeHistory[i].time</p>
+                        <input type="button" data-codeTextId="@Model.CodeHistory[i].Id" data-codeText="@Model.CodeHistory[i].CodeText" class="save-changes-btn btn btn-default btn-md col-lg-12" value="@SharedLocalizer["Save"]" />
+
+                    </div>
+                </div>
+                <div class="checkbox_wrapper col-lg-1">
+                    <input data-id="@Model.CodeHistory[i].Id" data-flag="@Model.CodeHistory[i].IsFavouriteCode" id="icon" value="@Model.CodeHistory[i].IsFavouriteCode" type="checkbox" />
+                    @if (@Model.CodeHistory[i].IsFavouriteCode)
+                    {
+                        <label name="qwert" data-id="@Model.CodeHistory[i].Id" data-flag="@Model.CodeHistory[i].IsFavouriteCode" style="color:red;" for="icon" class="glyphicon glyphicon-heart"></label>
+                    }
+                    else
+                    {
+                        <label name="qwert" data-id="@Model.CodeHistory[i].Id" data-flag="@Model.CodeHistory[i].IsFavouriteCode" style="color:black;" for="icon" class="glyphicon glyphicon-heart"></label>
+                    }
+
+                </div>
+
+            </form>
+            <div class="col-lg-1" style="margin-top:24px;">
+                <form asp-controller="Code" asp-action="Index">
+                    <input type="hidden" name="UserId" value="@Model.UserId" />
+                    <input type="hidden" name="ExerciseId" value="@Model.ExerciseId" />
+                    <input type="hidden" name="CodeText" value="@Model.CodeHistory[i].CodeText" />
+                    <button type="submit" class="btn btn-default">@SharedLocalizer["Start"]</button>
+                </form>
             </div>
-            <div class="checkbox_wrapper col-lg-1">
-                <input data-id="@Model.CodeHistory[i].Id" id="icon" value="@Model.CodeHistory[i].IsFavouriteCode" type="checkbox" />
-                <label data-id="@Model.CodeHistory[i].Id" for="icon" class="glyphicon glyphicon-heart"></label>
-            </div>
-            
-        </form>
-    </div><hr />
+        </div><hr />
+    }
+}
+catch (Exception ex)
+{
+    <p>@SharedLocalizer["No-Content"]</p>
 }
 
 
@@ -88,50 +112,84 @@
     <script src="~/js/continuecomment.js"></script>
     <script src="~/js/clike.js"></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script src="~/js/tinymce.min.js"></script>
+
+
     <script>
-        var flag = false;
+        
         $(document).ready(function () {
-            $(document).on('click', '.titlecode', function (e) {
-                e.preventDefault();
-                var $this = $(this),
-                    parent = $this.parents('form'),
-                    showHideEl = parent.find('.code-example');
-
-                showHideEl.slideToggle();
-            });
-            $(document).on('click', '.glyphicon', function (e) {
+            $('.save-changes-btn').click(function () {
                 var obj = new Object();
-                var $this = $(this),
-                    parent = $this.parents('form'),
-                    showHideEl = parent.find('.glyphicon');
+                var codeTextId = $.parseJSON($(this).attr('data-codeTextId'));
+                var codeText = editableCodeMirror.getValue();
+                obj.codeTextId = codeTextId;
+                obj.codeText = (codeText);
+                console.log(codeText);
 
-                codeId = showHideEl.data('id');
-                flag = !flag;
+                //$.ajax({
+                //    type: "POST",
+                //    url: "/CodeHistory/EditCode",
+                //    data: obj,
+                //    success: function (data) {
+                //        console.log(data);
+                //    }
 
-                obj.codeId = codeId;
-                obj.flag = flag;
+                //});
+            });
+
+            $('.execute-btn').click(function () {
+
+                var userCode = new Object();
+                userCode.CodeText = $(this).attr('data-codeText');
+                userCode.ExerciseId = $(this).attr('data-exId');
+                userCode.UserId = $(this).attr('data-userId');
+                console.log(userCode);
                 $.ajax({
                     type: "POST",
-                    url: "/CodeHistory/setFav",
-                    data: obj,
-
-                    success: function (data) {
-                        console.log(data.flag);
-                        if (data.flag === true)
-                            $this.css('color', 'red');
-                        else
-                            $this.css('color', 'grey');
+                    url: "/CodeHistory/SendCodeToExecute",
+                    data: userCode,
+                    success: function () {
+                        location.reload();
                     }
                 });
+
             });
         });
+        
+        $(document).on('click', '.titlecode', function () {
+            var $this = $(this),
+                parent = $this.parents('form'),
+                showHideEl = parent.find('#code-example');
+            showHideEl.slideToggle();
+            
+        });
+        
+        $(document).on('click', '.glyphicon', function (e) {
+            var obj = new Object();
+            var $this = $(this),
+                parent = $this.parents('form'),
+                showHideEl = parent.find('.glyphicon');
 
+            codeId = showHideEl.data('id');
+            flag = showHideEl.data('flag');
 
+            obj.codeId = codeId;
+            obj.flag = flag;
 
-
-
-
-
-
+            $.ajax({
+                type: "POST",
+                url: "/CodeHistory/SetFav",
+                data: obj,
+                success: function (data) {
+                    console.log(data.flag);
+                    if (data.flag === true)
+                        $this.css('color', 'red');
+                    else
+                        $this.css('color', 'black');
+                    location.reload();
+                }
+            });
+        });
+        
     </script>
 }

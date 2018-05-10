@@ -7,6 +7,6 @@ namespace Model.Entity
     public class SetFav
     {
         public bool flag { get; set; }
-        public int  codeId { get; set; }
+        public int codeId { get; set; }
     }
 }
