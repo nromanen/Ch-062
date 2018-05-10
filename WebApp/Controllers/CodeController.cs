@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BAL.Interfaces;
 using BAL.Managers;
 using DAL.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Model.DB;
@@ -14,6 +15,7 @@ using Model.DTO.CodeDTO;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class CodeController : Controller
     {
         private CodeManager codeManager;
@@ -28,7 +30,7 @@ namespace WebApp.Controllers
             {
                 return View("../Home/Index");
             }
-            return View(codeManager.BuildCodeModel(model));
+            return View(model);
         }
 
         [HttpPost]
@@ -41,16 +43,24 @@ namespace WebApp.Controllers
         [HttpPost]
         public string ExecuteCode(UserCodeDTO model)
         {
+       
             return model.CodeText == null ? "Write some codeeeee" : codeManager.GetCode(model);
         }
 
 
-        [HttpPost]
+      /*  [HttpPost]
         public ActionResult SetCodeStatus(UserCodeViewModel model)
         {
             var code = codeManager.UserCodeByExId(model.UserId, model.ExerciseId);
             codeManager.SetCodeStatus(code.Id);
             return RedirectToAction("TaskView ", "ExerciseManagement", model.ExerciseId);
         }
+        */
+
+
+        //public ActionResult CodeReview(int )
+        //{
+
+        //}
     }
 }

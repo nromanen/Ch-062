@@ -327,6 +327,18 @@
   <data name="Written" xml:space="preserve">
     <value>Опубліковано</value>
   </data>
+  <data name="No-Content" xml:space="preserve">
+    <value>Ваш аккаунт ще не має історії написання коду</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>Історія</value>
+  </data>
+  <data name="save-changes" xml:space="preserve">
+    <value>зберегти</value>
+  </data>
+  <data name="News" xml:space="preserve">
+    <value>Новини</value>
+  </data>
   <data name="Run" xml:space="preserve">
     <value>Виконати</value>
   </data>

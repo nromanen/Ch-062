@@ -69,13 +69,11 @@ namespace BAL.Managers
 
         public string ExecuteCode(UserCodeDTO model)
         {
-            var status = model.CodeStatus;
             if (FindUserCode(model.UserId, model.ExerciseId))
             {
                 var code = unitOfWork.CodeRepo.Get(c => c.ExerciseId == model.ExerciseId && c.UserId == model.UserId).FirstOrDefault();
                 if (code != null)
                 {
-                    status = code.CodeStatus;
                     code.CodeText = model.CodeText;
                     unitOfWork.CodeRepo.Update(code);
                 }
@@ -85,17 +83,17 @@ namespace BAL.Managers
                 UserCode code = new UserCode
                 {
                     CodeText = model.CodeText,
-                    UserId = model.UserId,
-                    ExerciseId = model.ExerciseId
+                    ExerciseId = model.ExerciseId,
+                    UserId = unitOfWork.UserRepo.Get().Where(e=>e.UserName== model.UserId).FirstOrDefault().Id
                 };
 
                 unitOfWork.CodeRepo.Insert(code);
             }
             unitOfWork.Save();
-            return ExecutionResult(model.CodeText, model.ExerciseId, model.UserId, status);
+            return ExecutionResult(model.CodeText, model.ExerciseId, unitOfWork.UserRepo.Get().Where(e => e.UserName == model.UserId).FirstOrDefault().Id);
         }
 
-        public string ExecutionResult(string code, int exId, string userId, CodeStatus codeStatus)
+        public string ExecutionResult(string code, int exId, string userId)
         {
             var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
             var res = sandboxManager.Execute(code);
@@ -103,91 +101,62 @@ namespace BAL.Managers
             {
                 string result =
                     $"Result: {res.Result};\r\nCompile time: {res.CompileTime.TotalMilliseconds};\r\nExecution Time: {res.ExecutionTime.TotalMilliseconds};";
-                if(codeStatus != CodeStatus.Done)
-                {
-                    AddHistory(codeId, code, DateTime.Now, null, result);
-                }
+                AddHistory(codeId, code, DateTime.Now, null, result);
                 return result;
             }
             
             string errors = res.CompileTimeExceptions.Aggregate("", (current, v) => current + (v + ";\r\n"));
             errors = res.RunTimeExceptions.Aggregate(errors, (current, v) => current + (v + ";\r\n"));
-            if(codeStatus != CodeStatus.Done)
-            {
-                AddHistory(codeId, code, DateTime.Now, errors, null);
-            }
+            AddHistory(codeId, code, DateTime.Now,  errors, null );
             return errors;
         }
 
 
 
         public string GetCode(UserCodeDTO model)
-        {
-            if (FindUserCode(model.UserId, model.ExerciseId))
-            {
-                var code = unitOfWork.CodeRepo.Get(c => c.ExerciseId == model.ExerciseId && c.UserId == model.UserId).FirstOrDefault();
-                if (code != null)
-                {
-                    code.CodeText = model.CodeText;
-                    unitOfWork.CodeRepo.Update(code);
-                }
-            }
-            else
-            {
+       {
+   
                 UserCode code = new UserCode
                 {
-                    CodeText = model.CodeText,
-                    UserId = model.UserId,
-                    ExerciseId = model.ExerciseId
+             CodeText = model.CodeText,
                 };
 
-                unitOfWork.CodeRepo.Insert(code);
-            }
-            unitOfWork.Save();
-            return GetResult(model.CodeText, model.ExerciseId, model.UserId);
+
+                  return ExecuteCode(model.CodeText);
         }
 
-
-        public string GetResult(string code, int exId, string userId)
+       public string ExecuteCode(string code)
         {
-            var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
-
+            
+         //   var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
             var res = sandboxManager.Execute(code);
             if (res.Success)
             {
                 string result =
-                    $"Result: {res.Result};\r\nCompile time: {res.CompileTime.TotalMilliseconds};\r\nExecution Time: {res.ExecutionTime.TotalMilliseconds};";
+$"Result: {res.Result};\r\nCompile time: {res.CompileTime.TotalMilliseconds};\r\nExecution Time: {res.ExecutionTime.TotalMilliseconds};";
                 return result;
-            }
+           }
 
             string errors = res.CompileTimeExceptions.Aggregate("", (current, v) => current + (v + ";\r\n"));
             errors = res.RunTimeExceptions.Aggregate(errors, (current, v) => current + (v + ";\r\n"));
             return errors;
-        }
+       }
 
 
-        public void SetCodeStatus(int id)
-        {
-            var code = unitOfWork.CodeRepo.GetById(id);
-            code.CodeStatus = CodeStatus.Done;
-            unitOfWork.CodeRepo.Update(code);
-            unitOfWork.Save();
-        }
 
-        public UserCodeDTO BuildCodeModel(UserCodeDTO model)
-        {
-            var exercise = exerciseManager.GetById(model.ExerciseId);
-            model.Exercise = exercise;
-            model.CodeText = exercise.TaskBaseCodeField;
-            var user = userManager.FindByNameAsync(model.UserId).Result;
-            model.UserId = user.Id;
-            string text = IsUserDidExercise(user.Id, exercise.Id);
-            if (text != null)
-            {
-                model.CodeText = text;
-            }
-            return model;
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
         
         public List<CodeHistory> GetHistoryLst(int codeId)
         {
@@ -199,14 +168,18 @@ namespace BAL.Managers
 
         public SetFav SetFavouriteCode(SetFav model)
         {
-                var codeHistoryEntity = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == model.codeId).FirstOrDefault();
-            codeHistoryEntity.IsFavouriteCode = model.flag;
+            var codeHistoryEntity = unitOfWork.CodeHistoryRepo.Get().Where(e => e.Id==model.codeId).FirstOrDefault();
+            codeHistoryEntity.IsFavouriteCode = !model.flag;
+            model.flag = !model.flag;
             unitOfWork.Save();
             return model;
         }
-        public void EditCode(int codeTextId)
+        public CodeModel EditCode(CodeModel codeModel)
         {
-
+            var code = unitOfWork.CodeHistoryRepo.Get().Where(e => e.Id == codeModel.codeTextId).FirstOrDefault();
+            code.CodeText = codeModel.codeText;
+            unitOfWork.Save();
+            return codeModel;
         }
 
 

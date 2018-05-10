@@ -37,6 +37,14 @@
                                     </a>
                                 </li>
                             }
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li>
+                                    <a class="gn-icon gn-icon-cog" asp-controller="AddNews" asp-action="News">
+                                        @SharedLocalizer["News"]
+                                    </a>
+                                </li>
+                            }
                             @if (User.IsInRole("Teacher"))
                             {
                                 <li>

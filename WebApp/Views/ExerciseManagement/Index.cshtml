@@ -39,7 +39,12 @@
                             <a asp-route-id="@task.Id" asp-action="Update" class="btn btn-sm btn-primary">@SharedLocalizer["Change"]</a>
                             <button type="submit" class="btn btn-sm btn-danger">
                                 @SharedLocalizer["Delete"]
-                            </button>
+                            </button> 
+                        </form>
+                        <form asp-route-id="@task.Id" asp-action="ExerciseSolutionsIndex" method="post">
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Solutions
+                            </button> 
                         </form>
                     }
                 </td>

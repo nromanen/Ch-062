@@ -32,6 +32,9 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+         
+            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
+
             services.AddLocalization(options => options.ResourcesPath = "Res");
             services.AddMvc()
                 .AddDataAnnotationsLocalization(options =>
@@ -79,6 +82,7 @@ namespace WebApp
             services.AddScoped<ISandboxManager, SandboxManager>();
             services.AddScoped<ICommentManager, CommentManager>();
             services.AddScoped<ICodeManager, CodeManager>();
+            services.AddScoped<INewsManager, NewsManager>();
 
             services.Configure<IdentityOptions>(options =>
             {

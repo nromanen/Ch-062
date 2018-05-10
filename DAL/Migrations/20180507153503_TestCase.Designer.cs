@@ -11,9 +11,10 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180507153503_TestCase")]
+    partial class TestCase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,59 +241,13 @@ namespace DAL.Migrations
 
                     b.Property<string>("TeacherId");
 
+                    b.Property<string>("TestCasesCode");
+
                     b.Property<DateTime>("UpdateDateTime");
 
                     b.HasKey("Id");
 
                     b.ToTable("Exercises");
-                });
-
-            modelBuilder.Entity("Model.DB.News", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("CourseId");
-
-                    b.Property<int>("Day");
-
-                    b.Property<string>("ImagePath");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("Month");
-
-                    b.Property<string>("Text");
-
-                    b.Property<string>("Title");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("News");
-                });
-
-            modelBuilder.Entity("Model.DB.TestCase", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("ExerciseId");
-
-                    b.Property<string>("InputData");
-
-                    b.Property<string>("OutputData");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExerciseId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("TestCases");
                 });
 
             modelBuilder.Entity("Model.DB.User", b =>
@@ -413,26 +368,6 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Model.DB.Course", b =>
                 {
-                    b.HasOne("Model.DB.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("Model.DB.News", b =>
-                {
-                    b.HasOne("Model.DB.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Model.DB.TestCase", b =>
-                {
-                    b.HasOne("Model.DB.Exercise", "Exercise")
-                        .WithMany()
-                        .HasForeignKey("ExerciseId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Model.DB.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");

@@ -11,12 +11,12 @@
 
     <div>
         <div class="col-md-12">
-            <div class="row" style="height: 100%; padding: 20px; border-color: black; border: 1px solid; background-color: white">
-                <div class="col-md-12">
-                    <div class="row" style="padding: 10px">@SharedLocalizer["Exercisetitle"]: @Model.Exercise.TaskName</div>
-                    <div class="row" style="padding: 10px">@SharedLocalizer["Task"]: @Model.Exercise.TaskTextField</div>
-                </div>
-            </div>
+            @*<div class="row" style="height: 100%; padding: 20px; border-color: black; border: 1px solid; background-color: white">
+                    <div class="col-md-12">
+                        <div class="row" style="padding: 10px">@SharedLocalizer["Exercisetitle"]: @Model.ExerciseId</div>
+                        <div class="row" style="padding: 10px">@SharedLocalizer["Task"]: @Model.</div>
+                    </div>
+                </div>*@
             <br />
             <div class="row">
                 <div class="col-md-9">
@@ -30,7 +30,7 @@
                     <br />
                     <button type="button" id="executeButton" class="btn btn-default"> @SharedLocalizer["Execute"] </button>
                     @*<button type="button" id="reloadButton" class="btn btn-default"> @SharedLocalizer["Reload"] </button>*@
-                    <button type="button" id="exit" class="btn btn-default" onclick='location.href = "@Url.Action("Index","Home")"'> @SharedLocalizer["Exit"] </button>
+                    <button type="button" id="exit" class="btn btn-default" onclick='location.href = "@Url.Action("Index", "Home")"'> @SharedLocalizer["Exit"] </button>
 
                 </div>
 
@@ -50,53 +50,59 @@
     <script>
         $(document).ready(function() {
             $('#codeText').html('@Model.CodeText');
+           // console.log('@Model.CodeText');
         });
 
-
         var editableCodeMirror = null;
-        window.onload = function () {
-            editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeText'), {
-                mode: "htmlmixed",
-                theme: "default",
-                lineNumbers: true
-            });
-
-            editableCodeMirror.on('change', function () {  //(cMirror)
-                $('#result').html('');
-                // get value right from instance
-                //console.log(cMirror.getValue());
-                console.log("Starteeed")
-
-                var userCode = new Object();
-                userCode.CodeText = editableCodeMirror.getValue();
-                userCode.ExerciseId = ('@Model.ExerciseId');
-                userCode.UserId = ('@Model.UserId');
-
-                $.ajax({
-                    type: "POST",
-                    url: "/Code/GetCode",
-                    data: userCode,
-                    success: function (data) {
-                        $("#result").html(data);
-                    }
+        window.onload = function() {
+          //  console.log(document.getElementById('codeText'));
+            editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeText'),
+                {
+                    mode: "htmlmixed",
+                    theme: "default",
+                    lineNumbers: true
                 });
+
+            
+          
+            editableCodeMirror.on('change', function () {             
+                editableCodeMirror.userCodeWasChanged = true;
             });
 
+            setInterval(function () { 
+                if (editableCodeMirror.userCodeWasChanged) {
+                    editableCodeMirror.userCodeWasChanged = false;
+                    $('#result').html('');
+                    var userCode = new Object();
+                    userCode.CodeText = editableCodeMirror.getValue();
 
-            editableCodeMirror.setOption("mode", "text/x-csrc");
-            console.log("Test2");
-
+                    $.ajax({
+                        type: "POST",
+                        url: "/Code/ExecuteCode",
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                        data: userCode,
+                        cache: false,
+                        success: function (data) {
+                            $("#result").html(data);
+                        }
+                    });
+                }
+            },3000);
+      
+            editableCodeMirror.setOption("mode", "text/x-csrc");      
         };
+
         $('#done').click(
-            function () {
+            function() {
 
                 var model = new Object();
                 model.CodeText = editableCodeMirror.getValue();
-                model.UserId =('@Model.UserId');
+                model.UserId = ('@Model.UserId');
                 model.ExerciseId = ('@Model.ExerciseId');
 
                 $.ajax({
-
                     type: "POST",
                     url: "/Code/SetCodeStatus",
                     data: model
@@ -104,13 +110,13 @@
             });
 
 
-        $('#reloadButton').click(function () {
+        $('#reloadButton').click(function() {
 
             editableCodeMirror.setValue('@Model.CodeText');
         });
 
         $('#executeButton').click(
-            function () {
+            function() {
                 $('#result').html('');
                 console.log("start");
 
@@ -130,7 +136,6 @@
 
             }
         );
-
 
 
     </script>
