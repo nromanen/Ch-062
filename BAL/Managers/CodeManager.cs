@@ -113,19 +113,17 @@ namespace BAL.Managers
 
 
 
-        public string GetCode(UserCodeDTO model)
+        public string GetOnFlyCode(UserCodeDTO model)
        {
    
                 UserCode code = new UserCode
                 {
              CodeText = model.CodeText,
                 };
-
-
-                  return ExecuteCode(model.CodeText);
+                  return ExecuteOnFlyCode(model.CodeText);
         }
 
-       public string ExecuteCode(string code)
+       public string ExecuteOnFlyCode(string code)
         {
             
          //   var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
@@ -133,7 +131,7 @@ namespace BAL.Managers
             if (res.Success)
             {
                 string result =
-$"Result: {res.Result};\r\nCompile time: {res.CompileTime.TotalMilliseconds};\r\nExecution Time: {res.ExecutionTime.TotalMilliseconds};";
+                       $"Result: {res.Result};\r\nCompile time: {res.CompileTime.TotalMilliseconds};\r\nExecution Time: {res.ExecutionTime.TotalMilliseconds};";
                 return result;
            }
 

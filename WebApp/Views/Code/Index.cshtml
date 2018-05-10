@@ -78,7 +78,7 @@
 
                     $.ajax({
                         type: "POST",
-                        url: "/Code/ExecuteCode",
+                        url: "/Code/ExecuteOnFlyCode",
                         beforeSend: function (xhr) {
                             xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
                         },
