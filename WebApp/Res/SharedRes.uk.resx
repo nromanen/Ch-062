@@ -303,8 +303,8 @@
   <data name="OutputData" xml:space="preserve">
     <value>Вихідні дані</value>
   </data>
-  <data name="Testcases" xml:space="preserve">
-    <value>Тести</value>
+  <data name="TestCasesCode" xml:space="preserve">
+    <value>Код юніт тестів</value>
   </data>
   <data name="Comment" xml:space="preserve">
     <value>Коментар</value>
@@ -326,5 +326,8 @@
   </data>
   <data name="Written" xml:space="preserve">
     <value>Опубліковано</value>
+  </data>
+  <data name="Run" xml:space="preserve">
+    <value>Виконати</value>
   </data>
 </root>

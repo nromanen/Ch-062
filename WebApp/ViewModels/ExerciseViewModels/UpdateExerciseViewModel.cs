@@ -21,6 +21,8 @@ namespace WebApp.ViewModels
 
         public string TaskBaseCodeField { get; set; }
 
+        public string TestCases { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public DateTime UpdateDateTime { get; set; }
