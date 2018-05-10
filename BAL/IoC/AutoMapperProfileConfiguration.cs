@@ -29,8 +29,7 @@ namespace BAL.IoC
                 .ForMember(dest => dest.IsDeleted, options => options.MapFrom(src => src.IsDeleted))
                 .ForMember(dest => dest.Rating, options => options.MapFrom(src => src.Rating))
                 .ForMember(dest => dest.CreateDateTime, options => options.MapFrom(src => src.CreateDateTime))
-                .ForMember(dest => dest.UpdateDateTime, options => options.MapFrom(src => src.UpdateDateTime))
-                .ForMember(dest => dest.TestCasesCode, options => options.MapFrom(src => src.TestCasesCode));
+                .ForMember(dest => dest.UpdateDateTime, options => options.MapFrom(src => src.UpdateDateTime));
                 cfg.CreateMap<List<Exercise>, List<ExerciseDTO>>();
 
                 cfg.CreateMap<Comment, CommentDTO>().ForMember(dest => dest.Id, option => option.MapFrom(src => src.Id))
@@ -57,7 +56,9 @@ namespace BAL.IoC
                     .ForMember(dest => dest.CodeStatus, options => options.MapFrom(src => src.CodeStatus))
                     .ForMember(dest => dest.Mark, options => options.MapFrom(src => src.Mark))
                     .ForMember(dest => dest.TeachersComment, options => options.MapFrom(src => src.TeachersComment))
-                    .ForMember(dest => dest.EndTime, options => options.MapFrom(src => src.EndTime));
+                    .ForMember(dest => dest.EndTime, options => options.MapFrom(src => src.EndTime))
+                    .ForMember(dest => dest.UserId, options => options.MapFrom(src => src.UserId));
+ 
                 cfg.CreateMap<List<UserCode>, List<UserCodeDTO>>();
 
 
@@ -69,6 +70,10 @@ namespace BAL.IoC
                     .ForMember(dest => dest.IsFavouriteCode, options => options.MapFrom(src => src.IsFavouriteCode))
                     .ForMember(dest => dest.UserCodeId, options => options.MapFrom(src => src.UserCodeId));
                 cfg.CreateMap<List<CodeHistory>, List<CodeHistoryDTO>>();
+
+                cfg.CreateMap<News, NewsDTO>();
+                cfg.CreateMap<List<News>, List<NewsDTO>>();
+
             });
         }
 

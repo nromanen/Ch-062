@@ -227,19 +227,23 @@ namespace BAL.Managers
             var codeHistories = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).ToList();
             return codeHistories;
         }
-        
+
 
 
         public SetFav SetFavouriteCode(SetFav model)
         {
-                var codeHistoryEntity = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == model.codeId).FirstOrDefault();
-            codeHistoryEntity.IsFavouriteCode = model.flag;
+            var codeHistoryEntity = unitOfWork.CodeHistoryRepo.Get().Where(e => e.Id == model.codeId).FirstOrDefault();
+            codeHistoryEntity.IsFavouriteCode = !model.flag;
+            model.flag = !model.flag;
             unitOfWork.Save();
             return model;
         }
-        public void EditCode(int codeTextId)
+        public CodeModel EditCode(CodeModel codeModel)
         {
-
+            var code = unitOfWork.CodeHistoryRepo.Get().Where(e => e.Id == codeModel.codeTextId).FirstOrDefault();
+            code.CodeText = codeModel.codeText;
+            unitOfWork.Save();
+            return codeModel;
         }
 
 

@@ -28,6 +28,8 @@ namespace BAL.Interfaces
         void SetCodeStatus(int id);
         void SetMark(int id, int mark, string comment);
         SetFav SetFavouriteCode(SetFav model);
-        void EditCode(int codeTextId);
+        //string ExecutionResult(string code, int exId, string userId);
+        CodeModel EditCode(CodeModel codeModel);
+
     }
 }

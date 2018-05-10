@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
+    [Authorize]
     public class CodeController : Controller
     {
         private CodeManager codeManager;
@@ -57,7 +58,7 @@ namespace WebApp.Controllers
             var IdForRedirect = new RedirectTempData();
             IdForRedirect.IdForRedirection = model.ExerciseId;
             //return RedirectToAction("TaskView", "ExerciseManagement", IdForRedirect.IdForRedirection);
-            return RedirectToAction("Index", "CourseManagement");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

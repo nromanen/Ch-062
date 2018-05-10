@@ -54,12 +54,12 @@
 
     <div>
         <div class="col-md-12">
-            <div class="row" style="height: 100%; padding: 20px; border-color: black; border: 1px solid; background-color: white">
-                <div class="col-md-12">
-                    <div class="row" style="padding: 10px">@SharedLocalizer["Exercisetitle"]: @Model.Exercise.TaskName</div>
-                    <div class="row" style="padding: 10px">@SharedLocalizer["Task"]: @Model.Exercise.TaskTextField</div>
-                </div>
-            </div>
+            @**<div class="row" style="height: 100%; padding: 20px; border-color: black; border: 1px solid; background-color: white">
+                    <div class="col-md-12">
+                        <div class="row" style="padding: 10px">@SharedLocalizer["Exercisetitle"]: @Model.ExerciseId</div>
+                        <div class="row" style="padding: 10px">@SharedLocalizer["Task"]: @Model.</div>
+                    </div>
+                </div>*@
             <br />
             <div class="row">
                 <div class="col-md-9">
@@ -97,7 +97,6 @@
             tinymce.init({ selector: '#MCE', menubar: false, toolbar: false });
         });
 
-
         var editableCodeMirror = null;
         window.onload = function () {
             editableCodeMirror = CodeMirror.fromTextArea(document.getElementById('codeText'), {
@@ -106,49 +105,46 @@
                 lineNumbers: true
             });
 
-            editableCodeMirror.on('change', function (cMirror) {  //(cMirror)
-                $('#result').html('');
+          
+          
+            editableCodeMirror.on('change', function () {             
+                editableCodeMirror.userCodeWasChanged = true;
+            });
 
-                //console.log(cMirror.getValue());
+            setInterval(function () { 
+                if (editableCodeMirror.userCodeWasChanged) {
+                    editableCodeMirror.userCodeWasChanged = false;
+                    $('#result').html('');
+                    var userCode = new Object();
+                    userCode.CodeText = editableCodeMirror.getValue();
 
-                var userCode = new Object();
-                userCode.CodeText = editableCodeMirror.getValue();
-                userCode.ExerciseId = ('@Model.ExerciseId');
-                userCode.UserId = ('@Model.UserId');
-
-                var checkasync = false;
-
-
-                $.ajax({
-                    type: "POST",
-                    url: "/Code/ExecuteCode",
-                    data: userCode,
-                    success: function(data) {
-
-                        $("#result").html(data);
-                        checkasync = true;
-
-                    }
-
-                });
-
-
-                 });
-
-
-            editableCodeMirror.setOption("mode", "text/x-csrc");
-
+                    $.ajax({
+                        type: "POST",
+                        url: "/Code/ExecuteCode",
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
+                        },
+                        data: userCode,
+                        cache: false,
+                        success: function (data) {
+                            $("#result").html(data);
+                        }
+                    });
+                }
+            },3000);
+      
+            editableCodeMirror.setOption("mode", "text/x-csrc");      
         };
+
         $('#done').click(
-            function () {
+            function() {
 
                 var model = new Object();
                 model.CodeText = editableCodeMirror.getValue();
-                model.UserId =('@Model.UserId');
+                model.UserId = ('@Model.UserId');
                 model.ExerciseId = ('@Model.ExerciseId');
 
                 $.ajax({
-
                     type: "POST",
                     url: "/Code/SetCodeStatus",
                     data: model
@@ -156,13 +152,13 @@
             });
 
 
-        $('#reloadButton').click(function () {
+        $('#reloadButton').click(function() {
 
             editableCodeMirror.setValue('@Model.CodeText');
         });
 
         $('#executeButton').click(
-            function () {
+            function() {
                 $('#result').html('');
                 console.log("start");
 
@@ -182,7 +178,6 @@
 
             }
         );
-
 
 
     </script>
