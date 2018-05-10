@@ -206,6 +206,14 @@ namespace BAL.Managers
             model.CodeText = exercise.TaskBaseCodeField;
             var user = userManager.FindByNameAsync(model.UserId).Result;
             model.UserId = user.Id;
+            var code = unitOfWork.CodeRepo.Get(c=>c.ExerciseId==model.ExerciseId && c.UserId==model.UserId).FirstOrDefault();
+            if (code != null)
+            {
+                model.CodeText = code.CodeText;
+                model.CodeStatus = code.CodeStatus;
+                model.Mark = code.Mark;
+                model.TeachersComment = code.TeachersComment;
+            }
             string text = IsUserDidExercise(user.Id, exercise.Id);
             if (text != null)
             {
