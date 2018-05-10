@@ -29,8 +29,19 @@
         <label class="control-label">@SharedLocalizer["Task"]:</label>
         <textarea asp-for="TaskTextField" id="MCE"></textarea>
     </div>
-    <label asp-for="TaskBaseCodeField" class="control-label">@SharedLocalizer["BaseCode"]:</label>
-    <textarea asp-for="TaskBaseCodeField" id="taskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;"></textarea>
+
+    <div class="row">
+        <div class=" col-md-6">
+            <label class="control-label">@SharedLocalizer["BaseCode"]:</label>
+            <textarea asp-for="TaskBaseCodeField" id="taskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;"></textarea>
+        </div>
+
+        <div>
+            <label class="control-label">@SharedLocalizer["TestCasesCode"]:</label>
+            <textarea asp-for="TestCases" id="testCasesCodeField" class="col-md-12" style="height: 400px; width: 100%;"></textarea>
+        </div>
+    </div>
+
 
     <div class="form-group">
         <button id="save" class="btn btn-default">@SharedLocalizer["Save"]</button>
@@ -51,7 +62,11 @@
             theme: "default",
             lineNumbers: true
         });
+
+        var editableTestCasesCodeMirror = CodeMirror.fromTextArea(document.getElementById('testCasesCodeField'), {
+            mode: "text/x-csrc",
+            theme: "default",
+            lineNumbers: true
+        });
     };
-
-
 </script>

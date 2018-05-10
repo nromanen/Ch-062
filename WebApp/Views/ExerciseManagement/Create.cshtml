@@ -12,6 +12,7 @@
 <script src="~/js/continuecomment.js"></script>
 <script src="~/js/clike.js"></script>
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script src="~/js/jquery.min.js"></script>
 <link rel="stylesheet" href="~/css/site.css" />
 
 <form asp-action="Create" asp-controller="ExerciseManagement" method="post">
@@ -19,7 +20,7 @@
     <div class="form-group">
 
         <label class="control-label">@SharedLocalizer["CourseName"] *</label>
-        <select asp-for="CourseId" , asp-items="@(new SelectList(Model.CourseList, "Id" , "Name"))" class="form-control" required></select>
+        <select asp-for="CourseId" asp-items="@(new SelectList(Model.CourseList, "Id" , "Name"))" class="form-control" required></select>
         <label class="control-label">@SharedLocalizer["TaskName"] *</label>
         <input asp-for="TaskName" type="text" class="form-control" required />
     </div>
@@ -27,8 +28,17 @@
         <label class="control-label">@SharedLocalizer["Task"]:</label>
         <textarea asp-for="TaskTextField" id="MCE"></textarea>
     </div>
-    <label class="control-label">@SharedLocalizer["BaseCode"]:</label>
-    <textarea asp-for="TaskBaseCodeField" id="taskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;"></textarea>
+    <div class="row">
+        <div class=" col-md-6">
+            <label class="control-label">@SharedLocalizer["BaseCode"]:</label>
+            <textarea asp-for="TaskBaseCodeField" id="taskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;"></textarea>
+        </div>
+
+        <div>
+            <label class="control-label">@SharedLocalizer["TestCasesCode"]:</label>
+            <textarea asp-for="TestCases" id="testCasesCodeField" class="col-md-12" style="height: 400px; width: 100%;"></textarea>
+        </div>
+    </div>
 
     <div class="form-group">
         <button type="submit" class="btn btn-default">@SharedLocalizer["Add"]</button>
@@ -40,6 +50,7 @@
 <h6>@SharedLocalizer["Required"]</h6>
 
 <script>
+
     tinymce.init({ selector: '#MCE' });
 
 
@@ -49,7 +60,10 @@
             theme: "default",
             lineNumbers: true
         });
+        var editableTestCasesCodeMirror = CodeMirror.fromTextArea(document.getElementById('testCasesCodeField'), {
+            mode: "text/x-csrc",
+            theme: "default",
+            lineNumbers: true
+        });
     };
-
-
 </script>

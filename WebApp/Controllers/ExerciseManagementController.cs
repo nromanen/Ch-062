@@ -74,6 +74,7 @@ namespace WebApp.Controllers
                     TaskName = model.TaskName,
                     TaskTextField = model.TaskTextField,
                     TaskBaseCodeField = model.TaskBaseCodeField,
+                    TestCasesCode = model.TestCases,
                     TeacherId = user.Id,
                     Rating = 0,
                     CreateDateTime = DateTime.Now,
@@ -117,7 +118,8 @@ namespace WebApp.Controllers
                 CourseList = courseList,
                 TaskName = task.TaskName,
                 TaskTextField = task.TaskTextField,
-                TaskBaseCodeField = task.TaskBaseCodeField
+                TaskBaseCodeField = task.TaskBaseCodeField,
+                TestCases = task.TestCasesCode
             });
 
         }
