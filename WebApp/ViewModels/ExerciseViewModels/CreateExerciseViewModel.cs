@@ -20,6 +20,8 @@ namespace WebApp.ViewModels
 
         public string TaskBaseCodeField { get; set; }
 
+        public string TestCases { get; set; }
+
         public IEnumerable<CourseDTO> CourseList { get; set; }
     }
 }

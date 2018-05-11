@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Model.DTO.CodeDTO;
 
-namespace WebApp.ViewModels.UserCodeList
+namespace WebApp.ViewModels.UserCodeReview
 {
     public class UserCodeListUnitViewModel
     {

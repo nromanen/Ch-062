@@ -2,12 +2,12 @@
 @inject IViewLocalizer Localizer
 @inject IHtmlLocalizer<SharedRes> SharedLocalizer
 
-@model WebApp.ViewModels.UserCodeList.UserCodeListViewModel;
+@model WebApp.ViewModels.UserCodeReview.UserCodeListViewModel;
 @{
     ViewBag.Title = "Task List";
 }
 
-@if (Model == null)
+@if (Model.userCodeList==null)
 {
    <h4>There areno solutions yet </h4>
 }
@@ -23,16 +23,17 @@ else
        
             <tr>
                     <td>@code.UserName</td>
-                    <td>time</td>
+                    <td>@code.codeUnit.CodeStatus</td>
                     
-                <td>
-                    @if (User.IsInRole("Teacher"))
-                    {
-                    <form asp-route-id="@code.codeUnit.Id" asp-controller="Code" asp-action="" method="post">
-                        <button type="submit" class="btn btn-sm btn-success"> Review </button>
-                    </form>
-                    }
-                </td>
+                    <td>
+                        @if (User.IsInRole("Teacher"))
+    {
+                        <form  asp-action="CodeReview" asp-controller="Code">
+                            <input type="hidden" name="id" value="@code.codeUnit.Id" />
+                            <button type="submit" class="btn btn-sm btn-success"> Review </button>
+                        </form>
+}
+                    </td>
             </tr>
        
     }

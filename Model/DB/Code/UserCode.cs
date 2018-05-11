@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Model.DTO.CodeDTO;
 using Model.Entity;
+using System;
 
 namespace Model.DB.Code
 {
@@ -18,7 +19,9 @@ namespace Model.DB.Code
         public virtual Exercise Exercise { get; set; }
 
         public CodeStatus CodeStatus { get; set; }
+        public DateTime EndTime { get; set; }
         public int Mark { get; set; }
+        public string TeachersComment { get; set; }
 
     }
 
