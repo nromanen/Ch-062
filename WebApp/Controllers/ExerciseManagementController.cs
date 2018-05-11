@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using WebApp.Models;
 using WebApp.ViewModels;
-using WebApp.ViewModels.UserCodeList;
+using WebApp.ViewModels.UserCodeReview;
 using Model.DB;
 using Model.DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -74,6 +74,7 @@ namespace WebApp.Controllers
                     TaskName = model.TaskName,
                     TaskTextField = model.TaskTextField,
                     TaskBaseCodeField = model.TaskBaseCodeField,
+                    TestCasesCode = model.TestCases,
                     TeacherId = user.Id,
                     Rating = 0,
                     CreateDateTime = DateTime.Now,
@@ -117,7 +118,8 @@ namespace WebApp.Controllers
                 CourseList = courseList,
                 TaskName = task.TaskName,
                 TaskTextField = task.TaskTextField,
-                TaskBaseCodeField = task.TaskBaseCodeField
+                TaskBaseCodeField = task.TaskBaseCodeField,
+                TestCases = task.TestCasesCode
             });
 
         }
@@ -146,7 +148,7 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "ExerciseManagement");
         }
 
-       /* [HttpPost]
+       [HttpPost]
         [Authorize(Roles = "Teacher")]
         public IActionResult ExerciseSolutionsIndex(int id)
         {
@@ -166,6 +168,6 @@ namespace WebApp.Controllers
 
             }
             return View(new UserCodeListViewModel() { userCodeList = codesList});
-        }*/
+        }
     }
 }

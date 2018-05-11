@@ -18,6 +18,8 @@ namespace WebApp.ViewModels
 
         public string TaskBaseCodeField { get; set; }
 
+        public string TestCases { get; set; }
+
         public IEnumerable<CommentDTO> CommentList { get; set; }
 
         public double Rating { get; set; }

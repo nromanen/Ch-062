@@ -303,8 +303,8 @@
   <data name="OutputData" xml:space="preserve">
     <value>Output data</value>
   </data>
-  <data name="Testcases" xml:space="preserve">
-    <value>Test cases</value>
+  <data name="TestCasesCode" xml:space="preserve">
+    <value>Test cases code</value>
   </data>
   <data name="Comment" xml:space="preserve">
     <value>Comment</value>
@@ -338,5 +338,8 @@
   </data>
   <data name="News" xml:space="preserve">
     <value>News</value>
+  </data>
+  <data name="Run" xml:space="preserve">
+    <value>Run</value>
   </data>
 </root>

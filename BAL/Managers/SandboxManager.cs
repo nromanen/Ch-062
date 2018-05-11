@@ -5,8 +5,9 @@ using Microsoft.CodeAnalysis.Emit;
 using System.Diagnostics;
 using Model.Entity;
 using BAL.Interfaces;
-using System;
 using System.IO;
+using NUnit.Framework;
+using System.Xml.Linq;
 
 namespace BAL.Managers
 {
@@ -15,49 +16,44 @@ namespace BAL.Managers
         public ExecutionResult Execute(string code, string entryPoint = "Test", object[] parameters = null)
         {
             var tree = SyntaxFactory.ParseSyntaxTree(code);
-            string fileName = "OnlineExam.dll";
-            string targetClass = "OnlineExam.Program";
-            // Detect the file location for the library that defines the object type
+
             var systemRefLocation = typeof(object).GetTypeInfo().Assembly.Location;
-            // Create a reference to the library
             var systemReference = MetadataReference.CreateFromFile(systemRefLocation);
-            // A single, immutable invocation to the compiler
-            // to produce a library
+            var nunitReference = MetadataReference.CreateFromFile(typeof(TestAttribute).GetTypeInfo().Assembly.Location);
+
+            string fileName = "OnlineExam.dll";
+            string resultFilename = "Result.xml";
+            string pathTodll = Path.Combine(Directory.GetCurrentDirectory(), fileName);
+            string pathToxml = Path.Combine(Directory.GetCurrentDirectory(), resultFilename);
+            string NUnit = "NUnit.Console-3.8.0";
+
             var compilation = CSharpCompilation
                 .Create(fileName)
                 .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, checkOverflow: true))
-                .AddReferences(systemReference)
+                .AddReferences(systemReference, nunitReference)
                 .AddSyntaxTrees(tree);
-            string tempPath = Path.Combine(Path.GetTempPath(), Path.GetFileNameWithoutExtension(Path.GetTempFileName()) + ".dll");
-            string path = Path.Combine(Directory.GetCurrentDirectory(), fileName);
-            var timer = new Stopwatch();
-            timer.Start();
-            EmitResult compilationResult = compilation.Emit(path);
-            timer.Stop();
-            File.Copy(path, tempPath);
+
             var result = new ExecutionResult() { Success = false };
+            EmitResult compilationResult = compilation.Emit(pathTodll);
             if (compilationResult.Success)
             {
-                result.CompileTime = timer.Elapsed;
-                // Load the assembly
-                //Assembly asm = AssemblyLoadContext.Default.LoadFromStream(fileStream);
-                //Assembly asm = AssemblyLoadContext.Default.LoadFromAssemblyPath(tempPath);
-                var assembly = Assembly.LoadFile(tempPath);
-                try
-                {
-                    timer.Reset();
-                    timer.Start();
-                    // Invoke the method passing arguments
-                    object tempres = assembly.GetType(targetClass).GetMethod(entryPoint).Invoke(null, parameters);
-                    result.Success = true;
-                    result.Result = tempres.ToString();
-                }
-                catch (Exception ex)
-                {
-                    timer.Stop();
-                    result.RunTimeExceptions.Add($"Error: {ex.InnerException.Message}, Location: {ex.InnerException.StackTrace}");
-                }
-                result.ExecutionTime = timer.Elapsed;
+                string strCmdText = $"NUNIT3-CONSOLE {pathTodll} --result={pathToxml}";
+                var p = new Process();
+                p.StartInfo.FileName = "cmd.exe";
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.RedirectStandardInput = true;
+                p.Start();
+                p.StandardInput.WriteLine($"cd {Path.Combine(Directory.GetCurrentDirectory(), NUnit)}");
+                p.StandardInput.WriteLine(strCmdText);
+
+                var xmlResult = XDocument.Load(pathToxml).Root;
+                var tests = xmlResult.Document.Element("test-run");
+                result.Result += string.Join("Total: ", (string)tests.Attribute("total"));
+                result.Result += string.Join("Passed: ", (string)tests.Attribute("passed"));
+                result.Result += string.Join("Failed: ", (string)tests.Attribute("failed"));
+                result.Result += string.Join("Duration: ", (string)tests.Attribute("duration"));
+                result.Success = true;
             }
             else
             {
