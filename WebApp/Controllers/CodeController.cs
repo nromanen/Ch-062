@@ -43,19 +43,18 @@ namespace WebApp.Controllers
         [HttpPost]
         public string ExecuteCode(UserCodeDTO model)
         {
-       
-            return model.CodeText == null ? "Write some codeeeee" : codeManager.GetCode(model);
+            return model.CodeText == null ? "Write some codeeeee" : GetCode(model);
         }
 
 
-      /*  [HttpPost]
-        public ActionResult SetCodeStatus(UserCodeViewModel model)
-        {
-            var code = codeManager.UserCodeByExId(model.UserId, model.ExerciseId);
-            codeManager.SetCodeStatus(code.Id);
-            return RedirectToAction("TaskView ", "ExerciseManagement", model.ExerciseId);
-        }
-        */
+        /*  [HttpPost]
+          public ActionResult SetCodeStatus(UserCodeViewModel model)
+          {
+              var code = codeManager.UserCodeByExId(model.UserId, model.ExerciseId);
+              codeManager.SetCodeStatus(code.Id);
+              return RedirectToAction("TaskView ", "ExerciseManagement", model.ExerciseId);
+          }
+          */
 
 
         //public ActionResult CodeReview(int )

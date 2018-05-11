@@ -51,24 +51,27 @@ namespace WebApp.Controllers
             
         }
         [HttpPost("UploadFiles")]
-        public async Task<IActionResult> Post(List<IFormFile> files, string Text, string Title, string Course)
+        public async Task<IActionResult> Post(IFormFile files, string Text, string Title, string Course)
         {
-            long size = files.Sum(f => f.Length);
-            var name = files.Select(e => e.FileName);
             // full path to file in temp location
-            var filePath = Path.GetTempFileName();
+            var filePath = "/images/" + files.FileName;
             var course = courseManager.Get().Where(e => e.Name == Course).FirstOrDefault();
-            foreach (var formFile in files)
-            {
-                if (formFile.Length > 0)
-                {
-                    using (var stream = new FileStream(filePath, FileMode.OpenOrCreate))
+           
+                    using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        await formFile.CopyToAsync(stream);
+                        await files.CopyToAsync(stream);
                     }
-                }
-            }
-            NewsDTO newsDTO = new NewsDTO() {Text = Text, Title = Title , ImagePath = filePath + name, Day = DateTime.Today.Day, Month = Enum.GetName(typeof(MonthEnum), DateTime.Today.Month - 1), CourseId = course.Id };
+            NewsDTO newsDTO = new NewsDTO()
+            {
+                Text = Text,
+                Title = Title ,
+                ImagePath = filePath,
+                Day = DateTime.Today.Day,
+                Month = Enum.GetName(typeof(MonthEnum), 
+                DateTime.Today.Month - 1),
+                CourseId = course.Id
+            };
+
             newsManager.Insert(newsDTO);
 
             var news = newsManager.GetAll().ToList();

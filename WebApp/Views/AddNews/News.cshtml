@@ -67,7 +67,7 @@
         }
 
         .modalDialog > div {
-            width: 400px;
+            width: 600px;
             position: relative;
             margin: 10% auto;
             padding: 5px 20px 13px 20px;
@@ -108,6 +108,17 @@
         cursor: pointer;
         color: slategrey;
     }
+    #preview {
+        max-height: 150px;
+        min-height: 150px;
+        max-width: 220px;
+        min-width: 220px;
+    }
+
+    img {
+        background-size: contain;
+        background-size: cover;
+    }
 </style>
 
 
@@ -131,7 +142,6 @@
                     </div>
                     <br />
                     <hr />
-
                 }
             </div>
             <div class="col-lg-4">
@@ -151,8 +161,9 @@
                     <a href="#close" title="Закрыть" class="close">X</a>
                     <form name="uploadFiles" method="post" enctype="multipart/form-data" asp-controller="AddNews" asp-action="Post">
                         <div class="form-group">
+                            <br />
                             <input type='file' name="files" multiple onchange="readURL(this);" />
-                            <img id="preview" src="#" alt="your image" />
+                            <img id="preview" src="http://www.adbazar.pk/frontend/images/default-image.jpg" alt="your image" />
                             <div></div>
                             <hr>
                         </div>
