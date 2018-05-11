@@ -237,9 +237,6 @@
   <data name="HomePageContent" xml:space="preserve">
     <value>Here will be a home page content</value>
   </data>
-  <data name="AddChange" xml:space="preserve">
-    <value>Add/Change</value>
-  </data>
   <data name="AddNewRole" xml:space="preserve">
     <value>Add new role in List</value>
   </data>
@@ -341,5 +338,11 @@
   </data>
   <data name="Run" xml:space="preserve">
     <value>Run</value>
+  </data>
+  <data name="UsersList" xml:space="preserve">
+    <value>List of Users</value>
+  </data>
+  <data name="EditRoles" xml:space="preserve">
+    <value>Edit list of roles</value>
   </data>
 </root>

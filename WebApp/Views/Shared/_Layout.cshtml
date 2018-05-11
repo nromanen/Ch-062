@@ -18,6 +18,11 @@
         a:hover {
             text-decoration: none;
         }
+
+        .gn-menu-main {
+            border-bottom: 1px solid #b6b6cf;
+        }
+        
     </style>
 </head>
 
@@ -30,51 +35,50 @@
                     <div class="gn-scroller">
                         <ul class="gn-menu">
                             @if (User.IsInRole("Administrator"))
-                            {
-                                <li>
-                                    <a class="gn-icon gn-icon-cog" asp-controller="AdminPanel" asp-action="Users">
-                                        @SharedLocalizer["AdminPanel"]
-                                    </a>
-                                </li>
-                            }
+                        {
+                            <li>
+                                <a class="gn-icon gn-icon-cog" asp-controller="AdminPanel" asp-action="Users">
+                                    @SharedLocalizer["AdminPanel"]
+                                </a>
+                            </li>
+                    }
                             @if (User.Identity.IsAuthenticated)
-                            {
-                                <li>
-                                    <a class="gn-icon gn-icon-cog" asp-controller="AddNews" asp-action="News">
-                                        @SharedLocalizer["News"]
-                                    </a>
-                                </li>
-                            }
+                        {
+                            <li>
+                                <a class="gn-icon gn-icon-cog" asp-controller="AddNews" asp-action="News">
+                                    @SharedLocalizer["News"]
+                                </a>
+                            </li>
+                    }
                             @if (User.IsInRole("Teacher"))
-                            {
-                                <li>
-                                    <a class="gn-icon gn-icon-cog" asp-controller="ExerciseManagement" asp-action="Index">
-                                        @SharedLocalizer["Tasks"]
-                                    </a>
-                                </li>
-                            }
+                        {
+                            <li>
+                                <a class="gn-icon gn-icon-cog" asp-controller="ExerciseManagement" asp-action="Index">
+                                    @SharedLocalizer["Tasks"]
+                                </a>
+                            </li>
+                    }
                             <li><a class="gn-icon gn-icon-cog" asp-controller="CourseManagement" asp-action="Index">@SharedLocalizer["Courses"]</a></li>
                             @if (User.Identity.IsAuthenticated)
-                            {
+                        {
 
-                                <li><a class="gn-icon gn-icon-cog" asp-controller="CodeHistory" asp-action="History">@SharedLocalizer["CodeHistory"]</a></li>
+                            <li><a class="gn-icon gn-icon-cog" asp-controller="CodeHistory" asp-action="History">@SharedLocalizer["CodeHistory"]</a></li>
 
-                            }
+                    }
                         </ul>
                     </div>
                 </nav>
             </li>
             <li>
                 <a asp-area="" asp-controller="Home" asp-action="Index" style="font-size: 20px">@SharedLocalizer["SoftServe"]</a>
-
             </li>
             @await Html.PartialAsync("_LoginPartial")
         </ul>
         <header></header>
-
+        <br />
+        <br />
         <div class="container body-content" style="margin-top: 30px">
             @RenderBody()
-
         </div>
     </div>
 

@@ -20,6 +20,7 @@ a:hover {
 }
 .navbar{
     background-color:#004577;
+    border-bottom:1px solid grey;
 }
 li{
     color:white;
