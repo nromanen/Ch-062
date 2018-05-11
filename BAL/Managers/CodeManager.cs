@@ -141,17 +141,13 @@ namespace BAL.Managers
    
                 UserCode code = new UserCode
                 {
-                    CodeText = model.CodeText,
-                    UserId = model.UserId,
-                    ExerciseId = model.ExerciseId
+                    CodeText = model.CodeText             
                 };
                   return ExecuteOnFlyCode(model.CodeText);
         }
 
        public string ExecuteOnFlyCode(string code)
         {
-            var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
-
             var res = sandboxManager.Execute(code);
             if (res.Success)
             {
