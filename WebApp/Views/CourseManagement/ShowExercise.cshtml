@@ -21,7 +21,7 @@
                         if (User.Identity.IsAuthenticated)
                         {
                            
-                            <a class="btn btn-sm btn-primary" asp-controller="ExerciseManagement" asp-action="TaskView" asp-route-id="@p.Id">@SharedLocalizer["Tasks"]</a>                               
+                            <a class="btn btn-sm btn-default" asp-controller="ExerciseManagement" asp-action="TaskView" asp-route-id="@p.Id">@SharedLocalizer["Tasks"]</a>                               
                         }
                     }
 

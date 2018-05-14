@@ -148,7 +148,7 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "ExerciseManagement");
         }
 
-       [HttpPost]
+        [HttpGet]
         [Authorize(Roles = "Teacher")]
         public IActionResult ExerciseSolutionsIndex(int id)
         {
@@ -156,7 +156,7 @@ namespace WebApp.Controllers
             var solutionsList = codeManager.Get(c => c.ExerciseId == id && c.CodeStatus == Model.Entity.CodeStatus.Done);
             if (solutionsList != null)
             {
-                
+
                 foreach (var elem in solutionsList)
                 {
                     codesList.Add(new UserCodeListUnitViewModel
@@ -167,7 +167,23 @@ namespace WebApp.Controllers
                 }
 
             }
-            return View(new UserCodeListViewModel() { userCodeList = codesList});
+            UserCodeListViewModel model = new UserCodeListViewModel { userCodeList = codesList };
+            return View(model);
         }
+
+
+        [HttpPost]
+         [Authorize(Roles = "Teacher")]
+        public IActionResult ExerciseSolutionsIndex(UserCodeListViewModel model)
+        {
+            var b = model.userCodeList;
+
+            return RedirectToAction("ExerExerciseSolutionsIndex", "ExerciseManagement");
+
+        }
+
+
+
     }
-}
+    }
+

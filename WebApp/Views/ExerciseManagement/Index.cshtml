@@ -9,7 +9,7 @@
 
 @if (User.IsInRole("Teacher"))
 {
-    <h4 style="margin-top: 15px"><a asp-action="Create" class="btn btn-sm btn-primary">@SharedLocalizer["AddTask"]</a></h4>
+    <h4 style="margin-top: 15px"><a asp-action="Create" class="btn btn-sm btn-default">@SharedLocalizer["AddTask"]</a></h4>
 }
 <table class="table">
     <tr>
@@ -35,17 +35,14 @@
                 <td>
                     @if (User.IsInRole("Teacher"))
                     {
-                        <form asp-route-id="@task.Id" asp-action="DeleteOrRecover" method="post">
-                            <a asp-route-id="@task.Id" asp-action="Update" class="btn btn-sm btn-primary">@SharedLocalizer["Change"]</a>
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                @SharedLocalizer["Delete"]
-                            </button> 
-                        </form>
-                        <form asp-route-id="@task.Id" asp-action="ExerciseSolutionsIndex" method="post">
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                Solutions
-                            </button> 
-                        </form>
+                    <form asp-route-id="@task.Id" asp-action="DeleteOrRecover" method="post">
+                        <a asp-route-id="@task.Id" asp-action="Update" class="btn btn-sm btn-default">@SharedLocalizer["Change"]</a>
+                        <button type="submit" class="btn btn-sm btn-danger">
+                            @SharedLocalizer["Delete"]
+                        </button>
+                       <button style="margin-left:25px;" asp-route-id="@task.Id" asp-action="ExerciseSolutionsIndex" class="btn btn-sm btn-default">   @SharedLocalizer["Solutions"]</button>
+                    </form>
+                    
                     }
                 </td>
             </tr>
