@@ -345,4 +345,7 @@
   <data name="EditRoles" xml:space="preserve">
     <value>Edit list of roles</value>
   </data>
+  <data name="Solutions" xml:space="preserve">
+    <value>Solutions</value>
+  </data>
 </root>

@@ -348,4 +348,7 @@
   <data name="EditRoles" xml:space="preserve">
     <value>Редагувати ролі</value>
   </data>
+  <data name="Solutions" xml:space="preserve">
+    <value>Рішення</value>
+  </data>
 </root>

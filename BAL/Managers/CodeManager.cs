@@ -136,42 +136,23 @@ namespace BAL.Managers
 
 
 
-        public string GetCode(UserCodeDTO model)
-        {
-            if (FindUserCode(model.UserId, model.ExerciseId))
-            {
-                var code = unitOfWork.CodeRepo.Get(c => c.ExerciseId == model.ExerciseId && c.UserId == model.UserId).FirstOrDefault();
-                if (code != null)
-                {
-                    code.CodeText = model.CodeText;
-                    unitOfWork.CodeRepo.Update(code);
-                }
-            }
-            else
-            {
+        public string GetOnFlyCode(UserCodeDTO model)
+       {
+   
                 UserCode code = new UserCode
                 {
-                    CodeText = model.CodeText,
-                    UserId = model.UserId,
-                    ExerciseId = model.ExerciseId
+                    CodeText = model.CodeText             
                 };
-
-                unitOfWork.CodeRepo.Insert(code);
-            }
-            unitOfWork.Save();
-            return GetResult(model.CodeText, model.ExerciseId, model.UserId);
+                  return ExecuteOnFlyCode(model.CodeText);
         }
 
-
-        public string GetResult(string code, int exId, string userId)
+       public string ExecuteOnFlyCode(string code)
         {
-            var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
-
             var res = sandboxManager.Execute(code);
             if (res.Success)
             {
                 string result =
-                    $"Result: {res.Result};\r\nCompile time: {res.CompileTime.TotalMilliseconds};\r\nExecution Time: {res.ExecutionTime.TotalMilliseconds};";
+                       $"Result: {res.Result};\r\nCompile time: {res.CompileTime.TotalMilliseconds};\r\nExecution Time: {res.ExecutionTime.TotalMilliseconds};";
                 return result;
             }
 

@@ -59,7 +59,7 @@
                             @if (User.Identity.IsAuthenticated)
                         {
                             <li>
-                                <a class="gn-icon gn-icon-cog" asp-controller="AddNews" asp-action="News">
+                                <a class="gn-icon gn-icon-article" asp-controller="AddNews" asp-action="News">
                                     @SharedLocalizer["News"]
                                 </a>
                             </li>
@@ -67,16 +67,16 @@
                             @if (User.IsInRole("Teacher"))
                         {
                             <li>
-                                <a class="gn-icon gn-icon-cog" asp-controller="ExerciseManagement" asp-action="Index">
+                                <a class="gn-icon gn-icon-earth" asp-controller="ExerciseManagement" asp-action="Index">
                                     @SharedLocalizer["Tasks"]
                                 </a>
                             </li>
                     }
-                            <li><a class="gn-icon gn-icon-cog" asp-controller="CourseManagement" asp-action="Index">@SharedLocalizer["Courses"]</a></li>
+                            <li><a class="gn-icon gn-icon-earth" asp-controller="CourseManagement" asp-action="Index">@SharedLocalizer["Courses"]</a></li>
                             @if (User.Identity.IsAuthenticated)
                         {
 
-                            <li><a class="gn-icon gn-icon-cog" asp-controller="CodeHistory" asp-action="History">@SharedLocalizer["CodeHistory"]</a></li>
+                            <li><a class="gn-icon gn-icon-archive" asp-controller="CodeHistory" asp-action="History">@SharedLocalizer["CodeHistory"]</a></li>
 
                     }
                         </ul>

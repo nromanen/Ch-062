@@ -7,7 +7,7 @@
 }
 <style>
     .btn-default{
-        width:65px;
+        width:105px;
     }
 </style>
 <h2>@SharedLocalizer["UsersList"]</h2>
@@ -20,7 +20,7 @@
             <div class="col-lg-3">
                 <p>@user.Email</p>
             </div>
-            <div class="col-lg-5">
+            <div class="col-lg-8">
                 <form asp-action="Delete" asp-route-id="@user.Id" method="post">
                     <a class="btn btn-sm btn-default btn-lg" asp-action="EditRole" asp-route-userid="@user.Id">@SharedLocalizer["Rights"]</a>
                     <button type="submit" class="btn btn-sm btn-default btn-lg">

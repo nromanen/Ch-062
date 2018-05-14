@@ -7,7 +7,7 @@ using Model.DTO.CodeDTO;
 
 namespace BAL.IoC
 {
-    public class AutoMapperProfileConfiguration : Profile
+   public class AutoMapperProfileConfiguration : Profile
     {
         public AutoMapperProfileConfiguration()
               : this("MyProfile")

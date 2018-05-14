@@ -12,10 +12,22 @@
         <td>@Model.Email </td>
         <td>
             <form method="post">
-                <a class="btn btn-sm btn-primary" asp-action="ChangePassword" asp-route-id="@Model.Id">@SharedLocalizer["ChangePassword"]</a>
-                <a class="btn btn-sm btn-primary" asp-action="ChangeUserName" asp-route-id="@Model.Id">@SharedLocalizer["ChangeUsername"]</a>
-                <a class="btn btn-sm btn-primary" asp-action="ChangeEmail" asp-route-id="@Model.Id">@SharedLocalizer["ChangeEmail"]</a>
+                <a class="btn btn-sm btn-default" asp-action="ChangePassword" asp-route-id="@Model.Id">@SharedLocalizer["ChangePassword"]</a>
             </form>
+    <tr>
+        <td></td>
+        <td>
+            <form method="post">
+                <a class="btn btn-sm btn-default" asp-action="ChangeUserName" asp-route-id="@Model.Id">@SharedLocalizer["ChangeUsername"]</a></form>
         </td>
     </tr>
+    <tr>
+        <td></td>
+         <td>
+             <form method="post">
+                 <a class="btn btn-sm btn-default" asp-action="ChangeEmail" asp-route-id="@Model.Id">@SharedLocalizer["ChangeEmail"]</a></form>
+         </td>
+    </tr>
+          
+  
 </table>

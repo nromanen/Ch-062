@@ -5,7 +5,7 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IViewLocalizer Localizer
 @inject IHtmlLocalizer<SharedRes> SharedLocalizer
-<a asp-action="Create" class="btn btn-sm btn-primary">@SharedLocalizer["Addcourse"]</a>
+<a asp-action="Create" class="btn btn-sm btn-default">@SharedLocalizer["Addcourse"]</a>
 
 <table class="table">
     <tr>
@@ -19,7 +19,7 @@
             <td>@course.CreationDate.ToString("dd/MM/yyyy")</td>
             <td>
                 <form asp-action="Delete" asp-route-id="@course.Id" method="post">
-                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@course.Id">@SharedLocalizer["Change"]</a>
+                    <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@course.Id">@SharedLocalizer["Change"]</a>
                     @if (course.IsActive)
                     {
                     <a class="btn btn-sm btn-danger" asp-action="Toggle" asp-route-id="@course.Id">@SharedLocalizer["Delete"]</a>

@@ -8,9 +8,8 @@
 
 @if (User.IsInRole("Teacher"))
 {
-    <a asp-action="Create" class="btn btn-sm btn-primary">@SharedLocalizer["Addcourse"]</a>
-    <a asp-action="ViewCourses" class="btn btn-sm btn-primary">@SharedLocalizer["Mycourses"]</a>
-
+    <a asp-action="Create" class="btn btn-sm btn-default">@SharedLocalizer["Addcourse"]</a>
+    <a asp-action="ViewCourses" class="btn btn-sm btn-default">@SharedLocalizer["Mycourses"]</a>
 }
 
 
@@ -31,8 +30,8 @@
                     <form asp-action="Delete" asp-route-id="@course.Id" method="post">
                         @if (User.IsInRole("Administrator"))
                         {
-                            <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@course.Id">@SharedLocalizer["Change"]</a>
-                            <a class="btn btn-sm btn-primary" asp-action="ChangeOwner" asp-route-id="@course.Id">@SharedLocalizer["Changecourseowner"]</a>
+                            <a class="btn btn-sm btn-default" asp-action="Edit" asp-route-id="@course.Id">@SharedLocalizer["Change"]</a>
+                            <a class="btn btn-sm btn-default" asp-action="ChangeOwner" asp-route-id="@course.Id">@SharedLocalizer["Changecourseowner"]</a>
                             if (course.IsActive)
                             {
                                 <a class="btn btn-sm btn-danger" asp-action="Toggle" asp-route-id="@course.Id">@SharedLocalizer["Delete"]</a>
@@ -46,5 +45,4 @@
                 </td>
             </tr>
         }
-
 </table>

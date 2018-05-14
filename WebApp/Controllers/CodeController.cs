@@ -44,9 +44,10 @@ namespace WebApp.Controllers
 
 
         [HttpPost]
-        public string ExecuteCode(UserCodeDTO model)
+        public string ExecuteOnFlyCode(UserCodeDTO model)
         {
-            return model.CodeText == null ? "Write some codeeeee" : codeManager.GetCode(model);
+       
+            return model.CodeText == null ? "Write some codeeeee" : codeManager.GetOnFlyCode(model);
         }
 
 
