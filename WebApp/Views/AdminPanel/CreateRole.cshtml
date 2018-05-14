@@ -4,10 +4,3 @@
 @inject IHtmlLocalizer<SharedRes> SharedLocalizer
 <div asp-validation-summary="All" class="text-danger"></div>
 
-<form asp-action="CreateRole">
-    <div class="form-group">
-        <label for="name">@SharedLocalizer["NewRole"]</label>
-        <input name="name" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-primary">@SharedLocalizer["Add"]</button>
-</form>

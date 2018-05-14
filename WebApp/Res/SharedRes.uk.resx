@@ -342,4 +342,10 @@
   <data name="Run" xml:space="preserve">
     <value>Виконати</value>
   </data>
+  <data name="UsersList" xml:space="preserve">
+    <value>Список користувачів</value>
+  </data>
+  <data name="EditRoles" xml:space="preserve">
+    <value>Редагувати ролі</value>
+  </data>
 </root>
