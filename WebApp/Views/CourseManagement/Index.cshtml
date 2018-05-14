@@ -14,13 +14,13 @@
 
 
 <table class="table">
+
     <tr>
         <th>@SharedLocalizer["CourseName"]</th>
         <th>@SharedLocalizer["CreateDate"]</th>
     </tr>
     
-    @*@if (User.IsInRole("Teacher") || User.IsInRole("Administrator"))*@
-    @* { *@
+
         @foreach (var course in Model)
         {
             <tr>
