@@ -10,17 +10,18 @@
 {
     <a asp-action="Create" class="btn btn-sm btn-primary">@SharedLocalizer["Addcourse"]</a>
     <a asp-action="ViewCourses" class="btn btn-sm btn-primary">@SharedLocalizer["Mycourses"]</a>
+
 }
 
 
 <table class="table">
+
     <tr>
         <th>@SharedLocalizer["CourseName"]</th>
         <th>@SharedLocalizer["CreateDate"]</th>
     </tr>
     
-    @*@if (User.IsInRole("Teacher") || User.IsInRole("Administrator"))*@
-    @* { *@
+
         @foreach (var course in Model)
         {
             <tr>
@@ -45,18 +46,5 @@
                 </td>
             </tr>
         }
-    @* } *@
-    @*else
-    {
-        @foreach (var course in Model)
-        {
-            if (course.IsActive)
-            {
-                <tr>
-                    <td>@course.Name</td>
-                    <td>@course.CreationDate.ToString("dd/MM/yyyy")</td>
-                </tr>
-            }
-        }
-    }*@
+
 </table>

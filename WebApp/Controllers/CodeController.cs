@@ -58,7 +58,7 @@ namespace WebApp.Controllers
             var IdForRedirect = new RedirectTempData();
             IdForRedirect.IdForRedirection = model.ExerciseId;
             //return RedirectToAction("TaskView", "ExerciseManagement", IdForRedirect.IdForRedirection);
-            return RedirectToAction("Index", "Home");
+            return View("../Home/Index");
         }
 
         [HttpPost]
