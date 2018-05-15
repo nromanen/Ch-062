@@ -348,4 +348,22 @@
   <data name="Solutions" xml:space="preserve">
     <value>Solutions</value>
   </data>
+  <data name="Congrats" xml:space="preserve">
+    <value>Congrats! Your result is pretty good! Your mark:</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="NotEnough" xml:space="preserve">
+    <value>Sorry, you tied but not good enough. Your mark:</value>
+  </data>
+  <data name="OnReview" xml:space="preserve">
+    <value>Your Solution in on review now. Please, wait for result.</value>
+  </data>
+  <data name="TeachersComment" xml:space="preserve">
+    <value>Teachers Comment</value>
+  </data>
 </root>
