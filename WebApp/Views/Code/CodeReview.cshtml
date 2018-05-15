@@ -51,6 +51,7 @@
                     <label class="control-label">Solution Review</label>
                     <span class="rating" id="rateField" data-default-rating="-1"></span>
                 </div>
+                <input asp-for="UserCodeDTO.UserId" type="hidden">
                 <div class="panel-body">
                     <label class="control-label">@SharedLocalizer["ComText"]</label>
                     <textarea asp-for="@Model.UserCodeDTO.TeachersComment" style="width: 100%; margin-left: 20px;" id="MCE" class="form-control"></textarea>

@@ -161,25 +161,20 @@ namespace BAL.Managers
             return errors;
         }
 
-        public void NewSolution(string userId)
-        {
-            var user = userManager.FindByIdAsync(userId).Result;
-            user.DoneTaskNumber +=1;
-            unitOfWork.UserRepo.Update(user);
-            unitOfWork.Save();
-        }
-
         public void SetCodeStatus(int id , string userId)
         {
             var code = unitOfWork.CodeRepo.GetById(id);
-            code.CodeStatus = CodeStatus.Done;
-            code.EndTime = DateTime.Now;
-            unitOfWork.CodeRepo.Update(code);
-            unitOfWork.Save();
-            var user = userManager.FindByIdAsync(userId).Result;
-            user.DoneTaskNumber +=1;
-            unitOfWork.UserRepo.Update(user);
-            unitOfWork.Save();
+            if (code.CodeStatus != CodeStatus.Done)
+            {
+                code.CodeStatus = CodeStatus.Done;
+                code.EndTime = DateTime.Now;
+                unitOfWork.CodeRepo.Update(code);
+                unitOfWork.Save();
+                var user = userManager.FindByIdAsync(userId).Result;
+                user.DoneTaskNumber += 1;
+                unitOfWork.UserRepo.Update(user);
+                unitOfWork.Save();
+            }
         }
 
         public void SetMark(int id, int mark, string comment, string userId)
@@ -247,7 +242,5 @@ namespace BAL.Managers
             unitOfWork.Save();
             return codeModel;
         }
-
-
     }
 }

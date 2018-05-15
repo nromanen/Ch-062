@@ -15,8 +15,6 @@ namespace Model.DTO
 
         public double UserRating { get; set; }
 
-        public int AllTasksNumber { get; set; }
-
         public int DoneTaskNumber { get; set; }
     }
 }

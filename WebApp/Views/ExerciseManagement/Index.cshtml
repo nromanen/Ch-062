@@ -32,18 +32,18 @@
                     <td>@task.UpdateDateTime</td>
                 }
                 <td style="color: #0800ff;"><a asp-action="TaskView" asp-route-id="@task.Id">@task.TaskName</a></td>
-                <td>
+                <td class="row">
                     @if (User.IsInRole("Teacher"))
-                    {
-                    <form asp-route-id="@task.Id" asp-action="DeleteOrRecover" method="post">
-                        <a asp-route-id="@task.Id" asp-action="Update" class="btn btn-sm btn-default">@SharedLocalizer["Change"]</a>
-                        <button type="submit" class="btn btn-sm btn-danger">
-                            @SharedLocalizer["Delete"]
-                        </button>
-                       <button style="margin-left:25px;" asp-route-id="@task.Id" asp-action="ExerciseSolutionsIndex" class="btn btn-sm btn-default">   @SharedLocalizer["Solutions"]</button>
-                    </form>
-                    
-                    }
+    {    
+                        
+                <form asp-route-id="@task.Id" asp-action="DeleteOrRecover" method="post" class=" col-md-7">
+                    <a asp-route-id="@task.Id" asp-action="Update" class="btn btn-sm btn-default" >@SharedLocalizer["Change"]</a>
+                    <button type="submit" class="btn btn-sm btn-danger">
+                        @SharedLocalizer["Delete"]
+                    </button>
+                </form>
+                <button  onclick='location.href = "@Url.Action("ExerciseSolutionsIndex", "ExerciseManagement", new { id = @task.Id})"' class="btn btn-sm btn-default col-md-3" >   @SharedLocalizer["Solutions"]</button>
+}
                 </td>
             </tr>
         }

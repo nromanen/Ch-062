@@ -21,11 +21,13 @@ namespace WebApp.Controllers
     {
         private CodeManager codeManager;
         private IExerciseManager exerciseManager;
+        private UserManager<User> userManager;
 
-        public CodeController(CodeManager codeManager, IExerciseManager exerciseManager)
+        public CodeController(CodeManager codeManager, IExerciseManager exerciseManager, UserManager<User> userManager)
         {
             this.codeManager = codeManager;
             this.exerciseManager = exerciseManager;
+            this.userManager = userManager; 
         }
         public IActionResult Index(UserCodeDTO model)
         {
@@ -33,8 +35,11 @@ namespace WebApp.Controllers
             {
                 return View("../Home/Index");
             }
-
-            return View(codeManager.BuildCodeModel(model));
+            var exercise = exerciseManager.GetById(model.ExerciseId);
+            return View(new CodeStartViewModel() {
+                UserCodeDTO = codeManager.BuildCodeModel(model),
+                ExerciseTaskText = exercise.TaskTextField
+        });
         }
 
         [HttpPost]
@@ -56,9 +61,12 @@ namespace WebApp.Controllers
         public IActionResult SetCodeStatus(UserCodeViewModel model)
         {
             var code = codeManager.UserCodeByExId(model.UserId, model.ExerciseId);
-            codeManager.SetCodeStatus(code.Id);
-            var IdForRedirect = new RedirectTempData();
-            IdForRedirect.IdForRedirection = model.ExerciseId;
+            if (code != null)
+            {
+                codeManager.SetCodeStatus(code.Id, code.UserId);
+                var IdForRedirect = new RedirectTempData();
+                IdForRedirect.IdForRedirection = model.ExerciseId;
+            }
             //return RedirectToAction("TaskView", "ExerciseManagement", IdForRedirect.IdForRedirection);
             return View("../Home/Index");
         }
@@ -80,7 +88,7 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Teacher")]
         public IActionResult CodeMarking(UserCodeReviewViewModel model)
         {
-            codeManager.SetMark(model.UserCodeDTO.Id, model.UserCodeDTO.Mark, model.UserCodeDTO.TeachersComment);
+            codeManager.SetMark(model.UserCodeDTO.Id, model.UserCodeDTO.Mark, model.UserCodeDTO.TeachersComment,model.UserCodeDTO.UserId);
             //  return RedirectToAction("ExerciseSolutionsIndex","ExerciseManagement",model.UserCodeDTO.ExerciseId);
             return RedirectToAction("Index", "ExerciseManagement");
         }

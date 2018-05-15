@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@model Model.DTO.CodeDTO.UserCodeDTO
+@model WebApp.ViewModels.CodeStartViewModel;
 @using Model.Entity;
 @inject IViewLocalizer Localizer
 @inject IHtmlLocalizer<SharedRes> SharedLocalizer
@@ -8,11 +8,11 @@
 </style>
 
 
-@if (Model.CodeStatus == CodeStatus.Done)
+@if (Model.UserCodeDTO.CodeStatus == CodeStatus.Done)
 {
     <div class="row">
-        <div class="col-md-12"></div>
-        @if (Model.Mark == 0)
+        <div class="col-md-12 col-lg-1"></div>
+        @if (Model.UserCodeDTO.Mark == 0)
         {
             <div class="col-md-12" style="background-color: #fff8c4; height: 70px;">
                 <h5>Your Solution in on review now. Please, wait for result...</h5>
@@ -20,25 +20,25 @@
         }
         else
         {
-            if (Model.Mark > 50)
+            if (Model.UserCodeDTO.Mark > 50)
             {
                 <div class="col-md-12" style="background-color: white; height: 205px;">
-                    <h5>Congrats! Your result is pretty good! Your mark: @Model.Mark</h5>
-                    @if (Model.TeachersComment != null)
+                    <h5>Congrats! Your result is pretty good! Your mark: @Model.UserCodeDTO.Mark</h5>
+                    @if (Model.UserCodeDTO.TeachersComment != null)
                     {
                         <label class="control-label">Teachers Comment</label>
-                        <textarea asp-for="@Model.TeachersComment" style="width: 100%;" id="MCE" class="form-control"></textarea>
+                        <textarea asp-for="@Model.UserCodeDTO.TeachersComment" style="width: 100%;" id="MCE" class="form-control"></textarea>
                     }
                 </div>
             }
             else
             {
                 <div class="col-md-12" style=" padding: 10px; box-shadow: 10px rgba(,0,0,0.5); background-color: #ffffff; height: 205px; ">
-                    <h5>Sorry, you tied but not good enough... Your mark: @Model.Mark</h5>
-                    @if (Model.TeachersComment != null)
+                    <h5>Sorry, you tied but not good enough... Your mark: @Model.UserCodeDTO.Mark</h5>
+                    @if (Model.UserCodeDTO.TeachersComment != null)
                     {
                         <label class="control-label">Teachers Comment</label>
-                        <textarea asp-for="@Model.TeachersComment" style="width: 100%; " id="MCE" class="form-control"></textarea>
+                        <textarea asp-for="@Model.UserCodeDTO.TeachersComment" style="width: 100%; " id="MCE" class="form-control"></textarea>
                     }
                 </div>
             }
@@ -46,6 +46,13 @@
         }
     </div>
 }
+<div style="clear: both;">
+    <br />
+</div>
+<div class="col-md-12">
+    <label class="control-label">Task:</label>
+    <textarea asp-for="@Model.ExerciseTaskText" id="ECM"></textarea>
+</div>
 <div style="clear: both;">
     <br />
 </div>
@@ -83,8 +90,9 @@
 
     <script>
         $(document).ready(function() {
-            $('#codeText').html('@Model.CodeText');
-            tinymce.init({ selector: '#MCE', menubar: false, toolbar: false });
+            $('#codeText').html('@Model.UserCodeDTO.CodeText');
+            tinymce.init({ selector: '#MCE', readonly: 1, menubar: false, toolbar: false }); 
+            tinymce.init({ selector: '#ECM', readonly: 1, menubar: false, toolbar: false }); 
         });
 
         var editableCodeMirror = null;
@@ -131,8 +139,8 @@
 
                 var model = new Object();
                 model.CodeText = editableCodeMirror.getValue();
-                model.UserId = ('@Model.UserId');
-                model.ExerciseId = ('@Model.ExerciseId');
+                model.UserId = ('@Model.UserCodeDTO.UserId');
+                model.ExerciseId = ('@Model.UserCodeDTO.ExerciseId');
 
                 $.ajax({
                     type: "POST",
@@ -144,7 +152,7 @@
 
         $('#reloadButton').click(function() {
 
-            editableCodeMirror.setValue('@Model.CodeText');
+            editableCodeMirror.setValue('@Model.UserCodeDTO.CodeText');
         });
 
         $('#executeButton').click(
@@ -154,8 +162,8 @@
 
                 var userCode = new Object();
                 userCode.CodeText = editableCodeMirror.getValue();
-                userCode.ExerciseId = ('@Model.ExerciseId');
-                userCode.UserId = ('@Model.UserId');
+                userCode.ExerciseId = ('@Model.UserCodeDTO.ExerciseId');
+                userCode.UserId = ('@Model.UserCodeDTO.UserId');
 
                 $.ajax({
                     type: "POST",

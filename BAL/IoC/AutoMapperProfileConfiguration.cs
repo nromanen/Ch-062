@@ -8,7 +8,7 @@ using Model.DTO.CodeDTO;
 namespace BAL.IoC
 {
    public class AutoMapperProfileConfiguration : Profile
-    {/*
+    {
         public AutoMapperProfileConfiguration()
               : this("MyProfile")
         {
@@ -16,7 +16,9 @@ namespace BAL.IoC
             {
                 cfg.CreateMap<User, UserDTO>().ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))
                 .ForMember(dest => dest.UserName, options => options.MapFrom(src => src.UserName))
-                .ForMember(dest => dest.Email, options => options.MapFrom(src => src.Email));
+                .ForMember(dest => dest.Email, options => options.MapFrom(src => src.Email))
+                .ForMember(dest => dest.UserRating, options => options.MapFrom(src => src.UserRating))
+                .ForMember(dest => dest.DoneTaskNumber, options => options.MapFrom(src => src.DoneTaskNumber));
                 cfg.CreateMap<List<User>, List<UserDTO>>();
 
                 cfg.CreateMap<Exercise, ExerciseDTO>().ForMember(dest => dest.Id, options => options.MapFrom(src => src.Id))
@@ -81,6 +83,6 @@ namespace BAL.IoC
             : base(profileName)
         {
 
-        }*/
+        }
     }
 }
