@@ -21,22 +21,22 @@
             if (Model.UserCodeDTO.Mark > 50)
             {
                 <div class="col-md-12" style="background-color: white; height: 205px;">
-                    <h5>@SharedLocalizer["Congrats"] @Model.Mark</h5>
-                    @if (Model.TeachersComment != null)
+                    <h5>@SharedLocalizer["Congrats"] @Model.UserCodeDTO.Mark</h5>
+                    @if (Model.UserCodeDTO.TeachersComment != null)
                     {
                         <label class="control-label">@SharedLocalizer["TeachersComment"]</label>
-                        <textarea asp-for="@Model.TeachersComment" style="width: 100%;" id="MCE" class="form-control"></textarea>
+                        <textarea asp-for="@Model.UserCodeDTO.TeachersComment" style="width: 100%;" id="MCE" class="form-control"></textarea>
                     }
                 </div>
             }
             else
             {
                 <div class="col-md-12" style=" padding: 10px; box-shadow: 10px rgba(,0,0,0.5); background-color: #ffffff; height: 205px; ">
-                    <h5>@SharedLocalizer["NotEnough"] @Model.Mark</h5>
-                    @if (Model.TeachersComment != null)
+                    <h5>@SharedLocalizer["NotEnough"] @Model.UserCodeDTO.Mark</h5>
+                    @if (Model.UserCodeDTO.TeachersComment != null)
                     {
                     <label class="control-label">@SharedLocalizer["TeachersComment"]</label>
-                        <textarea asp-for="@Model.TeachersComment" style="width: 100%; " id="MCE" class="form-control"></textarea>
+                        <textarea asp-for="@Model.UserCodeDTO.TeachersComment" style="width: 100%; " id="MCE" class="form-control"></textarea>
                     }
                 </div>
             }
