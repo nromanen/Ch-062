@@ -25,8 +25,8 @@ namespace BAL.Interfaces
         UserCodeDTO BuildCodeModel(UserCodeDTO model);
         List<CodeHistory> GetHistoryLst(int codeId);
         List<UserCodeDTO> UserCodeListByExId(int exerciseId);
-        void SetCodeStatus(int id);
-        void SetMark(int id, int mark, string comment);
+        void SetCodeStatus(int id, string userId);
+        void SetMark(int id, int mark, string comment, string userId);
         SetFav SetFavouriteCode(SetFav model);
         //string ExecutionResult(string code, int exId, string userId);
         CodeModel EditCode(CodeModel codeModel);

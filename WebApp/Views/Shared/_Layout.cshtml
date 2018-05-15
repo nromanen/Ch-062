@@ -14,13 +14,16 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/codemirror.css" />
     <link rel="stylesheet" href="~/css/StarRating.css" />
+    <!-- <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>-->
+    <script src="~/js/jquery.tinymce.min.js"></script>
+    <script src="~/js/tinymce.min.js"></script>
     <script src="~/js/codemirror.js"></script>
     <script src="~/js/matchbrackets.js"></script>
     <script src="~/js/continuecomment.js"></script>
     <script src="~/js/clike.js"></script>
     <script src="~/js/jquery.tinymce.min.js"></script>
     <script src="~/js/StarRating.js"></script>
-    <script src="~/js/tinymce.min.js"></script>
+
 
     <title>@ViewData["Title"] - WebApp</title>
 
@@ -30,7 +33,29 @@
         }
 
         .gn-menu-main {
-            border-bottom: 1px solid #b6b6cf;
+            
+            background-color: #0d0804;
+            scrollbar-face-color: #ffffff;
+        }
+        .gn-menu-main li {
+            border: #0d0804;
+        }
+            .gn-menu-main li:focus {
+                background-color: #ffffff;
+            }
+        .gn-menu-wrapper {
+            background-color: #0d0804;
+            color: #0d0804;
+        }
+        .gn-icon {
+            background-color: #0d0804;
+            color: #ffffff;
+        }
+        .gn-menu-main a {
+        color: #ffffff;
+        }
+        .gn-trigger a:after{
+        color: #ffffff;
         }
     </style>
 </head>

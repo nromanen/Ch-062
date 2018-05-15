@@ -12,11 +12,11 @@
 
 <form asp-action="TaskView" asp-controller="ExerciseManagement">
     <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group" >
+    <div class="form-group">
         <input type="hidden" asp-for="Id" id="TaskId" value="@Model.Id" />
     </div>
     <div class="form-group">
-        <input type="text" asp-for="TaskName" class="form-control" readonly  style="background-color: white;"/>
+        <input type="text" asp-for="TaskName" class="form-control" readonly style="background-color: white;" />
     </div>
     <div class="form-group">
         <label class="control-label">@SharedLocalizer["Task"]:</label>
@@ -25,11 +25,11 @@
     <label asp-for="TaskBaseCodeField" class="control-label">@SharedLocalizer["BaseCode"]:</label>
     <textarea id="taskBaseCodeField" asp-for="TaskBaseCodeField" class="col-md-12" style="height: 400px; width: 100%;" readonly> </textarea>
     <br />
-    <div class="col-md-1" >
+    <div class="col-md-1">
         <input value="@SharedLocalizer["Ok"]" onClick="history.go(-1)" ; class="btn btn-default" />
-     
+
     </div>
-    
+
 </form>
 <div class="col-md-1"></div>
 <div class="col-md-2" style="margin-left: 10px;">
@@ -42,8 +42,8 @@
 
 </div>
 <div style="clear: both;">
-    <br/>
- </div>
+    <br />
+</div>
 
 <div>
     @foreach (var comment in Model.CommentList)

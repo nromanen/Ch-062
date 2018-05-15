@@ -12,5 +12,11 @@ namespace Model.DTO
         public string UserName { get; set; }
 
         public string Email { get; set; }
+
+        public double UserRating { get; set; }
+
+        public int AllTasksNumber { get; set; }
+
+        public int DoneTaskNumber { get; set; }
     }
 }

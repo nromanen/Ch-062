@@ -317,10 +317,14 @@ namespace DAL.Migrations
 
                     b.Property<string>("SecurityStamp");
 
+                    b.Property<int>("TaskNumber");
+
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
+
+                    b.Property<int>("UserRating");
 
                     b.HasKey("Id");
 
