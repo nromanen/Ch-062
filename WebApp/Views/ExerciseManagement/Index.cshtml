@@ -13,11 +13,13 @@
 }
 <table class="table">
     <tr>
-    @*<td>@SharedLocalizer["CourseName"]</td>*@
                 @if (User.IsInRole("Teacher"))
                 {
+                    <td>@SharedLocalizer["TaskName"]</td>
                     <td>@SharedLocalizer["CreateDate"]</td>
                     <td>@SharedLocalizer["UpdateDate"]</td>
+                    <td>@SharedLocalizer["CourseName"]</td>
+                    <td></td>
                 }
         </tr>
     @foreach (var task in Model)
@@ -25,14 +27,17 @@
         @if (!task.IsDeleted)
         {
             <tr>
-                <td>@task.Course</td>
+                <td>
+                    <a id="bluhighl" asp-action="TaskView" asp-route-id="@task.Id">@task.TaskName</a></td>
+                
                 @if (User.IsInRole("Teacher"))
                 {
-                    <td>@task.CreateDateTime</td>
-                    <td>@task.UpdateDateTime</td>
+                    
+                    <td>@task.CreateDateTime.ToString("dd/MM/yyyy")</td>
+                    <td>@task.UpdateDateTime.ToString("dd/MM/yyyy")</td>
                 }
-                <td style="color: #0800ff;"><a asp-action="TaskView" asp-route-id="@task.Id">@task.TaskName</a></td>
-                <td class="row">
+                    <td>@task.Course </td>
+                <td>
                     @if (User.IsInRole("Teacher"))
     {    
                         

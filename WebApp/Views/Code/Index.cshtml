@@ -4,8 +4,6 @@
 @inject IViewLocalizer Localizer
 @inject IHtmlLocalizer<SharedRes> SharedLocalizer
 
-<style type="text/css">
-</style>
 
 
 @if (Model.UserCodeDTO.CodeStatus == CodeStatus.Done)
@@ -15,7 +13,7 @@
         @if (Model.UserCodeDTO.Mark == 0)
         {
             <div class="col-md-12" style="background-color: #fff8c4; height: 70px;">
-                <h5>Your Solution in on review now. Please, wait for result...</h5>
+                <h5>@SharedLocalizer["OnReview"]</h5>
             </div>
         }
         else
@@ -23,22 +21,22 @@
             if (Model.UserCodeDTO.Mark > 50)
             {
                 <div class="col-md-12" style="background-color: white; height: 205px;">
-                    <h5>Congrats! Your result is pretty good! Your mark: @Model.UserCodeDTO.Mark</h5>
-                    @if (Model.UserCodeDTO.TeachersComment != null)
+                    <h5>@SharedLocalizer["Congrats"] @Model.Mark</h5>
+                    @if (Model.TeachersComment != null)
                     {
-                        <label class="control-label">Teachers Comment</label>
-                        <textarea asp-for="@Model.UserCodeDTO.TeachersComment" style="width: 100%;" id="MCE" class="form-control"></textarea>
+                        <label class="control-label">@SharedLocalizer["TeachersComment"]</label>
+                        <textarea asp-for="@Model.TeachersComment" style="width: 100%;" id="MCE" class="form-control"></textarea>
                     }
                 </div>
             }
             else
             {
                 <div class="col-md-12" style=" padding: 10px; box-shadow: 10px rgba(,0,0,0.5); background-color: #ffffff; height: 205px; ">
-                    <h5>Sorry, you tied but not good enough... Your mark: @Model.UserCodeDTO.Mark</h5>
-                    @if (Model.UserCodeDTO.TeachersComment != null)
+                    <h5>@SharedLocalizer["NotEnough"] @Model.Mark</h5>
+                    @if (Model.TeachersComment != null)
                     {
-                        <label class="control-label">Teachers Comment</label>
-                        <textarea asp-for="@Model.UserCodeDTO.TeachersComment" style="width: 100%; " id="MCE" class="form-control"></textarea>
+                    <label class="control-label">@SharedLocalizer["TeachersComment"]</label>
+                        <textarea asp-for="@Model.TeachersComment" style="width: 100%; " id="MCE" class="form-control"></textarea>
                     }
                 </div>
             }
@@ -81,7 +79,7 @@
 
             </div>
             <br />
-            <button type="button" id="done" class="btn btn-default"> Done </button>
+            <button type="button" id="done" class="btn btn-default">@SharedLocalizer["Done"]</button>
         </div>
     </div>
 </div>
