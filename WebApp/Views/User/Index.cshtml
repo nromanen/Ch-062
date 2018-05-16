@@ -1,33 +1,35 @@
 ﻿
 @model Model.DTO.UserDTO
 
+
+
 @using Microsoft.AspNetCore.Mvc.Localization
 
 @inject IViewLocalizer Localizer
 
 @inject IHtmlLocalizer<SharedRes> SharedLocalizer
+
 <table class="table">
     <tr><th>@SharedLocalizer["Email"]</th><th>@SharedLocalizer["Action"]</th><th></th></tr>
     <tr>
         <td>@Model.Email </td>
         <td>
-            <form method="post">
                 <a class="btn btn-sm btn-default" asp-action="ChangePassword" asp-route-id="@Model.Id">@SharedLocalizer["ChangePassword"]</a>
-            </form>
     <tr>
         <td></td>
         <td>
-            <form method="post">
-                <a class="btn btn-sm btn-default" asp-action="ChangeUserName" asp-route-id="@Model.Id">@SharedLocalizer["ChangeUsername"]</a></form>
+                <a class="btn btn-sm btn-default" asp-action="ChangeUserName" asp-route-id="@Model.Id">@SharedLocalizer["ChangeUsername"]</a>
         </td>
     </tr>
     <tr>
         <td></td>
-         <td>
-             <form method="post">
-                 <a class="btn btn-sm btn-default" asp-action="ChangeEmail" asp-route-id="@Model.Id">@SharedLocalizer["ChangeEmail"]</a></form>
-         </td>
+        <td>
+                <a class="btn btn-sm btn-default" asp-action="ChangeEmail" asp-route-id="@Model.Id">@SharedLocalizer["ChangeEmail"]</a>         
+        </td>
     </tr>
-          
-  
+
+    <tr>
+        <td></td>
+        <td> <a class="btn btn-sm btn-default" asp-action="ChangeAllData" asp-route-id="@Model.Id">@SharedLocalizer["ChangeAllData"]</a> </td>
+    </tr>
 </table>
