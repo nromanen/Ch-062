@@ -113,7 +113,9 @@ namespace BAL.Managers
         public string ExecutionResult(string code, int exId, string userId, CodeStatus codeStatus)
         {
             var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
-            var res = sandboxManager.Execute(code);
+            var testCasesCode = unitOfWork.ExerciseRepo.GetById(exId).TestCasesCode;
+            var finalCode = string.Concat(testCasesCode, code);
+            var res = sandboxManager.Execute(finalCode);
             if (res.Success)
             {
                 string result =
@@ -166,7 +168,6 @@ namespace BAL.Managers
         public string GetResult(string code, int exId, string userId)
         {
             var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
-
             var res = sandboxManager.Execute(code);
             if (res.Success)
             {

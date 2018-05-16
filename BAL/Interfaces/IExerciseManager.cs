@@ -20,7 +20,7 @@ namespace BAL.Interfaces
         void Insert(ExerciseDTO item);
         void Update(int id, string taskName, string taskTextField,
                            string taskBaseCodeField, int courseId, string course,
-                           DateTime updateDateTime);
+                           DateTime updateDateTime, string testCasesCode);
         void DeleteOrRecover(int id);
         void UpdateRating(int id, double rating);
         void Delete(ExerciseDTO item);
