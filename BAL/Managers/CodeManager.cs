@@ -186,7 +186,7 @@ namespace BAL.Managers
             unitOfWork.Save();
             var user = userManager.FindByIdAsync(userId).Result;
             var codes = unitOfWork.CodeRepo.Get(c => c.UserId == userId && c.CodeStatus == CodeStatus.Done && c.Mark != 0);
-            int MarkSum = 0;
+            double MarkSum = 0;
             foreach (var elem in codes)
             {
                 MarkSum += elem.Mark;

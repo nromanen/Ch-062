@@ -366,4 +366,7 @@
   <data name="TeachersComment" xml:space="preserve">
     <value>Teachers Comment</value>
   </data>
+  <data name="Ratings" xml:space="preserve">
+    <value>Ratings</value>
+  </data>
 </root>

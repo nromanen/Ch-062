@@ -369,4 +369,7 @@
   <data name="TeachersComment" xml:space="preserve">
     <value>Коментар вчителя</value>
   </data>
+  <data name="Ratings" xml:space="preserve">
+    <value>Рейтинги</value>
+  </data>
 </root>
