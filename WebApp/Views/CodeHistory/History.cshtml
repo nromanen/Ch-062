@@ -64,7 +64,7 @@
                 <div class="col-lg-1 date">
                     <div class="row form-group">
                         <p class="col-lg-12">@Model.CodeHistory[i].time</p>
-                        <input type="button" data-codeTextId="@Model.CodeHistory[i].Id" data-codeText="@Model.CodeHistory[i].CodeText" class="save-changes-btn btn btn-default btn-md col-lg-12" value="@SharedLocalizer["Save"]" />
+                        <input id="myBtn" type="button" data-codeTextId="@Model.CodeHistory[i].Id" data-codeText="@Model.CodeHistory[i].CodeText" class="save-changes-btn btn btn-default btn-md col-lg-12" value="@SharedLocalizer["Save"]" />
 
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                 <form asp-controller="Code" asp-action="Index">
                     <input type="hidden" name="UserId" value="@Model.UserId" />
                     <input type="hidden" name="ExerciseId" value="@Model.ExerciseId" />
-                    <input type="hidden" name="CodeText" value="@Model.CodeHistory[i].CodeText" />
+                    <input type="hidden" name="CodeText" id="inputTextareaToSend" value="" />
                     <button type="submit" class="btn btn-default">@SharedLocalizer["Start"]</button>
                 </form>
             </div>
@@ -107,7 +107,6 @@ catch (Exception ex)
 
 
 @section Scripts{
-    <script src="~/js/codemirror.js"></script>
     <script src="~/js/matchbrackets.js"></script>
     <script src="~/js/continuecomment.js"></script>
     <script src="~/js/clike.js"></script>
@@ -116,25 +115,34 @@ catch (Exception ex)
 
 
     <script>
+        window.onload = function () {
+            $('#myBtn').hide();
+            }
+
+        $("#code-example").on('change', function () {
+            $("#myBtn").show();
+        });
         
         $(document).ready(function () {
-            $('.save-changes-btn').click(function () {
+            $('#myBtn').click(function () {
                 var obj = new Object();
                 var codeTextId = $.parseJSON($(this).attr('data-codeTextId'));
-                var codeText = editableCodeMirror.getValue();
+                var codeText = $("#code-example");//to set textarea to this codeText
+                $("#inputTextareaToSend").val() = codeText;
                 obj.codeTextId = codeTextId;
-                obj.codeText = (codeText);
+                obj.codeText = codeText;
                 console.log(codeText);
 
-                //$.ajax({
-                //    type: "POST",
-                //    url: "/CodeHistory/EditCode",
-                //    data: obj,
-                //    success: function (data) {
-                //        console.log(data);
-                //    }
+                $.ajax({
+                    type: "POST",
+                    url: "/CodeHistory/EditCode",
+                    data: obj,
+                    success: function (data) {
+                        console.log(data);
+                        Location.reload();
+                    }
 
-                //});
+                });
             });
 
             $('.execute-btn').click(function () {
