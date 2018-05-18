@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using BAL.Interfaces;
 using BAL.Managers;
-using DAL.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Model.DB;
 using WebApp.ViewModels;
 using WebApp.ViewModels.UserCodeReview;
-using Model.DB.Code;
 using Model.DTO.CodeDTO;
 using Microsoft.AspNetCore.Authorization;
 
@@ -52,7 +47,6 @@ namespace WebApp.Controllers
         [HttpPost]
         public string ExecuteOnFlyCode(UserCodeDTO model)
         {
-       
             return model.CodeText == null ? "Write some codeeeee" : codeManager.GetOnFlyCode(model);
         }
 

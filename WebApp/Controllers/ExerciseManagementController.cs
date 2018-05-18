@@ -54,7 +54,8 @@ namespace WebApp.Controllers
             var courseList = courseManager.Get(x => x.IsActive).ToList();
             return View(new CreateExerciseViewModel()
             {
-                CourseList = courseList
+                CourseList = courseList,
+                TestCases = "using NUnit.Framwork;"
             });
         }
 
@@ -134,7 +135,7 @@ namespace WebApp.Controllers
 
                     exerciseManager.Update(model.Id, model.TaskName, model.TaskTextField,
                                        model.TaskBaseCodeField, model.CourseId,
-                                       course.Name, DateTime.Now);
+                                       course.Name, DateTime.Now, model.TestCases);
             }
             return RedirectToAction("Index", "ExerciseManagement");
         }

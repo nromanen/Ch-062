@@ -13,8 +13,6 @@ using Model.Entity;
 
 namespace BAL.Managers
 {
-
-
     public class CodeManager : ICodeManager
     {
         private IUnitOfWork unitOfWork;
@@ -63,7 +61,7 @@ namespace BAL.Managers
         }
 
 
-        public void AddHistory(int codeId, string text,DateTime date,  string error = null, string result = null)
+        public void AddHistory(int codeId, string text, DateTime date, string error = null, string result = null)
         {
             unitOfWork.CodeHistoryRepo.Insert(new CodeHistory
             {
@@ -108,21 +106,21 @@ namespace BAL.Managers
         public string ExecutionResult(string code, int exId, string userId, CodeStatus codeStatus)
         {
             var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
-            var res = sandboxManager.Execute(code);
+            var testCasesCode = unitOfWork.ExerciseRepo.GetById(exId).TestCasesCode;
+            var finalCode = string.Concat(testCasesCode, code);
+            var res = sandboxManager.Execute(finalCode);
             if (res.Success)
             {
-                string result =
-                    $"Result: {res.Result};\r\nCompile time: {res.CompileTime.TotalMilliseconds};\r\nExecution Time: {res.ExecutionTime.TotalMilliseconds};";
-                if(codeStatus != CodeStatus.Done)
+                string result = res.Result;
+                if (codeStatus != CodeStatus.Done)
                 {
                     AddHistory(codeId, code, DateTime.Now, null, result);
                 }
                 return result;
             }
-            
-            string errors = res.CompileTimeExceptions.Aggregate("", (current, v) => current + (v + ";\r\n"));
-            errors = res.RunTimeExceptions.Aggregate(errors, (current, v) => current + (v + ";\r\n"));
-            if(codeStatus != CodeStatus.Done)
+
+            string errors = res.Result;
+            if (codeStatus != CodeStatus.Done)
             {
                 AddHistory(codeId, code, DateTime.Now, errors, null);
             }
@@ -132,31 +130,23 @@ namespace BAL.Managers
 
 
         public string GetOnFlyCode(UserCodeDTO model)
-       {
-   
-                UserCode code = new UserCode
-                {
-                    CodeText = model.CodeText             
-                };
-                  return ExecuteOnFlyCode(model.CodeText);
+        {
+            UserCode code = new UserCode
+            {
+                CodeText = model.CodeText
+            };
+            var testCasesCode = unitOfWork.ExerciseRepo.GetById(model.ExerciseId).TestCasesCode;
+            var finalCode = string.Concat(testCasesCode, code.CodeText);
+            return ExecuteOnFlyCode(finalCode);
         }
 
-       public string ExecuteOnFlyCode(string code)
+        public string ExecuteOnFlyCode(string code)
         {
             var res = sandboxManager.Execute(code);
-            if (res.Success)
-            {
-                string result =
-                       $"Result: {res.Result};\r\nCompile time: {res.CompileTime.TotalMilliseconds};\r\nExecution Time: {res.ExecutionTime.TotalMilliseconds};";
-                return result;
-            }
-
-            string errors = res.CompileTimeExceptions.Aggregate("", (current, v) => current + (v + ";\r\n"));
-            errors = res.RunTimeExceptions.Aggregate(errors, (current, v) => current + (v + ";\r\n"));
-            return errors;
+            return res.Result;
         }
 
-        public void SetCodeStatus(int id , string userId)
+        public void SetCodeStatus(int id, string userId)
         {
             var code = unitOfWork.CodeRepo.GetById(id);
             if (code.CodeStatus != CodeStatus.Done)
@@ -219,7 +209,7 @@ namespace BAL.Managers
             }
             return model;
         }
-        
+
         public List<CodeHistory> GetHistoryLst(int codeId)
         {
             var codeHistories = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == codeId).ToList();

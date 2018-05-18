@@ -44,15 +44,16 @@
     <br />
 </div>
 
-<div>
+<button id="tggl">Show/Hide Comments</button>
+<div id="comments">
     @foreach (var comment in Model.CommentList)
     {
-        <div class="panel panel-info col-md-11" style="width: 500px; position: unset;">
+        <div class="panel panel-info" >
 
-            <div class="panel-heading">
+            <div class="panel-heading" >
                 @comment.UserName <span style="float: right;" class="rating" data-default-rating=@comment.Rating disabled></span>
             </div>
-            <div class="panel-body">
+            <div class="panel-body" >
                 @comment.CommentText
             </div>
             <div class="panel-footer">
@@ -62,13 +63,14 @@
     }
 </div>
 
+
 <div>
-    <div class="panel panel-warning col-md-11"  position: unset;">
-        <div class="panel-heading">
-            <label class="control-label">@SharedLocalizer["RateField"]</label>
+    <div class="panel panel-warning"  position: unset;">
+        <div class="panel-heading ">
+            <label class="control-label ">@SharedLocalizer["RateField"]</label>
             <span class="rating" id="rateField" data-default-rating="-1"></span>
         </div>
-        <div class="panel-body">
+        <div class="panel-body ">
             <label class="control-label">@SharedLocalizer["ComText"]</label>
             <textarea style="width: 95%; margin-left: 20px;" id="textField" class="form-control"></textarea>
         </div>
@@ -114,6 +116,12 @@
             });
         }
 
+
+        $(document).ready(function () {
+            $('#tggl').click(function () {
+                $('#comments').toggle(1800);
+            });
+        });
 
         var editableCodeMirror = null;
         window.onload = function () {
