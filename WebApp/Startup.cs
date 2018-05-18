@@ -84,6 +84,7 @@ namespace WebApp
             services.AddScoped<ICodeManager, CodeManager>();
             services.AddScoped<INewsManager, NewsManager>();
             services.AddScoped<IUserRatingManager, UserRatingManager>();
+            services.AddScoped<IMessagesManager, MessagesManager>();
 
             services.Configure<IdentityOptions>(options =>
             {

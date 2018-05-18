@@ -15,6 +15,7 @@ namespace DAL.Interface
         IBaseRepository<CodeHistory> CodeHistoryRepo { get; }
         IBaseRepository<Comment> CommentRepo { get; }
         IBaseRepository<News> NewsRepo { get; }
+        IBaseRepository<Messages> MessagesRepo { get; }
         int Save();
     }
 }

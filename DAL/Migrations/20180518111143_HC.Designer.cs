@@ -12,9 +12,10 @@ using System;
 namespace DAL.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180518111143_HC")]
+    partial class HC
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,30 +257,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Exercises");
-                });
-
-            modelBuilder.Entity("Model.DB.Messages", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("Date");
-
-                    b.Property<string>("FromEmail");
-
-                    b.Property<string>("InboxText");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("OutboxText");
-
-                    b.Property<string>("Subject");
-
-                    b.Property<string>("ToEmail");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("Model.DB.News", b =>
