@@ -29,13 +29,6 @@ namespace WebApplication1.Controllers
                 .AddSyntaxTrees(tree);
 
             EmitResult compilationResult = compilation.Emit(pathTodll);
-
-
-            //    foreach (Diagnostic codeIssue in compilationResult.Diagnostics)
-            //    {
-            //        result.CompileErrors.Add($"Error: {codeIssue.Id}, {codeIssue.GetMessage()}, Location {codeIssue.Location.GetLineSpan().StartLinePosition}");
-            //    }
-
             return compilationResult.Success;
         }
     }
