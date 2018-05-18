@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BAL.Interfaces;
 using Common;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Model.DTO;
@@ -15,13 +16,16 @@ namespace WebApp.Controllers
 {
     public class AddNewsController : Controller
     {
+        IHostingEnvironment appEnvironment;
         private readonly ICourseManager courseManager;
         private readonly INewsManager newsManager;
 
-        public AddNewsController(ICourseManager courseManager, INewsManager newsManager)
+        public AddNewsController(ICourseManager courseManager, INewsManager newsManager,
+            IHostingEnvironment appEnvironment)
         {
             this.newsManager = newsManager;
             this.courseManager = courseManager;
+            this.appEnvironment = appEnvironment;
         }
 
         public IActionResult Index()
@@ -29,45 +33,51 @@ namespace WebApp.Controllers
             return View();
         }
 
-        public IActionResult News()
+        public IActionResult News(int page = 1, int id = 0)
         {
-            try
+            int pageSize = 8;   // количество элементов на странице
+            List<NewsDTO> news;
+            if (id == 0)
             {
-                var news = newsManager.GetAll().ToList();
-                var courses = courseManager.GetAll().ToList();
-                return View(new NewsViewModel()
-                {
-                    NewsDTO = news,
-                    CoursesDTO = courses,
-                    
-                    
-                });
+                news = newsManager.GetAll().Reverse().ToList();
             }
-            catch(Exception ex)
+            else
             {
+                news = newsManager.Get().Where(e => e.CourseId == id).Reverse().ToList();
+            }
+            var count = news.Count();
+            var items = news.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var courses = courseManager.GetAll().ToList();
 
-            }
-            return View();
-            
+            PageViewModel NewsPageViewModel = new PageViewModel(count, page, pageSize);
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                NewsPageViewModel = NewsPageViewModel,
+                News = items,
+                Courses = courses
+            };
+            return View(viewModel);
         }
         [HttpPost("UploadFiles")]
         public async Task<IActionResult> Post(IFormFile files, string Text, string Title, string Course)
         {
             // full path to file in temp location
             var filePath = "/images/" + files.FileName;
+
+            using (var fileStream = new FileStream(appEnvironment.WebRootPath + filePath, FileMode.Create))
+            {
+                await files.CopyToAsync(fileStream);
+            }
+
             var course = courseManager.Get().Where(e => e.Name == Course).FirstOrDefault();
-           
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await files.CopyToAsync(stream);
-                    }
+
             NewsDTO newsDTO = new NewsDTO()
             {
                 Text = Text,
-                Title = Title ,
+                Title = Title,
                 ImagePath = filePath,
                 Day = DateTime.Today.Day,
-                Month = Enum.GetName(typeof(MonthEnum), 
+                Month = Enum.GetName(typeof(MonthEnum),
                 DateTime.Today.Month - 1),
                 CourseId = course.Id
             };
@@ -76,17 +86,13 @@ namespace WebApp.Controllers
 
             var news = newsManager.GetAll().ToList();
             var courses = courseManager.GetAll().ToList();
-            return View("News", new NewsViewModel()
-            {
-                NewsDTO = news,
-                CoursesDTO = courses,
-            });
-            
+            return RedirectToAction("News");
+
         }
         public void AddArticle()
         {
 
-            
+
         }
 
         public void DeleteOrRecoverArticle(NewsDTO newsDTO)
