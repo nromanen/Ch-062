@@ -38,15 +38,10 @@
             <div style="clear:both;"></div>
             <h3>@SharedLocalizer["CurRole"] </h3>
             @foreach (var role in Model.UserRoles)
-    {
-        <div>@role</div>
-}
-            <br />
-            <h3>@SharedLocalizer["EditRoles"]</h3>
-            <form>
-                <a style="width:110px; " class="btn btn-default" asp-action="Roles">@SharedLocalizer["Edit"]</a>
-            </form>
-
+            {
+                <div>@role</div>
+            }
+            
         </div>
     </div>
 </div>
