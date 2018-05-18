@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 using System.Text;
 using Model.DB;
 using Model.DTO;
@@ -10,6 +11,6 @@ namespace BAL.Interfaces
 {
     public interface IUserRatingManager 
     {
-        IEnumerable<UserDTO> GetAll();
+        List<User> GetAll( UserManager<User> userManager);
     }
 }

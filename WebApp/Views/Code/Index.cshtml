@@ -20,7 +20,7 @@
         {
             if (Model.UserCodeDTO.Mark > 50)
             {
-                <div class="col-md-12" style="background-color: white; height: 205px;">
+                <div class="col-md-12" style="background-color: #d6fbcd; height: 205px;">
                     <h5>@SharedLocalizer["Congrats"] @Model.UserCodeDTO.Mark</h5>
                     @if (Model.UserCodeDTO.TeachersComment != null)
                     {
@@ -31,7 +31,7 @@
             }
             else
             {
-                <div class="col-md-12" style=" padding: 10px; box-shadow: 10px rgba(,0,0,0.5); background-color: #ffffff; height: 205px; ">
+                <div class="col-md-12" style=" padding: 10px; box-shadow: 10px rgba(,0,0,0.5); background-color: #c48787; height: 205px; ">
                     <h5>@SharedLocalizer["NotEnough"] @Model.UserCodeDTO.Mark</h5>
                     @if (Model.UserCodeDTO.TeachersComment != null)
                     {
@@ -72,14 +72,15 @@
                     <br />
                     <br />
                     <button type="button" id="executeButton" class="btn btn-default"> @SharedLocalizer["Execute"] </button>
-                   
+
                     <button type="button" id="exit" class="btn btn-default" onclick='location.href = "@Url.Action("Index", "Home")"'> @SharedLocalizer["Exit"] </button>
+
+                    <button type="button" id="done" class="btn btn-danger">@SharedLocalizer["Done"]</button>
 
                 </div>
 
             </div>
-            <br />
-            <button type="button" id="done" class="btn btn-default">@SharedLocalizer["Done"]</button>
+         
         </div>
     </div>
 </div>
@@ -106,6 +107,16 @@
             $(document).ready(function () {
                 $('#task').click(function () {
                     $('#ECMDIV').toggle(900);
+                });
+            });
+
+            $(document).ready(function () {
+                $('#task').hover(function () {
+                    $(this).css("color", "red");
+                    $(this).css("font-size", "20px");
+                }, function () {
+                    $(this).css("color", "black");
+                    $(this).css("font-size", "14px");
                 });
             });
           
