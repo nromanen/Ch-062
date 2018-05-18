@@ -43,17 +43,21 @@
 <div style="clear: both;">
     <br />
 </div>
+<div>
+    <button id="tggl">Show/Hide Comments</button>
 
-<button id="tggl">Show/Hide Comments</button>
+</div>
+
 <div id="comments">
+    <br />
     @foreach (var comment in Model.CommentList)
     {
-        <div class="panel panel-info" >
+        <div class="panel panel-info">
 
-            <div class="panel-heading" >
+            <div class="panel-heading">
                 @comment.UserName <span style="float: right;" class="rating" data-default-rating=@comment.Rating disabled></span>
             </div>
-            <div class="panel-body" >
+            <div class="panel-body">
                 @comment.CommentText
             </div>
             <div class="panel-footer">
@@ -65,7 +69,8 @@
 
 
 <div>
-    <div class="panel panel-warning"  position: unset;">
+    <br />
+    <div class="panel panel-warning" position: unset;">
         <div class="panel-heading ">
             <label class="control-label ">@SharedLocalizer["RateField"]</label>
             <span class="rating" id="rateField" data-default-rating="-1"></span>
@@ -116,10 +121,9 @@
             });
         }
 
-
         $(document).ready(function () {
             $('#tggl').click(function () {
-                $('#comments').toggle(1800);
+                $('#comments').toggle(900);
             });
         });
 

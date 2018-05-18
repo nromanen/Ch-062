@@ -2,6 +2,7 @@
 using DAL.Interface;
 using BAL.Interfaces;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 using Model.DTO;
 using System.Linq.Expressions;
 using System.Linq;
@@ -15,9 +16,12 @@ namespace BAL.Managers
     {
         public UserRatingManager(IUnitOfWork unitOfWork, IMapper mapper) : base(unitOfWork, mapper) { }
 
-        public IEnumerable<UserDTO> GetAll()
+        public List<User> GetAll(UserManager<User> userManager)
         {
-            return mapper.Map<List<UserDTO>>(unitOfWork.UserRepo.GetAll());
+            var alluserList = userManager.GetUsersInRoleAsync("Student").Result.ToList();
+        
+
+            return alluserList;
         }
     }
 }

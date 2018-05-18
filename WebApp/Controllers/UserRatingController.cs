@@ -25,16 +25,19 @@ namespace WebApp.Controllers
         private readonly IUserRatingManager userRatingManager;
         private readonly IMapper mapper;
 
-        public UserRatingController(IUserRatingManager userRatingManager, IMapper mapper)
+        private readonly UserManager<User> userManager;
+
+        public UserRatingController(IUserRatingManager userRatingManager, IMapper mapper, UserManager<User> userManager)
         {
             this.userRatingManager = userRatingManager;
             this.mapper = mapper;
+            this.userManager = userManager;
         }
 
        
         public IActionResult Index()
         {
-            var userList = userRatingManager.GetAll();
+            var userList = userRatingManager.GetAll(userManager);
             return View(userList);
         }
     }
