@@ -14,6 +14,7 @@ namespace Model.Entity
 
         public ExecutionResult()
         {
+            Result = string.Empty;
             ExecutionTime = new TimeSpan();
             CompileTime = new TimeSpan();
             CompileTimeExceptions = new List<string>();

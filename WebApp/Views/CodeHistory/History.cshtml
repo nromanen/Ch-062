@@ -53,13 +53,13 @@
                     <p data-id="@Model.CodeHistory[i].Id" id="@Model.CodeHistory[i].Id" class="form-control titlecode" readonly>@Model.ExerciseName</p>
 
                     <textarea id="code-example" data-id="@Model.CodeHistory[i].Id" class="form-control col" rows="15" style="height: 100%; width: 100%; display:none;">@Model.CodeHistory[i].CodeText</textarea>
-                    
-                        <textarea class="form-control col" rows="5" style="height: 100%; width: 100%; " readonly>
+
+                    <textarea class="form-control col" rows="5" style="height: 100%; width: 100%; " readonly>
                 @if (@Model.CodeHistory[i].Result!=null) {@Model.CodeHistory[i].Result}
                 else {
                     @Model.CodeHistory[i].Error
                 }</textarea>
-                    
+
                 </div>
                 <div class="col-lg-1 date">
                     <div class="row form-group">
@@ -86,7 +86,7 @@
                 <form asp-controller="Code" asp-action="Index">
                     <input type="hidden" name="UserId" value="@Model.UserId" />
                     <input type="hidden" name="ExerciseId" value="@Model.ExerciseId" />
-                    <input type="hidden" name="CodeText" id="inputTextareaToSend" value="" />
+                    <input type="hidden" name="CodeText" id="inputTextareaToSend" value="@Model.CodeHistory[i].CodeText" />
                     <button type="submit" class="btn btn-default">@SharedLocalizer["Start"]</button>
                 </form>
             </div>
@@ -117,32 +117,28 @@ catch (Exception ex)
     <script>
         window.onload = function () {
             $('#myBtn').hide();
-            }
+        }
 
         $("#code-example").on('change', function () {
             $("#myBtn").show();
         });
-        
+
         $(document).ready(function () {
             $('#myBtn').click(function () {
                 var obj = new Object();
                 var codeTextId = $.parseJSON($(this).attr('data-codeTextId'));
-                if (codeTextId==) {
-
-
-                }
-                var codeText = $("#code-example").val();
-                $("#inputTextareaToSend").val() = codeText;
+                var $this = $(this),
+                    parent = $this.parents('form'),
+                    showHideEl = parent.find('#code-example');
+                var codeText = showHideEl.val();
                 obj.codeTextId = codeTextId;
                 obj.codeText = codeText;
-                console.log(codeText);
 
                 $.ajax({
                     type: "POST",
                     url: "/CodeHistory/EditCode",
                     data: obj,
                     success: function (data) {
-                        console.log(data);
                         Location.reload();
                     }
 
@@ -167,15 +163,15 @@ catch (Exception ex)
 
             });
         });
-        
+
         $(document).on('click', '.titlecode', function () {
             var $this = $(this),
                 parent = $this.parents('form'),
                 showHideEl = parent.find('#code-example');
             showHideEl.slideToggle();
-            
+
         });
-        
+
         $(document).on('click', '.glyphicon', function (e) {
             var obj = new Object();
             var $this = $(this),
@@ -202,6 +198,6 @@ catch (Exception ex)
                 }
             });
         });
-        
+
     </script>
 }

@@ -40,7 +40,7 @@ namespace BAL.Managers
 
         public void Update(int id, string taskName, string taskTextField,
                            string taskBaseCodeField, int courseId, string course,
-                           DateTime updateDateTime)
+                           DateTime updateDateTime, string testCasesCode)
         {
             var task = unitOfWork.ExerciseRepo.GetById(id);
             task.Course = course;
@@ -49,6 +49,7 @@ namespace BAL.Managers
             task.TaskTextField = taskTextField;
             task.TaskBaseCodeField = taskBaseCodeField;
             task.UpdateDateTime = updateDateTime;
+            task.TestCasesCode = testCasesCode;
             unitOfWork.ExerciseRepo.Update(task);
             unitOfWork.Save();
         }

@@ -95,6 +95,31 @@ namespace DAL.Seed
             }
             if (!context.Exercises.Any(r => r.TaskName == ".Net Task 1"))
             {
+                string code = 
+@"public class Program
+{
+    public static int Addition(int a, int b)
+    {
+        return a + b;
+    }
+}";
+                string testCasesCode = 
+@"using NUnit.Framework;
+[TestFixture]
+public class UnitTest
+{
+    [Test, TestCaseSource(""Cases"")]
+    public void TestMethod(int expected, int a, int b)
+    {
+        Assert.AreEqual(expected, Program.Addition(a, b));
+    }
+    static object[] Cases =
+    {
+        new object[] { 12, 8, 4 },
+        new object[] { 12, 6, 6 },
+        new object[] { 12, 2, 10 }
+    };
+}";
                 unitOfWork.ExerciseRepo.Insert(new Exercise
                 {
                     TaskName = ".Net Task 1",
@@ -105,7 +130,8 @@ namespace DAL.Seed
                     CreateDateTime = System.DateTime.Now,
                     UpdateDateTime = System.DateTime.Now,
                     TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id,
-                    TaskBaseCodeField = "namespace OnlineExam\n{\n\tpublic class Program\n    \t{\n    \t\tpublic static int Test()\n    \t\t\t{\n    \t\t\t\treturn 123;\n                }\n        }\n}"
+                    TaskBaseCodeField = code,
+                    TestCasesCode = testCasesCode
                 });
             }
             if (!context.Exercises.Any(r => r.TaskName == "Java Task 1"))

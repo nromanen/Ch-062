@@ -1,25 +1,30 @@
-﻿using Microsoft.CodeAnalysis;
-using System.Reflection;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Emit;
-using System.Diagnostics;
-using Model.Entity;
+﻿using Model.Entity;
 using BAL.Interfaces;
+using RestSharp;
 using System.IO;
-using NUnit.Framework;
+using System.Diagnostics;
 using System.Xml.Linq;
 
 namespace BAL.Managers
 {
     public class SandboxManager : ISandboxManager
     {
-        public ExecutionResult Execute(string code, string entryPoint = "Test", object[] parameters = null)
+        public ExecutionResult Execute(string code)
         {
-            var tree = SyntaxFactory.ParseSyntaxTree(code);
-
-            var systemRefLocation = typeof(object).GetTypeInfo().Assembly.Location;
-            var systemReference = MetadataReference.CreateFromFile(systemRefLocation);
-            var nunitReference = MetadataReference.CreateFromFile(typeof(TestAttribute).GetTypeInfo().Assembly.Location);
+            var client = new RestClient("http://localhost:62543/");
+            var request = new RestRequest("api/values/validate", Method.POST);
+            request.RequestFormat = DataFormat.Json;
+            request.AddBody(code);
+            IRestResponse response = client.Execute(request);
+            bool result = false;
+            if (response.Content == "true")
+            {
+                result = true;
+            }
+            else if (response.Content == "false")
+            {
+                result = false;
+            }
 
             string fileName = "OnlineExam.dll";
             string resultFilename = "Result.xml";
@@ -27,15 +32,8 @@ namespace BAL.Managers
             string pathToxml = Path.Combine(Directory.GetCurrentDirectory(), resultFilename);
             string NUnit = "NUnit.Console-3.8.0";
 
-            var compilation = CSharpCompilation
-                .Create(fileName)
-                .WithOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, checkOverflow: true))
-                .AddReferences(systemReference, nunitReference)
-                .AddSyntaxTrees(tree);
-
-            var result = new ExecutionResult() { Success = false };
-            EmitResult compilationResult = compilation.Emit(pathTodll);
-            if (compilationResult.Success)
+            var executeResult = new ExecutionResult();
+            if (result)
             {
                 string strCmdText = $"NUNIT3-CONSOLE {pathTodll} --result={pathToxml}";
                 var p = new Process();
@@ -47,23 +45,21 @@ namespace BAL.Managers
                 p.StandardInput.WriteLine($"cd {Path.Combine(Directory.GetCurrentDirectory(), NUnit)}");
                 p.StandardInput.WriteLine(strCmdText);
 
-                var xmlResult = XDocument.Load(pathToxml).Root;
+                var xmlResult = XDocument.Load(pathToxml);
                 var tests = xmlResult.Document.Element("test-run");
-                result.Result += string.Join("Total: ", (string)tests.Attribute("total"));
-                result.Result += string.Join("Passed: ", (string)tests.Attribute("passed"));
-                result.Result += string.Join("Failed: ", (string)tests.Attribute("failed"));
-                result.Result += string.Join("Duration: ", (string)tests.Attribute("duration"));
-                result.Success = true;
+                var total = string.Concat("Total:", (string)tests.Attribute("total"));
+                var passed = string.Concat("Passed:", (string)tests.Attribute("passed"));
+                var failed = string.Concat("Failed:", (string)tests.Attribute("failed"));
+                var duration = string.Concat("Duration:", (string)tests.Attribute("duration"));
+                executeResult.Success = true;
+                executeResult.Result = string.Join("; ", total, passed, failed, duration);
             }
             else
             {
-                foreach (Diagnostic codeIssue in compilationResult.Diagnostics)
-                {
-                    string issue = $"Error: {codeIssue.Id}, {codeIssue.GetMessage()}, Location {codeIssue.Location.GetLineSpan().StartLinePosition}";
-                    result.CompileTimeExceptions.Add(issue);
-                }
+                executeResult.Success = false;
+                executeResult.Result = "Compile errors";
             }
-            return result;
+            return executeResult;
         }
     }
 }
