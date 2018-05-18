@@ -55,7 +55,7 @@
 </style>
 <div class="container">
     <div class="row">
-        <a class="btn btn-primary email-btn" asp-controller="EmailMessages" asp-action="SendEmail">Send Message</a>
+        <a class="btn btn-primary email-btn" asp-controller="EmailMessages" asp-action="SendEmail">@SharedLocalizer["SendMessage"]</a>
     </div>
     <hr />
     <div class="row">
@@ -63,13 +63,13 @@
             <div class="Inbox">
                 <br />
                 <br />
-                <a>Inbox</a>
+                <a>@SharedLocalizer["Inbox"]</a>
             </div>
             <div class="Outbox">
                 <br />
                 <br />
 
-                <a>Outbox</a>
+                <a>@SharedLocalizer["Outbox"]</a>
             </div>
 
         </div>

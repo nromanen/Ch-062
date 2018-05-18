@@ -72,6 +72,9 @@
         .gn-trigger a:after {
             color: #ffffff;
         }
+        .contacts{
+            font-size:21px;
+        }
     </style>
 </head>
 
@@ -124,15 +127,15 @@
                             }
                             @if (User.IsInRole("Administrator") || User.IsInRole("Teacher"))
                             {
-                                <li><a class="gn-icon glyphicon glyphicon-envelope" style="padding-top:20px;padding-bottom:20px; padding-left:2px;" asp-controller="EmailMessages" asp-action="Index">@SharedLocalizer["Messages"]</a></li>
+                                <li><a class="gn-icon glyphicon glyphicon-envelope contacts" style="padding-top:20px;padding-bottom:20px; padding-left:2px;" asp-controller="EmailMessages" asp-action="Index">@SharedLocalizer["Messages"]</a></li>
 
                             }
-                            @if (User.IsInRole("Student"))
+                            @if (!User.IsInRole("Administrator") && !User.IsInRole("Teacher"))
                             {
                                 <li>
-                                    <a class="gn-icon glyphicon glyphicon-envelope" style="padding-top:20px;padding-bottom:20px;" asp-controller="EmailMessages" asp-action="GetEmail">
-                                        @SharedLocalizer["Contacts"]
-                                    </a>
+                                    <a class="gn-icon glyphicon glyphicon-envelope contacts" 
+                                       style="padding-top:20px;padding-bottom:20px;" asp-controller="EmailMessages" 
+                                       asp-action="GetEmail">@SharedLocalizer["Contacts"]</a>
                                 </li>
                             }
                         </ul>

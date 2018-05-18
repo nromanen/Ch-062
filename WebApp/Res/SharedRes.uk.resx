@@ -381,4 +381,34 @@
   <data name="BackToMail" xml:space="preserve">
     <value>Назад до Пошти</value>
   </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Зв'яжіться з нами</value>
+  </data>
+  <data name="Favourites" xml:space="preserve">
+    <value>Вподобаний код</value>
+  </data>
+  <data name="Inbox" xml:space="preserve">
+    <value>Отримані повідомлення</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Повідомлення</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Ім'я</value>
+  </data>
+  <data name="Outbox" xml:space="preserve">
+    <value>Відправлені повідомлення</value>
+  </data>
+  <data name="SendMessage" xml:space="preserve">
+    <value>Відправити повідомлення</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="Your" xml:space="preserve">
+    <value>Ваше</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Відправити</value>
+  </data>
 </root>

@@ -189,7 +189,7 @@ namespace BAL.Managers
             model.UserId = user.Id;
             if (model.CodeText != null)
             {
-                //FOR RUSLAN
+                
             }
             else
             {

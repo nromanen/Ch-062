@@ -40,10 +40,10 @@
     }
 
     .tabs {
-        width: 100px;
+        width: 125px;
         height: 30px;
         border: 1px solid #cecece;
-        border-radius: 10%;
+        border-radius: 5%;
         text-align: center;
         padding: 3px;
         margin-right: 11px;
@@ -52,6 +52,9 @@
 
     .active {
         box-shadow: 0px 1px 10px #000000;
+    }
+    .display-none{
+        display:none;
     }
 </style>
 
@@ -84,7 +87,7 @@
                     <div class="col-lg-1 date">
                         <div class="row form-group">
                             <p class="col-lg-12">@Model.CodeHistory[i].time</p>
-                            <input id="myBtn" type="button" data-codeTextId="@Model.CodeHistory[i].Id" class="save-changes-btn btn btn-default btn-md col-lg-12" value="@SharedLocalizer["Save"]" />
+                            <input id="myBtn" type="button" data-codeTextId="@Model.CodeHistory[i].Id" class="save-changes-btn btn btn-default btn-md col-lg-12 display-none" value="@SharedLocalizer["Save"]" />
 
                         </div>
                     </div>
@@ -98,7 +101,6 @@
                         {
                             <label name="qwert" data-id="@Model.CodeHistory[i].Id" data-flag="@Model.CodeHistory[i].IsFavouriteCode" style="color:black;" for="icon" class="glyphicon glyphicon-heart"></label>
                         }
-
                     </div>
 
                 </form>
@@ -141,7 +143,7 @@
                     <div class="col-lg-1 date">
                         <div class="row form-group">
                             <p class="col-lg-12">@Model.CodeHistory[i].time</p>
-                            <input id="myBtn" type="button" data-codeTextId="@Model.CodeHistory[i].Id" class="save-changes-btn btn btn-default btn-md col-lg-12" value="@SharedLocalizer["Save"]" />
+                            <input id="myBtn" type="button" data-codeTextId="@Model.CodeHistory[i].Id" class="save-changes-btn btn btn-default btn-md col-lg-12 display-none" value="@SharedLocalizer["Save"]" />
 
                         </div>
                     </div>
@@ -197,13 +199,13 @@
             $('.history').removeClass("active");
             $('.favourites').addClass("active");
         });
-        window.onload = function () {
-            $('#myBtn').hide();
-        }
-
-        $("#code-example").on('change', function () {
-            $("#myBtn").show();
+        $(document).on('focusin', '#code-example', function () { 
+                var $this = $(this),
+                    parent = $this.parents('form'),
+                    showHideEl = parent.find('#myBtn');
+                showHideEl.show();
         });
+        
 
         $(document).ready(function () {
             $('#myBtn').click(function () {
@@ -226,7 +228,7 @@
 
                 });
             });
-
+            
             $('.execute-btn').click(function () {
 
                 var userCode = new Object();
