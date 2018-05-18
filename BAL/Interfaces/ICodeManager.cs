@@ -17,7 +17,6 @@ namespace BAL.Interfaces
                              string includeProperties = "");
         UserCodeDTO GetUserCodeById(string id);
         UserCodeDTO UserCodeByExId(string userId, int exerciseId);
-        string IsUserDidExercise(string userId, int exerciseId);
         bool FindUserCode(string userId, int exerciseId);
         void AddHistory(int codeId, string text, DateTime date, string error = null, string result = null);
         string ExecuteCode(UserCodeDTO model);
