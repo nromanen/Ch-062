@@ -76,6 +76,9 @@ namespace BAL.IoC
                 cfg.CreateMap<News, NewsDTO>();
                 cfg.CreateMap<List<News>, List<NewsDTO>>();
 
+                cfg.CreateMap<Messages, MessagesDTO>();
+                cfg.CreateMap<List<Messages>, List<MessagesDTO>>();
+
             });
         }
 

@@ -2,7 +2,6 @@
 using DAL.Repositories;
 using Model.DB;
 using DAL.Interface;
-using DAL.Migrations;
 using Microsoft.AspNetCore.Identity;
 using Model.DB.Code;
 
@@ -18,9 +17,9 @@ namespace DAL
         private IBaseRepository<Course> courseRepo;
         private IBaseRepository<UserCode> codeRepo;
         private IBaseRepository<CodeHistory> codeHistoryRepo;
-        private IBaseRepository<TestCase> testCasesRepo;
         private IBaseRepository<Comment> commentRepo;
         private IBaseRepository<News> newsRepo;
+        private IBaseRepository<Messages> messagesRepo;
 
         public UnitOfWork(MainDbContext context)
         {
@@ -90,15 +89,6 @@ namespace DAL
                 return codeHistoryRepo;
             }
         }
-        
-        public IBaseRepository<TestCase> TestCasesRepo
-        {
-            get
-            {
-                if (testCasesRepo == null) { testCasesRepo = new BaseRepository<TestCase>(context); }
-                return testCasesRepo;
-            }
-        }
 
         public IBaseRepository<News> NewsRepo
         {
@@ -106,6 +96,15 @@ namespace DAL
             {
                 if (newsRepo == null) { newsRepo = new BaseRepository<News>(context); }
                 return newsRepo;
+            }
+        }
+
+        public IBaseRepository<Messages> MessagesRepo
+        {
+            get
+            {
+                if (messagesRepo == null) { messagesRepo = new BaseRepository<Messages>(context); }
+                return messagesRepo;
             }
         }
 

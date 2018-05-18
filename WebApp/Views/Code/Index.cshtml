@@ -130,6 +130,7 @@
                     $('#result').html('');
                     var userCode = new Object();
                     userCode.CodeText = editableCodeMirror.getValue();
+                    userCode.ExerciseId = ('@Model.UserCodeDTO.ExerciseId');
 
                     $.ajax({
                         type: "POST",

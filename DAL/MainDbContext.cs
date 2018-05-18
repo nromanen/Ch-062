@@ -15,6 +15,7 @@ namespace DAL
         public DbSet<CodeHistory> CodeHistories { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<News> News { get; set; }
+        public DbSet<Messages> Messages { get; set; }
 
         public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
         {

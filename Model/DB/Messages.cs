@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Model.DB
+{
+    public class Messages
+    {
+        public int Id { get; set; }
+        public string Subject { get; set; }
+        public string InboxText { get; set; }
+        public string OutboxText { get; set; }
+        public string FromEmail { get; set; }
+        public string ToEmail { get; set; }
+
+        public bool IsDeleted { get; set; }
+        public DateTime Date { get; set; }
+    }
+}
