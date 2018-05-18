@@ -146,7 +146,6 @@ namespace BAL.Managers
 
        public string ExecuteOnFlyCode(string code)
         {
-            var codeId = unitOfWork.CodeRepo.Get(c => c.ExerciseId == exId && c.UserId == userId).First().Id;
             var res = sandboxManager.Execute(code);
             if (res.Success)
             {
