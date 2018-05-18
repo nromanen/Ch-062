@@ -142,7 +142,7 @@
                             <span class="eo-date__month">@i.Month</span>
                         </div>
                         <div class="col-lg-9">
-                            <span class="title">@i.Title</span>
+                            <a  href='@Url.Action("ShowNews", "AddNews", new { id = i.Id }, null)' class="title">@i.Title</a>
                         </div>
                     </div>
                     <br />

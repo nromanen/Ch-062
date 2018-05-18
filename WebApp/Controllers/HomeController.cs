@@ -28,7 +28,7 @@ namespace WebApp.Controllers
         }
         public IActionResult Index(int page = 1, int id = 0)
         {
-            int pageSize = 8;   // количество элементов на странице
+            int pageSize = 8;
             List<NewsDTO> news;
             if (id == 0)
             {
@@ -77,6 +77,11 @@ namespace WebApp.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public IActionResult ShowNews(int id)
+        {
+            var news = newsManager.Get().Where(e => e.Id == id).FirstOrDefault();
+            return View(news);
         }
     }
 }

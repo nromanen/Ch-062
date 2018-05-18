@@ -35,7 +35,7 @@ namespace WebApp.Controllers
 
         public IActionResult News(int page = 1, int id = 0)
         {
-            int pageSize = 8;   // количество элементов на странице
+            int pageSize = 8; 
             List<NewsDTO> news;
             if (id == 0)
             {
@@ -103,6 +103,11 @@ namespace WebApp.Controllers
         public void UpdateArticle(NewsDTO newsDTO)
         {
             newsManager.Update(newsDTO);
+        }
+        public IActionResult ShowNews(int id)
+        {
+            var news = newsManager.Get().Where(e => e.Id == id).FirstOrDefault();
+            return View(news);
         }
     }
 }
