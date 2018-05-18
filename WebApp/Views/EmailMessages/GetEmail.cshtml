@@ -1,102 +1,81 @@
-﻿
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
 <style>
     .form-container {
-        padding: 5%;
         background: #ffffff;
-        border: 9px solid #f2f2f2;
         max-width: 620px;
         margin: auto;
     }
+
+    .soft {
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        width: 100%;
+        height: auto;
+    }
+    .footer {
+        background:#e1e1e1;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        width: 100%;
+        height: 100px;
+        bottom:0;
+        
+    }
+    .text {
+        margin-top: 20px;
+        margin-left: 20px;
+        font-size:16px;
+    }
 </style>
-<div class="form-container">
-    <h1>Свяжитеcь с нами</h1>
-    <br />
-    <form asp-controller="EmailMessages" asp-action="GetEmail" method="post" id="reused_form">
-        <label for="name">Ваше Имя:</label>
-        <input id="name" type="text" class="form-control" name="Name" required maxlength="50">
+<div class="container">
+    <div class="row">
+        <div class="form-container col-lg-7">
+            <h1>Свяжитеcь с нами</h1>
+            <br />
+            <form asp-controller="EmailMessages" asp-action="GetMessage" method="post" id="reused_form">
+                <label for="name">Ваше Имя:</label>
+                <input id="name" type="text" class="form-control" name="Name" required maxlength="50">
 
-        <label for="email">Ваш Email:</label>
-        <input id="email" class="form-control" type="email" name="Email" required maxlength="70">
+                <label for="email">Ваш Email:</label>
+                <input id="email" class="form-control" type="email" name="Email" required maxlength="70">
 
-        <label for="message">Сообщение:</label>
-        <textarea id="message" class="form-control" name="Message" rows="10" maxlength="6000" required></textarea>
+                <label for="message">Сообщение:</label>
+                <textarea id="message" class="form-control" name="Message" rows="10" maxlength="6000" required></textarea>
 
+                <br />
+                <input class="btn btn-primary btn-send-email" type="submit" value="Отправить" />
+            </form>
+
+            <div id="success_message" style="display:none">
+                <h3>Submitted the form successfully!</h3>
+                <p>
+                    Спасибо! Мы с Вами свяжемся!
+                </p>
+            </div>
+            <div id="error_message"
+                 style="width:100%; height:100%; display:none; ">
+                <h3>Error</h3>
+                Sorry there was an error sending your form.
+
+            </div>
+        </div>
         <br />
-        <input class="btn btn-primary btn-send-email" type="submit" value="Отправить" />
-    </form>
-
-    <div id="success_message" style="display:none">
-        <h3>Submitted the form successfully!</h3>
-        <p>
-            Спасибо! Мы с Вами свяжемся!
-        </p>
+        <div class="col-lg-5 ">
+            <img class="soft" src="~/images/Screenshot_13.png" />
+        </div>
     </div>
-    <div id="error_message"
-         style="width:100%; height:100%; display:none; ">
-        <h3>Error</h3>
-        Sorry there was an error sending your form.
-
+    <br />
+    <br />
+    <div class="row footer">
+        <p class="text">Адрес: 246, Головна вулиця, 246, Чернівці, Чернівецька область, 58000</p>
+        <p class="text">Телефон: 0372 586 130</p>
     </div>
 </div>
 <br />
 @section Scripts{
     <script>
-        //$(function () {
-        //    function after_form_submitted(data) {
-        //        if (data.result == 'success') {
-        //            $('form#reused_form').hide();
-        //            $('#success_message').show();
-        //            $('#error_message').hide();
-        //        }
-        //        else {
-        //            $('#error_message').append('<ul></ul>');
-
-        //            jQuery.each(data.errors, function (key, val) {
-        //                $('#error_message ul').append('<li>' + key + ':' + val + '</li>');
-        //            });
-        //            $('#success_message').hide();
-        //            $('#error_message').show();
-
-        //            //reverse the response on the button
-        //            $('button[type="button"]', $form).each(function () {
-        //                $btn = $(this);
-        //                label = $btn.prop('orig_label');
-        //                if (label) {
-        //                    $btn.prop('type', 'submit');
-        //                    $btn.text(label);
-        //                    $btn.prop('orig_label', '');
-        //                }
-        //            });
-
-        //        }//else
-        //    }
-
-        //    $('#reused_form').submit(function (e) {
-        //        e.preventDefault();
-
-        //        $form = $(this);
-        //        //show some response on the button
-        //        $('button[type="submit"]', $form).each(function () {
-        //            $btn = $(this);
-        //            $btn.prop('type', 'button');
-        //            $btn.prop('orig_label', $btn.text());
-        //            $btn.text('Sending ...');
-        //        });
-
-
-        //        $.ajax({
-        //            type: "POST",
-        //            url: 'handler.php',
-        //            data: $form.serialize(),
-        //            success: after_form_submitted,
-        //            dataType: 'json'
-        //        });
-
-        //    });
-
-
-
-        //});
         $(".btn-send-email").click(function () {
             console.log("sss");
             $.ajax({

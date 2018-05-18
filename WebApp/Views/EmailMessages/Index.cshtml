@@ -1,0 +1,155 @@
+﻿@model WebApp.ViewModels.IndexViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    a:hover {
+        cursor: pointer;
+    }
+
+    .Inbox {
+        width: 200px;
+        height: 100px;
+        border: 1px solid #dedede;
+        text-align: center;
+        margin-top: 20px;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .Outbox {
+        width: 200px;
+        height: 100px;
+        border: 1px solid #dedede;
+        text-align: center;
+        margin-top: 20px;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    #InBoxMEssages {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    #OutBoxMEssages {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .mess {
+        margin-top: 20px;
+        min-height: 500px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .email-btn {
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        margin-left: 15px;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <a class="btn btn-primary email-btn" asp-controller="EmailMessages" asp-action="SendEmail">Send Message</a>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="Inbox">
+                <br />
+                <br />
+                <a>Inbox</a>
+            </div>
+            <div class="Outbox">
+                <br />
+                <br />
+
+                <a>Outbox</a>
+            </div>
+
+        </div>
+        <div class="col-lg-8 mess">
+            <div id="InBoxMEssages" style="display:none;">
+                @foreach (var mes in Model.InBoxMessages)
+                {
+                    if (mes.FromEmail != null)
+                    {
+                        <p>@mes.FromEmail @mes.Date</p>
+
+                        <p>@mes.InboxText</p>
+                        <hr />
+                    }
+                }
+                @if (Model.InBoxMessagesPageViewModel.HasPreviousPage)
+                {
+                    <a asp-action="Index"
+                       asp-route-page="@(Model.InBoxMessagesPageViewModel.PageNumber - 1)"
+                       class="btn btn-default btn">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                        Назад
+                    </a>
+                }
+                @if (Model.InBoxMessagesPageViewModel.HasNextPage)
+                {
+                    <a asp-action="Index"
+                       asp-route-page="@(Model.InBoxMessagesPageViewModel.PageNumber + 1)"
+                       class="btn btn-default btn">
+                        Вперед
+                        <i class="glyphicon glyphicon-chevron-right"></i>
+                    </a>
+                }
+            </div>
+            <div id="OutBoxMEssages" style="display:none;">
+                @foreach (var mes in Model.OutBoxMessages)
+                {
+                    if (mes.ToEmail != null)
+                    {
+                        <p>@mes.ToEmail @mes.Date</p>
+                        <p>@mes.OutboxText</p>
+                        <hr />
+                    }
+                }
+                @if (Model.OutBoxMessagesPageViewModel.HasPreviousPage)
+                {
+                    <a asp-action="Index"
+                       asp-route-page="@(Model.OutBoxMessagesPageViewModel.PageNumber - 1)"
+                       class="btn btn-default btn">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                        Назад
+                    </a>
+                }
+                @if (Model.OutBoxMessagesPageViewModel.HasNextPage)
+                {
+                    <a asp-action="Index"
+                       asp-route-page="@(Model.OutBoxMessagesPageViewModel.PageNumber + 1)"
+                       class="btn btn-default btn">
+                        Вперед
+                        <i class="glyphicon glyphicon-chevron-right"></i>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <script>
+
+        $('.Inbox').click(function () {
+            $("#InBoxMEssages").toggle();
+            $("#OutBoxMEssages").slideUp();
+        });
+
+        $('.Outbox').click(function () {
+            $("#OutBoxMEssages").toggle();
+            $("#InBoxMEssages").slideUp();
+        });
+
+
+    </script>
+}

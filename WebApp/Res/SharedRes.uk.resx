@@ -372,4 +372,13 @@
   <data name="Ratings" xml:space="preserve">
     <value>Рейтинги</value>
   </data>
+  <data name="Messages" xml:space="preserve">
+    <value>Пошта</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Контактна інформація</value>
+  </data>
+  <data name="BackToMail" xml:space="preserve">
+    <value>Назад до Пошти</value>
+  </data>
 </root>
