@@ -358,7 +358,7 @@
     <value>Exit</value>
   </data>
   <data name="NotEnough" xml:space="preserve">
-    <value>Sorry, you tied but not good enough. Your mark:</value>
+    <value>Sorry, you tried but not good enough. Your mark:</value>
   </data>
   <data name="OnReview" xml:space="preserve">
     <value>Your Solution in on review now. Please, wait for result.</value>
