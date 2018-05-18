@@ -348,4 +348,19 @@
   <data name="Solutions" xml:space="preserve">
     <value>Solutions</value>
   </data>
+  <data name="DoesNotmatch" xml:space="preserve">
+    <value>'New password' and 'Confirm new password' does not match</value>
+  </data>
+  <data name="FillConfNewPassword" xml:space="preserve">
+    <value>Please fill confirm new password field!</value>
+  </data>
+  <data name="FillNewPassword" xml:space="preserve">
+    <value>Please fill the fill new password field!</value>
+  </data>
+  <data name="FillPassword" xml:space="preserve">
+    <value>Please fill the old password field!</value>
+  </data>
+  <data name="FixError" xml:space="preserve">
+    <value>Please fix this errors!</value>
+  </data>
 </root>

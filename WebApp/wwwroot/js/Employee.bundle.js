@@ -1,47 +1,35 @@
 ﻿
-document.addEventListener('DOMContentLoaded', function (event) {
-    let app = new Vue({ /*view*/
-        el: '#app',         //document.getElementById('view'),
-     //  mounted: function () { },
-        data: {
-            NewUserName: "",
-            NewEmail: "",
-            Password: "",
-            NewPassword: "",
-            ConfirmNewPassword: ""
-        },
-        methods:
-        {
-            checkForm: function (e) { //save
-              //  try {
-             //   var url = '/User/ChangeAllData';
-                     var data = {
-                        "NewUserName": this.NewUserName,
-                        "NewEmail": this.NewEmail,
-                        "Password": this.Password,
-                        "NewPassword": this.NewPassword,
-                        "ConfirmNewPassword": this.ConfirmNewPassword
-                    };
-                    e.preventDefault();
-                    alert("successful");
-                  /*  var self = this;
-                    http.post(url, data)
-                        .then(function (response) {
-                            console.log("successfully added!");
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });*/
-               // } catch (ex) {
-               //     console.log(ex);
-               // }
+let app = new Vue({
+    el: '#app',
+    data: {
+        errors: [],
+        OldPassword: "",
+        NewPassword: "",
+        ConfirmNewPassword: ""
 
-                return false;
-            }
+    },
+
+    methods:
+    {
+        save: function (e) {
+            this.errors = [];
+        
+           
+            if (!this.OldPassword) this.errors.push("Please fill the 'Old Password' field");
+            if (!this.NewPassword) this.errors.push("Please fill the 'New Password' field");
+            if (!this.ConfirmNewPassword) this.errors.push("Please fill the 'Confirm New password' field");
+
+            //if (this.OldPassword === "" || this.NewPassword === "" || this.ConfirmNewPassword === "") {
+            //    this.errors.push("")
+            //}
+
+            if (!this.errors.length) return true;
+            e.preventDefault();
         }
-    });
-});
 
+    }
+});
+//});
 
 //const app = new Vue({
 //    el: '#app',
@@ -75,17 +63,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
 
 
-
-
-
-
-
-var app6 = new Vue({
-    el: '#app-6',
-    data: {
-        message: 'Привет, Vue!'
-    }
-});
 
 //<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"> </script>
    

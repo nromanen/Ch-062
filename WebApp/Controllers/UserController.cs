@@ -141,6 +141,7 @@ namespace WebApp.Controllers
 
             User user = await userManager.FindByIdAsync(model.Id);
             IdentityResult userNameResult = await userManager.SetUserNameAsync(user, model.NewUserName);
+            
             if (!userNameResult.Succeeded)
             {
                 foreach (var error in userNameResult.Errors)

@@ -351,4 +351,19 @@
   <data name="Solutions" xml:space="preserve">
     <value>Рішення</value>
   </data>
+  <data name="DoesNotmatch" xml:space="preserve">
+    <value>Поля 'Новий парль' і 'Підвердити новий пароль' не співпадають</value>
+  </data>
+  <data name="FillConfNewPassword" xml:space="preserve">
+    <value>Будь ласка заповніть поле 'Підвердити новий пароль!'</value>
+  </data>
+  <data name="FillNewPassword" xml:space="preserve">
+    <value>Будь ласка заповніть поле 'Новий пароль!'</value>
+  </data>
+  <data name="FillPassword" xml:space="preserve">
+    <value>Будь ласка заповніть поле 'Старий пароль!'</value>
+  </data>
+  <data name="FixError" xml:space="preserve">
+    <value>Будь ласка виправте ці помилки</value>
+  </data>
 </root>
