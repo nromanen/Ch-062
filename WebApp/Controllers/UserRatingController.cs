@@ -31,7 +31,7 @@ namespace WebApp.Controllers
             this.mapper = mapper;
         }
 
-        [Authorize]
+       // [Authorize]
         public IActionResult Index()
         {
             var userList = userRatingManager.GetAll();

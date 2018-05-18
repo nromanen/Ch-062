@@ -48,8 +48,8 @@
     <br />
 </div>
 <div class="col-md-12">
-    <label class="control-label">Task:</label>
-    <textarea asp-for="@Model.ExerciseTaskText" id="ECM"></textarea>
+    <label class="control-label" id="task">Task:</label>
+  <div id="ECMDIV">  <textarea asp-for="@Model.ExerciseTaskText" id="ECM"></textarea> </div>
 </div>
 <div style="clear: both;">
     <br />
@@ -101,7 +101,11 @@
                 lineNumbers: true
             });
 
-          
+            $(document).ready(function () {
+                $('#task').click(function () {
+                    $('#ECMDIV').toggle(1800);
+                });
+            });
           
             editableCodeMirror.on('change', function () {             
                 editableCodeMirror.userCodeWasChanged = true;

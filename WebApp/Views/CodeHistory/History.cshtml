@@ -64,7 +64,7 @@
                 <div class="col-lg-1 date">
                     <div class="row form-group">
                         <p class="col-lg-12">@Model.CodeHistory[i].time</p>
-                        <input id="myBtn" type="button" data-codeTextId="@Model.CodeHistory[i].Id" data-codeText="@Model.CodeHistory[i].CodeText" class="save-changes-btn btn btn-default btn-md col-lg-12" value="@SharedLocalizer["Save"]" />
+                        <input id="myBtn" type="button" data-codeTextId="@Model.CodeHistory[i].Id" class="save-changes-btn btn btn-default btn-md col-lg-12" value="@SharedLocalizer["Save"]" />
 
                     </div>
                 </div>
@@ -127,7 +127,11 @@ catch (Exception ex)
             $('#myBtn').click(function () {
                 var obj = new Object();
                 var codeTextId = $.parseJSON($(this).attr('data-codeTextId'));
-                var codeText = $("#code-example");//to set textarea to this codeText
+                if (codeTextId==) {
+
+
+                }
+                var codeText = $("#code-example").val();
                 $("#inputTextareaToSend").val() = codeText;
                 obj.codeTextId = codeTextId;
                 obj.codeText = codeText;
