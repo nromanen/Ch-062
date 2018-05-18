@@ -57,11 +57,6 @@ namespace BAL.Managers
             return code;
         }
 
-        public string IsUserDidExercise(string userId, int exerciseId)
-        {
-            return unitOfWork.CodeRepo.Get(c => c.UserId == userId && c.ExerciseId == exerciseId).LastOrDefault()?.CodeText;
-        }
-
         public bool FindUserCode(string userId, int exerciseId)
         {
             return unitOfWork.CodeRepo.Get(c => c.ExerciseId == exerciseId && c.UserId == userId).FirstOrDefault() != null;
@@ -200,21 +195,27 @@ namespace BAL.Managers
         {
             var exercise = exerciseManager.GetById(model.ExerciseId);
             model.Exercise = exercise;
-            model.CodeText = exercise.TaskBaseCodeField;
             var user = userManager.FindByNameAsync(model.UserId).Result;
             model.UserId = user.Id;
-            var code = unitOfWork.CodeRepo.Get(c=>c.ExerciseId==model.ExerciseId && c.UserId==model.UserId).FirstOrDefault();
-            if (code != null)
+            if (model.CodeText != null)
             {
-                model.CodeText = code.CodeText;
-                model.CodeStatus = code.CodeStatus;
-                model.Mark = code.Mark;
-                model.TeachersComment = code.TeachersComment;
+                //FOR RUSLAN
             }
-            string text = IsUserDidExercise(user.Id, exercise.Id);
-            if (text != null)
+            else
             {
-                model.CodeText = text;
+                var code = unitOfWork.CodeRepo.Get(c => c.ExerciseId == model.ExerciseId && c.UserId == model.UserId).FirstOrDefault();
+                if (code != null)
+                {
+                    model.CodeText = code.CodeText;
+                    model.CodeStatus = code.CodeStatus;
+                    model.Mark = code.Mark;
+                    model.TeachersComment = code.TeachersComment;
+                }
+                else
+                {
+                    model.CodeStatus = CodeStatus.InProgress;
+                    model.CodeText = exercise.TaskBaseCodeField;
+                }
             }
             return model;
         }
