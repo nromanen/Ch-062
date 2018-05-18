@@ -1,10 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Identity;
-using Model;
 using DAL.Interface;
 using Model.DB;
-using Model.DB.Code;
-using System.Collections.Generic;
 
 namespace DAL.Seed
 {
@@ -49,6 +46,11 @@ namespace DAL.Seed
                 userManager.CreateAsync(new User { UserName = userTeacher, Email = userTeacher, EmailConfirmed = true }, passwordTeacher).Wait();
                 var t = userManager.FindByNameAsync(userTeacher);
                 userManager.AddToRoleAsync(t.Result, "Teacher").Wait();
+
+                string userTeacher2 = "teacher2@gmail.com";
+                userManager.CreateAsync(new User { UserName = userTeacher2, Email = userTeacher2, EmailConfirmed = true }, passwordTeacher).Wait();
+                var t2 = userManager.FindByNameAsync(userTeacher2);
+                userManager.AddToRoleAsync(t2.Result, "Teacher").Wait();
             }
             if (!context.Roles.Any(r => r.Name == "Student"))
             {
@@ -58,42 +60,30 @@ namespace DAL.Seed
                 userManager.CreateAsync(new User { UserName = userStudent, Email = userStudent, EmailConfirmed = true }, passwordStudent).Wait();
                 var t = userManager.FindByNameAsync(userStudent);
                 userManager.AddToRoleAsync(t.Result, "Student").Wait();
+
+                string userStudent2 = "student2@gmail.com";
+                userManager.CreateAsync(new User { UserName = userStudent2, Email = userStudent2, EmailConfirmed = true }, passwordStudent).Wait();
+                var t2 = userManager.FindByNameAsync(userStudent2);
+                userManager.AddToRoleAsync(t2.Result, "Student").Wait();
+
+                string userStudent3 = "student3@gmail.com";
+                userManager.CreateAsync(new User { UserName = userStudent3, Email = userStudent3, EmailConfirmed = true }, passwordStudent).Wait();
+                var t3 = userManager.FindByNameAsync(userStudent3);
+                userManager.AddToRoleAsync(t3.Result, "Student").Wait();
             }
-            if (!context.Courses.Any(r => r.Name == ".Net"))
+            if (!context.Courses.Any(r => r.Name == "DotNet Starter"))
             {
                 unitOfWork.CourseRepo.Insert(new Course
                 {
-                    Name = ".Net",
-                    Description = "Courses for .Net group",
+                    Name = "DotNet Starter",
+                    Description = "Courses for .Net starter group",
                     IsActive = true,
                     CreationDate = System.DateTime.Now,
                     UserId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
                 });
             }
-            if (!context.Courses.Any(r => r.Name == "Java"))
-            {
-                unitOfWork.CourseRepo.Insert(new Course
-                {
-                    Name = "Java",
-                    Description = "Courses for Java group",
-                    IsActive = true,
-                    CreationDate = System.DateTime.Now,
-                    UserId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
-                });
-            }
-            if (!context.Courses.Any(r => r.Name == "JavaScript"))
-            {
-                unitOfWork.CourseRepo.Insert(new Course
-                {
-                    Name = "JavaScript",
-                    Description = "Courses for JavaScript group",
-                    IsActive = true,
-                    CreationDate = System.DateTime.Now,
-                    UserId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
-                });
-                unitOfWork.Save();
-            }
-            if (!context.Exercises.Any(r => r.TaskName == ".Net Task 1"))
+            unitOfWork.Save();
+            if (!context.Exercises.Any(r => r.TaskName == ".Net Addition Task"))
             {
                 string code = 
 @"public class Program
@@ -122,10 +112,10 @@ public class UnitTest
 }";
                 unitOfWork.ExerciseRepo.Insert(new Exercise
                 {
-                    TaskName = ".Net Task 1",
+                    TaskName = ".Net Addition Task",
                     TaskTextField = "First Task 4 .Net",
-                    Course = ".Net",
-                    CourseId = unitOfWork.CourseRepo.Get(c => c.Name == ".Net").First().Id,
+                    Course = "DotNet Starter",
+                    CourseId = unitOfWork.CourseRepo.Get(c => c.Name == "DotNet Starter").First().Id,
                     IsDeleted = false,
                     CreateDateTime = System.DateTime.Now,
                     UpdateDateTime = System.DateTime.Now,
@@ -134,35 +124,6 @@ public class UnitTest
                     TestCasesCode = testCasesCode
                 });
             }
-            if (!context.Exercises.Any(r => r.TaskName == "Java Task 1"))
-            {
-                unitOfWork.ExerciseRepo.Insert(new Exercise
-                {
-                    TaskName = "Java Task 1",
-                    TaskTextField = "First Task 4 Java",
-                    Course = "Java",
-                    CourseId = unitOfWork.CourseRepo.Get(c => c.Name == "Java").First().Id,
-                    IsDeleted = false,
-                    CreateDateTime = System.DateTime.Now,
-                    UpdateDateTime = System.DateTime.Now,
-                    TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
-                });
-            }
-            if (!context.Exercises.Any(r => r.TaskName == "JavaScript Task 1"))
-            {
-                unitOfWork.ExerciseRepo.Insert(new Exercise
-                {
-                    TaskName = "JavaScript Task 1",
-                    TaskTextField = "First Task 4 JavaScript",
-                    Course = "JavaScript",
-                    CourseId = unitOfWork.CourseRepo.Get(c => c.Name == "JavaScript").First().Id,
-                    IsDeleted = false,
-                    CreateDateTime = System.DateTime.Now,
-                    UpdateDateTime = System.DateTime.Now,
-                    TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id
-                });
-            }
-            
             unitOfWork.Save();
         }
     }
