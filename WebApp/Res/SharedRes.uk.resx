@@ -381,4 +381,76 @@
   <data name="BackToMail" xml:space="preserve">
     <value>Назад до Пошти</value>
   </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Зв'яжіться з нами</value>
+  </data>
+  <data name="Favourites" xml:space="preserve">
+    <value>Вподобаний код</value>
+  </data>
+  <data name="Inbox" xml:space="preserve">
+    <value>Отримані повідомлення</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Повідомлення</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Ім'я</value>
+  </data>
+  <data name="Outbox" xml:space="preserve">
+    <value>Відправлені повідомлення</value>
+  </data>
+  <data name="SendMessage" xml:space="preserve">
+    <value>Відправити повідомлення</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Тема</value>
+  </data>
+  <data name="Your" xml:space="preserve">
+    <value>Ваше</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Відправити</value>
+  </data>
+  <data name="DoesNotmatch" xml:space="preserve">
+    <value>Поля 'Новий парль' і 'Підвердити новий пароль' не співпадають</value>
+  </data>
+  <data name="FillConfNewPassword" xml:space="preserve">
+    <value>Будь ласка, заповніть поле 'Підвердити новий пароль!'</value>
+  </data>
+  <data name="FillNewPassword" xml:space="preserve">
+    <value>Будь ласка заповніть поле 'Новий пароль!'</value>
+  </data>
+  <data name="FillOldPassword" xml:space="preserve">
+    <value>Будь ласка заповніть поле 'Старий пароль!'</value>
+  </data>
+  <data name="FixError" xml:space="preserve">
+    <value>Будь ласка виправте ці помилки</value>
+  </data>
+  <data name="8Char" xml:space="preserve">
+    <value>Пароль повинен містити хоча б 8 символів</value>
+  </data>
+  <data name="CorrectEmail" xml:space="preserve">
+    <value>Будь ласка, напишіть правильну електронну адресу</value>
+  </data>
+  <data name="FillNewEmail" xml:space="preserve">
+    <value>Будь ласка, заповніть поле 'Нова електронна пошта'</value>
+  </data>
+  <data name="FillPassword" xml:space="preserve">
+    <value>Будь ласка, заповність поле 'Пароль'</value>
+  </data>
+  <data name="FillUserName" xml:space="preserve">
+    <value>Будь ласка, заповніть поле 'Ім'я користувача'!</value>
+  </data>
+  <data name="LowerCase" xml:space="preserve">
+    <value>Пароль повинен містити хоча б одну літеру нижнього регістру ('a'-'z').</value>
+  </data>
+  <data name="NonAN" xml:space="preserve">
+    <value>Пароль повинен містити хоча б один не алфавітно-цифровий символ</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Пароль повинен містити хоча б одну цифру</value>
+  </data>
+  <data name="UpperCase" xml:space="preserve">
+    <value>Пароль повинен містити хоча б одну літеру верхнього регістру ('A'-'Z').</value>
+  </data>
 </root>

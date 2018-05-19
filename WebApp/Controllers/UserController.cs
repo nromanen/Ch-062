@@ -16,7 +16,7 @@ using Remotion.Linq.Utilities;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers
-{
+{   
     [Authorize]
     public class UserController : Controller
     {
@@ -24,19 +24,18 @@ namespace WebApp.Controllers
         private readonly UserManager<User> userManager;
         private readonly IMapper mapper;
 
-        public UserController(UserManager<User> userManager, IMapper ucMapper, SignInManager<User> signInManager)
+        public UserController(UserManager<User> userManager, IMapper mapper, SignInManager<User> signInManager)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
-            mapper = ucMapper;
-        }
+           this.mapper = mapper;
+        }       
 
         public IActionResult Index()
         {
-            var getuser = mapper.Map<UserDTO>(userManager.GetUserAsync(HttpContext.User).Result);
+              var getuser = mapper.Map<UserDTO>(userManager.GetUserAsync(HttpContext.User).Result);
 
             return View(getuser);
-
         }
 
         [HttpGet]
@@ -51,6 +50,7 @@ namespace WebApp.Controllers
 
             return View(model);
         }
+
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
@@ -79,6 +79,7 @@ namespace WebApp.Controllers
 
             return View(model);
         }
+
         [HttpGet]
         public async Task<IActionResult> ChangeUserName(string id)
         {
@@ -91,7 +92,7 @@ namespace WebApp.Controllers
 
             return View(model);
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> ChangeUserName(ChangeUserNameViewModel model)
         {
@@ -102,6 +103,7 @@ namespace WebApp.Controllers
 
             User user = await userManager.FindByIdAsync(model.Id);
             IdentityResult userNameResult = await userManager.SetUserNameAsync(user, model.NewUserName);
+
             if (!userNameResult.Succeeded)
             {
                 foreach (var error in userNameResult.Errors)
@@ -114,6 +116,7 @@ namespace WebApp.Controllers
             bool passwordResult = await userManager.CheckPasswordAsync(user, model.Password);
             if (!passwordResult)
             {
+                
                 ModelState.AddModelError(string.Empty, "Incorrect password");
                 return View(model);
             }
@@ -159,8 +162,11 @@ namespace WebApp.Controllers
                 return View(model);
             }
             return RedirectToAction("Index", "Home");
+          
         }
 
+      
+       
 
     }
 

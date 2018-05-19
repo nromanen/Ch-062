@@ -1,9 +1,9 @@
-﻿@model WebApp.ViewModels.NewsViewModel
+﻿@model WebApp.ViewModels.IndexViewModel
 @{
     ViewData["Title"] = "News";
 }
-
 <style>
+
     .eo-date .eo-date__day {
         font-size: 18px;
         font-weight: 700;
@@ -100,14 +100,17 @@
         .close:hover {
             background: #00d9ff;
         }
-    .section:hover{
-        cursor:pointer;
-        color:slategrey;
+
+    .section:hover {
+        cursor: pointer;
+        color: slategrey;
     }
+
     .title:hover {
         cursor: pointer;
         color: slategrey;
     }
+
     #preview {
         max-height: 150px;
         min-height: 150px;
@@ -121,14 +124,13 @@
     }
 </style>
 
-
 @try
 {
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
                 <h3>News</h3>
-                @foreach (var i in Model.NewsDTO)
+                @foreach (var i in Model.News)
                 {
                     <br />
                     <div class="row">
@@ -137,57 +139,74 @@
                             <span class="eo-date__month">@i.Month</span>
                         </div>
                         <div class="col-lg-9">
-                            <span class="title">@i.Title</span>
+                            <a  href='@Url.Action("ShowNews", "AddNews", new { id = i.Id }, null)' class="title">@i.Title</a>
                         </div>
                     </div>
                     <br />
                     <hr />
                 }
+                @if (Model.NewsPageViewModel.HasPreviousPage)
+                {
+                    <a asp-action="Index"
+                       asp-route-page="@(Model.NewsPageViewModel.PageNumber - 1)"
+                       class="btn btn-default btn">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                        Назад
+                    </a>
+                }
+                @if (Model.NewsPageViewModel.HasNextPage)
+                {
+                    <a asp-action="Index"
+                       asp-route-page="@(Model.NewsPageViewModel.PageNumber + 1)"
+                       class="btn btn-default btn">
+                        Вперед
+                        <i class="glyphicon glyphicon-chevron-right"></i>
+                    </a>
+                }
             </div>
             <div class="col-lg-4">
                 <h3>Sort by sections</h3>
                 <br />
-                @foreach (var i in Model.CoursesDTO)
-    {
-
-            <p class="section">@i.Name</p>
-}
-
+                @foreach (var i in Model.Courses)
+                {
+                    <a  href='@Url.Action("News", "AddNews", new { id = i.Id }, null)' class="section">@i.Name</a>
+                    <div></div>
+                }
                 @if (User.IsInRole("Teacher"))
-    {
-            <a href="#openModal" class="btn btn-default" style="margin-top:30px;">Create Article</a>
-            <div id="openModal" class="modalDialog">
-                <div>
-                    <a href="#close" title="Закрыть" class="close">X</a>
-                    <form name="uploadFiles" method="post" enctype="multipart/form-data" asp-controller="AddNews" asp-action="Post">
-                        <div class="form-group">
-                            <br />
-                            <input type='file' name="files" multiple onchange="readURL(this);" />
-                            <img id="preview" src="http://www.adbazar.pk/frontend/images/default-image.jpg" alt="your image" />
-                            <div></div>
-                            <hr>
-                        </div>
-                        <div class="form-group">
-                            <label>Course Name</label>
-                            <input type="text" name="Course" />
-                            <div></div>
-                            <hr>
-                            <label for="title">Title</label>
-                            <textarea cols="30" rows="10" class="form-control text-area-title" name="Title" id="title" required>
+                {
+                    <a href="#openModal" class="btn btn-default" style="margin-top:30px;">Create Article</a>
+                    <div id="openModal" class="modalDialog">
+                        <div>
+                            <a href="#close" title="Закрыть" class="close">X</a>
+                            <form name="uploadFiles" method="post" enctype="multipart/form-data" asp-controller="AddNews" asp-action="Post">
+                                <div class="form-group">
+                                    <br />
+                                    <input type='file' name="files" multiple onchange="readURL(this);" />
+                                    <img id="preview" src="http://www.adbazar.pk/frontend/images/default-image.jpg" alt="your image" />
+                                    <div></div>
+                                    <hr>
+                                </div>
+                                <div class="form-group">
+                                    <label>Course Name</label>
+                                    <input type="text" name="Course" />
+                                    <div></div>
+                                    <hr>
+                                    <label for="title">Title</label>
+                                    <textarea cols="30" rows="10" class="form-control text-area-title" name="Title" id="title" required>
                 </textarea>
-                            <div></div>
-                            <hr>
-                            <label for="article">Article</label>
-                            <textarea cols="30" rows="10" class="form-control text-area-article" name="Text" id="article" required>
+                                    <div></div>
+                                    <hr>
+                                    <label for="article">Article</label>
+                                    <textarea cols="30" rows="10" class="form-control text-area-article" name="Text" id="article" required>
                 </textarea>
-                            <div></div>
+                                    <div></div>
+                                </div>
+                                <input type="submit" value="Publish" />
+                            </form>
                         </div>
-                        <input type="submit" value="Publish" />
-                    </form>
-                </div>
-            </div>
+                    </div>
 
-}
+                }
             </div>
         </div>
     </div>
@@ -196,9 +215,7 @@ catch (Exception ex)
 {
     <p>Still no news</p>
 }
-
 @section Scripts{
-
     <script>
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -227,5 +244,4 @@ catch (Exception ex)
                 });
         });
     </script>
-
 }

@@ -378,4 +378,70 @@
   <data name="BackToMail" xml:space="preserve">
     <value>Back to MailBox</value>
   </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
+  <data name="Inbox" xml:space="preserve">
+    <value>Inbox</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Outbox" xml:space="preserve">
+    <value>Outbox</value>
+  </data>
+  <data name="SendMessage" xml:space="preserve">
+    <value>Send Message</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Subject</value>
+  </data>
+  <data name="Your" xml:space="preserve">
+    <value>Your</value>
+  </data>
+  <data name="DoesNotmatch" xml:space="preserve">
+    <value>'New password' and 'Confirm new password' does not match</value>
+  </data>
+  <data name="FillConfNewPassword" xml:space="preserve">
+    <value>Please fill confirm new password field!</value>
+  </data>
+  <data name="FillNewPassword" xml:space="preserve">
+    <value>Please fill the fill new password field!</value>
+  </data>
+  <data name="FillOldPassword" xml:space="preserve">
+    <value>Please fill the old password field!</value>
+  </data>
+  <data name="FixError" xml:space="preserve">
+    <value>Please fix this errors!</value>
+  </data>
+  <data name="8Char" xml:space="preserve">
+    <value>Passwords must be at least 8 characters.</value>
+  </data>
+  <data name="CorrectEmail" xml:space="preserve">
+    <value>Please write the correct email address</value>
+  </data>
+  <data name="FillNewEmail" xml:space="preserve">
+    <value>Please fill the 'New Email' field!</value>
+  </data>
+  <data name="FillPassword" xml:space="preserve">
+    <value>Please fill the 'Password' field!</value>
+  </data>
+  <data name="FillUserName" xml:space="preserve">
+    <value>Please fill the 'User name' field!</value>
+  </data>
+  <data name="LowerCase" xml:space="preserve">
+    <value>Passwords must have at least one lowercase('a'-'z').</value>
+  </data>
+  <data name="NonAN" xml:space="preserve">
+    <value>Passwords must have at least one non alphanumeric character.</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Passwords must have at least one digit ('0'-'9')</value>
+  </data>
+  <data name="UpperCase" xml:space="preserve">
+    <value>Passwords must have at least one uppercase ('A'-'Z').</value>
+  </data>
 </root>
