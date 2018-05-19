@@ -33,10 +33,49 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
-            var getuser = mapper.Map<UserDTO>(userManager.GetUserAsync(HttpContext.User).Result);
+              var getuser = mapper.Map<UserDTO>(userManager.GetUserAsync(HttpContext.User).Result);
 
             return View(getuser);
+        }
+        [HttpGet]
+        public async Task< IActionResult > ChangeAllData(string id)
+        {
+            User user = await userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            ChangeUserDataViewModel model = new ChangeUserDataViewModel { Id = user.Id};
 
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task <IActionResult> ChangeAllData(ChangeUserDataViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            User user = await userManager.FindByIdAsync(model.Id);
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "User not found");
+                return View(model);
+            }
+            IdentityResult result = await userManager.ChangePasswordAsync(user, model.Password, model.NewPassword);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return View(model);
         }
 
         [HttpGet]
@@ -102,6 +141,7 @@ namespace WebApp.Controllers
 
             User user = await userManager.FindByIdAsync(model.Id);
             IdentityResult userNameResult = await userManager.SetUserNameAsync(user, model.NewUserName);
+            
             if (!userNameResult.Succeeded)
             {
                 foreach (var error in userNameResult.Errors)
