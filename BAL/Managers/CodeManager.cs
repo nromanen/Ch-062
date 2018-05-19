@@ -77,30 +77,32 @@ namespace BAL.Managers
 
         public string ExecuteCode(UserCodeDTO model)
         {
-            var status = model.CodeStatus;
-            if (FindUserCode(model.UserId, model.ExerciseId))
+            if (model.CodeStatus != CodeStatus.Done && model.CodeStatus != CodeStatus.FromHistory)
             {
-                var code = unitOfWork.CodeRepo.Get(c => c.ExerciseId == model.ExerciseId && c.UserId == model.UserId).FirstOrDefault();
-                if (code != null)
+                if (FindUserCode(model.UserId, model.ExerciseId))
                 {
-                    status = code.CodeStatus;
-                    code.CodeText = model.CodeText;
-                    unitOfWork.CodeRepo.Update(code);
+               
+                    var code = unitOfWork.CodeRepo.Get(c => c.ExerciseId == model.ExerciseId && c.UserId == model.UserId).FirstOrDefault();
+                    if (code != null)
+                    {
+                        code.CodeText = model.CodeText;
+                        unitOfWork.CodeRepo.Update(code);
+                    }
                 }
-            }
-            else
-            {
-                UserCode code = new UserCode
+                else
                 {
-                    CodeText = model.CodeText,
-                    UserId = model.UserId,
-                    ExerciseId = model.ExerciseId
-                };
+                    UserCode code = new UserCode
+                    {
+                        CodeText = model.CodeText,
+                        UserId = model.UserId,
+                        ExerciseId = model.ExerciseId
+                    };
 
-                unitOfWork.CodeRepo.Insert(code);
+                    unitOfWork.CodeRepo.Insert(code);
+                }
+                unitOfWork.Save();
             }
-            unitOfWork.Save();
-            return ExecutionResult(model.CodeText, model.ExerciseId, model.UserId, status);
+            return ExecutionResult(model.CodeText, model.ExerciseId, model.UserId, model.CodeStatus);
         }
 
         public string ExecutionResult(string code, int exId, string userId, CodeStatus codeStatus)
@@ -112,7 +114,7 @@ namespace BAL.Managers
             if (res.Success)
             {
                 string result = res.Result;
-                if (codeStatus != CodeStatus.Done)
+                if (codeStatus != CodeStatus.Done && codeStatus != CodeStatus.FromHistory)
                 {
                     AddHistory(codeId, code, DateTime.Now, null, result);
                 }
@@ -120,7 +122,7 @@ namespace BAL.Managers
             }
 
             string errors = res.Result;
-            if (codeStatus != CodeStatus.Done)
+            if (codeStatus != CodeStatus.Done && codeStatus != CodeStatus.FromHistory) 
             {
                 AddHistory(codeId, code, DateTime.Now, errors, null);
             }
@@ -189,7 +191,10 @@ namespace BAL.Managers
             model.UserId = user.Id;
             if (model.CodeText != null)
             {
-                //FOR RUSLAN
+
+                model.CodeStatus = CodeStatus.FromHistory; 
+                return model;
+
             }
             else
             {

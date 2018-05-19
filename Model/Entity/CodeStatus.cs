@@ -7,6 +7,7 @@ namespace Model.Entity
     public enum CodeStatus
     {
         InProgress,
-        Done
+        Done,
+        FromHistory
     }
 }

@@ -71,6 +71,8 @@
                     <textarea id="result" style="padding: 10px; border-color: black; border: 1px solid; height: 100%; width: 100%; background-color: white" readonly="readonly"></textarea>
                     <br />
                     <br />
+                    <input type="hidden" id="stat" asp-for="@Model.UserCodeDTO.CodeStatus">
+
                     <button type="button" id="executeButton" class="btn btn-default"> @SharedLocalizer["Execute"] </button>
 
                     <button type="button" id="exit" class="btn btn-default" onclick='location.href = "@Url.Action("Index", "Home")"'> @SharedLocalizer["Exit"] </button>
@@ -180,6 +182,7 @@
                 userCode.CodeText = editableCodeMirror.getValue();
                 userCode.ExerciseId = ('@Model.UserCodeDTO.ExerciseId');
                 userCode.UserId = ('@Model.UserCodeDTO.UserId');
+                userCode.CodeStatus = ('@Model.UserCodeDTO.CodeStatus');
 
                 $.ajax({
                     type: "POST",
