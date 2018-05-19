@@ -355,15 +355,42 @@
     <value>Поля 'Новий парль' і 'Підвердити новий пароль' не співпадають</value>
   </data>
   <data name="FillConfNewPassword" xml:space="preserve">
-    <value>Будь ласка заповніть поле 'Підвердити новий пароль!'</value>
+    <value>Будь ласка, заповніть поле 'Підвердити новий пароль!'</value>
   </data>
   <data name="FillNewPassword" xml:space="preserve">
     <value>Будь ласка заповніть поле 'Новий пароль!'</value>
   </data>
-  <data name="FillPassword" xml:space="preserve">
+  <data name="FillOldPassword" xml:space="preserve">
     <value>Будь ласка заповніть поле 'Старий пароль!'</value>
   </data>
   <data name="FixError" xml:space="preserve">
     <value>Будь ласка виправте ці помилки</value>
+  </data>
+  <data name="8Char" xml:space="preserve">
+    <value>Пароль повинен містити хоча б 8 символів</value>
+  </data>
+  <data name="CorrectEmail" xml:space="preserve">
+    <value>Будь ласка, напишіть правильну електронну адресу</value>
+  </data>
+  <data name="FillNewEmail" xml:space="preserve">
+    <value>Будь ласка, заповніть поле 'Нова електронна пошта'</value>
+  </data>
+  <data name="FillPassword" xml:space="preserve">
+    <value>Будь ласка, заповність поле 'Пароль'</value>
+  </data>
+  <data name="FillUserName" xml:space="preserve">
+    <value>Будь ласка, заповніть поле 'Ім'я користувача'!</value>
+  </data>
+  <data name="LowerCase" xml:space="preserve">
+    <value>Пароль повинен містити хоча б одну літеру нижнього регістру ('a'-'z').</value>
+  </data>
+  <data name="NonAN" xml:space="preserve">
+    <value>Пароль повинен містити хоча б один не алфавітно-цифровий символ</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Пароль повинен містити хоча б одну цифру</value>
+  </data>
+  <data name="UpperCase" xml:space="preserve">
+    <value>Пароль повинен містити хоча б одну літеру верхнього регістру ('A'-'Z').</value>
   </data>
 </root>
