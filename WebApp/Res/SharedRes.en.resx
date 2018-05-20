@@ -468,4 +468,7 @@
   <data name="Show/HideComments" xml:space="preserve">
     <value>Show/Hide Comments</value>
   </data>
+  <data name="CurrentOwner" xml:space="preserve">
+    <value>Current owner</value>
+  </data>
 </root>
