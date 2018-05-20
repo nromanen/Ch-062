@@ -11,5 +11,6 @@ namespace WebApp.ViewModels.CoursesViewModels
         public string CourseName { get; set; }
         public int CourseId { get; set; }
         public string ResultTeacherId { get; set; }
+        public string CurrentOwner { get; set; }
     }
 }

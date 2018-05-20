@@ -71,11 +71,11 @@ namespace DAL.Seed
                 var t3 = userManager.FindByNameAsync(userStudent3);
                 userManager.AddToRoleAsync(t3.Result, "Student").Wait();
             }
-            if (!context.Courses.Any(r => r.Name == "DotNet Starter"))
+            if (!context.Courses.Any(r => r.Name == "C# Starter"))
             {
                 unitOfWork.CourseRepo.Insert(new Course
                 {
-                    Name = "DotNet Starter",
+                    Name = "C# Starter",
                     Description = "Courses for .Net starter group",
                     IsActive = true,
                     CreationDate = System.DateTime.Now,

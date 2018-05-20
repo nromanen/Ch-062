@@ -444,4 +444,7 @@
   <data name="UpperCase" xml:space="preserve">
     <value>Passwords must have at least one uppercase ('A'-'Z').</value>
   </data>
+  <data name="CurrentOwner" xml:space="preserve">
+    <value>Current owner</value>
+  </data>
 </root>
