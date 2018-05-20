@@ -444,4 +444,28 @@
   <data name="UpperCase" xml:space="preserve">
     <value>Passwords must have at least one uppercase ('A'-'Z').</value>
   </data>
+  <data name="DoneTasksNumber" xml:space="preserve">
+    <value>Done Tasks Number</value>
+  </data>
+  <data name="FINISH" xml:space="preserve">
+    <value>FINISH</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>Review</value>
+  </data>
+  <data name="SetMark" xml:space="preserve">
+    <value>Set Mark</value>
+  </data>
+  <data name="Solution" xml:space="preserve">
+    <value>Solution</value>
+  </data>
+  <data name="SolutionReview" xml:space="preserve">
+    <value>Solution Review</value>
+  </data>
+  <data name="UserRate" xml:space="preserve">
+    <value>User Rating</value>
+  </data>
+  <data name="Show/HideComments" xml:space="preserve">
+    <value>Show/Hide Comments</value>
+  </data>
 </root>

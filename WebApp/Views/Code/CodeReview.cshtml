@@ -48,7 +48,7 @@
         <div class="col-md-10" style="padding-left: 100px">
             <div class="panel panel-warning" style="width: 100%" ; position: unset;">
                 <div class="panel-heading">
-                    <label class="control-label">Solution Review</label>
+                    <label class="control-label">@SharedLocalizer["SolutionReview"]</label>
                     <span class="rating" id="rateField" data-default-rating="-1"></span>
                 </div>
                 <input asp-for="UserCodeDTO.UserId" type="hidden">
@@ -56,11 +56,11 @@
                     <label class="control-label">@SharedLocalizer["ComText"]</label>
                     <textarea asp-for="@Model.UserCodeDTO.TeachersComment" style="width: 100%; margin-left: 20px;" id="MCE" class="form-control"></textarea>
                     <br />
-                    <label class="control-label">Set Mark</label>
+                    <label class="control-label">@SharedLocalizer["SetMark"]</label>
                     <input asp-for="@Model.UserCodeDTO.Mark" type="text" />
                 </div>
                 <div class="panel-footer">
-                    <button type="submit" class="btn btn-warning">FINISH</button>
+                    <button type="submit" class="btn btn-warning">@SharedLocalizer["FINISH"]</button>
                 </div>
             </div>
         </div>

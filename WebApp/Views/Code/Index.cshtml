@@ -48,7 +48,7 @@
     <br />
 </div>
 <div class="col-md-12">
-    <label class="control-label" id="task">Task:</label>
+    <label class="control-label" id="task">@SharedLocalizer["Task"]:</label>
   <div id="ECMDIV">  <textarea asp-for="@Model.ExerciseTaskText" id="ECM"></textarea> </div>
 </div>
 <div style="clear: both;">
@@ -77,7 +77,7 @@
 
                     <button type="button" id="exit" class="btn btn-default" onclick='location.href = "@Url.Action("Index", "Home")"'> @SharedLocalizer["Exit"] </button>
 
-                    <button type="button" id="done" class="btn btn-danger">@SharedLocalizer["Done"]</button>
+                    <button type="button" id="done" class="btn btn-danger" onclick='location.href = "@Url.Action("Index", "Home")"' >@SharedLocalizer["Done"]</button>
 
                 </div>
 

@@ -15,8 +15,8 @@ else
 {
 <table class="table">
     <tr>
-            <td>User</td>
-            <td>Solution</td>
+        <td>@SharedLocalizer["User"]</td>
+        <td>@SharedLocalizer["Solution"]</td>
     </tr>
     @foreach (var code in Model.userCodeList)
     {
@@ -30,7 +30,7 @@ else
     {
                         <form  asp-action="CodeReview" asp-controller="Code">
                             <input type="hidden" name="id" value="@code.codeUnit.Id" />
-                            <button type="submit" class="btn btn-sm btn-success"> Review </button>
+                            <button type="submit" class="btn btn-sm btn-success"> @SharedLocalizer["Review"] </button>
                         </form>
 }
                     </td>

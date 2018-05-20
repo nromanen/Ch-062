@@ -77,7 +77,7 @@ namespace BAL.Managers
 
         public string ExecuteCode(UserCodeDTO model)
         {
-            if (model.CodeStatus != CodeStatus.Done && model.CodeStatus != CodeStatus.FromHistory)
+            if (model.CodeStatus == CodeStatus.InProgress)
             {
                 if (FindUserCode(model.UserId, model.ExerciseId))
                 {
@@ -114,7 +114,7 @@ namespace BAL.Managers
             if (res.Success)
             {
                 string result = res.Result;
-                if (codeStatus != CodeStatus.Done && codeStatus != CodeStatus.FromHistory)
+                if (codeStatus == CodeStatus.InProgress)
                 {
                     AddHistory(codeId, code, DateTime.Now, null, result);
                 }
@@ -122,7 +122,7 @@ namespace BAL.Managers
             }
 
             string errors = res.Result;
-            if (codeStatus != CodeStatus.Done && codeStatus != CodeStatus.FromHistory) 
+            if (codeStatus == CodeStatus.InProgress) 
             {
                 AddHistory(codeId, code, DateTime.Now, errors, null);
             }
@@ -169,16 +169,17 @@ namespace BAL.Managers
             var code = unitOfWork.CodeRepo.GetById(id);
             code.Mark = mark;
             code.TeachersComment = comment;
+            code.CodeStatus = CodeStatus.Appreciated;
             unitOfWork.CodeRepo.Update(code);
             unitOfWork.Save();
             var user = userManager.FindByIdAsync(userId).Result;
-            var codes = unitOfWork.CodeRepo.Get(c => c.UserId == userId && c.CodeStatus == CodeStatus.Done && c.Mark != 0);
+            var codes = unitOfWork.CodeRepo.Get(c => c.UserId == userId && c.CodeStatus == CodeStatus.Appreciated && c.Mark != 0);
             double MarkSum = 0;
             foreach (var elem in codes)
             {
                 MarkSum += elem.Mark;
             }
-            user.UserRating = MarkSum / user.DoneTaskNumber;
+            user.UserRating = MarkSum / codes.Count();
             unitOfWork.UserRepo.Update(user);
             unitOfWork.Save();
         }
