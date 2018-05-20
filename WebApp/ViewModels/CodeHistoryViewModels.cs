@@ -12,8 +12,8 @@ namespace WebApp.ViewModels
     public class CodeHistoryViewModels
     {
         public List<CodeHistory> CodeHistory;
-        public string ExerciseName;
-        public int ExerciseId;
-        public string UserId;
+        public List<ExerciseDTO> Exercises;
+        public List<UserCodeDTO> UserCode;
+        public string UserName;
     }
 }
