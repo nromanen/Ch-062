@@ -453,4 +453,7 @@
   <data name="UpperCase" xml:space="preserve">
     <value>Пароль повинен містити хоча б одну літеру верхнього регістру ('A'-'Z').</value>
   </data>
+  <data name="CurrentOwner" xml:space="preserve">
+    <value>Поточний власник</value>
+  </data>
 </root>

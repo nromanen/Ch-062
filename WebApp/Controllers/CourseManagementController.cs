@@ -102,7 +102,8 @@ namespace WebApp.Controllers
             {
                 TeacherList = teacherList,
                 CourseId = course.Id,
-                CourseName = course.Name
+                CourseName = course.Name,
+                CurrentOwner = teacherList.Find(c => c.Id == course.UserId).UserName
             });
         }
 
