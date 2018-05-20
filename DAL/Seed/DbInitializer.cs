@@ -83,7 +83,7 @@ namespace DAL.Seed
                 });
             }
             unitOfWork.Save();
-            if (!context.Exercises.Any(r => r.TaskName == ".Net Addition Task"))
+            if (!context.Exercises.Any(r => r.TaskName == "Simple addition"))
             {
                 string code = 
 @"public class Program
@@ -112,7 +112,7 @@ public class UnitTest
 }";
                 unitOfWork.ExerciseRepo.Insert(new Exercise
                 {
-                    TaskName = ".Net Addition Task",
+                    TaskName = "Simple addition",
                     TaskTextField = "First Task 4 .Net",
                     Course = "DotNet Starter",
                     CourseId = unitOfWork.CourseRepo.Get(c => c.Name == "DotNet Starter").First().Id,
