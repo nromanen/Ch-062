@@ -52,6 +52,16 @@
         box-shadow: 0 0 10px rgba(0,0,0,0.3);
         margin-left: 15px;
     }
+
+    .mess-head {
+        background: rgba(188, 246, 161, 0.58)
+    }
+
+    .out-head {
+        background: rgb(76, 255, 0);
+        border: 1px solid #dedede;
+        border-radius: 5px;
+    }
 </style>
 <div class="container">
     <div class="row">
@@ -74,12 +84,13 @@
 
         </div>
         <div class="col-lg-8 mess">
-            <div id="InBoxMEssages" style="display:none;">
+            <div id="InBoxMEssages">
+                <h3 class="out-head">@SharedLocalizer["Inbox"]</h3>
                 @foreach (var mes in Model.InBoxMessages)
                 {
                     if (mes.FromEmail != null)
                     {
-                        <p>@mes.FromEmail @mes.Date</p>
+                        <p class="mess-head">@mes.FromEmail @mes.Date</p>
 
                         <p>@mes.InboxText</p>
                         <hr />
@@ -91,7 +102,6 @@
                        asp-route-page="@(Model.InBoxMessagesPageViewModel.PageNumber - 1)"
                        class="btn btn-default btn">
                         <i class="glyphicon glyphicon-chevron-left"></i>
-                        Назад
                     </a>
                 }
                 @if (Model.InBoxMessagesPageViewModel.HasNextPage)
@@ -99,17 +109,17 @@
                     <a asp-action="Index"
                        asp-route-page="@(Model.InBoxMessagesPageViewModel.PageNumber + 1)"
                        class="btn btn-default btn">
-                        Вперед
                         <i class="glyphicon glyphicon-chevron-right"></i>
                     </a>
                 }
             </div>
-            <div id="OutBoxMEssages" style="display:none;">
+            <div id="OutBoxMEssages">
+                <h3 class="out-head">@SharedLocalizer["Outbox"]</h3>
                 @foreach (var mes in Model.OutBoxMessages)
                 {
                     if (mes.ToEmail != null)
                     {
-                        <p>@mes.ToEmail @mes.Date</p>
+                        <p class="mess-head">@mes.ToEmail @mes.Date</p>
                         <p>@mes.OutboxText</p>
                         <hr />
                     }
@@ -120,7 +130,6 @@
                        asp-route-page="@(Model.OutBoxMessagesPageViewModel.PageNumber - 1)"
                        class="btn btn-default btn">
                         <i class="glyphicon glyphicon-chevron-left"></i>
-                        Назад
                     </a>
                 }
                 @if (Model.OutBoxMessagesPageViewModel.HasNextPage)
@@ -128,7 +137,6 @@
                     <a asp-action="Index"
                        asp-route-page="@(Model.OutBoxMessagesPageViewModel.PageNumber + 1)"
                        class="btn btn-default btn">
-                        Вперед
                         <i class="glyphicon glyphicon-chevron-right"></i>
                     </a>
                 }
