@@ -62,6 +62,25 @@
         border: 1px solid #dedede;
         border-radius: 5px;
     }
+
+    .notif {
+        background: #ff0000;
+        color: #FFFFFF;
+        line-height: 25px;
+        position: absolute;
+        right: 65px;
+        text-align: center;
+        top: 2px;
+        width: 24px;
+        text-decoration: none;
+        font-weight: bold;
+        -webkit-border-radius: 12px;
+        -moz-border-radius: 12px;
+        border-radius: 12px;
+        -moz-box-shadow: 1px 1px 3px #000;
+        -webkit-box-shadow: 1px 1px 3px #000;
+        box-shadow: 1px 1px 3px #000;
+    }
 </style>
 <div class="container">
     <div class="row">
@@ -70,77 +89,96 @@
     <hr />
     <div class="row">
         <div class="col-lg-3">
-            <div class="Inbox">
-                <br />
-                <br />
-                <a>@SharedLocalizer["Inbox"]</a>
-            </div>
-            <div class="Outbox">
-                <br />
-                <br />
+            @if (Model.InBoxMessages.Where(e => e.IsNew==true).Count()!= 0)
+            {
+                <p class="notif">@Model.InBoxMessages.Where(e => e.IsNew==true).Count()</p>
+            }
+            else
+            {
 
-                <a>@SharedLocalizer["Outbox"]</a>
-            </div>
+
+            }
+            <a href='@Url.Action("Open", "EmailMessages", new { flag = true }, null)'>
+                <div class="Inbox">
+                    <br />
+                    <br />
+                    @SharedLocalizer["Inbox"]
+                </div>
+            </a>
+            <a href='@Url.Action("Open", "EmailMessages", new { flag = false }, null)'>
+                <div class="Outbox">
+                    <br />
+                    <br />
+                    @SharedLocalizer["Outbox"]
+                </div>
+            </a>
 
         </div>
         <div class="col-lg-8 mess">
-            <div id="InBoxMEssages">
-                <h3 class="out-head">@SharedLocalizer["Inbox"]</h3>
-                @foreach (var mes in Model.InBoxMessages)
-                {
-                    if (mes.FromEmail != null)
+            @if (Model.InBoxMessages.Select(e => e.IsInBox).FirstOrDefault())
+            {
+                <div data-flag="@Model.OutBoxMessages.Select(e => e.IsInBox).FirstOrDefault()" id="InBoxMEssages">
+                    <h3 class="out-head">@SharedLocalizer["Inbox"]</h3>
+                    @foreach (var mes in Model.InBoxMessages)
                     {
-                        <p class="mess-head">@mes.FromEmail @mes.Date</p>
+                        if (mes.FromEmail != null)
+                        {
+                            <p class="mess-head">@mes.FromEmail @mes.Date</p>
 
-                        <p>@mes.InboxText</p>
-                        <hr />
+                            <p>@mes.InboxText</p>
+                            <hr />
+                        }
                     }
-                }
-                @if (Model.InBoxMessagesPageViewModel.HasPreviousPage)
-                {
-                    <a asp-action="Index"
-                       asp-route-page="@(Model.InBoxMessagesPageViewModel.PageNumber - 1)"
-                       class="btn btn-default btn">
-                        <i class="glyphicon glyphicon-chevron-left"></i>
-                    </a>
-                }
-                @if (Model.InBoxMessagesPageViewModel.HasNextPage)
-                {
-                    <a asp-action="Index"
-                       asp-route-page="@(Model.InBoxMessagesPageViewModel.PageNumber + 1)"
-                       class="btn btn-default btn">
-                        <i class="glyphicon glyphicon-chevron-right"></i>
-                    </a>
-                }
-            </div>
-            <div id="OutBoxMEssages">
-                <h3 class="out-head">@SharedLocalizer["Outbox"]</h3>
-                @foreach (var mes in Model.OutBoxMessages)
-                {
-                    if (mes.ToEmail != null)
+                    @if (Model.InBoxMessagesPageViewModel.HasPreviousPage)
                     {
-                        <p class="mess-head">@mes.ToEmail @mes.Date</p>
-                        <p>@mes.OutboxText</p>
-                        <hr />
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.InBoxMessagesPageViewModel.PageNumber - 1)"
+                           class="btn btn-default btn">
+                            <i class="glyphicon glyphicon-chevron-left"></i>
+                        </a>
                     }
-                }
-                @if (Model.OutBoxMessagesPageViewModel.HasPreviousPage)
-                {
-                    <a asp-action="Index"
-                       asp-route-page="@(Model.OutBoxMessagesPageViewModel.PageNumber - 1)"
-                       class="btn btn-default btn">
-                        <i class="glyphicon glyphicon-chevron-left"></i>
-                    </a>
-                }
-                @if (Model.OutBoxMessagesPageViewModel.HasNextPage)
-                {
-                    <a asp-action="Index"
-                       asp-route-page="@(Model.OutBoxMessagesPageViewModel.PageNumber + 1)"
-                       class="btn btn-default btn">
-                        <i class="glyphicon glyphicon-chevron-right"></i>
-                    </a>
-                }
-            </div>
+                    @if (Model.InBoxMessagesPageViewModel.HasNextPage)
+                    {
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.InBoxMessagesPageViewModel.PageNumber + 1)"
+                           class="btn btn-default btn">
+                            <i class="glyphicon glyphicon-chevron-right"></i>
+                        </a>
+                    }
+                </div>
+            }
+            @if (!Model.OutBoxMessages.Select(e => e.IsInBox).FirstOrDefault())
+            {
+                <div data-flag="@Model.OutBoxMessages.Select(e => e.IsInBox).FirstOrDefault()" id="OutBoxMEssages">
+                    <h3 class="out-head">@SharedLocalizer["Outbox"]</h3>
+                    @foreach (var mes in Model.OutBoxMessages)
+                    {
+                        if (mes.ToEmail != null)
+                        {
+                            <p class="mess-head">@mes.ToEmail @mes.Date</p>
+                            <p>@mes.OutboxText</p>
+                            <hr />
+                        }
+                    }
+                    @if (Model.OutBoxMessagesPageViewModel.HasPreviousPage)
+                    {
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.OutBoxMessagesPageViewModel.PageNumber - 1)"
+                           class="btn btn-default btn">
+                            <i class="glyphicon glyphicon-chevron-left"></i>
+                        </a>
+                    }
+                    @if (Model.OutBoxMessagesPageViewModel.HasNextPage)
+                    {
+                        <a asp-action="Index"
+                           asp-route-page="@(Model.OutBoxMessagesPageViewModel.PageNumber + 1)"
+                           class="btn btn-default btn">
+                            <i class="glyphicon glyphicon-chevron-right"></i>
+                        </a>
+                    }
+                </div>
+            }
+
         </div>
     </div>
 </div>
@@ -148,16 +186,44 @@
 
     <script>
 
-        $('.Inbox').click(function () {
-            $("#InBoxMEssages").toggle();
-            $("#OutBoxMEssages").slideUp();
-        });
+                        //$('.Inbox').click(function () {
+                        //    $("#InBoxMEssages").toggle();
+                        //    $("#OutBoxMEssages").slideUp();
+                        //});
 
-        $('.Outbox').click(function () {
-            $("#OutBoxMEssages").toggle();
-            $("#InBoxMEssages").slideUp();
-        });
+                        //$('.Outbox').click(function () {
+                        //    $("#OutBoxMEssages").toggle();
+                        //    $("#InBoxMEssages").slideUp();
+                        //});
 
+                        //$(document).on('click', '.Inbox', function (e) {
+                        //    var obj = new Object();
+
+                        //    obj.boolFlag = 1;
+
+                        //    $.ajax({
+                        //        type: "POST",
+                        //        url: "/EmailMessages/Open",
+                        //        data: obj,
+                        //        success: function (data) {
+                        //            location.reload();
+                        //        }
+                        //    });
+                        //});
+
+                        //$(document).on('click', '.Outbox', function (e) {
+                        //    var obj = new Object();
+                        //    obj.boolFlag = 0;
+
+                        //    $.ajax({
+                        //        type: "POST",
+                        //        url: "/EmailMessages/Open",
+                        //        data: obj,
+                        //        success: function (data) {
+                        //            location.reload();
+                        //        }
+                        //    });
+                        //});
 
     </script>
 }

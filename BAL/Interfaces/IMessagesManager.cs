@@ -15,5 +15,6 @@ namespace BAL.Interfaces
         IEnumerable<MessagesDTO> GetAll();
         MessagesDTO GetById(int id);
         void Insert(MessagesDTO entity);
+        void Update(MessagesDTO entity);
     }
 }

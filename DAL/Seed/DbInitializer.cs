@@ -110,19 +110,19 @@ public class UnitTest
         new object[] { 12, 2, 10 }
     };
 }";
-                unitOfWork.ExerciseRepo.Insert(new Exercise
-                {
-                    TaskName = "Simple addition",
-                    TaskTextField = "First Task 4 .Net",
-                    Course = "DotNet Starter",
-                    CourseId = unitOfWork.CourseRepo.Get(c => c.Name == "DotNet Starter").First().Id,
-                    IsDeleted = false,
-                    CreateDateTime = System.DateTime.Now,
-                    UpdateDateTime = System.DateTime.Now,
-                    TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id,
-                    TaskBaseCodeField = code,
-                    TestCasesCode = testCasesCode
-                });
+                //unitOfWork.ExerciseRepo.Insert(new Exercise
+                //{
+                //    TaskName = "Simple addition",
+                //    TaskTextField = "First Task 4 .Net",
+                //    Course = "DotNet Starter",
+                //    CourseId = unitOfWork.CourseRepo.Get(c => c.Name == "DotNet Starter").First().Id,
+                //    IsDeleted = false,
+                //    CreateDateTime = System.DateTime.Now,
+                //    UpdateDateTime = System.DateTime.Now,
+                //    TeacherId = unitOfWork.UserRepo.Get(c => c.Email == "teacher@gmail.com").First().Id,
+                //    TaskBaseCodeField = code,
+                //    TestCasesCode = testCasesCode
+                //});
             }
             unitOfWork.Save();
         }
