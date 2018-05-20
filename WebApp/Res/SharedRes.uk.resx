@@ -456,4 +456,10 @@
   <data name="CurrentOwner" xml:space="preserve">
     <value>Поточний власник</value>
   </data>
+  <data name="Create Article" xml:space="preserve">
+    <value>Створити новину</value>
+  </data>
+  <data name="Sort" xml:space="preserve">
+    <value>Сортувати по секціям</value>
+  </data>
 </root>
