@@ -66,22 +66,27 @@ namespace WebApp.Controllers
         }
         public IActionResult Open(bool flag)
         {
-            bool isInbox = flag;
-
-            var InBoxmessages = messagesManager.Get().Where(e => e.InboxText != null).LastOrDefault();
-            var OutBoxmessages = messagesManager.Get().Where(e => e.OutboxText != null).LastOrDefault();
-            InBoxmessages.IsInBox = isInbox;
-            OutBoxmessages.IsInBox = isInbox;
-            var NewMessages = messagesManager.Get().Where(e => e.IsNew == true).ToList();
-            messagesManager.Update(InBoxmessages);
-            foreach (var n in NewMessages)
+            try
             {
-                n.IsNew = false;
-                messagesManager.Update(n);
+                bool isInbox = flag;
+
+                var InBoxmessages = messagesManager.Get().Where(e => e.InboxText != null).LastOrDefault();
+                var OutBoxmessages = messagesManager.Get().Where(e => e.OutboxText != null).LastOrDefault();
+                InBoxmessages.IsInBox = isInbox;
+                OutBoxmessages.IsInBox = isInbox;
+                var NewMessages = messagesManager.Get().Where(e => e.IsNew == true).ToList();
+                messagesManager.Update(InBoxmessages);
+                foreach (var n in NewMessages)
+                {
+                    n.IsNew = false;
+                    messagesManager.Update(n);
+                }
+                messagesManager.Update(OutBoxmessages);
             }
-            messagesManager.Update(OutBoxmessages);
+            catch(Exception ex)
+            {
 
-
+            }
             return RedirectToAction("Index");
         }
         public IActionResult Send(string Email, string Message, string Subject)

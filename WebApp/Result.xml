@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<test-run id="2" testcasecount="3" result="Passed" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="3" engine-version="3.8.0.0" clr-version="4.0.30319.42000" start-time="2018-05-18 12:00:24Z" end-time="2018-05-18 12:00:25Z" duration="0.909941">
-  <command-line><![CDATA[NUNIT3-CONSOLE  D:\BKarpovych\Ch-062\WebApp\OnlineExam.dll --result=D:\BKarpovych\Ch-062\WebApp\Result.xml]]></command-line>
-  <test-suite type="Assembly" id="0-1005" name="OnlineExam.dll" fullname="D:\BKarpovych\Ch-062\WebApp\OnlineExam.dll" runstate="Runnable" testcasecount="3" result="Passed" start-time="2018-05-18 12:00:25Z" end-time="2018-05-18 12:00:25Z" duration="0.063455" total="3" passed="3" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="3">
-    <environment framework-version="3.10.1.0" clr-version="4.0.30319.42000" os-version="Microsoft Windows NT 10.0.10586.0" platform="Win32NT" cwd="D:\BKarpovych\Ch-062\WebApp\NUnit.Console-3.8.0" machine-name="CHCLASS01" user="bkarptc" user-domain="TRAINING" culture="uk-UA" uiculture="en-US" os-architecture="x64" />
+<test-run id="2" testcasecount="2" result="Passed" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="2" engine-version="3.8.0.0" clr-version="4.0.30319.42000" start-time="2018-05-20 16:14:28Z" end-time="2018-05-20 16:14:30Z" duration="1.609118">
+  <command-line><![CDATA[NUNIT3-CONSOLE  C:\Users\Filip\source\repos\Ch-062\WebApp\OnlineExam.dll --result=C:\Users\Filip\source\repos\Ch-062\WebApp\Result.xml]]></command-line>
+  <test-suite type="Assembly" id="0-1004" name="OnlineExam.dll" fullname="C:\Users\Filip\source\repos\Ch-062\WebApp\OnlineExam.dll" runstate="Runnable" testcasecount="2" result="Passed" start-time="2018-05-20 16:14:30Z" end-time="2018-05-20 16:14:30Z" duration="0.161323" total="2" passed="2" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="2">
+    <environment framework-version="3.10.1.0" clr-version="4.0.30319.42000" os-version="Microsoft Windows NT 10.0.17134.0" platform="Win32NT" cwd="C:\Users\Filip\source\repos\Ch-062\WebApp\NUnit.Console-3.8.0" machine-name="RUSLAN-PC772" user="Filip" user-domain="RUSLAN-PC772" culture="en-US" uiculture="en-GB" os-architecture="x64" />
     <settings>
       <setting name="DisposeRunners" value="True" />
-      <setting name="WorkDirectory" value="D:\BKarpovych\Ch-062\WebApp\NUnit.Console-3.8.0" />
+      <setting name="WorkDirectory" value="C:\Users\Filip\source\repos\Ch-062\WebApp\NUnit.Console-3.8.0" />
       <setting name="ImageRuntimeVersion" value="4.0.30319" />
       <setting name="ImageRequiresX86" value="False" />
       <setting name="ImageRequiresDefaultAppDomainAssemblyResolver" value="False" />
       <setting name="NumberOfTestWorkers" value="4" />
     </settings>
     <properties>
-      <property name="_PID" value="15036" />
+      <property name="_PID" value="15872" />
       <property name="_APPDOMAIN" value="domain-" />
     </properties>
-    <test-suite type="TestFixture" id="0-1000" name="UnitTest" fullname="UnitTest" classname="UnitTest" runstate="Runnable" testcasecount="3" result="Passed" start-time="2018-05-18 12:00:25Z" end-time="2018-05-18 12:00:25Z" duration="0.039494" total="3" passed="3" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="3">
-      <test-suite type="ParameterizedMethod" id="0-1004" name="TestMethod" fullname="UnitTest.TestMethod" classname="UnitTest" runstate="Runnable" testcasecount="3" result="Passed" start-time="2018-05-18 12:00:25Z" end-time="2018-05-18 12:00:25Z" duration="0.033166" total="3" passed="3" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="3">
-        <test-case id="0-1001" name="TestMethod(12,8,4)" fullname="UnitTest.TestMethod(12,8,4)" methodname="TestMethod" classname="UnitTest" runstate="Runnable" seed="1601424950" result="Passed" start-time="2018-05-18 12:00:25Z" end-time="2018-05-18 12:00:25Z" duration="0.023961" asserts="1" />
-        <test-case id="0-1002" name="TestMethod(12,6,6)" fullname="UnitTest.TestMethod(12,6,6)" methodname="TestMethod" classname="UnitTest" runstate="Runnable" seed="1540028563" result="Passed" start-time="2018-05-18 12:00:25Z" end-time="2018-05-18 12:00:25Z" duration="0.000139" asserts="1" />
-        <test-case id="0-1003" name="TestMethod(12,2,10)" fullname="UnitTest.TestMethod(12,2,10)" methodname="TestMethod" classname="UnitTest" runstate="Runnable" seed="80394493" result="Passed" start-time="2018-05-18 12:00:25Z" end-time="2018-05-18 12:00:25Z" duration="0.000075" asserts="1" />
+    <test-suite type="TestFixture" id="0-1000" name="UnitTest" fullname="UnitTest" classname="UnitTest" runstate="Runnable" testcasecount="2" result="Passed" start-time="2018-05-20 16:14:30Z" end-time="2018-05-20 16:14:30Z" duration="0.116969" total="2" passed="2" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="2">
+      <test-suite type="ParameterizedMethod" id="0-1003" name="TestMethod" fullname="UnitTest.TestMethod" classname="UnitTest" runstate="Runnable" testcasecount="2" result="Passed" start-time="2018-05-20 16:14:30Z" end-time="2018-05-20 16:14:30Z" duration="0.106317" total="2" passed="2" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="2">
+        <test-case id="0-1001" name="TestMethod(3,[1, 2, 3, 4, 5],4)" fullname="UnitTest.TestMethod(3,[1, 2, 3, 4, 5],4)" methodname="TestMethod" classname="UnitTest" runstate="Runnable" seed="549641781" result="Passed" start-time="2018-05-20 16:14:30Z" end-time="2018-05-20 16:14:30Z" duration="0.092006" asserts="1" />
+        <test-case id="0-1002" name="TestMethod(-1,[1, 2, 3, 4, 5],10)" fullname="UnitTest.TestMethod(-1,[1, 2, 3, 4, 5],10)" methodname="TestMethod" classname="UnitTest" runstate="Runnable" seed="99157047" result="Passed" start-time="2018-05-20 16:14:30Z" end-time="2018-05-20 16:14:30Z" duration="0.000233" asserts="1" />
       </test-suite>
     </test-suite>
   </test-suite>

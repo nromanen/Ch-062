@@ -184,7 +184,7 @@
                             <form name="uploadFiles" method="post" enctype="multipart/form-data" asp-controller="AddNews" asp-action="Post">
                                 <div class="form-group">
                                     <br />
-                                    <input type='file' name="files" multiple onchange="readURL(this);" />
+                                    <input type='file' name="files" multiple onchange="readURL(this);" required />
                                     <img id="preview" src="http://www.adbazar.pk/frontend/images/default-image.jpg" alt="your image" />
                                     <div></div>
                                     <hr>
@@ -195,13 +195,11 @@
                                     <div></div>
                                     <hr>
                                     <label for="title">Title</label>
-                                    <textarea cols="30" rows="10" class="form-control text-area-title" name="Title" id="title" required>
-                </textarea>
+                                    <textarea cols="30" rows="10" class="form-control text-area-title" name="Title" id="title" required></textarea>
                                     <div></div>
                                     <hr>
                                     <label for="article">Article</label>
-                                    <textarea cols="30" rows="10" class="form-control text-area-article" name="Text" id="article" required>
-                </textarea>
+                                    <textarea cols="30" rows="10" class="form-control text-area-article" name="Text"  required></textarea>
                                     <div></div>
                                 </div>
                                 <input type="submit" value="Publish" />
