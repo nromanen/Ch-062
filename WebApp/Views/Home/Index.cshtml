@@ -154,7 +154,6 @@
                        asp-route-page="@(Model.NewsPageViewModel.PageNumber - 1)"
                        class="btn btn-default btn">
                         <i class="glyphicon glyphicon-chevron-left"></i>
-                        Назад
                     </a>
                 }
                 @if (Model.NewsPageViewModel.HasNextPage)
@@ -162,7 +161,6 @@
                     <a asp-action="Index"
                        asp-route-page="@(Model.NewsPageViewModel.PageNumber + 1)"
                        class="btn btn-default btn">
-                        Вперед
                         <i class="glyphicon glyphicon-chevron-right"></i>
                     </a>
                 }

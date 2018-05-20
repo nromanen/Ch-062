@@ -8,6 +8,7 @@ using BAL.Managers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Model.DB;
+using Model.DB.Code;
 using Model.DTO.CodeDTO;
 using Model.Entity;
 using WebApp.ViewModels;
@@ -37,15 +38,17 @@ namespace WebApp.Controllers
             {
                 var userName = User.Identity.Name;
                 var user = userManager.Users.Where(e => e.UserName == userName).FirstOrDefault();
-                var code = codeManager.GetUserCodeById(user.Id);
-                var history = codeManager.GetHistoryLst(code.Id);
-                var exercise = exerciseManager.Get().Where(e => e.Id == code.ExerciseId).FirstOrDefault();
+
+                var codelst = codeManager.Get().Where(e => e.UserId == user.Id).ToList();
+                var history = codeManager.GetAll().ToList();
+                var exercise = exerciseManager.GetAll().ToList();
+
                 return View(new CodeHistoryViewModels
                 {
                     CodeHistory = history,
-                    ExerciseName = exercise.TaskName,
-                    ExerciseId = exercise.Id,
-                    UserId = user.UserName
+                    Exercises = exercise,
+                    UserCode = codelst,
+                    UserName = user.UserName
                 });
             }
             catch(Exception ex)
@@ -53,8 +56,6 @@ namespace WebApp.Controllers
 
             }
             return View();
-
-            
         }
         [HttpPost]
         public CodeModel EditCode(CodeModel codeModel)

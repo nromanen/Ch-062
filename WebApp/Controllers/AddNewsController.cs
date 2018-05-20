@@ -63,12 +63,14 @@ namespace WebApp.Controllers
         {
             // full path to file in temp location
             var filePath = "/images/" + files.FileName;
+            
 
             using (var fileStream = new FileStream(appEnvironment.WebRootPath + filePath, FileMode.Create))
             {
                 await files.CopyToAsync(fileStream);
             }
-
+            if (filePath == null)
+                filePath = " ";
             var course = courseManager.Get().Where(e => e.Name == Course).FirstOrDefault();
 
             NewsDTO newsDTO = new NewsDTO()

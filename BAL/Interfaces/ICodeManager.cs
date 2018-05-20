@@ -28,6 +28,6 @@ namespace BAL.Interfaces
         void SetMark(int id, int mark, string comment, string userId);
         SetFav SetFavouriteCode(SetFav model);
         CodeModel EditCode(CodeModel codeModel);
-
+        IEnumerable<CodeHistory> GetAll();
     }
 }

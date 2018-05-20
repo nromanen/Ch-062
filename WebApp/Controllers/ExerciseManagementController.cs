@@ -55,7 +55,7 @@ namespace WebApp.Controllers
             return View(new CreateExerciseViewModel()
             {
                 CourseList = courseList,
-                TestCases = "using NUnit.Framwork;"
+                TestCases = "using NUnit.Framework;"
             });
         }
 

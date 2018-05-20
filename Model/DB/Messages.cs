@@ -12,7 +12,9 @@ namespace Model.DB
         public string OutboxText { get; set; }
         public string FromEmail { get; set; }
         public string ToEmail { get; set; }
-
+        public bool IsNew { get; set; }
+        public bool IsInBox { get; set; }
+        
         public bool IsDeleted { get; set; }
         public DateTime Date { get; set; }
     }

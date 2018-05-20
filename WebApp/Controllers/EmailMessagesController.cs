@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model.DB;
 using Model.DTO;
+using Model.Entity;
 using WebApp.ViewModels;
 
 namespace WebApp.Controllers
@@ -24,12 +25,12 @@ namespace WebApp.Controllers
             this.mapper = mapper;
         }
         [Authorize(Roles = "Teacher, Administrator")]
-        public IActionResult Index(int page=1)
+        public IActionResult Index(int page = 1)
         {
             int pageSize = 8;   // количество элементов на странице
 
-            var InBoxmessages = messagesManager.Get().Where(e=>e.InboxText!=null).Reverse().ToList();
-            var OutBoxmessages = messagesManager.Get().Where(e=>e.OutboxText != null).Reverse().ToList();
+            var InBoxmessages = messagesManager.Get().Where(e => e.InboxText != null).Reverse().ToList();
+            var OutBoxmessages = messagesManager.Get().Where(e => e.OutboxText != null).Reverse().ToList();
             var InBoxcount = InBoxmessages.Count();
             var OutBoxcount = OutBoxmessages.Count();
             var InBoxItems = InBoxmessages.Skip((page - 1) * pageSize).Take(pageSize).ToList();
@@ -49,7 +50,10 @@ namespace WebApp.Controllers
         }
         public IActionResult GetMessage(string Email, string Message)
         {
-            messagesManager.Insert(new MessagesDTO() {FromEmail = Email, InboxText = Message, Date = DateTime.Now });
+            var OutBoxmessages = messagesManager.Get().Where(e => e.OutboxText != null).LastOrDefault();
+            OutBoxmessages.IsInBox = true;
+            messagesManager.Update(OutBoxmessages);
+            messagesManager.Insert(new MessagesDTO() { FromEmail = Email, InboxText = Message, Date = DateTime.Now, IsNew = true, IsInBox = true });
             return RedirectToAction("GetEmail");
         }
         public IActionResult SendEmail()
@@ -60,11 +64,39 @@ namespace WebApp.Controllers
         {
             return View();
         }
+        public IActionResult Open(bool flag)
+        {
+            try
+            {
+                bool isInbox = flag;
+
+                var InBoxmessages = messagesManager.Get().Where(e => e.InboxText != null).LastOrDefault();
+                var OutBoxmessages = messagesManager.Get().Where(e => e.OutboxText != null).LastOrDefault();
+                InBoxmessages.IsInBox = isInbox;
+                OutBoxmessages.IsInBox = isInbox;
+                var NewMessages = messagesManager.Get().Where(e => e.IsNew == true).ToList();
+                messagesManager.Update(InBoxmessages);
+                foreach (var n in NewMessages)
+                {
+                    n.IsNew = false;
+                    messagesManager.Update(n);
+                }
+                messagesManager.Update(OutBoxmessages);
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return RedirectToAction("Index");
+        }
         public IActionResult Send(string Email, string Message, string Subject)
         {
+            var InBoxmessages = messagesManager.Get().Where(e => e.InboxText != null).LastOrDefault();
+            InBoxmessages.IsInBox = false;
+            messagesManager.Update(InBoxmessages);
             EmailService emailService = new EmailService();
             emailService.SendEmail(Email, Message, Subject);
-            messagesManager.Insert(new MessagesDTO() { ToEmail = Email, OutboxText = Message, Date = DateTime.Now });
+            messagesManager.Insert(new MessagesDTO() { ToEmail = Email, OutboxText = Message, Date = DateTime.Now, IsNew = false, IsInBox = true });
             return RedirectToAction("Index");
         }
     }

@@ -237,5 +237,9 @@ namespace BAL.Managers
             unitOfWork.Save();
             return codeModel;
         }
+        public IEnumerable<CodeHistory> GetAll()
+        {
+            return unitOfWork.CodeHistoryRepo.GetAll();
+        }
     }
 }

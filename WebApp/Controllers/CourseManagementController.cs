@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using WebApp.ViewModels.CoursesViewModels;
 using BAL.Interfaces;
 using AutoMapper;
+using System.Threading.Tasks;
 
 namespace WebApp.Controllers
 {
@@ -52,10 +53,10 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "CourseManagement");
         }
 
-        public IActionResult ViewCourses()
+        public async Task<IActionResult> ViewCourses()
         {
-            var currentTeacher = userManager.GetUserAsync(HttpContext.User);
-            var courseList = courseManager.Get(course => course.UserId == currentTeacher.Result.Id);
+            var currentTeacher = await userManager.GetUserAsync(HttpContext.User);
+            var courseList = courseManager.Get(course => course.UserId == currentTeacher.Id);
             return View(courseList);
         }
 
@@ -102,7 +103,8 @@ namespace WebApp.Controllers
             {
                 TeacherList = teacherList,
                 CourseId = course.Id,
-                CourseName = course.Name
+                CourseName = course.Name,
+                CurrentOwner = teacherList.Find(c => c.Id == course.UserId).UserName
             });
         }
 

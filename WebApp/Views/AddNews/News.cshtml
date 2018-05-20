@@ -1,4 +1,9 @@
 ﻿@model WebApp.ViewModels.IndexViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+@inject IHtmlLocalizer<SharedRes> SharedLocalizer
 @{
     ViewData["Title"] = "News";
 }
@@ -129,7 +134,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <h3>News</h3>
+                <h3>@SharedLocalizer["News"]</h3>
                 @foreach (var i in Model.News)
                 {
                     <br />
@@ -139,7 +144,7 @@
                             <span class="eo-date__month">@i.Month</span>
                         </div>
                         <div class="col-lg-9">
-                            <a  href='@Url.Action("ShowNews", "AddNews", new { id = i.Id }, null)' class="title">@i.Title</a>
+                            <a href='@Url.Action("ShowNews", "AddNews", new { id = i.Id }, null)' class="title">@i.Title</a>
                         </div>
                     </div>
                     <br />
@@ -151,7 +156,6 @@
                        asp-route-page="@(Model.NewsPageViewModel.PageNumber - 1)"
                        class="btn btn-default btn">
                         <i class="glyphicon glyphicon-chevron-left"></i>
-                        Назад
                     </a>
                 }
                 @if (Model.NewsPageViewModel.HasNextPage)
@@ -159,29 +163,28 @@
                     <a asp-action="Index"
                        asp-route-page="@(Model.NewsPageViewModel.PageNumber + 1)"
                        class="btn btn-default btn">
-                        Вперед
                         <i class="glyphicon glyphicon-chevron-right"></i>
                     </a>
                 }
             </div>
             <div class="col-lg-4">
-                <h3>Sort by sections</h3>
+                <h3>@SharedLocalizer["Sort"]</h3>
                 <br />
                 @foreach (var i in Model.Courses)
                 {
-                    <a  href='@Url.Action("News", "AddNews", new { id = i.Id }, null)' class="section">@i.Name</a>
+                    <a href='@Url.Action("News", "AddNews", new { id = i.Id }, null)' class="section">@i.Name</a>
                     <div></div>
                 }
                 @if (User.IsInRole("Teacher"))
                 {
-                    <a href="#openModal" class="btn btn-default" style="margin-top:30px;">Create Article</a>
+                    <a href="#openModal" class="btn btn-default" style="margin-top:30px;">@SharedLocalizer["Create Article"]</a>
                     <div id="openModal" class="modalDialog">
                         <div>
                             <a href="#close" title="Закрыть" class="close">X</a>
                             <form name="uploadFiles" method="post" enctype="multipart/form-data" asp-controller="AddNews" asp-action="Post">
                                 <div class="form-group">
                                     <br />
-                                    <input type='file' name="files" multiple onchange="readURL(this);" />
+                                    <input type='file' name="files" multiple onchange="readURL(this);" required />
                                     <img id="preview" src="http://www.adbazar.pk/frontend/images/default-image.jpg" alt="your image" />
                                     <div></div>
                                     <hr>
@@ -192,13 +195,11 @@
                                     <div></div>
                                     <hr>
                                     <label for="title">Title</label>
-                                    <textarea cols="30" rows="10" class="form-control text-area-title" name="Title" id="title" required>
-                </textarea>
+                                    <textarea cols="30" rows="10" class="form-control text-area-title" name="Title" id="title" required></textarea>
                                     <div></div>
                                     <hr>
                                     <label for="article">Article</label>
-                                    <textarea cols="30" rows="10" class="form-control text-area-article" name="Text" id="article" required>
-                </textarea>
+                                    <textarea cols="30" rows="10" class="form-control text-area-article" name="Text"  required></textarea>
                                     <div></div>
                                 </div>
                                 <input type="submit" value="Publish" />

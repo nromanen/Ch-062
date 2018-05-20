@@ -44,7 +44,12 @@ namespace BAL.Managers
             unitOfWork.MessagesRepo.Insert(mapper.Map<Messages>(entity));
             unitOfWork.Save();
         }
-        
+        public void Update(MessagesDTO entity)
+        {
+            unitOfWork.MessagesRepo.Update(mapper.Map<Messages>(entity));
+            unitOfWork.Save();
+        }
+
         public void DeleteOrRecover(int id)
         {
             var message = unitOfWork.MessagesRepo.GetById(id);

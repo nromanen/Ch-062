@@ -172,7 +172,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.FileSystem">
-      <HintPath>\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+      <HintPath>..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.IO.FileSystem.Primitives">
