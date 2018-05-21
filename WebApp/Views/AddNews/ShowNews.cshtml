@@ -14,18 +14,21 @@
         width: 690px;
         height: 420px;
     }
+    .center{
+        text-align:center;
+    }
 </style>
 <div class="container">
     <div class="row">
-        <div class="row">
+        <div class="row center">
             <img style="margin-bottom:10px;" src="@Model.ImagePath" />
         </div>
 
-        <div class="row">
+        <div class="row center">
             @Model.Title
         </div>
 
-        <div class="row">
+        <div class="row center">
             @Html.Raw(Model.Text)
         </div>
 

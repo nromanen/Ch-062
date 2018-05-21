@@ -50,9 +50,17 @@ namespace WebApp.Controllers
         }
         public IActionResult GetMessage(string Email, string Message)
         {
-            var OutBoxmessages = messagesManager.Get().Where(e => e.OutboxText != null).LastOrDefault();
-            OutBoxmessages.IsInBox = true;
-            messagesManager.Update(OutBoxmessages);
+            try
+            {
+                var OutBoxmessages = messagesManager.Get().Where(e => e.OutboxText != null).LastOrDefault();
+                OutBoxmessages.IsInBox = true;
+                messagesManager.Update(OutBoxmessages);
+            }
+            catch (Exception ex)
+            {
+
+            }
+           
             messagesManager.Insert(new MessagesDTO() { FromEmail = Email, InboxText = Message, Date = DateTime.Now, IsNew = true, IsInBox = true });
             return RedirectToAction("GetEmail");
         }
@@ -91,9 +99,17 @@ namespace WebApp.Controllers
         }
         public IActionResult Send(string Email, string Message, string Subject)
         {
-            var InBoxmessages = messagesManager.Get().Where(e => e.InboxText != null).LastOrDefault();
-            InBoxmessages.IsInBox = false;
-            messagesManager.Update(InBoxmessages);
+            try
+            {
+                var InBoxmessages = messagesManager.Get().Where(e => e.InboxText != null).LastOrDefault();
+                InBoxmessages.IsInBox = false;
+                messagesManager.Update(InBoxmessages);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            
             EmailService emailService = new EmailService();
             emailService.SendEmail(Email, Message, Subject);
             messagesManager.Insert(new MessagesDTO() { ToEmail = Email, OutboxText = Message, Date = DateTime.Now, IsNew = false, IsInBox = true });
