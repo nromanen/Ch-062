@@ -97,3 +97,16 @@ input[type="checkbox"].input-validation-error {
 #editor-container {
     height: 375px;
 }
+#ChPaswBut1 {
+  width:171px;
+
+  height:30px;
+}
+#ChPaswBut2 {
+    width: 171px;
+    height: 30px;
+}
+#ChPaswBut3 {
+    width: 171px;
+    height: 30px;
+}
