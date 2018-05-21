@@ -48,7 +48,7 @@
     <br />
 </div>
 <div class="col-md-12">
-    <label class="control-label" id="task">@SharedLocalizer["Task"]:</label>
+    <label class="control-label" style="font-size: 20px;" id="task">@SharedLocalizer["Task"]:</label>
   <div id="ECMDIV">  <textarea asp-for="@Model.ExerciseTaskText" id="ECM"></textarea> </div>
 </div>
 <div style="clear: both;">
@@ -114,11 +114,9 @@
 
             $(document).ready(function () {
                 $('#task').hover(function () {
-                    $(this).css("color", "red");
-                    $(this).css("font-size", "20px");
+                    $(this).css("cursor","pointer");
                 }, function () {
-                    $(this).css("color", "black");
-                    $(this).css("font-size", "14px");
+                    $(this).css("cursor", "default");
                 });
             });
           
