@@ -58,11 +58,8 @@ namespace WebApp.Controllers
             if (code != null)
             {
                 codeManager.SetCodeStatus(code.Id, code.UserId);
-                var IdForRedirect = new RedirectTempData();
-                IdForRedirect.IdForRedirection = model.ExerciseId;
             }
-            //return RedirectToAction("TaskView", "ExerciseManagement", IdForRedirect.IdForRedirection);
-            return View("../Home/Index");
+            return RedirectToAction("Index", "CourseManagement");
         }
 
         [HttpPost]
@@ -83,7 +80,6 @@ namespace WebApp.Controllers
         public IActionResult CodeMarking(UserCodeReviewViewModel model)
         {
             codeManager.SetMark(model.UserCodeDTO.Id, model.UserCodeDTO.Mark, model.UserCodeDTO.TeachersComment,model.UserCodeDTO.UserId);
-            //  return RedirectToAction("ExerciseSolutionsIndex","ExerciseManagement",model.UserCodeDTO.ExerciseId);
             return RedirectToAction("Index", "ExerciseManagement");
         }
 

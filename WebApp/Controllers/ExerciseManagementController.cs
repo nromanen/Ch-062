@@ -154,7 +154,7 @@ namespace WebApp.Controllers
         public IActionResult ExerciseSolutionsIndex(int id)
         {
             List<UserCodeListUnitViewModel> codesList = new List<UserCodeListUnitViewModel>();
-            var solutionsList = codeManager.Get(c => c.ExerciseId == id && c.CodeStatus == Model.Entity.CodeStatus.Done);
+            var solutionsList = codeManager.Get(c => c.ExerciseId == id && (c.CodeStatus == Model.Entity.CodeStatus.Done || c.CodeStatus == Model.Entity.CodeStatus.Appreciated ));
             if (solutionsList != null)
             {
 

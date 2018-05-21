@@ -453,11 +453,35 @@
   <data name="UpperCase" xml:space="preserve">
     <value>Пароль повинен містити хоча б одну літеру верхнього регістру ('A'-'Z').</value>
   </data>
-  <data name="CurrentOwner" xml:space="preserve">
-    <value>Поточний власник</value>
+  <data name="DoneTasksNumber" xml:space="preserve">
+    <value>Кількість виконаних завдань</value>
+  </data>
+  <data name="FINISH" xml:space="preserve">
+    <value>ЗАВЕРШИТИ</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>Переглянути</value>
+  </data>
+  <data name="SetMark" xml:space="preserve">
+    <value>Оцінити</value>
+  </data>
+  <data name="Solution" xml:space="preserve">
+    <value>Рішення</value>
+  </data>
+  <data name="Solution Review" xml:space="preserve">
+    <value>Огляд рішення</value>
+  </data>
+  <data name="UserRate" xml:space="preserve">
+    <value>Рейтинг користувача</value>
+  </data>
+  <data name="Show/HideComments" xml:space="preserve">
+    <value>Показати/Сховати Коментарі</value>
   </data>
   <data name="Create Article" xml:space="preserve">
     <value>Створити новину</value>
+  </data>
+  <data name="CurrentOwner" xml:space="preserve">
+    <value>Поточний власник</value>
   </data>
   <data name="Sort" xml:space="preserve">
     <value>Сортувати по секціям</value>

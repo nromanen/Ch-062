@@ -8,6 +8,7 @@ namespace Model.Entity
     {
         InProgress,
         Done,
-        FromHistory
+        FromHistory,
+        Appreciated
     }
 }
