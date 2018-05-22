@@ -4,6 +4,7 @@ using RestSharp;
 using System.IO;
 using System.Diagnostics;
 using System.Xml.Linq;
+using System.Threading;
 
 namespace BAL.Managers
 {
@@ -44,7 +45,7 @@ namespace BAL.Managers
                 p.Start();
                 p.StandardInput.WriteLine($"cd {Path.Combine(Directory.GetCurrentDirectory(), NUnit)}");
                 p.StandardInput.WriteLine(strCmdText);
-
+                Thread.Sleep(1500);
                 var xmlResult = XDocument.Load(pathToxml);
                 var tests = xmlResult.Document.Element("test-run");
                 var total = string.Concat("Total:", (string)tests.Attribute("total"));
