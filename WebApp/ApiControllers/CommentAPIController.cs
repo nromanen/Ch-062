@@ -14,12 +14,16 @@ using DAL.Interface;
 using BAL.Interfaces;
 using WebApp.ViewModels.CoursesViewModels;
 using AutoMapper;
+using RestSharp;
+using System.Reflection;
+using Newtonsoft.Json;
+
 
 namespace WebApp.ApiControllers
 {
     [Produces("application/json")]
-    [Route("api/CommentAPI")]
-    public class CommentApiController : Controller
+    [Route("api/CommentApi")]
+    public class CommentApiController : ControllerBase
     {
         private readonly IExerciseManager exerciseManager;
         private readonly ICourseManager courseManager;
@@ -39,22 +43,17 @@ namespace WebApp.ApiControllers
             this.codeManager = codeManager;
         }
         // GET: api/CommentAPI
-        [HttpGet]
-        public IEnumerable<CommentDTO> Get(int id)
+        [HttpGet("{id}")]
+        public List<CommentDTO> Get(int id)
         {
-            return commentManager.Get(c=>c.Id==id).ToList();
-        }
 
-        // GET: api/CommentAPI/5
-        //[HttpGet("{id}", Name = "Get")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-        
+            var json = commentManager.Get(c => c.ExerciseId == id).ToList();
+            return json;
+        }
+       
         // POST: api/CommentAPI
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post(string value)
         {
         }
         

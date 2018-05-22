@@ -18,6 +18,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApp.ApiControllers;
 using System.Net.Http;
+using RestSharp;
 
 namespace WebApp.Controllers
 {
@@ -93,10 +94,17 @@ namespace WebApp.Controllers
         {
             var task = exerciseManager.GetById(id);
 
-            var commentList = commentManager.Get(g => g.ExerciseId == id).ToList();
+            var client = new RestClient("http://localhost:55842/");
+            var request = new RestRequest("api/CommentApi/{id}", Method.GET);            
+            request.AddUrlSegment("id", id);
+            //  request.RequestFormat = DataFormat.Json;
+            IRestResponse<List<CommentDTO>> response = client.Execute<List<CommentDTO>>(request);
+            //var content = response.Content;
+
+            var commentList = response.Data;//commentManager.Get(g => g.ExerciseId == id).ToList();
             
 
-
+       
             return View(new GetExerciseViewModel()
             {
                 Id = id,
