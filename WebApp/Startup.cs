@@ -73,9 +73,8 @@ namespace WebApp
             services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddScoped<CodeManager, CodeManager>();
             //add dependecy injection for dal repositories
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             //Adding DI for managers
             services.AddScoped<ICourseManager, CourseManager>();
             services.AddScoped<IExerciseManager, ExerciseManager>();
@@ -103,6 +102,8 @@ namespace WebApp
 
                 // User settings
                 options.User.RequireUniqueEmail = true;
+
+
             });
 
             services.ConfigureApplicationCookie(options =>
