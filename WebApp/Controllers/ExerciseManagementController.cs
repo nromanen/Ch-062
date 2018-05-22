@@ -16,6 +16,8 @@ using WebApp.ViewModels.CoursesViewModels;
 using AutoMapper;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using WebApp.ApiControllers;
+using System.Net.Http;
 
 namespace WebApp.Controllers
 {
@@ -90,7 +92,10 @@ namespace WebApp.Controllers
         public IActionResult TaskView(int id)
         {
             var task = exerciseManager.GetById(id);
+
             var commentList = commentManager.Get(g => g.ExerciseId == id).ToList();
+            
+
 
             return View(new GetExerciseViewModel()
             {
