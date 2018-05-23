@@ -53,10 +53,25 @@ namespace WebApp.ApiControllers
        
         // POST: api/CommentAPI
         [HttpPost]
-        public void Post(string value)
+        public void Post(CommentDTO comment)
         {
+            commentManager.Insert(comment);
+            if (comment.Rating != null)
+            {
+                var commentlist = commentManager.Get(g => g.ExerciseId == comment.ExerciseId && g.Rating != 0).ToList();
+                double average = 0;
+                foreach (var elem in commentlist)
+                {
+                    if (elem.Rating != 0)
+                        average += Convert.ToDouble(elem.Rating);
+                }
+
+                average = average / commentlist.Count;
+                exerciseManager.UpdateRating(comment.ExerciseId, average);
+
+            }
         }
-        
+
 
     }
 }

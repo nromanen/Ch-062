@@ -16,6 +16,7 @@ using WebApp.ViewModels.CoursesViewModels;
 using AutoMapper;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using RestSharp;
 
 
 namespace WebApp.Controllers
@@ -45,30 +46,20 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
+                var client = new RestClient("http://localhost:55842/");
+                var request = new RestRequest("api/CommentApi/", Method.POST);
+
                 CommentDTO comment = new CommentDTO
                 {
-                ExerciseId = model.ExerciseId,
-                UserId = currentUser,
-                UserName = User.Identity.Name,
-                CommentText = model.CommentText,
-                Rating = model.Rating,
-                CreationDateTime = DateTime.Now
+                    ExerciseId = model.ExerciseId,
+                    UserId = currentUser,
+                    UserName = User.Identity.Name,
+                    CommentText = model.CommentText,
+                    Rating = model.Rating,
+                    CreationDateTime = DateTime.Now
                 };
-                commentManager.Insert(comment);
-                if (model.Rating != null)
-                {
-                    var commentlist = commentManager.Get(g => g.ExerciseId == model.ExerciseId && g.Rating!=0).ToList();
-                    double average = 0;
-                    foreach (var elem in commentlist)
-                    {
-                        if(elem.Rating != 0)
-                        average += Convert.ToDouble(elem.Rating);
-                    }
-
-                    average = average / commentlist.Count;
-                    exerciseManager.UpdateRating(model.ExerciseId, average);
-
-                }
+                request.AddObject(comment);
+                client.Execute<CommentDTO>(request);
             }
             return RedirectToAction("TaskView ", "ExerciseManagement", model.ExerciseId);
         }
