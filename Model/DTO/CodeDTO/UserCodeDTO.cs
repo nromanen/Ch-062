@@ -12,7 +12,7 @@ namespace Model.DTO.CodeDTO
         public int Id { get; set; }
         public string CodeText { get; set; }
         
-        public ICollection<CodeHistoryDTO> CodeHistories { get; set; }
+        public List<CodeHistoryDTO> CodeHistories { get; set; }
         
         [Required]
         public string UserId { get; set; }

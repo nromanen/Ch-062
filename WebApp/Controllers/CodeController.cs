@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using BAL.Interfaces;
+﻿using BAL.Interfaces;
 using BAL.Managers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +7,8 @@ using WebApp.ViewModels;
 using WebApp.ViewModels.UserCodeReview;
 using Model.DTO.CodeDTO;
 using Microsoft.AspNetCore.Authorization;
+using RestSharp;
+using Microsoft.Extensions.Configuration;
 
 namespace WebApp.Controllers
 {
@@ -17,12 +18,14 @@ namespace WebApp.Controllers
         private CodeManager codeManager;
         private IExerciseManager exerciseManager;
         private UserManager<User> userManager;
+        private readonly IConfiguration configuration;
 
-        public CodeController(CodeManager codeManager, IExerciseManager exerciseManager, UserManager<User> userManager)
+        public CodeController(CodeManager codeManager, IExerciseManager exerciseManager, UserManager<User> userManager, IConfiguration configuration)
         {
             this.codeManager = codeManager;
             this.exerciseManager = exerciseManager;
-            this.userManager = userManager; 
+            this.userManager = userManager;
+            this.configuration = configuration;
         }
         public IActionResult Index(UserCodeDTO model)
         {
@@ -66,20 +69,24 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Teacher")]
         public IActionResult CodeReview(int id)
         {
-            var userCode = codeManager.Get(c => c.Id == id).First();
-            var exercise = exerciseManager.GetById(userCode.ExerciseId);
-            return View(new UserCodeReviewViewModel() {
-                UserCodeDTO = userCode,
-                ExerciseName = exercise.TaskName,
-                ExerciseTask = exercise.TaskTextField
-            });
+            var client = new RestClient(configuration.GetConnectionString("WebAppRouteAPI"));
+            var request = new RestRequest("api/CodeAPI/{id}", Method.GET);
+            request.AddUrlSegment("id", id);
+            IRestResponse<UserCodeReviewViewModel> response = client.Execute<UserCodeReviewViewModel>(request);
+            return View(response.Data);
         }
 
         [HttpPost]
         [Authorize(Roles = "Teacher")]
         public IActionResult CodeMarking(UserCodeReviewViewModel model)
         {
-            codeManager.SetMark(model.UserCodeDTO.Id, model.UserCodeDTO.Mark, model.UserCodeDTO.TeachersComment,model.UserCodeDTO.UserId);
+            var client = new RestClient(configuration.GetConnectionString("WebAppRouteAPI"));
+            var request = new RestRequest("api/CodeAPI", Method.POST);
+            request.AddParameter("userCodeId", model.UserCodeDTO.Id);
+            request.AddParameter("userCodeMark", model.UserCodeDTO.Mark);
+            request.AddParameter("userCodeTeachersComment", model.UserCodeDTO.TeachersComment);
+            request.AddParameter("userCodeDTOUserId", model.UserCodeDTO.UserId);
+            IRestResponse response = client.Execute(request);
             return RedirectToAction("Index", "ExerciseManagement");
         }
 

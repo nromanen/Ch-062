@@ -10,10 +10,17 @@ namespace BAL.Managers
 {
     public class SandboxManager : ISandboxManager
     {
+        private readonly string sandboxAPI;
+
+        public SandboxManager(string sandboxAPI)
+        {
+            this.sandboxAPI = sandboxAPI;
+        }
+
         public ExecutionResult Execute(string code)
         {
-            var client = new RestClient("http://localhost:62543/");
-            var request = new RestRequest("api/WebApp/validate", Method.POST);
+            var client = new RestClient(sandboxAPI);
+            var request = new RestRequest("api/values/validate", Method.POST);
             request.RequestFormat = DataFormat.Json;
             request.AddBody(code);
             IRestResponse response = client.Execute(request);

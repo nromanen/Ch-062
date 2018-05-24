@@ -32,7 +32,7 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-         
+
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 
             services.AddLocalization(options => options.ResourcesPath = "Res");
@@ -78,7 +78,7 @@ namespace WebApp
             //Adding DI for managers
             services.AddScoped<ICourseManager, CourseManager>();
             services.AddScoped<IExerciseManager, ExerciseManager>();
-            services.AddScoped<ISandboxManager, SandboxManager>();
+            services.AddScoped<ISandboxManager, SandboxManager>(snbx => new SandboxManager(Configuration.GetConnectionString("SandboxAPI")));
             services.AddScoped<ICommentManager, CommentManager>();
             services.AddScoped<ICodeManager, CodeManager>();
             services.AddScoped<INewsManager, NewsManager>();
@@ -137,7 +137,7 @@ namespace WebApp
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            
+
 
             app.UseAuthentication();
 
