@@ -92,28 +92,13 @@ namespace WebApp.Controllers
 
         public IActionResult TaskView(int id)
         {
-            var task = exerciseManager.GetById(id);
 
             var client = new RestClient("http://localhost:55842/");
-            var request = new RestRequest("api/CommentApi/{id}", Method.GET);            
+            var request = new RestRequest("api/ExerciseManagementAPI/{id}", Method.GET);
             request.AddUrlSegment("id", id);
-            //  request.RequestFormat = DataFormat.Json;
-            IRestResponse<List<CommentDTO>> response = client.Execute<List<CommentDTO>>(request);
-            //var content = response.Content;
-
-            var commentList = response.Data;//commentManager.Get(g => g.ExerciseId == id).ToList();
-            
-
-       
-            return View(new GetExerciseViewModel()
-            {
-                Id = id,
-                Course = task.Course,
-                CommentList = commentList,
-                TaskName = task.TaskName,
-                TaskTextField = task.TaskTextField,
-                TaskBaseCodeField = task.TaskBaseCodeField
-            });
+            request.ReadWriteTimeout = 500;
+            IRestResponse<GetExerciseViewModel> response = client.Execute<GetExerciseViewModel>(request);
+            return View(response.Data);
         }
 
 
