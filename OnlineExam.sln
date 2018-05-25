@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeValidator", "WebApplication1\CodeValidator.csproj", "{4E7011B0-5143-4F28-A8F7-0399F6A83F1B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BALTest", "BALTest\BALTest.csproj", "{D4BC7283-3987-45D3-91EE-C95421166706}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{4E7011B0-5143-4F28-A8F7-0399F6A83F1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E7011B0-5143-4F28-A8F7-0399F6A83F1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E7011B0-5143-4F28-A8F7-0399F6A83F1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4BC7283-3987-45D3-91EE-C95421166706}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4BC7283-3987-45D3-91EE-C95421166706}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4BC7283-3987-45D3-91EE-C95421166706}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4BC7283-3987-45D3-91EE-C95421166706}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
