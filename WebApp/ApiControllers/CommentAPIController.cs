@@ -55,6 +55,7 @@ namespace WebApp.ApiControllers
         [HttpPost]
         public void Post(CommentDTO comment)
         {
+            comment.CreationDateTime = DateTime.Now;
             commentManager.Insert(comment);
             if (comment.Rating != null)
             {
@@ -67,10 +68,12 @@ namespace WebApp.ApiControllers
                 }
 
                 average = average / commentlist.Count;
+                if(average>=0)
                 exerciseManager.UpdateRating(comment.ExerciseId, average);
 
             }
         }
+
 
 
     }
