@@ -56,7 +56,6 @@ namespace WebApp.Controllers
                     UserName = User.Identity.Name,
                     CommentText = model.CommentText,
                     Rating = model.Rating,
-                    CreationDateTime = DateTime.Now
                 };
                 request.AddObject(comment);
                 client.Execute<CommentDTO>(request);
