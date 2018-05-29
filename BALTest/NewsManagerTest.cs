@@ -43,7 +43,7 @@ namespace BALTest
         {
             var newsManager = new NewsManager(sUoW, mapper);
             var result = newsManager.GetAll();
-            sUoW.Received(1).Save();
+            sUoW.Received(0).Save();
             sUoW.ClearReceivedCalls();
 
             Assert.AreEqual("Hello World", result.First().Text);
