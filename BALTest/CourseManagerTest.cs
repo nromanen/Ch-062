@@ -11,13 +11,13 @@ using System.Linq;
 
 namespace BALTest
 {
-    [TestFixture]
-    class CourseManagerTest
+    [TestClass]
+    public class CourseManagerTest
     {
         IMapper mapper;
         IUnitOfWork sUoW;
 
-        [SetUp]
+        [TestInitialize]
         public void Setup()
         {
             var config = new MapperConfiguration(cfg =>
