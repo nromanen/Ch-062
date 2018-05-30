@@ -19,9 +19,11 @@
         <th>@SharedLocalizer["CourseName"]</th>
         <th>@SharedLocalizer["CreateDate"]</th>
     </tr>
-    
 
-        @foreach (var course in Model)
+
+    @foreach (var course in Model)
+    {
+        @if (!User.IsInRole("Student") || course.IsActive)
         {
             <tr>
                 <td> <a class="bluehighl" asp-action="ShowExercise" asp-route-id="@course.Id">@course.Name</a></td>
@@ -41,8 +43,9 @@
                                 <a class="btn btn-sm btn-primary" asp-action="Toggle" asp-route-id="@course.Id">@SharedLocalizer["Recover"]</a>
                             }
                         }
-                    </form>                  
+                    </form>
                 </td>
             </tr>
         }
+    }
 </table>
