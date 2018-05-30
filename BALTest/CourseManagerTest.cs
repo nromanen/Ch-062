@@ -9,13 +9,13 @@ using NUnit.Framework;
 namespace BALTest
 {
     [TestFixture]
-    class CourseManagerTest
+    class CourseManagerTest : TestStartup
     {
         IMapper mapper;
         IUnitOfWork sUoW;
 
         [SetUp]
-        public void Setup()
+        public override void Setup()
         {
             var config = new MapperConfiguration(cfg =>
             {
