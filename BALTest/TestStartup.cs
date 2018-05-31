@@ -18,17 +18,20 @@ namespace BALTest
         protected IMapper mapper;
         protected IUnitOfWork sUoW;
 
-        [ClassInitialize]
-        public virtual void Setup()
+        protected static MapperConfiguration config = new MapperConfiguration(cfg =>
         {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new AutoMapperProfileConfiguration());
-            });
+            cfg.AddProfile(new AutoMapperProfileConfiguration());
+        });
+
+
+
+        [ClassInitialize]
+        public void Setup()
+        {
+
             mapper = config.CreateMapper();
             sUoW = Substitute.For<IUnitOfWork>();
 
-           
         }
     }
 }

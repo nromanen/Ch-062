@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using BAL.IoC;
+﻿
 using BAL.Managers;
 using DAL.Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,22 +11,14 @@ using System.Linq;
 namespace BALTest
 {
     [TestClass]
-    public class CourseManagerTest
+    public class CourseManagerTest : TestStartup
     {
-        IMapper mapper;
-        IUnitOfWork sUoW;
 
         [TestInitialize]
-        public void Setup()
+        public void SetupForCourseManagerTests()
         {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new AutoMapperProfileConfiguration());
-            });
-            mapper = config.CreateMapper();
-
+            Setup();
             var sNewsRepo = Substitute.For<IBaseRepository<Course>>();
-            sUoW = Substitute.For<IUnitOfWork>();
         }
 
         [TestMethod]
@@ -70,7 +61,7 @@ namespace BALTest
         public void GetTest()
         {
             var courseManager = new CourseManager(sUoW, mapper);
-            sUoW.CourseRepo.Get(c => c.Name == "aaa").Returns(new List<Course>() { new Course() { Name = "aaa", UserId = "aaa" }, new Course() { Name = "aaa", UserId = "bbb" } });
+            sUoW.CourseRepo.Get(c => c.Name == "aaa").ReturnsForAnyArgs(new List<Course>() { new Course() { Name = "aaa", UserId = "aaa" }, new Course() { Name = "aaa", UserId = "bbb" } });
             var a = sUoW.CourseRepo.Get(c => c.Name == "aaa");
             Assert.AreEqual("aaa", courseManager.Get(c => c.Name == "aaa").FirstOrDefault().Name);
         }
