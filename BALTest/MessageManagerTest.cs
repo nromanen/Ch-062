@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using BAL.IoC;
-using BAL.Managers;
+﻿using BAL.Managers;
 using DAL.Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.DB;
@@ -11,20 +9,12 @@ using System.Linq;
 namespace BALTest
 {
     [TestClass]
-    public class MessageManagerTest
+    public class MessageManagerTest : TestStartup
     {
-        IMapper mapper;
-        IUnitOfWork sUoW;
-        
         [TestInitialize]
-        public void Setup()
+        public void SetupForMessagesManager()
         {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new AutoMapperProfileConfiguration());
-            });
-            mapper = config.CreateMapper();
-            sUoW = Substitute.For<IUnitOfWork>();
+            Setup();
             var sMessagesRepo = Substitute.For<IBaseRepository<Messages>>();
         }
 
@@ -32,7 +22,6 @@ namespace BALTest
         public void MessageTestMethodInsert()
         {
             var messageManager = new MessagesManager(sUoW, mapper);
-
             messageManager.Insert(new Model.DTO.MessagesDTO() { IsDeleted = false });
             sUoW.Received(1).Save();
             sUoW.ClearReceivedCalls();
@@ -41,8 +30,8 @@ namespace BALTest
         [TestMethod]
         public void MessageTestMethodUpdate()
         {
-            var messageManager = new MessagesManager(sUoW, mapper);      
-            messageManager.Update(new Model.DTO.MessagesDTO() { IsDeleted = false, OutboxText="Hello WOrld" });
+            var messageManager = new MessagesManager(sUoW, mapper);
+            messageManager.Update(new Model.DTO.MessagesDTO() { IsDeleted = false, OutboxText = "Hello WOrld" });
             sUoW.Received(1).Save();
             sUoW.ClearReceivedCalls();
         }
@@ -51,8 +40,8 @@ namespace BALTest
         public void MessageTestMethodDelete()
         {
             var messageManager = new MessagesManager(sUoW, mapper);
-           messageManager.Insert(new Model.DTO.MessagesDTO() { IsDeleted = false });
-           messageManager.Delete(new Model.DTO.MessagesDTO() { IsDeleted = false });
+            messageManager.Insert(new Model.DTO.MessagesDTO() { IsDeleted = false });
+            messageManager.Delete(new Model.DTO.MessagesDTO() { IsDeleted = false });
             sUoW.Received(2).Save();
             sUoW.ClearReceivedCalls();
         }
@@ -60,7 +49,7 @@ namespace BALTest
         public void MessageTestMethodGetAll()
         {
             var messageManager = new MessagesManager(sUoW, mapper);
-            sUoW.MessagesRepo.GetAll().Returns(new List <Messages>() { new Messages() { FromEmail = "dada", ToEmail = "aaa" } });
+            sUoW.MessagesRepo.GetAll().Returns(new List<Messages>() { new Messages() { FromEmail = "dada", ToEmail = "aaa" } });
             Assert.AreEqual("aaa", messageManager.GetAll().FirstOrDefault().ToEmail);
         }
 
@@ -71,14 +60,14 @@ namespace BALTest
             sUoW.MessagesRepo.GetById(1).Returns(new Messages() { FromEmail = "dada", Id = 1 });
             Assert.AreEqual(1, messageManager.GetById(1).Id);
 
-        } 
+        }
         [TestMethod]
         public void MessageTestMethodDeleteOrRecover()
         {
             var messageManager = new MessagesManager(sUoW, mapper);
-            sUoW.MessagesRepo.GetById(1).Returns(new Messages() { FromEmail = "dada", Id = 1 , IsDeleted=true });
+            sUoW.MessagesRepo.GetById(1).Returns(new Messages() { FromEmail = "dada", Id = 1, IsDeleted = true });
             messageManager.DeleteOrRecover(1);
-            Assert.AreEqual(false, messageManager.GetById(1).IsDeleted);   
+            Assert.AreEqual(false, messageManager.GetById(1).IsDeleted);
         }
         [TestMethod]
         public void MessageTestMethodGet()

@@ -32,15 +32,15 @@ namespace BALTest
             sNewsRepo.GetAll().Returns(moqNews);
             sUoW.MessageRepo.Returns(sNewsRepo);
         }
-        [TestMethod]
-        public void TestMethod1()
-        {
-            var newsManager = new NewsManager(sUoW, mapper);
-            var result = newsManager.GetAll();
-            sUoW.Received(0).Save();
-            sUoW.ClearReceivedCalls();
+        /*  [TestMethod]
+          public void TestMethod1()
+          {
+              var newsManager = new NewsManager(sUoW, mapper);
+              var result = newsManager.GetAll();
+              sUoW.Received(0).Save();
+              sUoW.ClearReceivedCalls();
 
-            Assert.AreEqual("Hello World", result.First().Text);
-        }
+              Assert.AreEqual("Hello World", result.First().Text);
+          }*/
     }
 }
