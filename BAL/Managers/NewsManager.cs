@@ -26,12 +26,12 @@ namespace BAL.Managers
 
         public IEnumerable<NewsDTO> GetAll()
         {
-            return mapper.Map<List<NewsDTO>>(unitOfWork.NewsRepo.GetAll());
+            return mapper.Map<List<NewsDTO>>(unitOfWork.MessageRepo.GetAll());
         }
 
         public NewsDTO GetById(int id)
         {
-            return mapper.Map<NewsDTO>(unitOfWork.NewsRepo.GetById(id));
+            return mapper.Map<NewsDTO>(unitOfWork.MessageRepo.GetById(id));
         }
 
         public virtual IEnumerable<NewsDTO> Get(Expression<Func<News, bool>> filter = null,
@@ -39,33 +39,33 @@ namespace BAL.Managers
                                      IOrderedQueryable<News>> orderBy = null,
                                      string includeProperties = "")
         {
-            return mapper.Map<List<NewsDTO>>(unitOfWork.NewsRepo.Get(filter, orderBy, includeProperties));
+            return mapper.Map<List<NewsDTO>>(unitOfWork.MessageRepo.Get(filter, orderBy, includeProperties));
         }
 
         public void Insert(NewsDTO entity)
         {
-            unitOfWork.NewsRepo.Insert(mapper.Map<News>(entity));
+            unitOfWork.MessageRepo.Insert(mapper.Map<News>(entity));
             unitOfWork.Save();
         }
 
         public void Update(NewsDTO entity)
         {
-            var article = unitOfWork.NewsRepo.GetById(entity.Id);
+            var article = unitOfWork.MessageRepo.GetById(entity.Id);
             article.CourseId = entity.CourseId;
             article.ImagePath = entity.ImagePath;
             article.Title = entity.Title;
             article.Text = entity.Text;
             article.Day = DateTime.Today.Day;
             article.Month = Enum.GetName(typeof(MonthEnum), DateTime.Today.Month-1);
-            unitOfWork.NewsRepo.Update(article);
+            unitOfWork.MessageRepo.Update(article);
             unitOfWork.Save();
         }
 
         public void DeleteOrRecover(int id)
         {
-            var article = unitOfWork.NewsRepo.GetById(id);
+            var article = unitOfWork.MessageRepo.GetById(id);
             article.IsDeleted = !article.IsDeleted;
-            unitOfWork.NewsRepo.Update(article);
+            unitOfWork.MessageRepo.Update(article);
             unitOfWork.Save();
         }
 
