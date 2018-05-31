@@ -28,16 +28,10 @@ namespace BALTest
             var sNewsRepo = Substitute.For<IBaseRepository<News>>();
             sUoW = Substitute.For<IUnitOfWork>();
 
-
             var moqNews = new List<News>() { new News() { Text = "Hello World" } };
             sNewsRepo.GetAll().Returns(moqNews);
-
-
-
-            sUoW.NewsRepo.Returns(sNewsRepo);
+            sUoW.MessageRepo.Returns(sNewsRepo);
         }
-
-
         [TestMethod]
         public void TestMethod1()
         {

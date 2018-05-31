@@ -21,7 +21,8 @@ namespace BALTest
            IMapper mapper;
             IUnitOfWork sUoW;
 
-        private UserManager<User> userManager;
+        private readonly UserManager<User> userManager;
+
         [TestInitialize]
             public void Setup()
             {
@@ -35,9 +36,13 @@ namespace BALTest
                 sUoW = Substitute.For<IUnitOfWork>();
 
 
-                var moqNews = new List<UserCode>() { new UserCode() { CodeText="code",  EndTime=DateTime.Now } };
-            sCodeRepo.GetAll().Returns(moqNews);
+                var moqCode = new List<UserCode>() { new UserCode() {Mark=5, CodeText="code",   EndTime=DateTime.Now } };
 
+
+
+                  //  var mooq = new List<CodeHistory>() { new CodeHistory() {  UserCode = moqNews} };
+            sCodeRepo.GetAll().Returns(moqCode);
+            
 
 
                 sUoW.CodeRepo.Returns(sCodeRepo);
@@ -50,14 +55,36 @@ namespace BALTest
             var exma = new ExerciseManager(sUoW, mapper);
             var sandb = new SandboxManager("SandboxAPI");
             var codeManager = new CodeManager(sUoW, mapper, exma, userManager , sandb);
-            var result = codeManager.Get(e=>e.CodeText == "code");
-            sUoW.Received(0).Save();
-            sUoW.ClearReceivedCalls();
+            var result = codeManager.Get(e=>e.Mark == 5);
+           // sUoW.Received(0).Save();
+          //  sUoW.ClearReceivedCalls();
           
-            Assert.AreEqual("code", result.First().CodeText);
+            Assert.AreEqual(5, result.FirstOrDefault().Mark);
   
           //  Assert.AreEqual("Hello World", result.First().Text);
         }
+
+        [TestMethod]
+        public void TestMethod3()
+        {
+
+
+            var exma = new ExerciseManager(sUoW, mapper);
+            var sandb = new SandboxManager("SandboxAPI");
+            var codeManager = new CodeManager(sUoW, mapper, exma, userManager, sandb);
+            var result = codeManager.GetAll();
+            sUoW.Received(0).Save();
+            sUoW.ClearReceivedCalls();
+
+            Assert.AreEqual("dadada", result.First().UserCode);
+
+            //  Assert.AreEqual("Hello World", result.First().Text);
+        }
+
+
+
+
+
     }
 
 }
