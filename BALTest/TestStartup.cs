@@ -11,12 +11,14 @@ using System.Linq;
 
 namespace BALTest
 {
+    [TestClass]
     public class TestStartup
     {
 
-        IMapper mapper;
-        IUnitOfWork sUoW;
+        protected IMapper mapper;
+        protected IUnitOfWork sUoW;
 
+        [ClassInitialize]
         public virtual void Setup()
         {
             var config = new MapperConfiguration(cfg =>

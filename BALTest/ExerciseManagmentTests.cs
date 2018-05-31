@@ -15,18 +15,17 @@ namespace BALTest
     [TestClass]
    public class ExerciseManagmentTests : TestStartup
     {
-        IMapper mapper;
-        IUnitOfWork sUoW;
 
-        [TestInitialize]
-        public override void Setup()
+
+        [ClassInitialize]
+        public void Setup1()
         {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new AutoMapperProfileConfiguration());
-            });
-            mapper = config.CreateMapper();
-            sUoW = Substitute.For<IUnitOfWork>();
+            //var config = new MapperConfiguration(cfg =>
+            //{
+            //    cfg.AddProfile(new AutoMapperProfileConfiguration());
+            //});
+            //mapper = config.CreateMapper();
+            //sUoW = Substitute.For<IUnitOfWork>();
 
             var sExerciseRepo = Substitute.For<IBaseRepository<Exercise>>();
  
@@ -35,6 +34,7 @@ namespace BALTest
 
 
             sUoW.ExerciseRepo.Returns(sExerciseRepo);
+
         }
 
 
