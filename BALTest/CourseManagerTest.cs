@@ -1,5 +1,4 @@
-﻿
-using BAL.Managers;
+﻿using BAL.Managers;
 using DAL.Interface;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.DB;
@@ -13,16 +12,15 @@ namespace BALTest
     [TestClass]
     public class CourseManagerTest : TestStartup
     {
-
         [TestInitialize]
         public void SetupForCourseManagerTests()
         {
             Setup();
-            var sNewsRepo = Substitute.For<IBaseRepository<Course>>();
+            var sCourseRepo = Substitute.For<IBaseRepository<Course>>();
         }
 
         [TestMethod]
-        public void InsertTest()
+        public void CourseInsertTest()
         {
             var courseManager = new CourseManager(sUoW, mapper);
             courseManager.Insert(new CourseDTO() { Name = "aaa" });
@@ -32,7 +30,7 @@ namespace BALTest
         }
 
         [TestMethod]
-        public void UpdateTest()
+        public void CourseUpdateTest()
         {
             var courseManager = new CourseManager(sUoW, mapper);
             courseManager.Update(new CourseDTO() { Name = "aaa" });
@@ -41,7 +39,7 @@ namespace BALTest
         }
 
         [TestMethod]
-        public void DeleteTest()
+        public void CourseDeleteTest()
         {
             var courseManager = new CourseManager(sUoW, mapper);
             courseManager.Delete(new CourseDTO() { Name = "aaa" });
@@ -50,7 +48,7 @@ namespace BALTest
         }
 
         [TestMethod]
-        public void GetByIdTest()
+        public void CourseGetByIdTest()
         {
             sUoW.CourseRepo.GetById(1).Returns(new Course() { Name = "aaa", UserId = "aaa" });
             var courseManager = new CourseManager(sUoW, mapper);
@@ -58,7 +56,7 @@ namespace BALTest
         }
 
         [TestMethod]
-        public void GetTest()
+        public void CourseGetTest()
         {
             var courseManager = new CourseManager(sUoW, mapper);
             sUoW.CourseRepo.Get(c => c.Name == "aaa").ReturnsForAnyArgs(new List<Course>() { new Course() { Name = "aaa", UserId = "aaa" }, new Course() { Name = "aaa", UserId = "bbb" } });
@@ -67,7 +65,7 @@ namespace BALTest
         }
 
         [TestMethod]
-        public void GetAllTest()
+        public void CourseGetAllTest()
         {
             var courseManager = new CourseManager(sUoW, mapper);
             sUoW.CourseRepo.GetAll().Returns(new List<Course>() { new Course() { Name = "aaa" }, new Course() { Name = "bbb" } });
@@ -75,7 +73,7 @@ namespace BALTest
         }
 
         [TestMethod]
-        public void UpdateCourseOwnerTest()
+        public void CourseUpdateCourseOwnerTest()
         {
             sUoW.CourseRepo.GetById(1).Returns(new Course() { Name = "aaa", UserId = "aaa" });
             var courseManager = new CourseManager(sUoW, mapper);
@@ -85,7 +83,7 @@ namespace BALTest
 
 
         [TestMethod]
-        public void ToggleCourseStatusTest()
+        public void CourseToggleCourseStatusTest()
         {
             var courseManager = new CourseManager(sUoW, mapper);
             sUoW.CourseRepo.GetById(1).Returns(new Course() { Name = "aaa", UserId = "aaa", IsActive = true });

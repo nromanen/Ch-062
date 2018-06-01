@@ -53,6 +53,11 @@ namespace WebApp.Controllers
             return model.CodeText == null ? "Write some codeeeee" : codeManager.GetOnFlyCode(model);
         }
 
+        [HttpPost]
+        public string TestRun(TestRunViewModel code)
+        {
+            return code == null ? "Write some codeeeee" : codeManager.ExecuteOnFlyCode(code.TestRunCode);
+        }
 
         [HttpPost]
         public IActionResult SetCodeStatus(UserCodeViewModel model)
