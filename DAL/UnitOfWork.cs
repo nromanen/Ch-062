@@ -90,7 +90,7 @@ namespace DAL
             }
         }
 
-        public IBaseRepository<News> NewsRepo
+        public IBaseRepository<News> MessageRepo
         {
             get
             {

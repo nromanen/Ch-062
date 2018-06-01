@@ -40,6 +40,7 @@ namespace WebApp.Controllers
             if (user != null)
             {
                 await this.userManager.DeleteAsync(user);
+
             }
             return RedirectToAction("Index");
         }
@@ -88,9 +89,7 @@ namespace WebApp.Controllers
             User user = await this.userManager.FindByIdAsync(userId);
             if (user != null)
             {
-                // получем список ролей пользователя
                 var userRoles = await this.userManager.GetRolesAsync(user);
-                // получаем список ролей, которые были выбраны
                 var addedRoles = roles.Except(userRoles);
 
                 await this.userManager.RemoveFromRolesAsync(user, addedRoles);
