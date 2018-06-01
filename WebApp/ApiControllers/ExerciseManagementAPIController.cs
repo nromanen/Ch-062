@@ -11,6 +11,8 @@ using BAL.Interfaces;
 using Model.DB;
 using Model.DTO;
 using RestSharp;
+using Microsoft.Extensions.Configuration;
+
 
 namespace WebApp.ApiControllers
 {
@@ -22,16 +24,18 @@ namespace WebApp.ApiControllers
         private readonly ICourseManager courseManager;
         private readonly UserManager<User> userManager;
         private readonly ICommentManager commentManager;
+        private readonly IConfiguration configuration;
         private readonly ICodeManager codeManager;
         private readonly IMapper mapper;
 
         public ExerciseManagementAPIController(IExerciseManager exerciseManager, ICourseManager courseManager,
-                                            UserManager<User> userManager, ICodeManager codeManager, IMapper mapper, ICommentManager commentManager)
+                                            UserManager<User> userManager, ICodeManager codeManager, IMapper mapper, ICommentManager commentManager, IConfiguration configuration)
         {
             this.exerciseManager = exerciseManager;
             this.courseManager = courseManager;
             this.userManager = userManager;
             this.commentManager = commentManager;
+            this.configuration = configuration;
             this.mapper = mapper;
             this.codeManager = codeManager;
         }
@@ -42,7 +46,7 @@ namespace WebApp.ApiControllers
         {
             var task = exerciseManager.GetById(id);
 
-            var client = new RestClient("http://localhost:55842/");
+            var client = new RestClient(configuration.GetConnectionString("WebAppRouteAPI"));
             var request = new RestRequest("api/CommentApi/{id}", Method.GET);
             request.AddUrlSegment("id", id);
             IRestResponse<List<CommentDTO>> response = client.Execute<List<CommentDTO>>(request);
