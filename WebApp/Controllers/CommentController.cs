@@ -17,6 +17,7 @@ using AutoMapper;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RestSharp;
+using Microsoft.Extensions.Configuration;
 
 
 namespace WebApp.Controllers
@@ -25,20 +26,21 @@ namespace WebApp.Controllers
     {
         private readonly ICommentManager commentManager;
         private readonly IExerciseManager exerciseManager;
+        private readonly IConfiguration configuration;
         private readonly UserManager<User> userManager;
         private readonly IMapper mapper;
 
         public CommentController(IExerciseManager exerciseManager, ICourseManager courseManager,
-                                            UserManager<User> userManager, ICommentManager commentManager, IMapper mapper)
+                                            UserManager<User> userManager, ICommentManager commentManager, IMapper mapper, IConfiguration configuration)
         {
             this.exerciseManager = exerciseManager;
             this.userManager = userManager;
             this.commentManager = commentManager;
+            this.configuration = configuration;
             this.mapper = mapper;
         }
 
 
-        // POST: Comment/Create
         [HttpPost]
         public ActionResult Create(CreateCommentViewModel model)
         {
@@ -46,7 +48,7 @@ namespace WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                var client = new RestClient("http://localhost:55842/");
+                var client = new RestClient(configuration.GetConnectionString("WebAppRouteAPI"));
                 var request = new RestRequest("api/CommentApi/", Method.POST);
 
                 CommentDTO comment = new CommentDTO
