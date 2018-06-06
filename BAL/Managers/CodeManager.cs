@@ -219,7 +219,39 @@ namespace BAL.Managers
             return codeHistories;
         }
 
+        public bool DeleteHistoryLst(UserCodeDTO code)
+        {
+            try
+            {
+                var codeHistories = unitOfWork.CodeHistoryRepo.Get().Where(e => e.UserCodeId == code.Id).ToList();
+                foreach (var ch in codeHistories)
+                {
+                    unitOfWork.CodeHistoryRepo.Delete(ch);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            
+        }
 
+        public bool DeleteCode(UserCodeDTO code)
+        {
+            var usercode = unitOfWork.CodeRepo.Get().FirstOrDefault();
+            try
+            {
+                unitOfWork.CodeRepo.Delete(usercode);
+                
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
 
         public SetFav SetFavouriteCode(SetFav model)
         {

@@ -23,11 +23,14 @@ namespace BAL.Interfaces
         string ExecutionResult(string code, int exId, string userId, CodeStatus codeStatus);
         UserCodeDTO BuildCodeModel(UserCodeDTO model);
         List<CodeHistory> GetHistoryLst(int codeId);
+        bool DeleteHistoryLst(UserCodeDTO code);
+        bool DeleteCode(UserCodeDTO code);
         List<UserCodeDTO> UserCodeListByExId(int exerciseId);
         void SetCodeStatus(int id, string userId);
         void SetMark(int id, int mark, string comment, string userId);
         SetFav SetFavouriteCode(SetFav model);
         CodeModel EditCode(CodeModel codeModel);
         IEnumerable<CodeHistory> GetAll();
+
     }
 }

@@ -10,20 +10,33 @@ using Model.DB;
 using Model.DTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using BAL.Interfaces;
+using BAL.Managers;
+using Model.DB.Code;
+using Model.DTO.CodeDTO;
+using Model.Entity;
 
 namespace WebApp.Controllers
 {
     [Authorize(Roles = "Administrator")]
     public class AdminPanelController : Controller
     {
-        UserManager<User> userManager;
-        RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<User> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IExerciseManager exerciseManager;
+        private readonly ICourseManager courseManager;
+        private readonly ICodeManager codeManager;
+
         IMapper mapper;
-        public AdminPanelController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
+
+        public AdminPanelController(ICodeManager codeManager, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper, IExerciseManager exerciseManager, ICourseManager courseManager)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.codeManager = codeManager;
             this.mapper = mapper;
+            this.exerciseManager = exerciseManager;
+            this.courseManager = courseManager;
         }
         
 
@@ -37,12 +50,15 @@ namespace WebApp.Controllers
         public async Task<ActionResult> Delete(string id)
         {
             User user = await this.userManager.FindByIdAsync(id);
+            var code = codeManager.Get().Where(e => e.UserId == user.Id).FirstOrDefault();
+            
             if (user != null)
             {
+                codeManager.DeleteHistoryLst(code);
+                codeManager.DeleteCode(code);
                 await this.userManager.DeleteAsync(user);
-
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Users");
         }
 
 
