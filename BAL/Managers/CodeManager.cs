@@ -151,7 +151,7 @@ namespace BAL.Managers
         public void SetCodeStatus(int id, string userId)
         {
             var code = unitOfWork.CodeRepo.GetById(id);
-            if (code.CodeStatus != CodeStatus.Done || code.CodeStatus != CodeStatus.Appreciated)
+            if (code.CodeStatus != CodeStatus.Done && code.CodeStatus != CodeStatus.Appreciated)
             {
                 code.CodeStatus = CodeStatus.Done;
                 code.EndTime = DateTime.Now;

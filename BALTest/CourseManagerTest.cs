@@ -16,7 +16,7 @@ namespace BALTest
         public void SetupForCourseManagerTests()
         {
             Setup();
-            var sCourseRepo = Substitute.For<IBaseRepository<Course>>();
+           // var sCourseRepo = Substitute.For<IBaseRepository<Course>>();
         }
 
         [TestMethod]

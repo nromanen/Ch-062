@@ -19,7 +19,7 @@ namespace BALTest
         public void SetupForExerciseManagerTests()
         {
             Setup();
-            var sExerciseRepo = Substitute.For<IBaseRepository<Exercise>>();
+          //  var sExerciseRepo = Substitute.For<IBaseRepository<Exercise>>();
         }
 
         [TestMethod]
