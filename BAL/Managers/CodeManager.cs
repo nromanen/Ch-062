@@ -130,7 +130,6 @@ namespace BAL.Managers
         }
 
 
-
         public string GetOnFlyCode(UserCodeDTO model)
         {
             UserCode code = new UserCode

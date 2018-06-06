@@ -50,14 +50,6 @@ namespace BAL.Managers
             unitOfWork.Save();
         }
 
-        public void DeleteOrRecover(int id)
-        {
-            var message = unitOfWork.MessagesRepo.GetById(id);
-            message.IsDeleted = !message.IsDeleted;
-            unitOfWork.MessagesRepo.Update(message);
-            unitOfWork.Save();
-        }
-
         public void Delete(MessagesDTO entityToDelete)
         {
             unitOfWork.MessagesRepo.Delete(mapper.Map<Messages>(entityToDelete));

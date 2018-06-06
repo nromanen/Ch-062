@@ -9,7 +9,7 @@ using System.Linq;
 namespace BALTest
 {
     [TestClass]
-    public class MessageManagerTest : TestStartup
+    public class MessagesManagerTest : TestStartup
     {
         [TestInitialize]
         public void SetupForMessagesManager()
@@ -61,14 +61,7 @@ namespace BALTest
             Assert.AreEqual(1, messageManager.GetById(1).Id);
 
         }
-        [TestMethod]
-        public void MessageTestMethodDeleteOrRecover()
-        {
-            var messageManager = new MessagesManager(sUoW, mapper);
-            sUoW.MessagesRepo.GetById(1).Returns(new Messages() { FromEmail = "dada", Id = 1, IsDeleted = true });
-            messageManager.DeleteOrRecover(1);
-            Assert.AreEqual(false, messageManager.GetById(1).IsDeleted);
-        }
+
         [TestMethod]
         public void MessageTestMethodGet()
         {

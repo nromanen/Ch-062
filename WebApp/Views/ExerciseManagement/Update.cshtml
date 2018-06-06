@@ -24,7 +24,9 @@
         <label class="control-label">@SharedLocalizer["Task"]:</label>
         <textarea asp-for="TaskTextField" id="MCE"></textarea>
     </div>
-
+    <div>
+        <button type="button" class="btn btn-success" id="runCode">►@SharedLocalizer["Run"]</button>
+    </div>
     <div class="row">
         <div class=" col-md-6">
             <label class="control-label">@SharedLocalizer["BaseCode"]:</label>
@@ -36,8 +38,10 @@
             <textarea asp-for="TestCases" id="testCasesCodeField" class="col-md-12" style="height: 400px; width: 100%;"></textarea>
         </div>
     </div>
-
-
+    <div>
+        <textarea id="result" style="padding: 10px; border-color: black; border: 1px solid; height: 100%; width: 100%; background-color: white" readonly="readonly"></textarea>
+    </div>
+    <br />
     <div class="form-group">
         <button id="save" class="btn btn-default">@SharedLocalizer["Save"]</button>
     </div>
@@ -96,5 +100,24 @@
             theme: "default",
             lineNumbers: true
         });
+
+        $('#runCode').click(
+            function () {
+                $('#result').html('');
+                var code = new Object();
+                code.TestRunCode = editableTestCasesCodeMirror.getValue();
+                code.TestRunCode += editableCodeMirror.getValue();
+                $.ajax({
+                    type: "POST",
+                    url: "/Code/TestRun",
+                    data: code,
+                    success: function (data) {
+                        $("#result").html(data);
+                    }
+                });
+            }
+        );
     };
+
+    
 </script>
