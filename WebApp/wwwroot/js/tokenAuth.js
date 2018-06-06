@@ -7,6 +7,7 @@ $('#submitLogin').click(function (e) {
         grant_type: 'password',
         username: $('#emailLogin').val(),
         password: $('#passwordLogin').val(),
+        retUrl: $('#formRetUrl').val(),
         rememberMe: isChecked
     };
 

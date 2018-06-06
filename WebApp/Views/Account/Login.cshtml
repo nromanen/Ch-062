@@ -20,6 +20,7 @@
             @SharedLocalizer["Email"]
         </label><br />
 
+        <input id="formRetUrl" value="@Model.ReturnUrl" type="hidden" />
         <input id="emailLogin" asp-for="Email" />
         <span asp-validation-for="Email"></span>
     </div>
