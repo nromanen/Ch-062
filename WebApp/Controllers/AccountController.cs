@@ -9,7 +9,11 @@ using WebApp.Models;
 using Model.DB;
 using WebApp.ViewModels;
 using DAL.Interface;
- 
+using Microsoft.AspNetCore.Http;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+
 
 namespace WebApp.Controllers
 {
@@ -104,6 +108,73 @@ namespace WebApp.Controllers
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost("/token")]
+        public async Task Token()
+        {
+            var username = Request.Form["username"];
+            var password = Request.Form["password"];
+            var remeberMe = Request.Form["rememberMe"];
+            bool flag;
+            if (remeberMe == "1")
+            {
+                flag = true;
+            }
+            else
+            {
+                flag = false;
+            }
+            var result =
+                    await signInManager.PasswordSignInAsync(username, password, flag, false);
+
+            //\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/////\/\/\/\/\/\/\/\/\/\/\/\дописать авторизацию
+
+            var identity = GetIdentity(username, password);
+            if (identity == null)
+            {
+                Response.StatusCode = 400;
+                await Response.WriteAsync("Invalid username or password.");
+                return;
+            }
+
+            var now = DateTime.UtcNow;
+            // crete JWT
+            var jwt = new JwtSecurityToken(
+                    issuer: AuthOptions.ISSUER,
+                    audience: AuthOptions.AUDIENCE,
+                    notBefore: now,
+                    claims: identity.Claims,
+                    expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
+                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+            var response = new
+            {
+                access_token = encodedJwt,
+                username = identity.Name
+            };
+
+            // responce ser
+            Response.ContentType = "application/json";
+            await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
+        }
+
+        private ClaimsIdentity GetIdentity(string username, string password)
+        {
+            if (username != null)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, username)
+                };
+                ClaimsIdentity claimsIdentity =
+                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
+                    ClaimsIdentity.DefaultRoleClaimType);
+                return claimsIdentity;
+            }
+
+            return null;
         }
     }
 }

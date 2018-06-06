@@ -18,7 +18,7 @@
         <p>@User.Identity.Name</p>
 
         <form method="post" asp-controller="Account" asp-action="LogOff">
-            <input type="submit" value="@SharedLocalizer["SignOut"]" />
+            <input type="submit" id="logOut" value="@SharedLocalizer["SignOut"]" />
 
         </form>
     }

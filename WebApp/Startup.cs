@@ -16,6 +16,8 @@ using Model.DB;
 using BAL.IoC;
 using BAL.Interfaces;
 using BAL.Managers;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace WebApp
 {
@@ -35,6 +37,28 @@ namespace WebApp
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
 
             services.AddLocalization(options => options.ResourcesPath = "Res");
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.RequireHttpsMetadata = false;//no ssl if false
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,//issuer valid if true
+
+                            ValidIssuer = AuthOptions.ISSUER,
+
+                            // consumer valid if true
+                            ValidateAudience = true,
+                            ValidAudience = AuthOptions.AUDIENCE,
+
+                            ValidateLifetime = true,
+
+                            //set key
+                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+
+                            ValidateIssuerSigningKey = true,
+                        };
+                    });
             services.AddMvc()
                 .AddDataAnnotationsLocalization(options =>
                 {
