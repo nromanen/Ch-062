@@ -239,11 +239,13 @@ namespace BAL.Managers
 
         public bool DeleteCode(UserCodeDTO code)
         {
-            var usercode = unitOfWork.CodeRepo.Get().FirstOrDefault();
+            var usercode = unitOfWork.CodeRepo.Get(c=>c.UserId==code.UserId);
             try
             {
-                unitOfWork.CodeRepo.Delete(usercode);
-                
+                foreach(var elem in usercode) {
+                    unitOfWork.CodeRepo.Delete(elem);
+
+                }
                 return true;
             }
             catch (Exception ex)
