@@ -113,7 +113,6 @@ namespace WebApp.Controllers
         [HttpPost("/token")]
         public async Task Token()
         {
-            var retUrl = Request.Form["retUrl"];
             var username = Request.Form["username"];
             var password = Request.Form["password"];
             var remeberMe = Request.Form["rememberMe"];
@@ -126,17 +125,18 @@ namespace WebApp.Controllers
             {
                 flag = false;
             }
-            LoginViewModel model = new LoginViewModel()
-            {
-                Email = username,
-                Password = password,
-                RememberMe = flag,
-                ReturnUrl = retUrl
-            };
             var result =
                     await signInManager.PasswordSignInAsync(username, password, flag, false);
 
+            //\\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/////\/\/\/\/\/\/\/\/\/\/\/\дописать авторизацию
+
             var identity = GetIdentity(username, password);
+            if (identity == null)
+            {
+                Response.StatusCode = 400;
+                await Response.WriteAsync("Invalid username or password.");
+                return;
+            }
 
             var now = DateTime.UtcNow;
             // crete JWT
@@ -158,7 +158,6 @@ namespace WebApp.Controllers
             // responce ser
             Response.ContentType = "application/json";
             await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
-            
         }
 
         private ClaimsIdentity GetIdentity(string username, string password)
